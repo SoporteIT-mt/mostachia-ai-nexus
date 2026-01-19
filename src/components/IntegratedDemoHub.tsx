@@ -4,32 +4,32 @@ import { Sparkles, Search, ExternalLink, ArrowRight, Utensils, PieChart, Leaf, X
 
 const demos = [
   {
+    id: 'hub',
+    title: 'Hub de Experiencias',
+    desc: 'Accede al catálogo completo de nuestras demos interactivas. Explora soluciones para diferentes industrias.',
+    icon: Sparkles,
+    tag: 'Plataforma',
+    file: '/demos/hubdemos.html',
+  },
+  {
+    id: 'migration',
+    title: 'Migración Inteligente',
+    desc: 'Migración SQL masiva con razonamiento de IA. Detecta esquemas, resuelve conflictos y ejecuta en segundos.',
+    icon: Search,
+    tag: 'Database',
+    file: '/demos/migracion-db.html',
+  },
+  {
     id: 'f1',
     title: 'RestoMaster',
     desc: 'Sistema de gestión gastronómica 360°. Comandas, reservas y dashboards de ventas en tiempo real.',
     icon: Utensils,
     tag: 'Gastronomía',
-    file: 'resto.html',
-  },
-  {
-    id: 'f2',
-    title: 'Estudio Estrada',
-    desc: 'Auditoría contable inteligente. Cálculo automatizado de impuestos y alertas fiscales.',
-    icon: PieChart,
-    tag: 'Finanzas',
-    file: 'contable.html',
-  },
-  {
-    id: 'f3',
-    title: 'Ajonjolí',
-    desc: 'Solución para dietéticas. Control de stock a granel y dashboards de tendencias saludables.',
-    icon: Leaf,
-    tag: 'Dietética',
-    file: 'demo3.html',
+    file: '/demos/hubdemos.html',
   },
 ];
 
-const categories = ['Todos', 'Gastronomía', 'Finanzas', 'Dietética', 'Salud', 'Corporativo'];
+const categories = ['Todos', 'Plataforma', 'Database', 'Gastronomía'];
 
 export const IntegratedDemoHub = () => {
   const ref = useRef(null);

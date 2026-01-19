@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 
 const navLinks = [
   { href: '#soluciones', label: 'Soluciones' },
-  { href: '#demos', label: 'Demos' },
-  { href: '#modelo', label: 'Modelo' },
+  { href: '#demos', label: 'Hub de Demos' },
+  { href: '#precios', label: 'Precios' },
   { href: '#blog', label: 'Blog' },
 ];
 
@@ -28,13 +28,13 @@ export const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'glass-nav py-3 shadow-md' : 'py-5 bg-background/50 backdrop-blur-md'
+        isScrolled ? 'glass-nav py-3' : 'py-5 bg-transparent'
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group">
-          <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center overflow-hidden">
+          <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center overflow-hidden shadow-lg shadow-primary/25">
             <span className="text-xl font-bold text-white">M</span>
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           </div>
@@ -58,8 +58,8 @@ export const Navbar = () => {
 
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="ghost" className="font-medium" asChild>
-            <a href="#contacto">Contacto</a>
+          <Button variant="ghost" className="font-medium text-muted-foreground hover:text-foreground" asChild>
+            <a href="#contacto">Empezar Transformación</a>
           </Button>
           <Button className="btn-glow rounded-xl px-6" asChild>
             <a href="#demos">Probar Demo</a>
@@ -123,8 +123,8 @@ export const Navbar = () => {
                 </motion.a>
               ))}
               <div className="flex flex-col gap-3 mt-4">
-                <Button variant="outline" className="w-full" asChild>
-                  <a href="#contacto">Contacto</a>
+                <Button variant="outline" className="w-full border-primary/30" asChild>
+                  <a href="#contacto">Empezar Transformación</a>
                 </Button>
                 <Button className="btn-glow w-full rounded-xl" asChild>
                   <a href="#demos">Probar Demo</a>

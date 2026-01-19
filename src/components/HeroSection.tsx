@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Play, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ConstellationBackground } from './ConstellationBackground';
 
@@ -14,12 +14,19 @@ const logos = [
 export const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/30" />
+      {/* Background layers */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-background/90" />
       <div 
         className="absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(160 100% 39% / 0.12), transparent)',
+          background: 'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(160 100% 39% / 0.2), transparent)',
+        }}
+      />
+      {/* Accent glow */}
+      <div 
+        className="absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full blur-3xl"
+        style={{
+          background: 'radial-gradient(circle, hsl(262 84% 58% / 0.15), transparent 70%)',
         }}
       />
       <ConstellationBackground />
@@ -33,26 +40,23 @@ export const HeroSection = () => {
             transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-            </span>
+            <Sparkles className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-primary">
-              Tecnología que escala con vos
+              Tu nuevo sistema operativo empresarial
             </span>
           </motion.div>
 
-          {/* Main Heading */}
+          {/* Main Heading with SEO */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1]"
+            className="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1] font-display"
           >
-            Procesos Inteligentes,{' '}
+            Automatización IA Argentina{' '}
             <span className="relative">
-              <span className="relative z-10 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Resultados Superiores.
+              <span className="relative z-10 bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
+                para Empresas que Escalan
               </span>
               <motion.span
                 initial={{ width: 0 }}
@@ -68,11 +72,11 @@ export const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed font-body"
           >
-            Transformamos tu empresa combinando el poder de la{' '}
-            <span className="text-foreground font-medium">Inteligencia Artificial</span> con la estrategia humana.
-            Automatiza lo operativo, escala lo estratégico.
+            Transformamos tu empresa combinando{' '}
+            <span className="text-foreground font-medium">Inteligencia Artificial</span> con estrategia humana.
+            Migración SQL automatizada, agentes IA y consultoría de élite.
           </motion.p>
 
           {/* CTAs */}
@@ -95,17 +99,17 @@ export const HeroSection = () => {
             <Button
               size="lg"
               variant="outline"
-              className="rounded-xl px-8 py-6 text-lg border-2 group"
+              className="rounded-xl px-8 py-6 text-lg border-2 border-primary/30 hover:border-primary/50 group"
               asChild
             >
               <a href="#contacto">
                 <Play className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
-                Agendar Consultoría
+                Empezar Transformación
               </a>
             </Button>
           </motion.div>
 
-          {/* Stats */}
+          {/* Mini Stats */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -113,9 +117,9 @@ export const HeroSection = () => {
             className="grid grid-cols-3 gap-8 max-w-xl mx-auto mb-16"
           >
             {[
-              { value: '+10M', label: 'Registros procesados' },
-              { value: '98%', label: 'Precisión IA' },
-              { value: '24/7', label: 'Automatización' },
+              { value: '$12M+', label: 'Ahorrados' },
+              { value: '450+', label: 'Bases Migradas' },
+              { value: '99.9%', label: 'Uptime SLA' },
             ].map((stat, i) => (
               <div key={i} className="text-center">
                 <div className="stat-number mb-1">{stat.value}</div>

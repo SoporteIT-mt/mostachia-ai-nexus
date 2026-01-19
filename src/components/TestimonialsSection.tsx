@@ -2,33 +2,38 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Star, Quote, Building2 } from 'lucide-react';
 
+import { realPeopleImages } from './TechLogos';
+
 const testimonials = [
   {
     id: 1,
     name: 'Martín Fernández',
     role: 'CTO',
     company: 'TechScale Argentina',
-    content: 'La migración de nuestra base de datos legacy tomaba semanas. Con MostachIA lo hicimos en 2 horas con cero errores. El equipo respondió todas nuestras dudas al instante.',
+    content: 'La migración de nuestra base de datos legacy tomaba semanas. Con MostachIA lo hicimos en 2 horas con cero errores.',
     rating: 5,
-    metric: '95% menos tiempo en migración',
+    metric: '95% menos tiempo',
+    image: realPeopleImages[0],
   },
   {
     id: 2,
     name: 'Carolina Ruiz',
     role: 'Directora de Operaciones',
     company: 'RetailMax',
-    content: 'El agente de WhatsApp atiende el 70% de las consultas automáticamente. Nuestro equipo ahora se enfoca en lo que realmente importa. La inversión se recuperó en el primer mes.',
+    content: 'El agente de WhatsApp atiende el 70% de las consultas automáticamente. La inversión se recuperó en el primer mes.',
     rating: 5,
-    metric: '70% consultas automatizadas',
+    metric: '70% automatizado',
+    image: realPeopleImages[1],
   },
   {
     id: 3,
     name: 'Diego Morales',
     role: 'CEO',
     company: 'DataFlow Argentina',
-    content: 'Pensábamos que necesitábamos 3 desarrolladores más. MostachIA automatizó todo y ahorramos $15,000 mensuales. Son profesionales de verdad, no vendedores de humo.',
+    content: 'Pensábamos que necesitábamos 3 desarrolladores más. MostachIA automatizó todo y ahorramos $15K mensuales.',
     rating: 5,
-    metric: '$15K ahorro mensual',
+    metric: '$15K ahorro/mes',
+    image: realPeopleImages[2],
   },
 ];
 
@@ -122,9 +127,11 @@ export const TestimonialsSection = () => {
 
                 {/* Author */}
                 <div className="flex items-center gap-3 pt-4 border-t border-white/10">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-lg font-bold text-primary-foreground">
-                    {testimonial.name.charAt(0)}
-                  </div>
+                  <img 
+                    src={testimonial.image} 
+                    alt={testimonial.name}
+                    className="w-12 h-12 rounded-full object-cover border-2 border-primary/30"
+                  />
                   <div className="flex-1">
                     <div className="font-bold">{testimonial.name}</div>
                     <div className="text-sm text-muted-foreground">{testimonial.role}</div>

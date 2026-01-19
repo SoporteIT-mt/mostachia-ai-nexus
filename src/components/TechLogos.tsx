@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-// Real tech company/tool logos using SVG paths
+// Real tech company/tool logos using SVG paths - Extended list
 export const techLogos = [
   {
     name: 'Google Cloud',
@@ -19,10 +19,42 @@ export const techLogos = [
     )
   },
   {
+    name: 'Microsoft',
+    svg: (
+      <svg viewBox="0 0 24 24" className="w-full h-full" fill="currentColor">
+        <path d="M0 0h11.377v11.372H0zm12.623 0H24v11.372H12.623zM0 12.623h11.377V24H0zm12.623 0H24V24H12.623z"/>
+      </svg>
+    )
+  },
+  {
+    name: 'Shopify',
+    svg: (
+      <svg viewBox="0 0 24 24" className="w-full h-full" fill="currentColor">
+        <path d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.756c-.022-.142-.17-.227-.285-.249-.114-.022-2.357-.042-2.357-.042s-1.747-1.698-1.912-1.869c-.054-.054-.118-.075-.18-.089l-.955 21.566zM11.592 6.24c-.182.085-.387.17-.609.263 0-.127.005-.25.005-.385 0-1.177-.164-2.127-.432-2.88l1.762.268c-.318.767-.562 1.707-.726 2.734zm2.288-2.66c-.282-.032-.588-.032-.92-.032-.086 0-.168.011-.255.011.372-.653.856-1.219 1.45-1.56l-.275 1.581zm-.48-3.27c.052 0 .106.004.159.011-.77.418-1.589 1.473-1.935 3.587-.538.032-1.063.043-1.599.043-.005-1.017.075-1.753.234-2.297.429-1.466 1.56-2.368 3.141-1.344zm3.174 5.003c-.014-.096-.052-.16-.117-.202-1.738-.112-4.093.257-4.093.257s-.037.128-.06.252c1.29-.055 2.515-.055 3.638-.043.036.546.061 1.134.079 1.761l-1.186.385-.879.286c.019-.364.027-.729.027-1.093l-2.206.706s-.048 1.401-.064 2.159c.695-.224 1.442-.466 2.226-.717 0 0 0 0 0 0l.879-.287c-.02 1.189-.092 2.37-.21 3.517l-2.895.937c-.02-.728-.032-1.458-.032-2.19l-2.213.717v2.67l-2.053.666c-.017-.705-.027-1.41-.027-2.116l-2.213.719s.01 1.55.027 2.63c-.759.246-1.316.426-1.478.479-.162.054-.418.118-.45.365-.032.246 0 1.93.06 3.244.054 1.314.086 1.968.172 2.49.086.523.14.822.248.926.107.107.268.142.462.086.193-.055 6.262-2.032 6.262-2.032s.054-.033.064-.086c.011-.054.086-1.468.128-2.66l2.053-.666c.011.556.021 1.095.032 1.607.011.557-.021 1.127-.053 1.709-.032.581-.075 1.18-.14 1.807-.043.427-.086.87-.14 1.316l-.032.289 7.203-2.286c-.001.001.15-10.5-.233-13.067zM14.44 17.91c-.15.032-.289.064-.418.086-.129.021-.236.043-.322.064a.41.41 0 0 1-.15.021l.193-1.864.697-.225v1.918z"/>
+      </svg>
+    )
+  },
+  {
     name: 'Stripe',
     svg: (
       <svg viewBox="0 0 24 24" className="w-full h-full" fill="currentColor">
         <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z"/>
+      </svg>
+    )
+  },
+  {
+    name: 'Twilio',
+    svg: (
+      <svg viewBox="0 0 24 24" className="w-full h-full" fill="currentColor">
+        <path d="M12 0C5.381 0 0 5.381 0 12s5.381 12 12 12 12-5.381 12-12S18.619 0 12 0zm0 20.25c-4.556 0-8.25-3.694-8.25-8.25S7.444 3.75 12 3.75s8.25 3.694 8.25 8.25-3.694 8.25-8.25 8.25zm3.45-11.7a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zm0 7.2a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zm-6.9-7.2a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zm0 7.2a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2z"/>
+      </svg>
+    )
+  },
+  {
+    name: 'SendGrid',
+    svg: (
+      <svg viewBox="0 0 24 24" className="w-full h-full" fill="currentColor">
+        <path d="M8 0h8v8h8v8h-8v8H8v-8H0V8h8V0zm8 16h8v8h-8v-8zM0 0h8v8H0V0z"/>
       </svg>
     )
   },
@@ -71,7 +103,7 @@ export const techLogos = [
 interface TechLogosBarProps {
   title?: string;
   className?: string;
-  variant?: 'default' | 'compact' | 'grid';
+  variant?: 'default' | 'compact' | 'grid' | 'marquee';
 }
 
 export const TechLogosBar = ({ 
@@ -79,6 +111,43 @@ export const TechLogosBar = ({
   className = "",
   variant = 'default'
 }: TechLogosBarProps) => {
+  // Marquee variant - infinite scroll animation
+  if (variant === 'marquee') {
+    return (
+      <div className={`overflow-hidden ${className}`}>
+        {title && (
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-sm text-muted-foreground text-center mb-8"
+          >
+            {title}
+          </motion.p>
+        )}
+        <div className="relative">
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
+          
+          {/* Marquee track */}
+          <div className="flex animate-marquee">
+            {[...techLogos, ...techLogos].map((logo, i) => (
+              <motion.div
+                key={`${logo.name}-${i}`}
+                whileHover={{ scale: 1.2, y: -4 }}
+                className="flex-shrink-0 w-14 h-14 mx-6 text-foreground/50 hover:text-primary transition-all duration-300 cursor-default"
+                title={logo.name}
+              >
+                {logo.svg}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (variant === 'grid') {
     return (
       <div className={`${className}`}>
@@ -87,7 +156,7 @@ export const TechLogosBar = ({
             {title}
           </p>
         )}
-        <div className="grid grid-cols-4 md:grid-cols-8 gap-4">
+        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-4">
           {techLogos.map((logo, i) => (
             <motion.div
               key={logo.name}
@@ -144,16 +213,16 @@ export const TechLogosBar = ({
           {title}
         </motion.p>
       )}
-      <div className="flex items-center justify-center gap-8 md:gap-12 flex-wrap">
+      <div className="flex items-center justify-center gap-6 md:gap-8 flex-wrap">
         {techLogos.map((logo, i) => (
           <motion.div
             key={logo.name}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 0.6, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.08, duration: 0.5 }}
-            whileHover={{ opacity: 1, scale: 1.1, y: -4 }}
-            className="w-10 h-10 md:w-12 md:h-12 text-foreground transition-all duration-300 cursor-default"
+            transition={{ delay: i * 0.06, duration: 0.5 }}
+            whileHover={{ opacity: 1, scale: 1.15, y: -4 }}
+            className="w-10 h-10 md:w-11 md:h-11 text-foreground transition-all duration-300 cursor-default"
             title={logo.name}
           >
             {logo.svg}
@@ -163,6 +232,26 @@ export const TechLogosBar = ({
     </div>
   );
 };
+
+// Placeholder images for real people (using professional headshots from UI Faces/Unsplash style)
+export const realPeopleImages = [
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face',
+  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face',
+];
+
+// Real company logos for cases/testimonials
+export const realCompanyLogos = [
+  { name: 'Mercado Libre', color: 'from-yellow-400 to-yellow-500', icon: '🛒' },
+  { name: 'Globant', color: 'from-green-400 to-green-600', icon: '🌐' },
+  { name: 'Despegar', color: 'from-purple-500 to-purple-700', icon: '✈️' },
+  { name: 'Ualá', color: 'from-blue-500 to-blue-700', icon: '💳' },
+  { name: 'Technisys', color: 'from-cyan-400 to-cyan-600', icon: '🏦' },
+  { name: 'Auth0', color: 'from-orange-500 to-red-500', icon: '🔐' },
+];
 
 // Client logos for testimonials/cases section
 export const clientLogos = [

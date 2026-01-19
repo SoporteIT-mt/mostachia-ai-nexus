@@ -108,25 +108,42 @@ export const PricingSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto pt-6">
           {plans.map((plan, i) => (
             <motion.div
               key={plan.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+              transition={{ 
+                duration: 0.6, 
+                delay: 0.1 + i * 0.1,
+                type: "spring",
+                stiffness: 100
+              }}
+              whileHover={{ 
+                y: -8, 
+                transition: { duration: 0.3, type: "spring", stiffness: 300 }
+              }}
               className={`relative ${
                 plan.isHighlighted 
                   ? 'pricing-highlight' 
                   : plan.isEnterprise 
                     ? 'pricing-enterprise' 
-                    : 'glass-card'
-              } p-6 flex flex-col`}
+                    : 'glass-card hover:border-primary/30'
+              } p-6 flex flex-col group cursor-pointer`}
             >
-              {/* Badge */}
+              {/* Badge - moved outside overflow */}
               {plan.badge && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="badge-popular">{plan.badge}</span>
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
+                  <motion.span 
+                    className="badge-popular whitespace-nowrap"
+                    animate={{ 
+                      boxShadow: ['0 0 20px rgba(0,200,150,0.3)', '0 0 30px rgba(0,200,150,0.5)', '0 0 20px rgba(0,200,150,0.3)']
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    {plan.badge}
+                  </motion.span>
                 </div>
               )}
 

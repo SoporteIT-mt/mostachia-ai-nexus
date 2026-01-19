@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Play, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatedGradientBackground } from './AnimatedGradientBackground';
 
@@ -7,7 +7,40 @@ const logos = [
   'TechCorp', 'DataFlow', 'CloudScale', 'AIStack', 'Nexus'
 ];
 
+const letterVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.3 + i * 0.03,
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  })
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+  }
+};
+
+const fadeUpSpring = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { type: "spring", stiffness: 100, damping: 15 }
+  }
+};
+
 export const HeroSection = () => {
+  const title1 = "Procesos Inteligentes,";
+  const title2 = "Resultados Superiores.";
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <AnimatedGradientBackground />
@@ -16,34 +49,62 @@ export const HeroSection = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/20 mb-8"
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, type: "spring", stiffness: 100 }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-sm"
           >
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <motion.span 
+              className="w-2 h-2 rounded-full bg-primary"
+              animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            />
             <span className="text-sm font-medium text-primary">
               Tecnología que escala con vos
             </span>
+            <Sparkles className="w-3.5 h-3.5 text-primary" />
           </motion.div>
 
-          {/* Main Title */}
+          {/* Main Title - Letter by Letter */}
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: 'easeOut', delay: 0.1 }}
             className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.1] font-display mb-8"
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
           >
-            Procesos Inteligentes,
-            <br />
-            <span className="text-gradient-primary">Resultados Superiores.</span>
+            <span className="block overflow-hidden">
+              {title1.split('').map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i}
+                  variants={letterVariants}
+                  className="inline-block"
+                  style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </span>
+            <span className="block overflow-hidden mt-2">
+              {title2.split('').map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i + title1.length}
+                  variants={letterVariants}
+                  className="inline-block text-gradient-primary"
+                  style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </span>
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed"
           >
             Transformamos tu empresa combinando el poder de la{' '}
@@ -54,39 +115,49 @@ export const HeroSection = () => {
 
           {/* CTAs */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
-            <Button
-              size="lg"
-              className="btn-glow rounded-xl px-8 py-6 text-lg group"
-              asChild
-            >
-              <a href="#demos">
-                Probar Tecnología Ahora
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-xl px-8 py-6 text-lg border-2 border-white/20 hover:border-primary/50 bg-white/5 backdrop-blur-sm group"
-              asChild
-            >
-              <a href="#contacto">
-                <Play className="mr-2 w-5 h-5 fill-current" />
-                Agendar Consultoría
-              </a>
-            </Button>
+            <motion.div variants={fadeUpSpring}>
+              <Button
+                size="lg"
+                className="btn-glow rounded-xl px-8 py-6 text-lg group relative overflow-hidden"
+                asChild
+              >
+                <a href="#demos">
+                  <motion.span
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '100%' }}
+                    transition={{ duration: 0.6 }}
+                  />
+                  <span className="relative">Probar Tecnología Ahora</span>
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform relative" />
+                </a>
+              </Button>
+            </motion.div>
+            <motion.div variants={fadeUpSpring}>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-xl px-8 py-6 text-lg border-2 border-white/20 hover:border-primary/50 bg-white/5 backdrop-blur-sm group"
+                asChild
+              >
+                <a href="#contacto">
+                  <Play className="mr-2 w-5 h-5 fill-current" />
+                  Agendar Consultoría
+                </a>
+              </Button>
+            </motion.div>
           </motion.div>
 
           {/* Stats */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.7 }}
+            transition={{ duration: 1, delay: 1 }}
             className="flex items-center justify-center gap-12 md:gap-20 mb-16"
           >
             {[
@@ -96,12 +167,25 @@ export const HeroSection = () => {
             ].map((stat, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 + i * 0.1 }}
-                className="text-center"
+                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: 1.1 + i * 0.1,
+                  type: "spring",
+                  stiffness: 100
+                }}
+                whileHover={{ scale: 1.05 }}
+                className="text-center cursor-default"
               >
-                <div className="text-3xl md:text-4xl font-bold text-primary font-display">{stat.value}</div>
+                <motion.div 
+                  className="text-3xl md:text-4xl font-bold text-primary font-display"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.3 + i * 0.1 }}
+                >
+                  {stat.value}
+                </motion.div>
                 <div className="text-xs md:text-sm text-muted-foreground mt-1">{stat.label}</div>
               </motion.div>
             ))}
@@ -111,7 +195,7 @@ export const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1 }}
+            transition={{ duration: 1, delay: 1.4 }}
             className="text-center"
           >
             <p className="text-sm text-muted-foreground mb-6">
@@ -121,10 +205,10 @@ export const HeroSection = () => {
               {logos.map((logo, i) => (
                 <motion.span
                   key={i}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.4 }}
-                  whileHover={{ opacity: 0.8 }}
-                  transition={{ duration: 0.3, delay: 1.1 + i * 0.05 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 0.4, y: 0 }}
+                  whileHover={{ opacity: 1, scale: 1.1 }}
+                  transition={{ duration: 0.3, delay: 1.5 + i * 0.05 }}
                   className="font-display font-bold text-lg text-foreground cursor-default"
                 >
                   {logo}
@@ -139,7 +223,7 @@ export const HeroSection = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
+        transition={{ delay: 2 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <motion.div
@@ -147,7 +231,11 @@ export const HeroSection = () => {
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-2"
         >
-          <motion.div className="w-1.5 h-2.5 rounded-full bg-primary" />
+          <motion.div 
+            className="w-1.5 h-2.5 rounded-full bg-primary"
+            animate={{ opacity: [1, 0.5, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
         </motion.div>
       </motion.div>
     </section>

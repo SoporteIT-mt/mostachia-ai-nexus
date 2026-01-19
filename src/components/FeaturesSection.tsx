@@ -80,56 +80,85 @@ export const FeaturesSection = () => {
         </motion.div>
 
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
           {features.map((feature, i) => {
             const Icon = feature.icon;
             return (
               <motion.div
                 key={feature.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                initial={{ opacity: 0, y: 40, rotateY: -10 }}
+                animate={isInView ? { opacity: 1, y: 0, rotateY: 0 } : {}}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: 0.1 + i * 0.1,
+                  type: "spring",
+                  stiffness: 80
+                }}
+                whileHover={{ 
+                  y: -8, 
+                  transition: { duration: 0.3, type: "spring", stiffness: 300 } 
+                }}
                 className={`group relative ${feature.isFlagship ? 'md:col-span-2 lg:col-span-1' : ''}`}
               >
                 <div className={`
-                  relative h-full p-6 rounded-2xl border transition-all duration-300
+                  relative h-full p-6 pt-8 rounded-2xl border transition-all duration-500
                   ${feature.isFlagship 
-                    ? 'glass-card border-primary/30 hover:border-primary/50' 
-                    : 'glass-card border-white/10 hover:border-white/20'
+                    ? 'glass-card border-primary/30 hover:border-primary/50 hover:shadow-[0_20px_60px_-15px_rgba(0,200,150,0.25)]' 
+                    : 'glass-card border-white/10 hover:border-white/30'
                   }
                   ${!feature.available && !feature.isFlagship ? 'opacity-60' : ''}
                 `}>
                   {/* Glow effect for flagship */}
                   {feature.isFlagship && (
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <motion.div 
+                      className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-accent/5"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.4 }}
+                    />
                   )}
                   
                   {/* Badge */}
                   {feature.badge && (
-                    <div className="absolute -top-3 left-6">
-                      <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-primary text-primary-foreground rounded-full shadow-glow">
+                    <motion.div 
+                      className="absolute -top-4 left-6 z-10"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      <span className="px-4 py-1.5 text-xs font-bold uppercase tracking-wider bg-primary text-primary-foreground rounded-full shadow-lg shadow-primary/30">
                         {feature.badge}
                       </span>
-                    </div>
+                    </motion.div>
                   )}
 
                   {/* Lock for unavailable */}
                   {!feature.available && (
-                    <div className="absolute top-4 right-4">
+                    <motion.div 
+                      className="absolute top-4 right-4"
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
                       <Lock className="w-4 h-4 text-muted-foreground" />
-                    </div>
+                    </motion.div>
                   )}
 
                   <div className="relative z-10">
-                    <div className={`
-                      w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-all duration-300
-                      ${feature.isFlagship 
-                        ? 'bg-primary/20 text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-glow' 
-                        : 'bg-white/5 text-foreground/60 group-hover:bg-white/10'
-                      }
-                    `}>
+                    <motion.div 
+                      className={`
+                        w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-all duration-300
+                        ${feature.isFlagship 
+                          ? 'bg-primary/20 text-primary' 
+                          : 'bg-white/5 text-foreground/60'
+                        }
+                      `}
+                      whileHover={{ 
+                        scale: 1.1,
+                        rotate: 5,
+                        backgroundColor: feature.isFlagship ? 'rgba(0,200,150,1)' : 'rgba(255,255,255,0.1)'
+                      }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
                       <Icon className="w-7 h-7" />
-                    </div>
+                    </motion.div>
 
                     <h3 className="text-xl font-bold mb-2 font-display">{feature.title}</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed mb-4">
@@ -143,7 +172,15 @@ export const FeaturesSection = () => {
                         asChild
                       >
                         <a href={feature.href} target="_blank" rel="noopener noreferrer">
-                          Probar ahora
+                          <span className="relative">
+                            Probar ahora
+                            <motion.span 
+                              className="absolute bottom-0 left-0 w-full h-px bg-primary"
+                              initial={{ scaleX: 0 }}
+                              whileHover={{ scaleX: 1 }}
+                              transition={{ duration: 0.3 }}
+                            />
+                          </span>
                           <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                         </a>
                       </Button>

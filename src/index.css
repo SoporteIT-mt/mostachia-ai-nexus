@@ -123,19 +123,18 @@
 
   /* Glass Card - Premium Dark */
   .glass-card {
-    @apply relative overflow-hidden rounded-2xl;
+    @apply relative rounded-2xl;
     background: hsl(var(--glass-bg));
     backdrop-filter: blur(var(--blur-strength));
     -webkit-backdrop-filter: blur(var(--blur-strength));
     border: 1px solid hsl(var(--glass-border));
     box-shadow: var(--shadow-card);
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .glass-card:hover {
     box-shadow: var(--shadow-card-hover);
     border-color: hsl(160 100% 39% / 0.2);
-    transform: translateY(-4px);
   }
 
   /* Glass Card with Glow */

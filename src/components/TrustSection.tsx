@@ -70,15 +70,32 @@ export const TrustSection = () => {
             return (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: 0.1 + i * 0.12,
+                  type: "spring",
+                  stiffness: 80
+                }}
+                whileHover={{ 
+                  y: -6,
+                  transition: { duration: 0.25, type: "spring", stiffness: 300 }
+                }}
                 className="group"
               >
-                <div className="h-full p-6 rounded-2xl glass-card border border-white/10 hover:border-primary/30 transition-all duration-300 text-center">
-                  <div className="w-16 h-16 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 group-hover:scale-110">
-                    <Icon className="w-8 h-8" />
-                  </div>
+                <div className="h-full p-6 rounded-2xl glass-card border border-white/10 hover:border-primary/30 transition-all duration-500 text-center hover:shadow-[0_20px_60px_-15px_rgba(0,200,150,0.15)]">
+                  <motion.div 
+                    className="w-16 h-16 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4"
+                    whileHover={{ 
+                      scale: 1.15, 
+                      rotate: 5,
+                      backgroundColor: 'rgba(0,200,150,1)'
+                    }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <Icon className="w-8 h-8 group-hover:text-primary-foreground transition-colors" />
+                  </motion.div>
                   <h3 className="text-lg font-bold mb-2">{point.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{point.description}</p>
                 </div>

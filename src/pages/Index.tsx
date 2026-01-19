@@ -4,6 +4,7 @@ import { MetricsTicker } from '@/components/MetricsTicker';
 import { TrustSection } from '@/components/TrustSection';
 import { IntegratedDemoHub } from '@/components/IntegratedDemoHub';
 import { CasosExitoSection } from '@/components/CasosExitoSection';
+import { IntegrationsSection } from '@/components/IntegrationsSection';
 import { FeaturesSection } from '@/components/FeaturesSection';
 import { HowItWorksSection } from '@/components/HowItWorksSection';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
@@ -15,7 +16,7 @@ import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { StickyCTA } from '@/components/StickyCTA';
 import { ParallaxBackground } from '@/components/ParallaxSection';
 
-// Soft section separator - subtle glow marker
+// Soft section separator
 const SectionGlow = () => (
   <div className="relative h-24 flex items-center justify-center overflow-hidden">
     <div className="w-full max-w-lg h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
@@ -29,32 +30,27 @@ const Index = () => {
       <ParallaxBackground />
       <Navbar />
       <main className="relative z-10">
-        {/* Conversion funnel optimized order */}
         <HeroSection />
         <MetricsTicker />
         <SectionGlow />
-        {/* Demos first - let them try before buying */}
         <IntegratedDemoHub />
         <SectionGlow />
-        {/* Social proof - build trust */}
         <CasosExitoSection />
+        <SectionGlow />
+        <IntegrationsSection />
         <SectionGlow />
         <TestimonialsSection />
         <SectionGlow />
-        {/* Features & Benefits */}
         <FeaturesSection />
         <SectionGlow />
         <HowItWorksSection />
         <SectionGlow />
-        {/* Trust signals before pricing */}
         <TrustSection />
         <SectionGlow />
-        {/* Pricing & FAQ together */}
         <PricingSection />
         <SectionGlow />
         <FAQSection />
         <SectionGlow />
-        {/* SEO & Authority */}
         <BlogSection />
       </main>
       <Footer />

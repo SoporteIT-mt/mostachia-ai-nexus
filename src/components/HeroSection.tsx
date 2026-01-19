@@ -7,19 +7,6 @@ const logos = [
   'TechCorp', 'DataFlow', 'CloudScale', 'AIStack', 'Nexus'
 ];
 
-const letterVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.3 + i * 0.03,
-      duration: 0.5,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  })
-};
-
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
@@ -38,8 +25,6 @@ const fadeUpSpring = {
 };
 
 export const HeroSection = () => {
-  const title1 = "Procesos Inteligentes,";
-  const title2 = "Resultados Superiores.";
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -65,39 +50,24 @@ export const HeroSection = () => {
             <Sparkles className="w-3.5 h-3.5 text-primary" />
           </motion.div>
 
-          {/* Main Title - Letter by Letter */}
+          {/* Main Title - Simplified for visibility */}
           <motion.h1
             className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.1] font-display mb-8"
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="block overflow-hidden">
-              {title1.split('').map((char, i) => (
-                <motion.span
-                  key={i}
-                  custom={i}
-                  variants={letterVariants}
-                  className="inline-block"
-                  style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}
-                >
-                  {char}
-                </motion.span>
-              ))}
+            <span className="block text-foreground">
+              Procesos Inteligentes,
             </span>
-            <span className="block overflow-hidden mt-2">
-              {title2.split('').map((char, i) => (
-                <motion.span
-                  key={i}
-                  custom={i + title1.length}
-                  variants={letterVariants}
-                  className="inline-block text-gradient-primary"
-                  style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </span>
+            <motion.span 
+              className="block mt-2 text-gradient-primary"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Resultados Superiores.
+            </motion.span>
           </motion.h1>
 
           {/* Subtitle */}

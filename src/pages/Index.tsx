@@ -1,8 +1,10 @@
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
 import { MetricsTicker } from '@/components/MetricsTicker';
+import { TrustSection } from '@/components/TrustSection';
 import { IntegratedDemoHub } from '@/components/IntegratedDemoHub';
 import { FeaturesSection } from '@/components/FeaturesSection';
+import { HowItWorksSection } from '@/components/HowItWorksSection';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { PricingSection } from '@/components/PricingSection';
 import { Footer } from '@/components/Footer';
@@ -16,8 +18,10 @@ const Index = () => {
       <main>
         <HeroSection />
         <MetricsTicker />
+        <TrustSection />
         <IntegratedDemoHub />
         <FeaturesSection />
+        <HowItWorksSection />
         <TestimonialsSection />
         <PricingSection />
       </main>

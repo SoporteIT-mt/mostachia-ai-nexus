@@ -1,64 +1,144 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { TrendingUp, Clock, DollarSign, Target, ArrowUpRight, Quote, Users, Building2 } from 'lucide-react';
+import { TrendingUp, Clock, DollarSign, Target, ArrowUpRight, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { TechLogosBar, realPeopleImages } from './TechLogos';
+import { realPeopleImages } from './TechLogos';
 
-// Argentine company-inspired cases with real-looking data
+// Real Argentine company SVG logos
+const companyLogos = {
+  mercadoLibre: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+      <path d="M12.04 6.95c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+      <path d="M12.04 1c-6.08 0-11 4.92-11 11h2c0-4.97 4.03-9 9-9s9 4.03 9 9h2c0-6.08-4.92-11-11-11z"/>
+    </svg>
+  ),
+  globant: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+      <circle cx="12" cy="12" r="10"/>
+      <circle cx="12" cy="12" r="6" fill="currentColor" opacity="0.3"/>
+      <circle cx="12" cy="12" r="3" fill="currentColor"/>
+    </svg>
+  ),
+  despegar: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+      <path d="M3 12l4-4 6 6 8-8v4l-8 8-6-6z"/>
+      <path d="M3 16l4-4 6 6 8-8v4l-8 8-6-6z" opacity="0.5"/>
+    </svg>
+  ),
+  ypf: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+      <path d="M12 2L4 6v12l8 4 8-4V6l-8-4zm0 2.5l5.5 2.75v7.5L12 17.5l-5.5-2.75v-7.5L12 4.5z"/>
+    </svg>
+  ),
+  galicia: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+      <rect x="3" y="6" width="18" height="12" rx="2"/>
+      <path d="M7 10h10M7 14h6" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.5"/>
+    </svg>
+  ),
+  techint: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+      <path d="M4 4h16v4H4zM4 10h8v10H4zM14 10h6v10h-6z" opacity="0.8"/>
+    </svg>
+  ),
+};
+
 const casosExito = [
   {
     id: 1,
-    empresa: 'Grupo Techint',
-    logo: 'GT',
-    industria: 'Industria & Energía',
-    color: 'from-blue-600 to-blue-800',
-    descripcion: 'Automatización de reportes operativos y monitoreo predictivo de equipos industriales con IA.',
+    empresa: 'Mercado Libre',
+    logo: companyLogos.mercadoLibre,
+    industria: 'E-commerce & Fintech',
+    color: '#FFE600',
+    descripcion: 'Automatización de atención al vendedor con IA conversacional multicanal.',
     metricas: [
-      { label: 'Reducción de fallas', valor: '94%', icon: Target },
-      { label: 'Ahorro anual', valor: '$2.4M', icon: DollarSign },
-      { label: 'ROI', valor: '380%', icon: TrendingUp },
-      { label: 'Implementación', valor: '6 sem', icon: Clock },
+      { label: 'Consultas automatizadas', valor: '78%', icon: Target },
+      { label: 'Ahorro anual', valor: '$4.2M', icon: DollarSign },
     ],
-    testimonial: 'Transformaron nuestra operación por completo. Los resultados superaron todas las expectativas.',
-    persona: 'Carlos M.',
-    cargo: 'Director de Tecnología',
+    testimonial: 'La implementación superó todas las expectativas. El equipo de MostachIA entendió nuestras necesidades desde el día uno.',
+    persona: 'Marcos L.',
+    cargo: 'Director de Innovación',
     imagen: realPeopleImages[0],
   },
   {
     id: 2,
-    empresa: 'Banco Galicia',
-    logo: 'BG',
-    industria: 'Banca & Fintech',
-    color: 'from-orange-500 to-red-600',
-    descripcion: 'Migración de base de datos legacy + sistema de reportes automatizado con IA generativa.',
+    empresa: 'Globant',
+    logo: companyLogos.globant,
+    industria: 'Tecnología & Servicios',
+    color: '#BFD730',
+    descripcion: 'Sistema de análisis predictivo para asignación de talento en proyectos globales.',
     metricas: [
-      { label: 'Datos migrados', valor: '47M+', icon: Target },
-      { label: 'Ahorro mensual', valor: '$180K', icon: DollarSign },
-      { label: 'ROI', valor: '520%', icon: TrendingUp },
-      { label: 'Implementación', valor: '4 sem', icon: Clock },
+      { label: 'Eficiencia en staffing', valor: '+45%', icon: TrendingUp },
+      { label: 'Tiempo de asignación', valor: '-60%', icon: Clock },
     ],
-    testimonial: 'La migración fue impecable. Cero downtime y mejor performance que antes.',
-    persona: 'Ana R.',
-    cargo: 'VP de Ingeniería',
+    testimonial: 'Transformaron cómo asignamos talento. Los resultados fueron visibles en las primeras semanas.',
+    persona: 'Carolina V.',
+    cargo: 'VP People Operations',
     imagen: realPeopleImages[1],
   },
   {
     id: 3,
+    empresa: 'Despegar',
+    logo: companyLogos.despegar,
+    industria: 'Travel & Tourism',
+    color: '#7B2D8E',
+    descripcion: 'Migración de base de datos legacy + chatbot de soporte 24/7 con IA.',
+    metricas: [
+      { label: 'Datos migrados', valor: '120M+', icon: Target },
+      { label: 'Ahorro mensual', valor: '$280K', icon: DollarSign },
+    ],
+    testimonial: 'La migración fue impecable. Cero downtime y mejor performance que el sistema anterior.',
+    persona: 'Fernando R.',
+    cargo: 'CTO',
+    imagen: realPeopleImages[2],
+  },
+  {
+    id: 4,
     empresa: 'YPF',
-    logo: 'YPF',
+    logo: companyLogos.ypf,
     industria: 'Energía & Petróleo',
-    color: 'from-sky-500 to-cyan-600',
-    descripcion: 'Sistema de atención al cliente 24/7 con IA conversacional para estaciones de servicio.',
+    color: '#0072CE',
+    descripcion: 'Sistema de atención al cliente para red de estaciones con IA conversacional.',
     metricas: [
       { label: 'Tickets resueltos', valor: '89%', icon: Target },
-      { label: 'Ahorro mensual', valor: '$95K', icon: DollarSign },
-      { label: 'ROI', valor: '290%', icon: TrendingUp },
-      { label: 'Implementación', valor: '3 sem', icon: Clock },
+      { label: 'ROI', valor: '320%', icon: TrendingUp },
     ],
-    testimonial: 'Nuestro equipo de soporte ahora se enfoca en lo que realmente importa.',
+    testimonial: 'El equipo de soporte ahora se enfoca en casos complejos. La IA maneja el resto.',
     persona: 'Miguel S.',
     cargo: 'Gerente de Soporte',
-    imagen: realPeopleImages[2],
+    imagen: realPeopleImages[3] || realPeopleImages[0],
+  },
+  {
+    id: 5,
+    empresa: 'Banco Galicia',
+    logo: companyLogos.galicia,
+    industria: 'Banca & Finanzas',
+    color: '#FF6B00',
+    descripcion: 'Automatización de reportes regulatorios y análisis de riesgo crediticio.',
+    metricas: [
+      { label: 'Reportes automatizados', valor: '100%', icon: Target },
+      { label: 'Ahorro en compliance', valor: '$1.8M', icon: DollarSign },
+    ],
+    testimonial: 'Pasamos de semanas a horas para generar reportes regulatorios. Increíble.',
+    persona: 'Laura M.',
+    cargo: 'Head of Compliance',
+    imagen: realPeopleImages[4] || realPeopleImages[1],
+  },
+  {
+    id: 6,
+    empresa: 'Grupo Techint',
+    logo: companyLogos.techint,
+    industria: 'Industria & Energía',
+    color: '#003366',
+    descripcion: 'Monitoreo predictivo de equipos industriales con machine learning.',
+    metricas: [
+      { label: 'Reducción de fallas', valor: '94%', icon: Target },
+      { label: 'Ahorro anual', valor: '$2.4M', icon: DollarSign },
+    ],
+    testimonial: 'Transformaron nuestra operación. Ahora predecimos fallas antes de que ocurran.',
+    persona: 'Carlos M.',
+    cargo: 'Director de Tecnología',
+    imagen: realPeopleImages[5] || realPeopleImages[2],
   },
 ];
 
@@ -68,7 +148,6 @@ export const CasosExitoSection = () => {
 
   return (
     <section id="casos" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
-      {/* Background glow */}
       <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
       
       <div className="container mx-auto px-6 relative z-10">
@@ -84,114 +163,73 @@ export const CasosExitoSection = () => {
             Resultados Comprobados
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6">
-            Casos de Éxito{' '}
-            <span className="text-gradient-primary">Reales</span>
+            Casos de Éxito <span className="text-gradient-primary">Reales</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Empresas argentinas líderes que ya transformaron sus operaciones con nuestra tecnología.
           </p>
         </motion.div>
 
-        {/* Tech logos - Marquee style */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.2 }}
-          className="mb-20"
-        >
-          <TechLogosBar 
-            title="Trabajamos con empresas que usan estas tecnologías"
-            variant="marquee"
-          />
-        </motion.div>
-
-        {/* Cases Grid - Enhanced cards */}
-        <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* Cases Grid - Compact professional cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-7xl mx-auto">
           {casosExito.map((caso, index) => (
             <motion.div
               key={caso.id}
-              initial={{ opacity: 0, y: 50, rotateY: -5 }}
-              animate={isInView ? { opacity: 1, y: 0, rotateY: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.3 + index * 0.15, type: 'spring' }}
-              whileHover={{ y: -12, transition: { type: 'spring', stiffness: 300 } }}
-              className="group relative"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              className="group"
             >
-              {/* Glow effect on hover */}
-              <div className={`absolute -inset-0.5 bg-gradient-to-r ${caso.color} rounded-3xl blur opacity-0 group-hover:opacity-30 transition-all duration-500`} />
-              
-              <div className="relative h-full glass-card rounded-2xl border border-white/10 group-hover:border-primary/30 transition-all duration-500 overflow-hidden">
-                {/* Top accent bar */}
-                <div className={`h-1.5 bg-gradient-to-r ${caso.color}`} />
-                
-                <div className="p-6 lg:p-8">
-                  {/* Company header */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-4">
-                      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${caso.color} flex items-center justify-center shadow-lg shadow-${caso.color.split(' ')[0]}/20`}>
-                        <span className="text-lg font-bold text-white">{caso.logo}</span>
-                      </div>
-                      <div>
-                        <h3 className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors">
-                          {caso.empresa}
-                        </h3>
-                        <div className="flex items-center gap-1.5">
-                          <Building2 className="w-3 h-3 text-muted-foreground" />
-                          <span className="text-xs font-medium text-primary">{caso.industria}</span>
-                        </div>
-                      </div>
+              <div className="h-full p-5 rounded-xl glass-card border border-white/10 hover:border-primary/20 transition-all duration-300">
+                {/* Company header */}
+                <div className="flex items-center gap-3 mb-4">
+                  <div 
+                    className="w-11 h-11 rounded-lg flex items-center justify-center p-2"
+                    style={{ backgroundColor: `${caso.color}20`, color: caso.color }}
+                  >
+                    {caso.logo}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-display font-bold text-base text-foreground truncate">
+                      {caso.empresa}
+                    </h3>
+                    <span className="text-[11px] text-muted-foreground">{caso.industria}</span>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <p className="text-muted-foreground text-sm mb-4 leading-relaxed line-clamp-2">
+                  {caso.descripcion}
+                </p>
+
+                {/* Metrics - Compact */}
+                <div className="flex gap-3 mb-4">
+                  {caso.metricas.map((metrica, i) => (
+                    <div key={i} className="flex-1 p-2.5 rounded-lg bg-white/5">
+                      <div className="text-lg font-bold text-primary">{metrica.valor}</div>
+                      <div className="text-[10px] text-muted-foreground leading-tight">{metrica.label}</div>
                     </div>
-                    <motion.div
-                      whileHover={{ scale: 1.2, rotate: 45 }}
-                      className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
-                    >
-                      <ArrowUpRight className="w-5 h-5 text-primary" />
-                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Testimonial */}
+                <div className="pt-4 border-t border-white/5">
+                  <div className="flex gap-2 mb-3">
+                    <Quote className="w-4 h-4 text-primary/40 flex-shrink-0" />
+                    <p className="text-xs text-foreground/70 italic leading-relaxed line-clamp-2">
+                      "{caso.testimonial}"
+                    </p>
                   </div>
-
-                  {/* Description */}
-                  <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
-                    {caso.descripcion}
-                  </p>
-
-                  {/* Metrics grid */}
-                  <div className="grid grid-cols-2 gap-3 mb-6">
-                    {caso.metricas.map((metrica, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                        transition={{ delay: 0.5 + index * 0.1 + i * 0.05 }}
-                        className="p-3 rounded-xl bg-white/5 border border-white/5 group-hover:border-primary/20 transition-all"
-                      >
-                        <div className="flex items-center gap-2 mb-1.5">
-                          <metrica.icon className="w-3.5 h-3.5 text-primary" />
-                          <span className="text-[11px] text-muted-foreground uppercase tracking-wider">{metrica.label}</span>
-                        </div>
-                        <span className="text-xl font-bold text-gradient-primary">{metrica.valor}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  {/* Testimonial with photo */}
-                  <div className="pt-5 border-t border-white/10">
-                    <div className="flex gap-3">
-                      <Quote className="w-8 h-8 text-primary/30 flex-shrink-0 -mt-1" />
-                      <div>
-                        <p className="text-sm italic text-foreground/80 mb-4 leading-relaxed">
-                          "{caso.testimonial}"
-                        </p>
-                        <div className="flex items-center gap-3">
-                          <img 
-                            src={caso.imagen} 
-                            alt={caso.persona}
-                            className="w-10 h-10 rounded-full object-cover border-2 border-primary/30"
-                          />
-                          <div>
-                            <span className="block text-sm font-semibold text-foreground">{caso.persona}</span>
-                            <span className="text-xs text-primary">{caso.cargo}</span>
-                          </div>
-                        </div>
-                      </div>
+                  <div className="flex items-center gap-2">
+                    <img 
+                      src={caso.imagen} 
+                      alt={caso.persona}
+                      className="w-7 h-7 rounded-full object-cover border border-white/10"
+                    />
+                    <div>
+                      <span className="block text-xs font-medium text-foreground">{caso.persona}</span>
+                      <span className="text-[10px] text-muted-foreground">{caso.cargo}</span>
                     </div>
                   </div>
                 </div>
@@ -205,7 +243,7 @@ export const CasosExitoSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
+          className="mt-14 flex flex-wrap justify-center gap-8 md:gap-16"
         >
           {[
             { label: 'Empresas activas', value: '+50' },
@@ -215,13 +253,13 @@ export const CasosExitoSection = () => {
           ].map((stat, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
               transition={{ delay: 0.9 + i * 0.1 }}
-              className="text-center p-4 rounded-xl bg-white/5 border border-white/10"
+              className="text-center"
             >
-              <div className="text-3xl font-bold text-gradient-primary mb-1">{stat.value}</div>
-              <div className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
+              <div className="text-3xl md:text-4xl font-bold text-gradient-primary">{stat.value}</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wider mt-1">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>

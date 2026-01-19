@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+const CAL_LINK = 'https://cal.com/mostachia/consultoria';
+
 export const StickyCTA = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -15,6 +17,10 @@ export const StickyCTA = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleBooking = () => {
+    window.open(CAL_LINK, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <AnimatePresence>
@@ -39,11 +45,9 @@ export const StickyCTA = () => {
             <Button
               variant="outline"
               className="rounded-xl py-6 px-4 border-primary/50"
-              asChild
+              onClick={handleBooking}
             >
-              <a href="#contacto">
-                <Calendar className="w-5 h-5" />
-              </a>
+              <Calendar className="w-5 h-5" />
             </Button>
           </div>
         </motion.div>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Estudio Contable - MostachIA</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0B0F19 0%, #1a1f2e 100%);
+      color: #f0f0f0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #00C896, #7C3AED);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    .header p { color: #888; font-size: 0.9rem; }
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .stat-card:hover {
+      border-color: rgba(0,200,150,0.3);
+      transform: translateY(-4px);
+    }
+    .stat-card .icon { font-size: 2rem; margin-bottom: 10px; }
+    .stat-card .value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #00C896;
+    }
+    .stat-card .label {
+      color: #888;
+      font-size: 0.85rem;
+      margin-top: 5px;
+    }
+    .main-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .main-panel { grid-template-columns: 1fr; }
+    }
+    .panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .panel-header {
+      background: rgba(0,200,150,0.1);
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .panel-content { padding: 20px; }
+    .task-list { list-style: none; }
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.02);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .task-item:hover { background: rgba(0,200,150,0.1); }
+    .task-item.completed { opacity: 0.5; }
+    .task-item.completed .task-text { text-decoration: line-through; }
+    .checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(0,200,150,0.5);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .checkbox.checked {
+      background: #00C896;
+      border-color: #00C896;
+    }
+    .checkbox.checked::after { content: '✓'; color: white; font-size: 12px; }
+    .task-text { flex: 1; font-size: 0.9rem; }
+    .task-badge {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 10px;
+      background: rgba(124,58,237,0.2);
+      color: #a78bfa;
+    }
+    .task-badge.urgent {
+      background: rgba(239,68,68,0.2);
+      color: #f87171;
+    }
+    .task-badge.today {
+      background: rgba(0,200,150,0.2);
+      color: #00C896;
+    }
+    .chat-mini {
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 0;
+    }
+    .chat-msg {
+      margin-bottom: 12px;
+      display: flex;
+      gap: 8px;
+    }
+    .chat-msg.bot .msg-bubble {
+      background: rgba(0,200,150,0.1);
+      border: 1px solid rgba(0,200,150,0.2);
+    }
+    .chat-msg.user { flex-direction: row-reverse; }
+    .chat-msg.user .msg-bubble {
+      background: rgba(124,58,237,0.2);
+    }
+    .msg-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00C896, #00a67d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    .chat-msg.user .msg-avatar { background: linear-gradient(135deg, #7C3AED, #5b21b6); }
+    .msg-bubble {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+    .chat-input-area {
+      display: flex;
+      gap: 8px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .chat-input-area input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 10px 16px;
+      color: #fff;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .chat-input-area button {
+      background: linear-gradient(135deg, #00C896, #00a67d);
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📊 Asistente Estudio Contable</h1>
+      <p>Dashboard inteligente para gestión de clientes y vencimientos</p>
+    </div>
+
+    <div class="dashboard">
+      <div class="stat-card">
+        <div class="icon">👥</div>
+        <div class="value">147</div>
+        <div class="label">Clientes Activos</div>
+      </div>
+      <div class="stat-card">
+        <div class="icon">⚠️</div>
+        <div class="value">23</div>
+        <div class="label">Vencimientos Esta Semana</div>
+      </div>
+      <div class="stat-card">
+        <div class="icon">✅</div>
+        <div class="value">89%</div>
+        <div class="label">Presentaciones al Día</div>
+      </div>
+      <div class="stat-card">
+        <div class="icon">📈</div>
+        <div class="value">$2.4M</div>
+        <div class="label">Facturación Mensual</div>
+      </div>
+    </div>
+
+    <div class="main-panel">
+      <div class="panel">
+        <div class="panel-header">📋 Tareas Pendientes</div>
+        <div class="panel-content">
+          <ul class="task-list" id="taskList">
+            <li class="task-item" onclick="toggleTask(this)">
+              <div class="checkbox"></div>
+              <span class="task-text">DDJJ IVA - Comercial López SRL</span>
+              <span class="task-badge urgent">Vence hoy</span>
+            </li>
+            <li class="task-item" onclick="toggleTask(this)">
+              <div class="checkbox"></div>
+              <span class="task-text">Liquidación sueldos - TechStart</span>
+              <span class="task-badge today">Mañana</span>
+            </li>
+            <li class="task-item" onclick="toggleTask(this)">
+              <div class="checkbox"></div>
+              <span class="task-text">Balance mensual - Farmacia Central</span>
+              <span class="task-badge">15/01</span>
+            </li>
+            <li class="task-item completed" onclick="toggleTask(this)">
+              <div class="checkbox checked"></div>
+              <span class="task-text">Inscripción monotributo - Juan Pérez</span>
+              <span class="task-badge">Completado</span>
+            </li>
+            <li class="task-item" onclick="toggleTask(this)">
+              <div class="checkbox"></div>
+              <span class="task-text">Certificación ingresos - María García</span>
+              <span class="task-badge">18/01</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">🤖 Asistente IA</div>
+        <div class="panel-content chat-mini">
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg bot">
+              <div class="msg-avatar">🤖</div>
+              <div class="msg-bubble">
+                ¡Hola! Soy tu asistente contable. Hoy tenés 23 vencimientos próximos. ¿Querés que te muestre los más urgentes?
+              </div>
+            </div>
+          </div>
+          <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Preguntá algo..." onkeypress="handleChat(event)">
+            <button onclick="sendChat()">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleTask(item) {
+      item.classList.toggle('completed');
+      const checkbox = item.querySelector('.checkbox');
+      checkbox.classList.toggle('checked');
+    }
+
+    const chatResponses = {
+      'vencimientos': 'Los vencimientos más urgentes son:\n\n1. DDJJ IVA - Comercial López (HOY)\n2. Liquidación sueldos - TechStart (mañana)\n3. CM Anual - Distribuidora Norte (viernes)\n\n¿Querés que te prepare los formularios?',
+      'iva': 'Para la DDJJ de IVA de Comercial López:\n\n📊 Ventas: $1.245.000\n📊 Compras: $890.000\n💰 Saldo a pagar: $74.550\n\nEl VEP ya está generado. ¿Lo envío al cliente?',
+      'clientes': 'Tenés 147 clientes activos:\n\n• 89 Monotributistas\n• 45 Responsables Inscriptos\n• 13 Sociedades\n\n¿Sobre cuál necesitás información?'
+    };
+
+    function sendChat() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      addChatMsg(text, false);
+      input.value = '';
+
+      setTimeout(() => {
+        let response = 'Entendido. Estoy procesando tu consulta sobre "' + text + '". ¿Necesitás algo más específico?';
+        for (const key in chatResponses) {
+          if (text.toLowerCase().includes(key)) {
+            response = chatResponses[key];
+            break;
+          }
+        }
+        addChatMsg(response, true);
+      }, 600);
+    }
+
+    function addChatMsg(text, isBot) {
+      const container = document.getElementById('chatMessages');
+      const div = document.createElement('div');
+      div.className = `chat-msg ${isBot ? 'bot' : 'user'}`;
+      div.innerHTML = `
+        <div class="msg-avatar">${isBot ? '🤖' : '👤'}</div>
+        <div class="msg-bubble">${text.replace(/\n/g, '<br>')}</div>
+      `;
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function handleChat(e) {
+      if (e.key === 'Enter') sendChat();
+    }
+  </script>
+</body>
+</html>

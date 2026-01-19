@@ -20,16 +20,32 @@ const demos = [
     file: '/demos/migracion-db.html',
   },
   {
-    id: 'f1',
-    title: 'RestoMaster',
-    desc: 'Sistema de gestión gastronómica 360°. Comandas, reservas y dashboards de ventas en tiempo real.',
+    id: 'resto',
+    title: 'Agente Restaurante',
+    desc: 'Bot de WhatsApp para restaurantes: menú del día, reservas y delivery automático 24/7.',
     icon: Utensils,
     tag: 'Gastronomía',
-    file: '/demos/hubdemos.html',
+    file: '/demos/resto.html',
+  },
+  {
+    id: 'contable',
+    title: 'Asistente Contable',
+    desc: 'Dashboard inteligente para estudios contables: vencimientos, clientes y automatización de tareas.',
+    icon: PieChart,
+    tag: 'Finanzas',
+    file: '/demos/contable.html',
+  },
+  {
+    id: 'analytics',
+    title: 'Analytics IA',
+    desc: 'Dashboard de métricas en tiempo real con insights predictivos generados por inteligencia artificial.',
+    icon: Leaf,
+    tag: 'Analytics',
+    file: '/demos/demo3.html',
   },
 ];
 
-const categories = ['Todos', 'Plataforma', 'Database', 'Gastronomía'];
+const categories = ['Todos', 'Plataforma', 'Database', 'Gastronomía', 'Finanzas', 'Analytics'];
 
 export const IntegratedDemoHub = () => {
   const ref = useRef(null);

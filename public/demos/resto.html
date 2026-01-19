@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Restaurante - MostachIA</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0B0F19 0%, #1a1f2e 100%);
+      color: #f0f0f0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #00C896, #7C3AED);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    .header p {
+      color: #888;
+      font-size: 0.9rem;
+    }
+    .chat-container {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .chat-header {
+      background: rgba(0,200,150,0.1);
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00C896, #00a67d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    .chat-info h3 { font-size: 1rem; }
+    .chat-info span { color: #00C896; font-size: 0.8rem; }
+    .messages {
+      padding: 20px;
+      height: 400px;
+      overflow-y: auto;
+    }
+    .message {
+      margin-bottom: 16px;
+      display: flex;
+      gap: 10px;
+    }
+    .message.bot .bubble {
+      background: rgba(0,200,150,0.1);
+      border: 1px solid rgba(0,200,150,0.2);
+    }
+    .message.user {
+      flex-direction: row-reverse;
+    }
+    .message.user .bubble {
+      background: rgba(124,58,237,0.2);
+      border: 1px solid rgba(124,58,237,0.3);
+    }
+    .bubble {
+      max-width: 70%;
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .mini-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00C896, #00a67d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .message.user .mini-avatar {
+      background: linear-gradient(135deg, #7C3AED, #5b21b6);
+    }
+    .quick-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .quick-btn {
+      background: rgba(0,200,150,0.1);
+      border: 1px solid rgba(0,200,150,0.3);
+      color: #00C896;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .quick-btn:hover {
+      background: rgba(0,200,150,0.2);
+      transform: translateY(-2px);
+    }
+    .input-area {
+      padding: 15px 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      gap: 10px;
+    }
+    .input-area input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 25px;
+      padding: 12px 20px;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .input-area input:focus {
+      border-color: rgba(0,200,150,0.5);
+    }
+    .send-btn {
+      background: linear-gradient(135deg, #00C896, #00a67d);
+      border: none;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s;
+    }
+    .send-btn:hover { transform: scale(1.1); }
+    .send-btn svg { width: 20px; height: 20px; fill: white; }
+    .menu-preview {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 12px;
+    }
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .menu-item:last-child { border: none; }
+    .menu-item .name { color: #fff; }
+    .menu-item .price { color: #00C896; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🍽️ Agente de Restaurante</h1>
+      <p>Demo interactiva de atención al cliente vía WhatsApp</p>
+    </div>
+    
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="avatar">🍽️</div>
+        <div class="chat-info">
+          <h3>La Parrilla de Juan</h3>
+          <span>● En línea</span>
+        </div>
+      </div>
+      
+      <div class="messages" id="messages">
+        <div class="message bot">
+          <div class="mini-avatar">🍽️</div>
+          <div class="bubble">
+            ¡Hola! 👋 Bienvenido a La Parrilla de Juan. Soy tu asistente virtual y puedo ayudarte con:
+            <div class="quick-actions">
+              <button class="quick-btn" onclick="sendQuick('Ver menú del día')">📋 Ver menú</button>
+              <button class="quick-btn" onclick="sendQuick('Hacer reserva')">📅 Reservar mesa</button>
+              <button class="quick-btn" onclick="sendQuick('Hacer pedido delivery')">🛵 Delivery</button>
+              <button class="quick-btn" onclick="sendQuick('Horarios')">🕐 Horarios</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="input-area">
+        <input type="text" id="userInput" placeholder="Escribí tu mensaje..." onkeypress="handleKeyPress(event)">
+        <button class="send-btn" onclick="sendMessage()">
+          <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const responses = {
+      'ver menú del día': `¡Excelente elección! 🍖 Nuestro menú del día incluye:
+        <div class="menu-preview">
+          <div class="menu-item"><span class="name">Bife de Chorizo 400g</span><span class="price">$8.500</span></div>
+          <div class="menu-item"><span class="name">Entraña a la parrilla</span><span class="price">$7.200</span></div>
+          <div class="menu-item"><span class="name">Parrillada para 2</span><span class="price">$15.900</span></div>
+          <div class="menu-item"><span class="name">Provoleta</span><span class="price">$2.800</span></div>
+        </div>
+        <div class="quick-actions" style="margin-top:12px">
+          <button class="quick-btn" onclick="sendQuick('Quiero la parrillada para 2')">Pedir parrillada</button>
+        </div>`,
+      'hacer reserva': '¡Perfecto! 📅 Para hacer tu reserva necesito:\n\n1️⃣ ¿Para qué día?\n2️⃣ ¿A qué hora?\n3️⃣ ¿Cuántas personas?\n\nTenemos disponibilidad de martes a domingo, de 12:00 a 15:00 y de 20:00 a 00:00.',
+      'hacer pedido delivery': '🛵 ¡Hacemos delivery a toda la zona! El pedido mínimo es de $5.000 y el envío es GRATIS para pedidos mayores a $10.000.\n\n¿Qué te gustaría ordenar?',
+      'horarios': '🕐 Nuestros horarios son:\n\n📅 Martes a Jueves: 12:00 - 15:30 / 20:00 - 00:00\n📅 Viernes y Sábado: 12:00 - 16:00 / 20:00 - 01:00\n📅 Domingo: 12:00 - 16:00\n🚫 Lunes: Cerrado',
+      'quiero la parrillada para 2': '🔥 ¡Excelente elección! La Parrillada para 2 ($15.900) incluye:\n\n• Bife de chorizo\n• Entraña\n• Vacío\n• Chorizo y morcilla\n• Provoleta\n• Papas fritas\n\n¿Es para delivery o retiro en local?'
+    };
+
+    function addMessage(text, isBot) {
+      const messages = document.getElementById('messages');
+      const div = document.createElement('div');
+      div.className = `message ${isBot ? 'bot' : 'user'}`;
+      div.innerHTML = `
+        <div class="mini-avatar">${isBot ? '🍽️' : '👤'}</div>
+        <div class="bubble">${text}</div>
+      `;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function sendQuick(text) {
+      sendMessage(text);
+    }
+
+    function sendMessage(quickText) {
+      const input = document.getElementById('userInput');
+      const text = quickText || input.value.trim();
+      if (!text) return;
+
+      addMessage(text, false);
+      input.value = '';
+
+      setTimeout(() => {
+        const response = responses[text.toLowerCase()] || 
+          '¡Gracias por tu mensaje! 😊 Un momento, te conecto con nuestro equipo para darte la mejor atención. Mientras tanto, ¿hay algo más en lo que pueda ayudarte?';
+        addMessage(response, true);
+      }, 800);
+    }
+
+    function handleKeyPress(e) {
+      if (e.key === 'Enter') sendMessage();
+    }
+  </script>
+</body>
+</html>

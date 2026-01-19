@@ -1,10 +1,10 @@
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
 import { MetricsTicker } from '@/components/MetricsTicker';
-import { ProblemSolutionSection } from '@/components/ProblemSolutionSection';
-import { DemoHubSection } from '@/components/DemoHubSection';
+import { IntegratedDemoHub } from '@/components/IntegratedDemoHub';
+import { FeaturesSection } from '@/components/FeaturesSection';
+import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { PricingSection } from '@/components/PricingSection';
-import { BlogSection } from '@/components/BlogSection';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { StickyCTA } from '@/components/StickyCTA';
@@ -16,10 +16,10 @@ const Index = () => {
       <main>
         <HeroSection />
         <MetricsTicker />
-        <ProblemSolutionSection />
-        <DemoHubSection />
+        <IntegratedDemoHub />
+        <FeaturesSection />
+        <TestimonialsSection />
         <PricingSection />
-        <BlogSection />
       </main>
       <Footer />
       <FloatingWhatsApp />

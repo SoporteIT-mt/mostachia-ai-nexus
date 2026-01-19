@@ -61,39 +61,62 @@ export const TestimonialsSection = () => {
         </motion.div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto pt-8">
           {testimonials.map((testimonial, i) => (
             <motion.div
               key={testimonial.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 + i * 0.15 }}
+              initial={{ opacity: 0, y: 40, rotateX: 10 }}
+              animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+              transition={{ 
+                duration: 0.7, 
+                delay: 0.15 + i * 0.15,
+                type: "spring",
+                stiffness: 80
+              }}
+              whileHover={{ 
+                y: -6,
+                transition: { duration: 0.25 }
+              }}
               className="group"
             >
-              <div className="relative h-full p-8 rounded-2xl glass-card border border-white/10 hover:border-primary/30 transition-all duration-300">
-                {/* Quote icon */}
-                <div className="absolute -top-4 left-6">
-                  <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                    <Quote className="w-4 h-4 text-primary-foreground" />
+              <div className="relative h-full p-8 pt-10 rounded-2xl glass-card border border-white/10 hover:border-primary/30 transition-all duration-500 hover:shadow-[0_20px_60px_-15px_rgba(0,200,150,0.2)]">
+                {/* Quote icon - positioned properly */}
+                <motion.div 
+                  className="absolute -top-5 left-6 z-10"
+                  whileHover={{ scale: 1.1, rotate: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/30">
+                    <Quote className="w-5 h-5 text-primary-foreground" />
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Metric badge */}
-                <div className="mb-4 pt-2">
-                  <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold">
+                <div className="mb-4">
+                  <motion.span 
+                    className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20"
+                    whileHover={{ scale: 1.05 }}
+                  >
                     {testimonial.metric}
-                  </span>
+                  </motion.span>
                 </div>
 
                 {/* Stars */}
                 <div className="flex gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, j) => (
-                    <Star key={j} className="w-4 h-4 text-primary fill-primary" />
+                    <motion.div
+                      key={j}
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                      transition={{ delay: 0.4 + i * 0.1 + j * 0.05 }}
+                    >
+                      <Star className="w-4 h-4 text-primary fill-primary" />
+                    </motion.div>
                   ))}
                 </div>
 
                 {/* Content */}
-                <p className="text-foreground/90 leading-relaxed mb-6">
+                <p className="text-foreground/90 leading-relaxed mb-6 text-[15px]">
                   "{testimonial.content}"
                 </p>
 

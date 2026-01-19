@@ -1,23 +1,16 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Sparkles, Search, ExternalLink, ArrowRight, Utensils, PieChart, Leaf, X } from 'lucide-react';
+import { Sparkles, Search, ArrowRight, Utensils, PieChart, Leaf, X, Lock, Database, MessageCircle, BarChart3 } from 'lucide-react';
 
 const demos = [
-  {
-    id: 'hub',
-    title: 'Hub de Experiencias',
-    desc: 'Accede al catálogo completo de nuestras demos interactivas. Explora soluciones para diferentes industrias.',
-    icon: Sparkles,
-    tag: 'Plataforma',
-    file: '/demos/hubdemos.html',
-  },
   {
     id: 'migration',
     title: 'Migración Inteligente',
     desc: 'Migración SQL masiva con razonamiento de IA. Detecta esquemas, resuelve conflictos y ejecuta en segundos.',
-    icon: Search,
+    icon: Database,
     tag: 'Database',
     file: '/demos/migracion-db.html',
+    isLocked: false,
   },
   {
     id: 'resto',
@@ -26,45 +19,62 @@ const demos = [
     icon: Utensils,
     tag: 'Gastronomía',
     file: '/demos/resto.html',
+    isLocked: true,
   },
   {
     id: 'contable',
     title: 'Asistente Contable',
-    desc: 'Dashboard inteligente para estudios contables: vencimientos, clientes y automatización de tareas.',
+    desc: 'Dashboard inteligente para estudios contables: vencimientos, clientes y automatización.',
     icon: PieChart,
     tag: 'Finanzas',
     file: '/demos/contable.html',
+    isLocked: true,
   },
   {
     id: 'analytics',
     title: 'Analytics IA',
-    desc: 'Dashboard de métricas en tiempo real con insights predictivos generados por inteligencia artificial.',
-    icon: Leaf,
+    desc: 'Dashboard de métricas en tiempo real con insights predictivos generados por IA.',
+    icon: BarChart3,
     tag: 'Analytics',
     file: '/demos/demo3.html',
+    isLocked: true,
+  },
+  {
+    id: 'whatsapp',
+    title: 'Agente WhatsApp',
+    desc: 'Atención al cliente 24/7 con IA conversacional que resuelve el 70% de consultas.',
+    icon: MessageCircle,
+    tag: 'Atención',
+    file: '/demos/hubdemos.html',
+    isLocked: true,
+  },
+  {
+    id: 'sustainability',
+    title: 'Dashboard Sustentable',
+    desc: 'Monitoreo de métricas ESG y huella de carbono con reportes automáticos.',
+    icon: Leaf,
+    tag: 'ESG',
+    file: '/demos/demo3.html',
+    isLocked: true,
   },
 ];
-
-const categories = ['Todos', 'Plataforma', 'Database', 'Gastronomía', 'Finanzas', 'Analytics'];
 
 export const IntegratedDemoHub = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState('Todos');
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerUrl, setViewerUrl] = useState('');
   const [viewerTitle, setViewerTitle] = useState('');
 
-  const filteredDemos = demos.filter((demo) => {
-    const matchesSearch = demo.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      demo.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      demo.tag.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesFilter = activeFilter === 'Todos' || demo.tag === activeFilter;
-    return matchesSearch && matchesFilter;
-  });
-
-  const openViewer = (file: string, title: string) => {
+  const openViewer = (file: string, title: string, isLocked: boolean) => {
+    if (isLocked) {
+      // Scroll to pricing section (Growth plan)
+      const pricingSection = document.getElementById('pricing');
+      if (pricingSection) {
+        pricingSection.scrollIntoView({ behavior: 'smooth' });
+      }
+      return;
+    }
     setViewerUrl(file);
     setViewerTitle(title);
     setViewerOpen(true);
@@ -90,7 +100,6 @@ export const IntegratedDemoHub = () => {
 
   return (
     <section id="demos" ref={ref} className="py-32 relative">
-      {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
       
       <div className="container mx-auto px-6 relative z-10">
@@ -98,102 +107,69 @@ export const IntegratedDemoHub = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
             <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Hub de Demos</span>
+            <span className="text-sm font-medium text-primary">Demos Interactivas</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+          <h2 className="text-5xl md:text-6xl font-bold font-display mb-6">
             Hub de <span className="text-gradient-primary">Innovación</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explorá nuestras demos interactivas y descubrí el potencial de la automatización IA
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Probá nuestras herramientas en vivo. Sin registro, sin compromiso.
           </p>
         </motion.div>
 
-        {/* Stats Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex justify-center gap-12 mb-8"
-        >
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary font-display">{demos.length}</div>
-            <div className="text-sm text-muted-foreground uppercase tracking-wider">Demos</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary font-display">{categories.length - 1}</div>
-            <div className="text-sm text-muted-foreground uppercase tracking-wider">Categorías</div>
-          </div>
-        </motion.div>
-
-        {/* Search & Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-3xl mx-auto mb-12"
-        >
-          {/* Search */}
-          <div className="relative mb-6">
-            <input
-              type="text"
-              placeholder="Buscar demo, cliente o tecnología..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-5 pl-12 py-4 rounded-2xl glass-card border border-white/10 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-all"
-            />
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-          </div>
-
-          {/* Filter Pills */}
-          <div className="flex flex-wrap justify-center gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveFilter(cat)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  activeFilter === cat
-                    ? 'bg-primary text-primary-foreground shadow-glow'
-                    : 'glass-card border border-white/10 text-muted-foreground hover:border-primary/30 hover:text-primary'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Demo Grid */}
+        {/* Demo Grid - 6 cards, 2x3 */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
         >
-          {filteredDemos.map((demo, i) => {
+          {demos.map((demo, i) => {
             const Icon = demo.icon;
             return (
               <motion.div
                 key={demo.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
-                onClick={() => openViewer(demo.file, demo.title)}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
+                onClick={() => openViewer(demo.file, demo.title, demo.isLocked)}
                 className="group cursor-pointer"
               >
-                <div className="relative h-full p-6 rounded-2xl glass-card border border-white/10 hover:border-primary/30 transition-all duration-300 overflow-hidden">
+                <div className={`relative h-full p-6 rounded-2xl glass-card border transition-all duration-300 overflow-hidden ${
+                  demo.isLocked 
+                    ? 'border-white/5 opacity-80' 
+                    : 'border-primary/20 hover:border-primary/40 hover:shadow-[0_0_40px_-15px] hover:shadow-primary/30'
+                }`}>
+                  {/* Locked overlay */}
+                  {demo.isLocked && (
+                    <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center gap-3">
+                      <Lock className="w-8 h-8 text-muted-foreground" />
+                      <span className="text-sm font-semibold text-muted-foreground">Plan Growth</span>
+                      <span className="text-xs text-primary">Click para ver planes →</span>
+                    </div>
+                  )}
+                  
                   {/* Shine effect */}
                   <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:left-[100%] transition-all duration-700" />
                   
                   <div className="relative z-10">
                     <div className="flex justify-between items-start mb-4">
-                      <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-5deg]">
+                      <div className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                        demo.isLocked 
+                          ? 'bg-white/5 text-muted-foreground' 
+                          : 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-110 group-hover:rotate-[-5deg]'
+                      }`}>
                         <Icon className="w-6 h-6" />
                       </div>
-                      <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
+                        demo.isLocked 
+                          ? 'bg-white/5 text-muted-foreground' 
+                          : 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground'
+                      }`}>
                         {demo.tag}
                       </span>
                     </div>
@@ -206,8 +182,10 @@ export const IntegratedDemoHub = () => {
                     </p>
 
                     <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                      <span className="text-primary font-semibold text-sm flex items-center gap-2 group-hover:gap-3 transition-all">
-                        Explorar <ArrowRight className="w-4 h-4" />
+                      <span className={`font-semibold text-sm flex items-center gap-2 group-hover:gap-3 transition-all ${
+                        demo.isLocked ? 'text-muted-foreground' : 'text-primary'
+                      }`}>
+                        {demo.isLocked ? 'Desbloquear' : 'Probar ahora'} <ArrowRight className="w-4 h-4" />
                       </span>
                     </div>
                   </div>
@@ -216,54 +194,22 @@ export const IntegratedDemoHub = () => {
             );
           })}
         </motion.div>
-
-        {filteredDemos.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">No se encontraron demos con ese criterio</p>
-          </div>
-        )}
       </div>
 
       {/* Viewer Modal */}
       <div className={`fixed inset-0 z-[100] transition-transform duration-500 ${viewerOpen ? 'translate-y-0' : 'translate-y-full'}`}>
         <div className="h-full flex flex-col bg-background">
-          {/* Header */}
           <div className="flex items-center justify-between px-6 py-4 glass-card border-b border-white/10">
-            <button
-              onClick={closeViewer}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl glass-card border border-white/10 hover:border-primary/30 transition-all text-sm font-medium"
-            >
-              <ArrowRight className="w-4 h-4 rotate-180" />
-              Volver
+            <button onClick={closeViewer} className="flex items-center gap-2 px-4 py-2 rounded-xl glass-card border border-white/10 hover:border-primary/30 transition-all text-sm font-medium">
+              <ArrowRight className="w-4 h-4 rotate-180" /> Volver
             </button>
             <span className="font-bold font-display">{viewerTitle}</span>
-            <div className="flex items-center gap-2">
-              <a
-                href={viewerUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-all text-sm font-medium"
-              >
-                Abrir en nueva pestaña <ExternalLink className="w-4 h-4" />
-              </a>
-              <button
-                onClick={closeViewer}
-                className="p-2 rounded-xl glass-card border border-white/10 hover:border-destructive/30 hover:text-destructive transition-all"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+            <button onClick={closeViewer} className="p-2 rounded-xl glass-card border border-white/10 hover:border-destructive/30 hover:text-destructive transition-all">
+              <X className="w-5 h-5" />
+            </button>
           </div>
-          
-          {/* Iframe */}
           <div className="flex-1 bg-white">
-            {viewerUrl && (
-              <iframe
-                src={viewerUrl}
-                className="w-full h-full border-none"
-                title={viewerTitle}
-              />
-            )}
+            {viewerUrl && <iframe src={viewerUrl} className="w-full h-full border-none" title={viewerTitle} />}
           </div>
         </div>
       </div>

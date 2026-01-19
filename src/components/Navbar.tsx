@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from './ThemeToggle';
 
 const navLinks = [
-  { href: '#soluciones', label: 'Soluciones' },
   { href: '#demos', label: 'Demos' },
-  { href: '#modelo', label: 'Modelo' },
+  { href: '#soluciones', label: 'Soluciones' },
+  { href: '#casos', label: 'Casos de Éxito' },
   { href: '#precios', label: 'Precios' },
 ];
+
+const CAL_LINK = 'https://cal.com/mostachia/consultoria';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -21,6 +24,10 @@ export const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleBooking = () => {
+    window.open(CAL_LINK, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <motion.nav
@@ -56,10 +63,16 @@ export const Navbar = () => {
           ))}
         </div>
 
-        {/* CTA Buttons */}
-        <div className="hidden md:flex items-center gap-4">
-          <Button variant="ghost" className="font-medium text-muted-foreground hover:text-foreground" asChild>
-            <a href="#contacto">Empezar Transformación</a>
+        {/* CTA Buttons & Theme Toggle */}
+        <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle />
+          <Button 
+            variant="ghost" 
+            className="font-medium text-muted-foreground hover:text-foreground"
+            onClick={handleBooking}
+          >
+            <Calendar className="w-4 h-4 mr-2" />
+            Agendar
           </Button>
           <Button className="btn-glow rounded-xl px-6" asChild>
             <a href="#demos">Probar Demo</a>
@@ -123,8 +136,14 @@ export const Navbar = () => {
                 </motion.a>
               ))}
               <div className="flex flex-col gap-3 mt-4">
-                <Button variant="outline" className="w-full border-primary/30" asChild>
-                  <a href="#contacto">Empezar Transformación</a>
+                <ThemeToggle />
+                <Button 
+                  variant="outline" 
+                  className="w-full border-primary/30"
+                  onClick={handleBooking}
+                >
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Agendar Consultoría
                 </Button>
                 <Button className="btn-glow w-full rounded-xl" asChild>
                   <a href="#demos">Probar Demo</a>

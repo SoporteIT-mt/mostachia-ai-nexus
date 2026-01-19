@@ -76,6 +76,63 @@
     --sidebar-border: 217 33% 17%;
     --sidebar-ring: 160 100% 39%;
   }
+
+  /* Light Theme */
+  .light {
+    --primary: 160 100% 32%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 160 100% 32%;
+    
+    --accent: 262 84% 50%;
+    --accent-foreground: 0 0% 100%;
+    
+    --background: 0 0% 98%;
+    --foreground: 222 47% 11%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+    
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --success: 160 84% 32%;
+    --success-foreground: 0 0% 100%;
+    
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 160 100% 32%;
+    
+    --glass-bg: 0 0% 0% / 0.02;
+    --glass-border: 0 0% 0% / 0.06;
+    
+    --shadow-color: 220 13% 80%;
+    --shadow-card: 0 10px 40px -10px hsl(var(--shadow-color) / 0.3);
+    --shadow-card-hover: 0 25px 50px -12px hsl(var(--shadow-color) / 0.4);
+    
+    --gradient-mesh: 
+      radial-gradient(at 40% 20%, hsl(160 100% 39% / 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsl(262 84% 58% / 0.06) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsl(160 100% 39% / 0.05) 0px, transparent 50%),
+      radial-gradient(at 90% 90%, hsl(262 84% 58% / 0.04) 0px, transparent 40%);
+      
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 160 100% 32%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 14% 96%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 160 100% 32%;
+  }
 }
 
 @layer base {
@@ -90,9 +147,14 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', 'Sora', sans-serif;
-    background-color: hsl(222 47% 7%);
+    background-color: hsl(var(--background));
     background-image: var(--gradient-mesh);
     background-attachment: fixed;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .light body {
+    background-color: hsl(var(--background));
   }
 
   /* Noise texture overlay */

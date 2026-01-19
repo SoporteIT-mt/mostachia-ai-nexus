@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Play, Sparkles } from 'lucide-react';
+import { ArrowRight, Calendar, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatedGradientBackground } from './AnimatedGradientBackground';
+
+const CAL_LINK = 'https://cal.com/mostachia/consultoria';
 
 const logos = [
   'TechCorp', 'DataFlow', 'CloudScale', 'AIStack', 'Nexus'
@@ -113,12 +115,10 @@ export const HeroSection = () => {
                 size="lg"
                 variant="outline"
                 className="rounded-xl px-8 py-6 text-lg border-2 border-white/20 hover:border-primary/50 bg-white/5 backdrop-blur-sm group"
-                asChild
+                onClick={() => window.open(CAL_LINK, '_blank', 'noopener,noreferrer')}
               >
-                <a href="#contacto">
-                  <Play className="mr-2 w-5 h-5 fill-current" />
-                  Agendar Consultoría
-                </a>
+                <Calendar className="mr-2 w-5 h-5" />
+                Agendar Consultoría
               </Button>
             </motion.div>
           </motion.div>

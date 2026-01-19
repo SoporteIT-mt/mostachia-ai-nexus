@@ -2,12 +2,10 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatedGradientBackground } from './AnimatedGradientBackground';
+import { TechLogosBar } from './TechLogos';
 
 const CAL_LINK = 'https://cal.com/mostachia/consultoria';
 
-const logos = [
-  'TechCorp', 'DataFlow', 'CloudScale', 'AIStack', 'Nexus'
-];
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -161,30 +159,16 @@ export const HeroSection = () => {
             ))}
           </motion.div>
 
-          {/* Logo Bar */}
+          {/* Tech Logos Bar */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.4 }}
-            className="text-center"
           >
-            <p className="text-sm text-muted-foreground mb-6">
-              Tecnología preparada para escalar con:
-            </p>
-            <div className="flex items-center justify-center gap-8 md:gap-12 flex-wrap">
-              {logos.map((logo, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 0.4, y: 0 }}
-                  whileHover={{ opacity: 1, scale: 1.1 }}
-                  transition={{ duration: 0.3, delay: 1.5 + i * 0.05 }}
-                  className="font-display font-bold text-lg text-foreground cursor-default"
-                >
-                  {logo}
-                </motion.span>
-              ))}
-            </div>
+            <TechLogosBar 
+              title="Integramos con las herramientas que ya usás"
+              variant="default"
+            />
           </motion.div>
         </div>
       </div>

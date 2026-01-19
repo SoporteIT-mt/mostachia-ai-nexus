@@ -32,7 +32,7 @@ export const DemoCard = ({
     >
       {/* Glow effect on hover */}
       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-        <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl" />
+        <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 to-accent/30 rounded-2xl blur-xl" />
       </div>
 
       <div className="relative flex-1 flex flex-col">
@@ -40,7 +40,7 @@ export const DemoCard = ({
         <div className="flex items-start justify-between mb-4">
           <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
             isFlagship 
-              ? 'bg-gradient-to-br from-primary to-accent' 
+              ? 'bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/25' 
               : 'bg-primary/10'
           }`}>
             <Icon className={`w-7 h-7 ${isFlagship ? 'text-white' : 'text-primary'}`} />
@@ -53,7 +53,7 @@ export const DemoCard = ({
         </div>
 
         {/* Content */}
-        <h3 className={`font-bold mb-2 ${isFlagship ? 'text-2xl' : 'text-lg'}`}>
+        <h3 className={`font-bold mb-2 font-display ${isFlagship ? 'text-2xl' : 'text-lg'}`}>
           {title}
         </h3>
         <p className={`text-muted-foreground flex-1 ${isFlagship ? 'text-base' : 'text-sm'}`}>
@@ -65,7 +65,7 @@ export const DemoCard = ({
           {isLocked ? (
             <Button
               variant="outline"
-              className="w-full rounded-xl group/btn"
+              className="w-full rounded-xl group/btn border-muted-foreground/20"
               disabled
             >
               <Lock className="w-4 h-4 mr-2" />
@@ -86,7 +86,7 @@ export const DemoCard = ({
 
       {/* Locked overlay */}
       {isLocked && (
-        <div className="absolute inset-0 bg-background/50 backdrop-blur-[2px] rounded-2xl flex items-center justify-center">
+        <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px] rounded-2xl flex items-center justify-center">
           <div className="text-center p-4">
             <Lock className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
             <p className="text-sm text-muted-foreground">

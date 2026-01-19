@@ -1,11 +1,13 @@
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
+import { MetricsTicker } from '@/components/MetricsTicker';
 import { ProblemSolutionSection } from '@/components/ProblemSolutionSection';
-import { DemosSection } from '@/components/DemosSection';
-import { BusinessModelSection } from '@/components/BusinessModelSection';
+import { DemoHubSection } from '@/components/DemoHubSection';
+import { PricingSection } from '@/components/PricingSection';
 import { BlogSection } from '@/components/BlogSection';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
+import { StickyCTA } from '@/components/StickyCTA';
 
 const Index = () => {
   return (
@@ -13,13 +15,15 @@ const Index = () => {
       <Navbar />
       <main>
         <HeroSection />
+        <MetricsTicker />
         <ProblemSolutionSection />
-        <DemosSection />
-        <BusinessModelSection />
+        <DemoHubSection />
+        <PricingSection />
         <BlogSection />
       </main>
       <Footer />
       <FloatingWhatsApp />
+      <StickyCTA />
     </div>
   );
 };

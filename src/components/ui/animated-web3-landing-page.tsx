@@ -58,34 +58,46 @@ export function Web3HeroBackground({ children, className }: Web3HeroBackgroundPr
         }}
       />
 
-      {/* Grid overlay: columns + subtle arcs */}
+      {/* Grid overlay: vertical columns - more visible */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-70"
+        className="pointer-events-none absolute inset-0"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(90deg, hsl(var(--primary) / 0.04) 0px, hsl(var(--primary) / 0.04) 1px, transparent 1px, transparent 84px)",
+            "repeating-linear-gradient(90deg, hsl(var(--primary) / 0.06) 0px, hsl(var(--primary) / 0.06) 1px, transparent 1px, transparent 72px)",
         }}
       />
+      {/* Horizontal subtle lines */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, hsl(var(--accent) / 0.03) 0px, hsl(var(--accent) / 0.03) 1px, transparent 1px, transparent 72px)",
+        }}
+      />
+      {/* SVG arcs - more visible */}
       <svg
-        className="pointer-events-none absolute inset-0 opacity-60"
+        className="pointer-events-none absolute inset-0 w-full h-full"
         viewBox="0 0 1200 800"
         preserveAspectRatio="none"
         aria-hidden="true"
       >
         <defs>
-          <linearGradient id="arc" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="hsl(var(--primary) / 0)" />
-            <stop offset="50%" stopColor="hsl(var(--accent) / 0.12)" />
-            <stop offset="100%" stopColor="hsl(var(--primary) / 0)" />
+          <linearGradient id="arc-gradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="transparent" />
+            <stop offset="30%" stopColor="hsl(160 84% 39% / 0.15)" />
+            <stop offset="50%" stopColor="hsl(263 70% 50% / 0.18)" />
+            <stop offset="70%" stopColor="hsl(160 84% 39% / 0.15)" />
+            <stop offset="100%" stopColor="transparent" />
           </linearGradient>
         </defs>
-        {[120, 210, 300, 390, 480, 570].map((y, i) => (
+        {[160, 260, 360, 460, 560, 660].map((y, i) => (
           <path
             key={i}
-            d={`M-200 ${y} C 250 ${y - 140}, 950 ${y - 140}, 1400 ${y}`}
+            d={`M-200 ${y} C 300 ${y - 120}, 900 ${y - 120}, 1400 ${y}`}
             fill="none"
-            stroke="url(#arc)"
-            strokeWidth="1"
+            stroke="url(#arc-gradient)"
+            strokeWidth="1.5"
+            opacity={0.7 - i * 0.08}
           />
         ))}
       </svg>
@@ -96,31 +108,31 @@ export function Web3HeroBackground({ children, className }: Web3HeroBackgroundPr
       {/* ================== FOREGROUND ================== */}
       {/* Center-bottom rectangular glow with pulse */}
       <div
-        className="pointer-events-none absolute left-1/2 bottom-[10%] h-[120px] w-[520px] -translate-x-1/2 rounded-2xl blur-2xl"
+        className="pointer-events-none absolute left-1/2 bottom-[4%] h-[100px] w-[480px] -translate-x-1/2 rounded-2xl blur-2xl"
         style={{
           background:
-            "linear-gradient(90deg, hsl(var(--primary) / 0.22) 0%, hsl(var(--accent) / 0.18) 50%, hsl(var(--primary) / 0.22) 100%)",
+            "linear-gradient(90deg, hsl(var(--primary) / 0.25) 0%, hsl(var(--accent) / 0.20) 50%, hsl(var(--primary) / 0.25) 100%)",
           animation: "web3SubtlePulse 4s ease-in-out infinite",
         }}
       />
 
-      {/* Stepped pillars silhouette */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[28%]">
+      {/* Stepped pillars silhouette - positioned lower (18% height) */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[18%]">
         {/* dark fade */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
         {/* bars */}
-        <div className="absolute bottom-0 left-0 right-0 flex items-end justify-center gap-[2px] px-4">
+        <div className="absolute bottom-0 left-0 right-0 flex items-end justify-center gap-[3px] px-6">
           {pillars.map((h, i) => (
             <div
               key={i}
-              className="flex-1 max-w-[60px] transition-[height,opacity] duration-700"
+              className="flex-1 max-w-[55px] transition-[height,opacity] duration-700"
               style={{
-                height: isMounted ? `${h}%` : "0%",
+                height: isMounted ? `${h * 0.7}%` : "0%",
                 opacity: isMounted ? 1 : 0,
-                transitionDelay: `${i * 40}ms`,
-                borderRadius: "2px 2px 0 0",
+                transitionDelay: `${i * 50}ms`,
+                borderRadius: "3px 3px 0 0",
                 background:
-                  "linear-gradient(to top, hsl(var(--foreground) / 0.10) 0%, hsl(var(--primary) / 0.14) 30%, hsl(var(--accent) / 0.10) 60%, transparent 100%)",
+                  "linear-gradient(to top, hsl(var(--foreground) / 0.12) 0%, hsl(var(--primary) / 0.18) 35%, hsl(var(--accent) / 0.12) 65%, transparent 100%)",
               }}
             />
           ))}

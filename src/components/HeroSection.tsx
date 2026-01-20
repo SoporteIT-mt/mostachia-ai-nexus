@@ -71,10 +71,12 @@ export const HeroSection = () => {
         "#9333EA", // Lighter violet
         "#00B385", // Darker mint
       ]}
-      waveWidth={60}
-      blur={12}
+      waveWidth={45}
+      blur={15}
       speed="slow"
-      waveOpacity={0.4}
+      waveOpacity={0.25}
+      wavePosition={0.78}
+      waveAmplitude={80}
       backgroundFill="hsl(222, 47%, 7%)"
     >
       {/* Decorative overlay gradients */}

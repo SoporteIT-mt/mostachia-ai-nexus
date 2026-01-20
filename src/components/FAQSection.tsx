@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { HelpCircle, Plus, Minus } from 'lucide-react';
+import { HelpCircle } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -43,51 +43,78 @@ const faqs = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06, delayChildren: 0.2 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 100, damping: 15 },
+  },
+};
+
 export const FAQSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
     <section id="faq" ref={ref} className="py-24 relative overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent" />
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6">
+          <motion.div 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ delay: 0.15, type: "spring", stiffness: 150 }}
+          >
             <HelpCircle className="w-4 h-4 text-accent" />
             <span className="text-sm font-medium text-accent">Preguntas Frecuentes</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+          </motion.div>
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold font-display mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             Resolvemos Tus <span className="text-gradient-primary">Dudas</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            className="text-lg text-muted-foreground max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 15 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
             Todo lo que necesitás saber antes de dar el primer paso
-          </p>
+          </motion.p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
           className="max-w-3xl mx-auto"
         >
           <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.4, delay: 0.3 + i * 0.05 }}
-              >
+              <motion.div key={i} variants={itemVariants}>
                 <AccordionItem 
                   value={`item-${i}`}
-                  className="glass-card border border-white/10 rounded-xl px-6 data-[state=open]:border-primary/30 transition-all duration-300"
+                  className="glass-card border border-border/50 rounded-xl px-6 data-[state=open]:border-primary/30 transition-all duration-300"
                 >
                   <AccordionTrigger className="text-left py-5 hover:no-underline group">
                     <span className="text-base font-semibold pr-4 group-hover:text-primary transition-colors">
@@ -103,19 +130,15 @@ export const FAQSection = () => {
           </Accordion>
         </motion.div>
 
-        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           className="text-center mt-12"
         >
           <p className="text-muted-foreground">
             ¿Tenés otra pregunta?{' '}
-            <a 
-              href="#contacto" 
-              className="text-primary hover:underline font-semibold"
-            >
+            <a href="#contacto" className="text-primary hover:underline font-semibold">
               Hablemos directamente
             </a>
           </p>

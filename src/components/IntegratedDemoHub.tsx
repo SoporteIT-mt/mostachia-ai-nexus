@@ -265,23 +265,115 @@ export const IntegratedDemoHub = () => {
         </motion.div>
       </div>
 
-      {/* Viewer Modal */}
-      <div className={`fixed inset-0 z-[100] transition-transform duration-500 ${viewerOpen ? 'translate-y-0' : 'translate-y-full'}`}>
-        <div className="h-full flex flex-col bg-background">
-          <div className="flex items-center justify-between px-6 py-4 glass-card border-b border-border dark:border-white/10">
-            <button onClick={closeViewer} className="flex items-center gap-2 px-4 py-2 rounded-xl glass-card border border-border dark:border-white/10 hover:border-primary/30 transition-all text-sm font-medium">
-              <ArrowRight className="w-4 h-4 rotate-180" /> Volver
-            </button>
-            <span className="font-bold font-display">{viewerTitle}</span>
-            <button onClick={closeViewer} className="p-2 rounded-xl glass-card border border-border dark:border-white/10 hover:border-destructive/30 hover:text-destructive transition-all">
+      {/* Viewer Modal with zoom animation */}
+      <motion.div 
+        className="fixed inset-0 z-[100]"
+        initial={false}
+        animate={viewerOpen ? { 
+          opacity: 1, 
+          scale: 1,
+          pointerEvents: 'auto' as const
+        } : { 
+          opacity: 0, 
+          scale: 0.9,
+          pointerEvents: 'none' as const
+        }}
+        transition={{ 
+          type: 'spring', 
+          stiffness: 300, 
+          damping: 30,
+          opacity: { duration: 0.2 }
+        }}
+        style={{ 
+          transformOrigin: 'center center',
+        }}
+      >
+        {/* Backdrop */}
+        <motion.div 
+          className="absolute inset-0 bg-background/95 backdrop-blur-xl"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: viewerOpen ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+          onClick={closeViewer}
+        />
+        
+        {/* Modal content */}
+        <motion.div 
+          className="relative h-full flex flex-col"
+          initial={{ y: 50, opacity: 0 }}
+          animate={viewerOpen ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+          transition={{ 
+            type: 'spring', 
+            stiffness: 250, 
+            damping: 25,
+            delay: viewerOpen ? 0.1 : 0
+          }}
+        >
+          {/* Header with slide-in animation */}
+          <motion.div 
+            className="flex items-center justify-between px-6 py-4 glass-card border-b border-border dark:border-white/10 relative z-10"
+            initial={{ y: -20, opacity: 0 }}
+            animate={viewerOpen ? { y: 0, opacity: 1 } : { y: -20, opacity: 0 }}
+            transition={{ delay: viewerOpen ? 0.15 : 0, duration: 0.3 }}
+          >
+            <motion.button 
+              onClick={closeViewer} 
+              className="flex items-center gap-2 px-4 py-2 rounded-xl glass-card border border-border dark:border-white/10 hover:border-primary/30 transition-all text-sm font-medium group"
+              whileHover={{ scale: 1.02, x: -3 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <motion.div
+                animate={{ x: [0, -3, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <ArrowRight className="w-4 h-4 rotate-180" />
+              </motion.div>
+              Volver
+            </motion.button>
+            
+            <motion.span 
+              className="font-bold font-display text-lg"
+              initial={{ scale: 0.9 }}
+              animate={viewerOpen ? { scale: 1 } : { scale: 0.9 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
+              {viewerTitle}
+            </motion.span>
+            
+            <motion.button 
+              onClick={closeViewer} 
+              className="p-2 rounded-xl glass-card border border-border dark:border-white/10 hover:border-destructive/30 hover:text-destructive transition-all"
+              whileHover={{ scale: 1.1, rotate: 90 }}
+              whileTap={{ scale: 0.9 }}
+            >
               <X className="w-5 h-5" />
-            </button>
-          </div>
-          <div className="flex-1 bg-white dark:bg-white">
-            {viewerUrl && <iframe src={viewerUrl} className="w-full h-full border-none" title={viewerTitle} />}
-          </div>
-        </div>
-      </div>
+            </motion.button>
+          </motion.div>
+          
+          {/* Iframe container with fade-in */}
+          <motion.div 
+            className="flex-1 bg-white dark:bg-white overflow-hidden relative"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={viewerOpen ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98 }}
+            transition={{ delay: viewerOpen ? 0.2 : 0, duration: 0.4 }}
+          >
+            {/* Loading shimmer */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent"
+              animate={{ x: ['-100%', '100%'] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+              style={{ display: viewerUrl ? 'none' : 'block' }}
+            />
+            {viewerUrl && (
+              <iframe 
+                src={viewerUrl} 
+                className="w-full h-full border-none" 
+                title={viewerTitle}
+              />
+            )}
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

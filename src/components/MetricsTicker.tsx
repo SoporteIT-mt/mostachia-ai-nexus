@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { TrendingUp, Database, DollarSign, Users, Zap, Clock } from 'lucide-react';
 
@@ -64,26 +64,88 @@ const CountUpNumber = ({
   );
 };
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 30, 
+    scale: 0.8,
+    rotateX: -15,
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    rotateX: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 150,
+      damping: 20,
+    },
+  },
+};
+
+const iconVariants = {
+  hidden: { scale: 0, rotate: -180 },
+  visible: { 
+    scale: 1, 
+    rotate: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 200,
+      damping: 15,
+      delay: 0.1,
+    },
+  },
+};
+
 export const MetricsTicker = () => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+
   return (
-    <section className="py-6 border-y border-border/50 overflow-hidden relative">
+    <section ref={ref} className="py-8 border-y border-border/50 overflow-hidden relative">
       {/* Glow effects */}
       <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
       <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
       
-      <div className="flex ticker-animate">
+      <motion.div 
+        className="flex ticker-animate"
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
         {[...metrics, ...metrics].map((metric, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="flex items-center gap-4 px-8 md:px-12 whitespace-nowrap"
+            variants={itemVariants}
+            className="flex items-center gap-4 px-8 md:px-12 whitespace-nowrap group"
           >
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+            <motion.div 
+              variants={iconVariants}
+              whileHover={{ 
+                scale: 1.15, 
+                rotate: [0, -10, 10, 0],
+                transition: { duration: 0.4 }
+              }}
+              className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shadow-lg shadow-primary/10 group-hover:bg-primary/20 group-hover:shadow-primary/20 transition-all duration-300"
+            >
               <metric.icon className="w-5 h-5 text-primary" />
-            </div>
-            <div>
+            </motion.div>
+            <motion.div
+              whileHover={{ x: 3 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
               <CountUpNumber 
                 end={metric.value} 
                 format={metric.format} 
@@ -91,10 +153,10 @@ export const MetricsTicker = () => {
                 suffix={metric.suffix}
               />
               <p className="text-xs text-muted-foreground font-medium">{metric.label}</p>
-            </div>
+            </motion.div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

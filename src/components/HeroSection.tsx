@@ -1,17 +1,52 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Calendar, Sparkles } from 'lucide-react';
+import { ArrowRight, Calendar, Sparkles, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { HeroGeometric } from '@/components/ui/shape-landing-hero';
+import { ElegantShape } from '@/components/ui/shape-landing-hero';
 import { TechLogosBar } from './TechLogos';
 
 const CAL_LINK = 'https://cal.com/mostachia/consultoria';
 
+// Animated text component - letter by letter reveal
+function AnimatedText({ text, delay = 0 }: { text: string; delay?: number }) {
+  return (
+    <span className="inline-block overflow-hidden">
+      {text.split("").map((char, i) => (
+        <motion.span
+          key={i}
+          initial={{ y: "100%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            duration: 0.5,
+            delay: delay + i * 0.03,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="inline-block"
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
+
+const fadeUpVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1,
+      delay: 0.5 + i * 0.2,
+      ease: [0.25, 0.4, 0.25, 1],
+    },
+  }),
+};
 
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+    transition: { staggerChildren: 0.1, delayChildren: 1.2 }
   }
 };
 
@@ -27,61 +62,118 @@ const fadeUpSpring = {
 export const HeroSection = () => {
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <HeroGeometric />
+    <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-background">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.05] via-transparent to-accent/[0.05] blur-3xl" />
 
+      {/* Decorative overlay gradients */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px]" />
+      </div>
+
+      {/* Elegant Shapes - Animated geometric forms */}
+      <div className="absolute inset-0 overflow-hidden">
+        <ElegantShape
+          delay={0.3}
+          width={600}
+          height={140}
+          rotate={12}
+          gradient="from-primary/[0.15]"
+          className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
+        />
+
+        <ElegantShape
+          delay={0.5}
+          width={500}
+          height={120}
+          rotate={-15}
+          gradient="from-accent/[0.15]"
+          className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
+        />
+
+        <ElegantShape
+          delay={0.4}
+          width={300}
+          height={80}
+          rotate={-8}
+          gradient="from-primary/[0.12]"
+          className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
+        />
+
+        <ElegantShape
+          delay={0.6}
+          width={200}
+          height={60}
+          rotate={20}
+          gradient="from-accent/[0.12]"
+          className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
+        />
+
+        <ElegantShape
+          delay={0.7}
+          width={150}
+          height={40}
+          rotate={-25}
+          gradient="from-primary/[0.08]"
+          className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
+        />
+      </div>
+
+      {/* Main Content */}
       <div className="container relative z-10 mx-auto px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.7, type: "spring", stiffness: 100 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/20 mb-8 backdrop-blur-sm"
+            custom={0}
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm mb-8 md:mb-12"
           >
-            <motion.span 
-              className="w-2 h-2 rounded-full bg-primary"
-              animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <span className="text-sm font-medium text-primary">
+            >
+              <Circle className="h-2 w-2 fill-primary text-primary" />
+            </motion.div>
+            <span className="text-sm text-muted-foreground tracking-wide">
               Tecnología que escala con vos
             </span>
             <Sparkles className="w-3.5 h-3.5 text-primary" />
           </motion.div>
 
-          {/* Main Title - Simplified for visibility */}
-          <motion.h1
-            className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.1] font-display mb-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          {/* Main Title with letter-by-letter animation */}
+          <motion.div
+            custom={1}
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
           >
-            <span className="block text-foreground">
-              Procesos Inteligentes,
-            </span>
-            <motion.span 
-              className="block mt-2 text-gradient-primary"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Resultados Superiores.
-            </motion.span>
-          </motion.h1>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-display tracking-tight mb-6 md:mb-8 leading-[1.1]">
+              <span className="block text-foreground">
+                <AnimatedText text="Procesos Inteligentes," delay={0.5} />
+              </span>
+              <span className="block text-gradient-primary mt-2">
+                <AnimatedText text="Resultados Superiores." delay={1.0} />
+              </span>
+            </h1>
+          </motion.div>
 
           {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed"
+          <motion.div
+            custom={2}
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
           >
-            Transformamos tu empresa combinando el poder de la{' '}
-            <span className="text-foreground font-semibold">Inteligencia Artificial</span> con la estrategia humana.
-            <br className="hidden sm:block" />
-            Automatiza lo operativo, escala lo estratégico.
-          </motion.p>
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed mb-10">
+              Transformamos tu empresa combinando el poder de la{' '}
+              <span className="text-foreground font-semibold">Inteligencia Artificial</span> con la estrategia humana.
+              <br className="hidden sm:block" />
+              Automatiza lo operativo, escala lo estratégico.
+            </p>
+          </motion.div>
 
           {/* CTAs */}
           <motion.div
@@ -125,7 +217,7 @@ export const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1 }}
+            transition={{ duration: 1, delay: 1.5 }}
             className="flex items-center justify-center gap-12 md:gap-20 mb-16"
           >
             {[
@@ -139,7 +231,7 @@ export const HeroSection = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ 
                   duration: 0.6, 
-                  delay: 1.1 + i * 0.1,
+                  delay: 1.6 + i * 0.1,
                   type: "spring",
                   stiffness: 100
                 }}
@@ -150,7 +242,7 @@ export const HeroSection = () => {
                   className="text-3xl md:text-4xl font-bold text-primary font-display"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 1.3 + i * 0.1 }}
+                  transition={{ delay: 1.8 + i * 0.1 }}
                 >
                   {stat.value}
                 </motion.div>
@@ -163,7 +255,7 @@ export const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.4 }}
+            transition={{ duration: 1, delay: 2 }}
           >
             <TechLogosBar 
               title="Integramos con las herramientas que ya usás"
@@ -177,7 +269,7 @@ export const HeroSection = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
+        transition={{ delay: 2.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <motion.div
@@ -192,6 +284,9 @@ export const HeroSection = () => {
           />
         </motion.div>
       </motion.div>
+
+      {/* Bottom gradient fade */}
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
     </section>
   );
 };

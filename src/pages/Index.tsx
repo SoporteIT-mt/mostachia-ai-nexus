@@ -15,6 +15,7 @@ import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { StickyCTA } from '@/components/StickyCTA';
 import { ParallaxBackground } from '@/components/ParallaxSection';
+import { ScrollProgress } from '@/components/ScrollProgress';
 
 // Soft section separator
 const SectionGlow = () => (
@@ -26,7 +27,8 @@ const SectionGlow = () => (
 
 const Index = () => {
   return (
-    <div className="relative min-h-screen overflow-x-hidden">
+    <div className="relative min-h-screen overflow-x-hidden scroll-smooth">
+      <ScrollProgress />
       <ParallaxBackground />
       <Navbar />
       <main className="relative z-10">

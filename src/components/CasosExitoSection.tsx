@@ -144,7 +144,37 @@ const casosExito = [
 
 export const CasosExitoSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 50,
+      scale: 0.95,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 80,
+        damping: 14,
+      },
+    },
+  };
 
   return (
     <section id="casos" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
@@ -153,35 +183,53 @@ export const CasosExitoSection = () => {
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-primary mb-6">
+          <motion.span 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-primary mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ delay: 0.15, type: "spring", stiffness: 150 }}
+          >
             <TrendingUp className="w-4 h-4" />
             Resultados Comprobados
-          </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6">
+          </motion.span>
+          <motion.h2 
+            className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             Casos de Éxito <span className="text-gradient-primary">Reales</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            className="text-lg text-muted-foreground max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 15 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
             Empresas argentinas líderes que ya transformaron sus operaciones con nuestra tecnología.
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Cases Grid - Compact professional cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-7xl mx-auto">
-          {casosExito.map((caso, index) => (
+        <motion.div 
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-7xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          {casosExito.map((caso) => (
             <motion.div
               key={caso.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+              variants={cardVariants}
               whileHover={{ y: -6, transition: { duration: 0.2 } }}
               className="group"
             >
-              <div className="h-full p-5 rounded-xl glass-card border border-white/10 hover:border-primary/20 transition-all duration-300">
+              <div className="h-full p-5 rounded-xl glass-card border border-border/50 hover:border-primary/20 transition-all duration-300">
                 {/* Company header */}
                 <div className="flex items-center gap-3 mb-4">
                   <div 
@@ -206,7 +254,7 @@ export const CasosExitoSection = () => {
                 {/* Metrics - Compact */}
                 <div className="flex gap-3 mb-4">
                   {caso.metricas.map((metrica, i) => (
-                    <div key={i} className="flex-1 p-2.5 rounded-lg bg-white/5">
+                    <div key={i} className="flex-1 p-2.5 rounded-lg bg-secondary/50">
                       <div className="text-lg font-bold text-primary">{metrica.valor}</div>
                       <div className="text-[10px] text-muted-foreground leading-tight">{metrica.label}</div>
                     </div>
@@ -214,7 +262,7 @@ export const CasosExitoSection = () => {
                 </div>
 
                 {/* Testimonial */}
-                <div className="pt-4 border-t border-white/5">
+                <div className="pt-4 border-t border-border/30">
                   <div className="flex gap-2 mb-3">
                     <Quote className="w-4 h-4 text-primary/40 flex-shrink-0" />
                     <p className="text-xs text-foreground/70 italic leading-relaxed line-clamp-2">
@@ -225,7 +273,7 @@ export const CasosExitoSection = () => {
                     <img 
                       src={caso.imagen} 
                       alt={caso.persona}
-                      className="w-7 h-7 rounded-full object-cover border border-white/10"
+                      className="w-7 h-7 rounded-full object-cover border border-border/30"
                     />
                     <div>
                       <span className="block text-xs font-medium text-foreground">{caso.persona}</span>
@@ -236,7 +284,7 @@ export const CasosExitoSection = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Stats bar */}
         <motion.div

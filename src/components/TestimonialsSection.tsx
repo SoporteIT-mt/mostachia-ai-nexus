@@ -37,9 +37,39 @@ const testimonials = [
   },
 ];
 
+// Animation variants for subtle scroll reveal
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 40,
+    scale: 0.96,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 80,
+      damping: 15,
+    },
+  },
+};
+
 export const TestimonialsSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
     <section ref={ref} className="py-32 relative overflow-hidden">
@@ -48,43 +78,56 @@ export const TestimonialsSection = () => {
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
+          <motion.div 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ delay: 0.15, type: "spring", stiffness: 150 }}
+          >
             <Star className="w-4 h-4 text-primary fill-primary" />
             <span className="text-sm font-medium text-primary">Historias Reales</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+          </motion.div>
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold font-display mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             Empresas que Ya <span className="text-gradient-primary">Transformaron</span> su Operación
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            className="text-lg text-muted-foreground max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 15 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
             No te contamos lo que podemos hacer. Te mostramos lo que ya hicimos.
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto pt-8">
-          {testimonials.map((testimonial, i) => (
+        <motion.div 
+          className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto pt-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          {testimonials.map((testimonial) => (
             <motion.div
               key={testimonial.id}
-              initial={{ opacity: 0, y: 40, rotateX: 10 }}
-              animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-              transition={{ 
-                duration: 0.7, 
-                delay: 0.15 + i * 0.15,
-                type: "spring",
-                stiffness: 80
-              }}
+              variants={itemVariants}
               whileHover={{ 
                 y: -6,
                 transition: { duration: 0.25 }
               }}
               className="group"
             >
-              <div className="relative h-full p-8 pt-10 rounded-2xl glass-card border border-white/10 hover:border-primary/30 transition-all duration-500 hover:shadow-[0_20px_60px_-15px_rgba(0,200,150,0.2)]">
+              <div className="relative h-full p-8 pt-10 rounded-2xl glass-card border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-[0_20px_60px_-15px_hsl(162_100%_39%_/_0.15)]">
                 {/* Quote icon - positioned properly */}
                 <motion.div 
                   className="absolute -top-5 left-6 z-10"
@@ -109,14 +152,7 @@ export const TestimonialsSection = () => {
                 {/* Stars */}
                 <div className="flex gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, j) => (
-                    <motion.div
-                      key={j}
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ delay: 0.4 + i * 0.1 + j * 0.05 }}
-                    >
-                      <Star className="w-4 h-4 text-primary fill-primary" />
-                    </motion.div>
+                    <Star key={j} className="w-4 h-4 text-primary fill-primary" />
                   ))}
                 </div>
 
@@ -126,7 +162,7 @@ export const TestimonialsSection = () => {
                 </p>
 
                 {/* Author */}
-                <div className="flex items-center gap-3 pt-4 border-t border-white/10">
+                <div className="flex items-center gap-3 pt-4 border-t border-border/30">
                   <img 
                     src={testimonial.image} 
                     alt={testimonial.name}
@@ -146,13 +182,13 @@ export const TestimonialsSection = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Social proof bar */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.5 }}
           className="text-center mt-16"
         >
           <p className="text-muted-foreground">

@@ -1,88 +1,72 @@
 import { useRef, ReactNode } from 'react';
-import { motion, useInView, Variants } from 'framer-motion';
+import { motion, useInView, useSpring, useTransform, useScroll, Variants } from 'framer-motion';
 
-type TransitionDirection = 'up' | 'down' | 'left' | 'right' | 'fade' | 'scale' | 'blur';
+type TransitionType = 'fade' | 'slideUp' | 'slideDown' | 'slideLeft' | 'slideRight' | 'scale' | 'blur' | 'rotate';
 
 interface SectionTransitionProps {
   children: ReactNode;
   className?: string;
-  direction?: TransitionDirection;
+  type?: TransitionType;
   delay?: number;
   duration?: number;
   once?: boolean;
   amount?: number;
 }
 
-const getVariants = (direction: TransitionDirection): Variants => {
-  const baseTransition = {
+const getVariants = (type: TransitionType, duration: number): Variants => {
+  const springTransition = {
     type: "spring" as const,
-    stiffness: 100,
+    stiffness: 80,
     damping: 20,
+    duration
   };
 
-  switch (direction) {
-    case 'up':
+  const easeTransition = {
+    duration,
+    ease: [0.25, 0.1, 0.25, 1] as const
+  };
+
+  switch (type) {
+    case 'slideUp':
       return {
-        hidden: { opacity: 0, y: 60 },
-        visible: { 
-          opacity: 1, 
-          y: 0,
-          transition: baseTransition
-        }
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0, transition: springTransition }
       };
-    case 'down':
+    case 'slideDown':
       return {
-        hidden: { opacity: 0, y: -60 },
-        visible: { 
-          opacity: 1, 
-          y: 0,
-          transition: baseTransition
-        }
+        hidden: { opacity: 0, y: -40 },
+        visible: { opacity: 1, y: 0, transition: springTransition }
       };
-    case 'left':
+    case 'slideLeft':
       return {
-        hidden: { opacity: 0, x: 80 },
-        visible: { 
-          opacity: 1, 
-          x: 0,
-          transition: baseTransition
-        }
+        hidden: { opacity: 0, x: 50 },
+        visible: { opacity: 1, x: 0, transition: springTransition }
       };
-    case 'right':
+    case 'slideRight':
       return {
-        hidden: { opacity: 0, x: -80 },
-        visible: { 
-          opacity: 1, 
-          x: 0,
-          transition: baseTransition
-        }
+        hidden: { opacity: 0, x: -50 },
+        visible: { opacity: 1, x: 0, transition: springTransition }
       };
     case 'scale':
       return {
-        hidden: { opacity: 0, scale: 0.9 },
-        visible: { 
-          opacity: 1, 
-          scale: 1,
-          transition: baseTransition
-        }
+        hidden: { opacity: 0, scale: 0.95 },
+        visible: { opacity: 1, scale: 1, transition: springTransition }
       };
     case 'blur':
       return {
-        hidden: { opacity: 0, filter: 'blur(10px)' },
-        visible: { 
-          opacity: 1, 
-          filter: 'blur(0px)',
-          transition: { duration: 0.6, ease: 'easeOut' }
-        }
+        hidden: { opacity: 0, filter: 'blur(8px)' },
+        visible: { opacity: 1, filter: 'blur(0px)', transition: easeTransition }
+      };
+    case 'rotate':
+      return {
+        hidden: { opacity: 0, rotate: -3, scale: 0.98 },
+        visible: { opacity: 1, rotate: 0, scale: 1, transition: springTransition }
       };
     case 'fade':
     default:
       return {
         hidden: { opacity: 0 },
-        visible: { 
-          opacity: 1,
-          transition: { duration: 0.6, ease: 'easeOut' }
-        }
+        visible: { opacity: 1, transition: easeTransition }
       };
   }
 };
@@ -90,24 +74,15 @@ const getVariants = (direction: TransitionDirection): Variants => {
 export const SectionTransition = ({
   children,
   className = '',
-  direction = 'up',
+  type = 'slideUp',
   delay = 0,
-  duration,
+  duration = 0.6,
   once = true,
-  amount = 0.2
+  amount = 0.15
 }: SectionTransitionProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once, amount });
-  
-  const variants = getVariants(direction);
-  
-  // Override duration if provided
-  if (duration && variants.visible && typeof variants.visible === 'object') {
-    variants.visible.transition = {
-      ...variants.visible.transition,
-      duration
-    };
-  }
+  const variants = getVariants(type, duration);
 
   return (
     <motion.div
@@ -115,15 +90,46 @@ export const SectionTransition = ({
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={variants}
-      style={{ transitionDelay: `${delay}s` }}
+      custom={delay}
       className={className}
+      style={{ willChange: 'transform, opacity' }}
     >
       {children}
     </motion.div>
   );
 };
 
-// Staggered container for multiple children
+// Smooth animated divider between sections
+export const AnimatedDivider = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+
+  const lineScale = useSpring(
+    useTransform(scrollYProgress, [0, 0.5], [0, 1]),
+    { stiffness: 100, damping: 30 }
+  );
+
+  return (
+    <div ref={ref} className="relative h-16 flex items-center justify-center overflow-hidden my-4">
+      <motion.div 
+        className="w-full max-w-md h-[1px] bg-gradient-to-r from-transparent via-border to-transparent"
+        style={{ scaleX: lineScale }}
+      />
+      <motion.div 
+        className="absolute w-1.5 h-1.5 rounded-full bg-primary/60"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+        transition={{ duration: 0.4, delay: 0.2, type: 'spring', stiffness: 200 }}
+      />
+    </div>
+  );
+};
+
+// Stagger container for grouped animations
 interface StaggerContainerProps {
   children: ReactNode;
   className?: string;
@@ -135,9 +141,9 @@ interface StaggerContainerProps {
 export const StaggerContainer = ({
   children,
   className = '',
-  staggerDelay = 0.1,
+  staggerDelay = 0.08,
   once = true,
-  amount = 0.2
+  amount = 0.15
 }: StaggerContainerProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once, amount });
@@ -148,7 +154,7 @@ export const StaggerContainer = ({
       opacity: 1,
       transition: {
         staggerChildren: staggerDelay,
-        delayChildren: 0.1
+        delayChildren: 0.05
       }
     }
   };
@@ -166,56 +172,21 @@ export const StaggerContainer = ({
   );
 };
 
-// Child item for stagger container
 interface StaggerItemProps {
   children: ReactNode;
   className?: string;
-  direction?: TransitionDirection;
+  type?: TransitionType;
 }
 
 export const StaggerItem = ({
   children,
   className = '',
-  direction = 'up'
+  type = 'slideUp'
 }: StaggerItemProps) => {
-  const variants = getVariants(direction);
-
+  const variants = getVariants(type, 0.5);
   return (
     <motion.div variants={variants} className={className}>
       {children}
     </motion.div>
-  );
-};
-
-// Animated section divider
-export const AnimatedDivider = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-
-  return (
-    <div ref={ref} className="relative h-24 flex items-center justify-center overflow-hidden">
-      <motion.div 
-        className="w-full max-w-lg h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
-        initial={{ scaleX: 0, opacity: 0 }}
-        animate={isInView ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      />
-      <motion.div 
-        className="absolute w-2 h-2 rounded-full bg-primary/50 shadow-lg shadow-primary/40"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-        transition={{ duration: 0.5, delay: 0.3, type: 'spring', stiffness: 300 }}
-      />
-      {/* Expanding ring effect */}
-      <motion.div 
-        className="absolute w-2 h-2 rounded-full border border-primary/30"
-        initial={{ scale: 1, opacity: 0 }}
-        animate={isInView ? { 
-          scale: [1, 4, 6], 
-          opacity: [0.5, 0.2, 0] 
-        } : { scale: 1, opacity: 0 }}
-        transition={{ duration: 1.5, delay: 0.5, ease: 'easeOut' }}
-      />
-    </div>
   );
 };

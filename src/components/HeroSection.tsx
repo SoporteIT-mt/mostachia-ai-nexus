@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { AnimatedGradientBackground } from './AnimatedGradientBackground';
+import { HeroGeometric } from '@/components/ui/shape-landing-hero';
 import { TechLogosBar } from './TechLogos';
 
 const CAL_LINK = 'https://cal.com/mostachia/consultoria';
@@ -28,7 +28,7 @@ export const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <AnimatedGradientBackground />
+      <HeroGeometric />
 
       <div className="container relative z-10 mx-auto px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">

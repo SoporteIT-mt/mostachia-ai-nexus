@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Sparkles, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { WavyBackground } from '@/components/ui/wavy-background';
+import { AnimatedHeroBackground } from '@/components/ui/animated-hero-background';
 import { TechLogosBar } from './TechLogos';
 
 const CAL_LINK = 'https://cal.com/mostachia/consultoria';
@@ -61,32 +61,9 @@ const fadeUpSpring = {
 
 export const HeroSection = () => {
   return (
-    <WavyBackground
-      containerClassName="relative min-h-screen w-full"
-      className="w-full"
-      colors={[
-        "#00C896", // Primary mint
-        "#00D9A5", // Lighter mint  
-        "#7C3AED", // Accent violet
-        "#9333EA", // Lighter violet
-        "#00B385", // Darker mint
-      ]}
-      waveWidth={45}
-      blur={15}
-      speed="slow"
-      waveOpacity={0.25}
-      wavePosition={0.78}
-      waveAmplitude={80}
-      backgroundFill="hsl(222, 47%, 7%)"
-    >
-      {/* Decorative overlay gradients */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px]" />
-      </div>
-
+    <AnimatedHeroBackground>
       {/* Main Content */}
-      <div className="container relative z-10 mx-auto px-6 py-20">
+      <div className="container relative z-10 mx-auto px-6 py-20 min-h-screen flex flex-col justify-center">
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
           <motion.div
@@ -235,7 +212,7 @@ export const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+        className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}
@@ -249,9 +226,6 @@ export const HeroSection = () => {
           />
         </motion.div>
       </motion.div>
-
-      {/* Bottom gradient fade */}
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
-    </WavyBackground>
+    </AnimatedHeroBackground>
   );
 };

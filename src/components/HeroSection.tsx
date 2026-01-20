@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Sparkles, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ElegantShape } from '@/components/ui/shape-landing-hero';
+import { WavyBackground } from '@/components/ui/wavy-background';
 import { TechLogosBar } from './TechLogos';
 
 const CAL_LINK = 'https://cal.com/mostachia/consultoria';
@@ -60,64 +60,27 @@ const fadeUpSpring = {
 };
 
 export const HeroSection = () => {
-
   return (
-    <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-background">
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.05] via-transparent to-accent/[0.05] blur-3xl" />
-
+    <WavyBackground
+      containerClassName="relative min-h-screen w-full"
+      className="w-full"
+      colors={[
+        "#00C896", // Primary mint
+        "#00D9A5", // Lighter mint  
+        "#7C3AED", // Accent violet
+        "#9333EA", // Lighter violet
+        "#00B385", // Darker mint
+      ]}
+      waveWidth={60}
+      blur={12}
+      speed="slow"
+      waveOpacity={0.4}
+      backgroundFill="hsl(222, 47%, 7%)"
+    >
       {/* Decorative overlay gradients */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px]" />
-      </div>
-
-      {/* Elegant Shapes - Animated geometric forms */}
-      <div className="absolute inset-0 overflow-hidden">
-        <ElegantShape
-          delay={0.3}
-          width={600}
-          height={140}
-          rotate={12}
-          gradient="from-primary/[0.15]"
-          className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
-        />
-
-        <ElegantShape
-          delay={0.5}
-          width={500}
-          height={120}
-          rotate={-15}
-          gradient="from-accent/[0.15]"
-          className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
-        />
-
-        <ElegantShape
-          delay={0.4}
-          width={300}
-          height={80}
-          rotate={-8}
-          gradient="from-primary/[0.12]"
-          className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
-        />
-
-        <ElegantShape
-          delay={0.6}
-          width={200}
-          height={60}
-          rotate={20}
-          gradient="from-accent/[0.12]"
-          className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
-        />
-
-        <ElegantShape
-          delay={0.7}
-          width={150}
-          height={40}
-          rotate={-25}
-          gradient="from-primary/[0.08]"
-          className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
-        />
       </div>
 
       {/* Main Content */}
@@ -270,7 +233,7 @@ export const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}
@@ -286,7 +249,7 @@ export const HeroSection = () => {
       </motion.div>
 
       {/* Bottom gradient fade */}
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
-    </section>
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
+    </WavyBackground>
   );
 };

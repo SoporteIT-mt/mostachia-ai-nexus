@@ -4,6 +4,7 @@ import { ArrowRight, Calendar, Sparkles, Circle, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Web3HeroBackground } from '@/components/ui/animated-web3-landing-page';
 import { TechLogosBar } from './TechLogos';
+import { FloatingParticles } from './FloatingParticles';
 
 const CAL_LINK = 'https://cal.com/mostachia/consultoria';
 
@@ -89,6 +90,9 @@ export const HeroSection = () => {
 
   return (
     <Web3HeroBackground>
+      {/* Floating Particles Layer */}
+      <FloatingParticles />
+      
       {/* Main Content */}
       <motion.div 
         ref={containerRef}

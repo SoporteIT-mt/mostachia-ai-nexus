@@ -3,173 +3,58 @@ import { motion, useInView, useAnimation } from 'framer-motion';
 import { Zap, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// Extensive list of real integrations with SVG logos
+// Integration categories and image URLs (using real brand colors for visual appeal)
 const integrations = [
-  {
-    name: 'Google Cloud',
-    category: 'Cloud',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.19 2.38a9.344 9.344 0 0 0-9.234 6.893c.053-.02-.055.013 0 0-3.875 2.551-3.922 8.11-.247 10.941l.006-.007-.007.03a6.717 6.717 0 0 0 4.077 1.356h5.173l.03.03h5.192c6.687.053 9.376-8.605 3.835-12.35a9.365 9.365 0 0 0-8.825-6.893z"/></svg>
-  },
-  {
-    name: 'AWS',
-    category: 'Cloud',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103a6.66 6.66 0 0 0-.735-.136c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.71 0 .224.08.416.24.567.159.152.454.304.877.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926z"/></svg>
-  },
-  {
-    name: 'Microsoft Azure',
-    category: 'Cloud',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.483 21.3H24L14.025 4.013l-3.038 8.347 5.836 6.938L5.483 21.3zM13.23 2.7L6.105 8.677 0 19.253h5.505v.014L13.23 2.7z"/></svg>
-  },
-  {
-    name: 'Stripe',
-    category: 'Pagos',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305z"/></svg>
-  },
-  {
-    name: 'PayPal',
-    category: 'Pagos',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527-.506 3.21a.619.619 0 0 0 .612.719h3.961c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.755-4.473a3.724 3.724 0 0 0-.399-.364z"/></svg>
-  },
-  {
-    name: 'Mercado Pago',
-    category: 'Pagos',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.999 2.4c-5.302 0-9.6 4.298-9.6 9.6s4.298 9.6 9.6 9.6 9.6-4.298 9.6-9.6-4.297-9.6-9.6-9.6zm4.383 6.973l-4.383 7.2-4.383-7.2h2.191l2.192 3.6 2.191-3.6h2.192z"/></svg>
-  },
-  {
-    name: 'Slack',
-    category: 'Comunicación',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
-  },
-  {
-    name: 'Microsoft Teams',
-    category: 'Comunicación',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.625 8.073h-5.27V6.674a1.09 1.09 0 0 0-1.09-1.09H8.39a1.09 1.09 0 0 0-1.09 1.09v1.399H2.03a1.09 1.09 0 0 0-1.09 1.09v8.163a1.09 1.09 0 0 0 1.09 1.09h5.27v1.399a1.09 1.09 0 0 0 1.09 1.09h5.875a1.09 1.09 0 0 0 1.09-1.09v-1.399h5.27a1.09 1.09 0 0 0 1.09-1.09V9.163a1.09 1.09 0 0 0-1.09-1.09zM16.51 4.91a2.182 2.182 0 1 0 0-4.364 2.182 2.182 0 0 0 0 4.364zm4.364 1.09a1.636 1.636 0 1 0 0-3.273 1.636 1.636 0 0 0 0 3.273z"/></svg>
-  },
-  {
-    name: 'WhatsApp Business',
-    category: 'Comunicación',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  },
-  {
-    name: 'Notion',
-    category: 'Productividad',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.98-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.934zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.22.186c-.094-.187 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.514.28-.887.747-.933z"/></svg>
-  },
-  {
-    name: 'Airtable',
-    category: 'Productividad',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.992 0L1.605 3.702l10.387 3.882 10.406-3.89L11.992 0zm.428 8.873v14.703l10.954-4.24V4.85L12.42 8.873zM.626 4.85v14.487l10.953 4.24V8.874L.626 4.85z"/></svg>
-  },
-  {
-    name: 'Trello',
-    category: 'Productividad',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 0H3C1.343 0 0 1.343 0 3v18c0 1.656 1.343 3 3 3h18c1.656 0 3-1.344 3-3V3c0-1.657-1.344-3-3-3zM10.44 18.18c0 .795-.645 1.44-1.44 1.44H4.56c-.795 0-1.44-.645-1.44-1.44V4.56c0-.795.645-1.44 1.44-1.44H9c.795 0 1.44.645 1.44 1.44v13.62zm10.44-6c0 .794-.645 1.44-1.44 1.44h-4.44c-.795 0-1.44-.646-1.44-1.44V4.56c0-.795.645-1.44 1.44-1.44h4.44c.795 0 1.44.645 1.44 1.44v7.62z"/></svg>
-  },
-  {
-    name: 'Salesforce',
-    category: 'CRM',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.006 5.415a4.195 4.195 0 0 1 3.045-1.306c1.56 0 2.954.9 3.69 2.205.63-.3 1.35-.45 2.1-.45 2.85 0 5.159 2.34 5.159 5.22s-2.31 5.22-5.16 5.22c-.345 0-.69-.045-1.02-.12a3.975 3.975 0 0 1-3.57 2.19c-.63 0-1.245-.15-1.785-.42a4.804 4.804 0 0 1-4.35 2.79c-2.31 0-4.26-1.665-4.69-3.87a4.013 4.013 0 0 1-.54.045c-2.34 0-4.23-1.92-4.23-4.29 0-1.86 1.17-3.435 2.82-4.035-.06-.345-.09-.69-.09-1.05 0-3.27 2.64-5.925 5.9-5.925 1.95-.015 3.72.96 4.72 2.805z"/></svg>
-  },
-  {
-    name: 'HubSpot',
-    category: 'CRM',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.164 7.93V5.084a2.198 2.198 0 0 0 1.267-1.984v-.066A2.2 2.2 0 0 0 17.238.84h-.065a2.2 2.2 0 0 0-2.193 2.193v.065a2.19 2.19 0 0 0 1.252 1.973v2.86a6.27 6.27 0 0 0-2.838 1.476l-7.55-5.874a2.625 2.625 0 1 0-1.39 1.884l7.32 5.69a6.28 6.28 0 0 0-.104 1.146 6.274 6.274 0 0 0 6.275 6.275c.192 0 .39-.017.59-.04l2.72 3.643a1.69 1.69 0 1 0 1.405-1.086l-2.61-3.493a6.274 6.274 0 0 0-2.622-10.622zm-.982 9.755a3.47 3.47 0 1 1 0-6.94 3.47 3.47 0 0 1 0 6.94z"/></svg>
-  },
-  {
-    name: 'Pipedrive',
-    category: 'CRM',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 18.75a6.75 6.75 0 1 1 0-13.5 6.75 6.75 0 0 1 0 13.5zm0-10.5a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5z"/></svg>
-  },
-  {
-    name: 'Zapier',
-    category: 'Automatización',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.633 1.927l-3.186 6.559-.15.309-.15-.309L8.96 1.927H3.058l3.186 6.559.15.309H0v6.41h6.394l-.15.309-3.186 6.559h5.902l3.187-6.559.15-.309.15.309 3.186 6.559h5.902l-3.186-6.559-.15-.309H24v-6.41h-6.394l.15-.309 3.186-6.559h-5.309zm-3.336 10.336a1.26 1.26 0 1 1 0-2.521 1.26 1.26 0 0 1 0 2.521z"/></svg>
-  },
-  {
-    name: 'Make',
-    category: 'Automatización',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6 13h-5v5h-2v-5H6v-2h5V6h2v5h5v2z"/></svg>
-  },
-  {
-    name: 'n8n',
-    category: 'Automatización',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-  },
-  {
-    name: 'Twilio',
-    category: 'Comunicación',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.381 0 0 5.381 0 12s5.381 12 12 12 12-5.381 12-12S18.619 0 12 0zm0 20.25c-4.556 0-8.25-3.694-8.25-8.25S7.444 3.75 12 3.75s8.25 3.694 8.25 8.25-3.694 8.25-8.25 8.25zm3.45-11.7a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zm0 7.2a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zm-6.9-7.2a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zm0 7.2a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2z"/></svg>
-  },
-  {
-    name: 'SendGrid',
-    category: 'Email',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 0h8v8h8v8h-8v8H8v-8H0V8h8V0zm8 16h8v8h-8v-8zM0 0h8v8H0V0z"/></svg>
-  },
-  {
-    name: 'Mailchimp',
-    category: 'Email',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.659 14.178c-.128-.065-.196-.034-.253.034-.037.044-.127.196-.19.348-.025.06-.047.107-.065.138-.08.138-.177.253-.317.345-.177.116-.397.175-.655.175-.323 0-.597-.1-.806-.295-.209-.196-.333-.466-.368-.798h2.79c.085 0 .134-.053.134-.158 0-.655-.168-1.176-.504-1.561-.336-.385-.819-.578-1.449-.578-.597 0-1.083.193-1.449.578-.365.385-.547.89-.547 1.515 0 .655.189 1.176.566 1.561.378.385.879.578 1.503.578.492 0 .897-.112 1.212-.336.316-.224.54-.516.676-.875.053-.146.019-.218-.106-.262z"/></svg>
-  },
-  {
-    name: 'PostgreSQL',
-    category: 'Database',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.561 9.201c-.419-2.199-1.91-4.065-4.084-5.083-.933-.436-1.96-.685-3.024-.734a8.08 8.08 0 0 0-1.193.029c-1.11-1.38-2.546-2.39-4.224-2.864C9.04.056 6.983.309 5.229 1.38c-1.19.728-2.144 1.767-2.81 2.985-.667 1.221-1.002 2.575-1.004 3.943-.003 1.95.613 3.886 1.726 5.457-.198.858-.277 1.74-.232 2.62.117 2.279 1.115 4.376 2.866 5.773 1.476 1.176 3.322 1.816 5.188 1.816.42 0 .84-.035 1.258-.106 1.488 1.126 3.306 1.734 5.186 1.734.657 0 1.318-.073 1.97-.222 2.462-.562 4.541-2.04 5.831-4.155 1.29-2.115 1.639-4.643 1.04-7.115-.22-.907-.565-1.765-1.029-2.56a6.85 6.85 0 0 0-1.658-1.35z"/></svg>
-  },
-  {
-    name: 'MongoDB',
-    category: 'Database',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.193 9.555c-1.264-5.58-4.252-7.414-4.573-8.115-.28-.394-.53-.954-.735-1.44-.036.495-.055.685-.523 1.184-.723.566-4.438 3.682-4.74 10.02-.282 5.912 4.27 9.435 4.888 9.884l.07.05A73.49 73.49 0 0 1 11.91 24h.481c.114-1.032.284-2.056.51-3.07.417-.296.604-.463.85-.693a11.342 11.342 0 0 0 3.639-8.464c.01-.814-.103-1.662-.197-2.218z"/></svg>
-  },
-  {
-    name: 'MySQL',
-    category: 'Database',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.405 5.676c-.115 0-.193.014-.274.033v.013h.014c.054.104.146.18.214.273.054.107.1.214.154.32l.014-.015c.094-.066.14-.172.14-.333-.04-.047-.046-.094-.08-.14-.04-.067-.126-.1-.18-.153z"/></svg>
-  },
-  {
-    name: 'Redis',
-    category: 'Database',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.5 2.661l-10.5 4.15v10.378l10.5 4.15 10.5-4.15V6.811l-10.5-4.15zm0 2.036l7.307 2.888-7.307 2.889-7.307-2.889 7.307-2.888zM2.143 8.452l7.5 2.963v7.133l-7.5-2.963V8.452zm16.714 0v7.133l-7.5 2.963v-7.133l7.5-2.963z"/></svg>
-  },
-  {
-    name: 'Shopify',
-    category: 'E-commerce',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.756c-.022-.142-.17-.227-.285-.249-.114-.022-2.357-.042-2.357-.042s-1.747-1.698-1.912-1.869c-.054-.054-.118-.075-.18-.089l-.955 21.566z"/></svg>
-  },
-  {
-    name: 'WooCommerce',
-    category: 'E-commerce',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.227 4.857A2.228 2.228 0 0 0 0 7.094v7.457c0 1.236 1.001 2.237 2.237 2.237h9.253l4.229 2.355-.962-2.355h7.006c1.236 0 2.237-1 2.237-2.237V7.094c0-1.236-1-2.237-2.237-2.237H2.227z"/></svg>
-  },
-  {
-    name: 'GitHub',
-    category: 'Desarrollo',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-  },
-  {
-    name: 'GitLab',
-    category: 'Desarrollo',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.845.904c-.435 0-.82.28-.955.692C2.639 5.449 1.246 9.728.07 13.335a1.437 1.437 0 0 0 .522 1.607l11.071 8.045c.2.145.472.144.67-.004l11.073-8.04a1.436 1.436 0 0 0 .522-1.61c-1.285-3.942-2.683-8.256-3.817-11.746a1.004 1.004 0 0 0-.957-.684.987.987 0 0 0-.949.69l-2.405 7.408H8.203l-2.41-7.408a.987.987 0 0 0-.942-.69h-.006z"/></svg>
-  },
-  {
-    name: 'Jira',
-    category: 'Desarrollo',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 11.513H0a5.218 5.218 0 0 0 5.232 5.215h2.13v2.057A5.215 5.215 0 0 0 12.575 24V12.518a1.005 1.005 0 0 0-1.005-1.005zm5.723-5.756H5.736a5.215 5.215 0 0 0 5.215 5.214h2.129v2.058a5.218 5.218 0 0 0 5.215 5.214V6.758a1.001 1.001 0 0 0-1.001-1.001zM23.013 0H11.455a5.215 5.215 0 0 0 5.215 5.215h2.129v2.057A5.215 5.215 0 0 0 24 12.483V1.005A1.005 1.005 0 0 0 23.013 0z"/></svg>
-  },
-  {
-    name: 'Figma',
-    category: 'Diseño',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zM8.148 24c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v4.49c0 2.476-2.014 4.49-4.588 4.49zm-.001-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02 3.019-1.355 3.019-3.019v-3.02H8.147zM8.148 8.981c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981H8.148zm-.001-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.147zM15.852 24c-2.574 0-4.588-2.014-4.588-4.49v-4.49h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm0-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019 3.019-1.355 3.019-3.019-1.354-3.019-3.019-3.019zM15.852 15.981h-4.588V8.981h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.51-4.49 4.51zm0-5.529c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.039 3.019 3.039 3.019-1.375 3.019-3.039-1.354-3.019-3.019-3.019z"/></svg>
-  },
-  {
-    name: 'OpenAI',
-    category: 'IA',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.407-.667zm2.01-3.023l-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.142.08L8.704 5.46a.795.795 0 0 0-.393.681zm1.097-2.365l2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z"/></svg>
-  },
-  {
-    name: 'Anthropic',
-    category: 'IA',
-    svg: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.304 3.541h-3.672l6.696 16.918h3.672l-6.696-16.918zm-10.608 0L0 20.459h3.744l1.368-3.6h7.056l1.368 3.6h3.744L10.584 3.541h-3.888zm-.48 10.222l2.424-6.378 2.424 6.378h-4.848z"/></svg>
-  },
+  // Cloud
+  { name: 'Google Cloud', category: 'Cloud', color: '#4285F4', icon: 'https://cdn.simpleicons.org/googlecloud' },
+  { name: 'AWS', category: 'Cloud', color: '#FF9900', icon: 'https://cdn.simpleicons.org/amazonaws/FF9900' },
+  { name: 'Azure', category: 'Cloud', color: '#0078D4', icon: 'https://cdn.simpleicons.org/microsoftazure' },
+  // Pagos
+  { name: 'Stripe', category: 'Pagos', color: '#635BFF', icon: 'https://cdn.simpleicons.org/stripe' },
+  { name: 'PayPal', category: 'Pagos', color: '#00457C', icon: 'https://cdn.simpleicons.org/paypal' },
+  { name: 'Mercado Pago', category: 'Pagos', color: '#00B1EA', icon: 'https://cdn.simpleicons.org/mercadopago' },
+  // Comunicación
+  { name: 'Slack', category: 'Comunicación', color: '#4A154B', icon: 'https://cdn.simpleicons.org/slack' },
+  { name: 'Teams', category: 'Comunicación', color: '#6264A7', icon: 'https://cdn.simpleicons.org/microsoftteams' },
+  { name: 'WhatsApp', category: 'Comunicación', color: '#25D366', icon: 'https://cdn.simpleicons.org/whatsapp' },
+  { name: 'Twilio', category: 'Comunicación', color: '#F22F46', icon: 'https://cdn.simpleicons.org/twilio' },
+  { name: 'Discord', category: 'Comunicación', color: '#5865F2', icon: 'https://cdn.simpleicons.org/discord' },
+  // Productividad
+  { name: 'Notion', category: 'Productividad', color: '#000000', icon: 'https://cdn.simpleicons.org/notion/ffffff' },
+  { name: 'Airtable', category: 'Productividad', color: '#18BFFF', icon: 'https://cdn.simpleicons.org/airtable' },
+  { name: 'Trello', category: 'Productividad', color: '#0052CC', icon: 'https://cdn.simpleicons.org/trello' },
+  { name: 'Monday', category: 'Productividad', color: '#FF3D57', icon: 'https://cdn.simpleicons.org/monday' },
+  { name: 'Asana', category: 'Productividad', color: '#F06A6A', icon: 'https://cdn.simpleicons.org/asana' },
+  // CRM
+  { name: 'Salesforce', category: 'CRM', color: '#00A1E0', icon: 'https://cdn.simpleicons.org/salesforce' },
+  { name: 'HubSpot', category: 'CRM', color: '#FF7A59', icon: 'https://cdn.simpleicons.org/hubspot' },
+  { name: 'Pipedrive', category: 'CRM', color: '#1A1A1A', icon: 'https://cdn.simpleicons.org/pipedrive/25CE7B' },
+  { name: 'Zoho', category: 'CRM', color: '#C8202B', icon: 'https://cdn.simpleicons.org/zoho' },
+  // Automatización
+  { name: 'Zapier', category: 'Automatización', color: '#FF4A00', icon: 'https://cdn.simpleicons.org/zapier' },
+  { name: 'Make', category: 'Automatización', color: '#6D00CC', icon: 'https://cdn.simpleicons.org/make' },
+  { name: 'n8n', category: 'Automatización', color: '#EA4B71', icon: 'https://cdn.simpleicons.org/n8n' },
+  // Email
+  { name: 'SendGrid', category: 'Email', color: '#1A82E2', icon: 'https://cdn.simpleicons.org/sendgrid' },
+  { name: 'Mailchimp', category: 'Email', color: '#FFE01B', icon: 'https://cdn.simpleicons.org/mailchimp' },
+  // Database
+  { name: 'PostgreSQL', category: 'Database', color: '#4169E1', icon: 'https://cdn.simpleicons.org/postgresql' },
+  { name: 'MongoDB', category: 'Database', color: '#47A248', icon: 'https://cdn.simpleicons.org/mongodb' },
+  { name: 'MySQL', category: 'Database', color: '#4479A1', icon: 'https://cdn.simpleicons.org/mysql' },
+  { name: 'Redis', category: 'Database', color: '#DC382D', icon: 'https://cdn.simpleicons.org/redis' },
+  // E-commerce
+  { name: 'Shopify', category: 'E-commerce', color: '#7AB55C', icon: 'https://cdn.simpleicons.org/shopify' },
+  { name: 'WooCommerce', category: 'E-commerce', color: '#96588A', icon: 'https://cdn.simpleicons.org/woocommerce' },
+  // Desarrollo
+  { name: 'GitHub', category: 'Desarrollo', color: '#181717', icon: 'https://cdn.simpleicons.org/github/ffffff' },
+  { name: 'GitLab', category: 'Desarrollo', color: '#FC6D26', icon: 'https://cdn.simpleicons.org/gitlab' },
+  { name: 'Jira', category: 'Desarrollo', color: '#0052CC', icon: 'https://cdn.simpleicons.org/jira' },
+  { name: 'Figma', category: 'Diseño', color: '#F24E1E', icon: 'https://cdn.simpleicons.org/figma' },
+  // IA
+  { name: 'OpenAI', category: 'IA', color: '#412991', icon: 'https://cdn.simpleicons.org/openai/ffffff' },
+  { name: 'Anthropic', category: 'IA', color: '#D4A574', icon: 'https://cdn.simpleicons.org/anthropic/ffffff' },
+  { name: 'Google AI', category: 'IA', color: '#4285F4', icon: 'https://cdn.simpleicons.org/googlegemini' },
+  { name: 'Vercel', category: 'Cloud', color: '#000000', icon: 'https://cdn.simpleicons.org/vercel/ffffff' },
 ];
 
 const categories = ['Todos', 'Cloud', 'Pagos', 'Comunicación', 'Productividad', 'CRM', 'Automatización', 'Database', 'E-commerce', 'Desarrollo', 'IA'];
@@ -233,10 +118,10 @@ export const IntegrationsSection = () => {
     }
   }, [isInView, controls]);
 
-  // Ensure even grid - pad to multiple of 10 for lg screens
+  // Ensure even grid - pad to multiple of 8 for lg screens
   const paddedIntegrations = [...integrations];
-  while (paddedIntegrations.length % 10 !== 0) {
-    paddedIntegrations.push({ name: '', category: '', svg: null });
+  while (paddedIntegrations.length % 8 !== 0) {
+    paddedIntegrations.push({ name: '', category: '', color: '', icon: '' });
   }
 
   return (
@@ -326,7 +211,7 @@ export const IntegrationsSection = () => {
           variants={containerVariants}
           initial="hidden"
           animate={controls}
-          className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-3 md:gap-4 max-w-6xl mx-auto mb-12"
+          className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-4 md:gap-6 max-w-5xl mx-auto mb-12"
         >
           {paddedIntegrations.map((integration, i) => (
             integration.name ? (
@@ -335,37 +220,37 @@ export const IntegrationsSection = () => {
                 custom={i}
                 variants={itemVariants}
                 whileHover={{ 
-                  scale: 1.15, 
-                  y: -8,
-                  transition: { type: "spring", stiffness: 400, damping: 10 }
+                  scale: 1.1, 
+                  y: -4,
+                  transition: { type: "spring", stiffness: 400, damping: 15 }
                 }}
-                className="group flex flex-col items-center gap-2 perspective-1000"
+                className="group flex flex-col items-center gap-2"
               >
                 <motion.div 
-                  className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-muted-foreground/70 group-hover:text-primary group-hover:border-primary/40 group-hover:bg-primary/10 transition-all duration-300 p-3 relative overflow-hidden"
+                  className="w-14 h-14 md:w-16 md:h-16 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center group-hover:border-primary/40 group-hover:bg-primary/5 transition-all duration-300 relative overflow-hidden"
                   whileHover="pulse"
                   variants={pulseVariants}
                 >
                   {/* Shine effect on hover */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full"
-                    whileHover={{ translateX: "200%" }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '100%' }}
                     transition={{ duration: 0.6 }}
                   />
-                  <div className="relative z-10">
-                    {integration.svg}
-                  </div>
+                  <img 
+                    src={integration.icon} 
+                    alt={integration.name}
+                    className="w-7 h-7 md:w-8 md:h-8 relative z-10 opacity-70 group-hover:opacity-100 transition-opacity"
+                    loading="lazy"
+                  />
                 </motion.div>
-                <motion.span 
-                  className="text-[9px] md:text-[10px] text-muted-foreground/60 group-hover:text-muted-foreground text-center transition-colors leading-tight"
-                  initial={{ opacity: 0.6 }}
-                  whileHover={{ opacity: 1 }}
-                >
+                <span className="text-[10px] md:text-xs text-muted-foreground/60 group-hover:text-muted-foreground text-center transition-colors leading-tight font-medium">
                   {integration.name}
-                </motion.span>
+                </span>
               </motion.div>
             ) : (
-              <div key={`empty-${i}`} className="w-12 h-12 md:w-14 md:h-14" />
+              <div key={`empty-${i}`} className="w-14 h-14 md:w-16 md:h-16" />
             )
           ))}
         </motion.div>

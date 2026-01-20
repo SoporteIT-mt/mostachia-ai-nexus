@@ -125,15 +125,24 @@ export const Navbar = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 + i * 0.05 }}
-              whileHover={{ y: -2 }}
-              className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group"
             >
-              {link.label}
+              <span className="relative z-10">{link.label}</span>
+              {/* Underline effect */}
               <motion.span
-                className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary origin-left"
+                className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-accent origin-left"
                 initial={{ scaleX: 0 }}
                 whileHover={{ scaleX: 1 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              />
+              {/* Glow dot on hover */}
+              <motion.span
+                className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary"
+                initial={{ opacity: 0, scale: 0 }}
+                whileHover={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.2, delay: 0.1 }}
               />
             </motion.a>
           ))}
@@ -142,22 +151,46 @@ export const Navbar = () => {
         {/* CTA Buttons & Theme Toggle */}
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <motion.div 
+            whileHover={{ scale: 1.05 }} 
+            whileTap={{ scale: 0.92 }}
+            className="relative"
+          >
             <Button 
               variant="ghost" 
-              className="font-medium text-muted-foreground hover:text-foreground"
+              className="font-medium text-muted-foreground hover:text-foreground relative overflow-hidden group"
               onClick={handleBooking}
             >
-              <Calendar className="w-4 h-4 mr-2" />
+              <motion.span
+                className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0"
+                initial={{ x: '-100%' }}
+                whileHover={{ x: '100%' }}
+                transition={{ duration: 0.6, ease: 'easeInOut' }}
+              />
+              <motion.div
+                whileHover={{ rotate: [0, -10, 10, 0] }}
+                transition={{ duration: 0.5 }}
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+              </motion.div>
               Agendar
             </Button>
           </motion.div>
           <motion.div 
             whileHover={{ scale: 1.05, y: -2 }} 
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.92 }}
+            className="relative"
           >
-            <Button className="btn-glow rounded-xl px-6" asChild>
-              <a href="#demos">Probar Demo</a>
+            <Button className="btn-glow rounded-xl px-6 relative overflow-hidden group" asChild>
+              <a href="#demos">
+                <motion.span
+                  className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: '100%' }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
+                />
+                <span className="relative z-10">Probar Demo</span>
+              </a>
             </Button>
           </motion.div>
         </div>

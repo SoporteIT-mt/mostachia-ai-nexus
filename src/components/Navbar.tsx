@@ -1,14 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { Menu, X, Calendar } from 'lucide-react';
+import { Menu, X, Calendar, Zap, Play, Users, DollarSign } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from './ThemeToggle';
 
-const navLinks = [
-  { href: '#demos', label: 'Demos' },
-  { href: '#soluciones', label: 'Soluciones' },
-  { href: '#casos', label: 'Casos de Éxito' },
-  { href: '#precios', label: 'Precios' },
+interface NavLink {
+  href: string;
+  label: string;
+  icon: typeof Zap;
+}
+
+const navLinks: NavLink[] = [
+  { href: '#demos', label: 'Demos', icon: Play },
+  { href: '#soluciones', label: 'Soluciones', icon: Zap },
+  { href: '#casos', label: 'Casos de Éxito', icon: Users },
+  { href: '#precios', label: 'Precios', icon: DollarSign },
 ];
 
 const CAL_LINK = 'https://cal.com/mostachia/consultoria';
@@ -17,12 +23,11 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
   const navRef = useRef<HTMLElement>(null);
 
-  // Scroll progress for dynamic styling
   const { scrollY } = useScroll();
   
-  // Transform values based on scroll
   const headerBg = useTransform(
     scrollY,
     [0, 50, 100],
@@ -47,18 +52,66 @@ export const Navbar = () => {
     ['0 0 0 0 rgba(0,0,0,0)', '0 4px 20px -5px rgba(0,0,0,0.3)', '0 8px 30px -5px rgba(0,0,0,0.5)']
   );
 
+  // Track active section based on scroll
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       setIsScrolled(scrollTop > 20);
       setScrollProgress(Math.min(scrollTop / 200, 1));
+      
+      // Detect active section
+      const sections = navLinks.map(link => link.href.replace('#', ''));
+      for (const section of sections.reverse()) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 150) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
+    
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleBooking = () => {
     window.open(CAL_LINK, '_blank', 'noopener,noreferrer');
+  };
+
+  // Icon morphing component
+  const MorphingIcon = ({ link, isActive }: { link: NavLink; isActive: boolean }) => {
+    const IconComponent = link.icon;
+    
+    return (
+      <motion.div
+        className="relative w-4 h-4 mr-1.5"
+        initial={false}
+        animate={isActive ? { scale: 1.2, rotate: 360 } : { scale: 1, rotate: 0 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      >
+        <motion.div
+          animate={isActive ? { opacity: 1 } : { opacity: 0.5 }}
+          transition={{ duration: 0.2 }}
+        >
+          <IconComponent 
+            className={`w-4 h-4 transition-colors duration-300 ${
+              isActive ? 'text-primary' : 'text-muted-foreground'
+            }`}
+          />
+        </motion.div>
+        {isActive && (
+          <motion.div
+            className="absolute inset-0 rounded-full bg-primary/20"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 2, opacity: [0.5, 0] }}
+            transition={{ duration: 0.6, repeat: Infinity, repeatDelay: 2 }}
+          />
+        )}
+      </motion.div>
+    );
   };
 
   return (
@@ -116,36 +169,52 @@ export const Navbar = () => {
           </span>
         </motion.a>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link, i) => (
-            <motion.a
-              key={link.href}
-              href={link.href}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 + i * 0.05 }}
-              whileHover={{ y: -3 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group"
-            >
-              <span className="relative z-10">{link.label}</span>
-              {/* Underline effect */}
-              <motion.span
-                className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-accent origin-left"
-                initial={{ scaleX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              />
-              {/* Glow dot on hover */}
-              <motion.span
-                className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary"
-                initial={{ opacity: 0, scale: 0 }}
-                whileHover={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.2, delay: 0.1 }}
-              />
-            </motion.a>
-          ))}
+        {/* Desktop Navigation with morphing icons */}
+        <div className="hidden md:flex items-center gap-6">
+          {navLinks.map((link, i) => {
+            const isActive = activeSection === link.href.replace('#', '');
+            
+            return (
+              <motion.a
+                key={link.href}
+                href={link.href}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 + i * 0.05 }}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className={`relative flex items-center text-sm font-medium transition-colors ${
+                  isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <MorphingIcon link={link} isActive={isActive} />
+                <span className="relative z-10">{link.label}</span>
+                
+                {/* Active indicator */}
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.span
+                      className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-accent"
+                      initial={{ scaleX: 0, opacity: 0 }}
+                      animate={{ scaleX: 1, opacity: 1 }}
+                      exit={{ scaleX: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                  )}
+                </AnimatePresence>
+                
+                {/* Hover underline (only when not active) */}
+                {!isActive && (
+                  <motion.span
+                    className="absolute -bottom-1 left-0 w-full h-0.5 bg-border origin-left"
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                )}
+              </motion.a>
+            );
+          })}
         </div>
 
         {/* CTA Buttons & Theme Toggle */}
@@ -243,19 +312,27 @@ export const Navbar = () => {
             }}
           >
             <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
-              {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.08 }}
-                  onClick={() => setIsMobileOpen(false)}
-                  className="text-lg font-medium py-2 hover:text-primary transition-colors"
-                >
-                  {link.label}
-                </motion.a>
-              ))}
+              {navLinks.map((link, i) => {
+                const IconComponent = link.icon;
+                const isActive = activeSection === link.href.replace('#', '');
+                
+                return (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.08 }}
+                    onClick={() => setIsMobileOpen(false)}
+                    className={`flex items-center gap-3 text-lg font-medium py-2 transition-colors ${
+                      isActive ? 'text-primary' : 'hover:text-primary'
+                    }`}
+                  >
+                    <IconComponent className="w-5 h-5" />
+                    {link.label}
+                  </motion.a>
+                );
+              })}
               <motion.div 
                 className="flex flex-col gap-3 mt-4 pt-4 border-t border-border/30"
                 initial={{ opacity: 0 }}

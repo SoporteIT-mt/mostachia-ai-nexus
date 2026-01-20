@@ -13,6 +13,8 @@ export const WavyBackground = ({
   blur = 10,
   speed = "slow",
   waveOpacity = 0.5,
+  wavePosition = 0.5, // 0 = top, 0.5 = center, 1 = bottom
+  waveAmplitude = 100,
   ...props
 }: {
   children?: React.ReactNode;
@@ -24,6 +26,8 @@ export const WavyBackground = ({
   blur?: number;
   speed?: "slow" | "fast";
   waveOpacity?: number;
+  wavePosition?: number;
+  waveAmplitude?: number;
   [key: string]: unknown;
 }) => {
   const noise = createNoise3D();
@@ -77,8 +81,8 @@ export const WavyBackground = ({
         ctx.lineWidth = waveWidth || 50;
         ctx.strokeStyle = waveColors[i % waveColors.length];
         for (let x = 0; x < w; x += 5) {
-          const y = noise(x / 800, 0.3 * i, nt) * 100;
-          ctx.lineTo(x, y + h * 0.5);
+          const y = noise(x / 800, 0.3 * i, nt) * waveAmplitude;
+          ctx.lineTo(x, y + h * wavePosition);
         }
         ctx.stroke();
         ctx.closePath();

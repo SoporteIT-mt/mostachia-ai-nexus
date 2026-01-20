@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { TrendingUp, Clock, DollarSign, Target, ArrowUpRight, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { realPeopleImages } from './TechLogos';
+import { Depth3DCard } from './ParallaxEffects';
 
 // Real Argentine company SVG logos
 const companyLogos = {
@@ -226,10 +227,9 @@ export const CasosExitoSection = () => {
             <motion.div
               key={caso.id}
               variants={cardVariants}
-              whileHover={{ y: -6, transition: { duration: 0.2 } }}
               className="group"
             >
-              <div className="h-full p-5 rounded-xl glass-card border border-border/50 hover:border-primary/20 transition-all duration-300">
+              <Depth3DCard depth={10} className="h-full p-5 rounded-xl glass-card border border-border/50 hover:border-primary/20 transition-colors duration-300">
                 {/* Company header */}
                 <div className="flex items-center gap-3 mb-4">
                   <div 
@@ -281,7 +281,7 @@ export const CasosExitoSection = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Depth3DCard>
             </motion.div>
           ))}
         </motion.div>

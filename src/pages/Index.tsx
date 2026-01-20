@@ -16,6 +16,7 @@ import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { StickyCTA } from '@/components/StickyCTA';
 import { ParallaxBackground } from '@/components/ParallaxSection';
 import { ScrollProgress } from '@/components/ScrollProgress';
+import { ScrollToTop } from '@/components/ScrollToTop';
 
 // Soft section separator
 const SectionGlow = () => (
@@ -79,6 +80,7 @@ const Index = () => {
       <Footer />
       <FloatingWhatsApp />
       <StickyCTA />
+      <ScrollToTop />
     </div>
   );
 };

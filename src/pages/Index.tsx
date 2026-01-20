@@ -18,11 +18,9 @@ import { ParallaxBackground } from '@/components/ParallaxSection';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { SectionTransition, AnimatedDivider } from '@/components/SectionTransition';
-import { PagePreloader } from '@/components/PagePreloader';
 
 const Index = () => {
   return (
-    <PagePreloader minLoadTime={1800}>
       <div className="relative min-h-screen overflow-x-hidden scroll-smooth">
         <ScrollProgress />
         <ParallaxBackground />
@@ -101,7 +99,6 @@ const Index = () => {
         <StickyCTA />
         <ScrollToTop />
       </div>
-    </PagePreloader>
   );
 };
 

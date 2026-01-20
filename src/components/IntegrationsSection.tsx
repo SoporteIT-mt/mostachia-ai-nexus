@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useRef, useEffect } from 'react';
+import { motion, useInView, useAnimation } from 'framer-motion';
 import { Zap, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -174,27 +174,112 @@ const integrations = [
 
 const categories = ['Todos', 'Cloud', 'Pagos', 'Comunicación', 'Productividad', 'CRM', 'Automatización', 'Database', 'E-commerce', 'Desarrollo', 'IA'];
 
+// Animation variants for wave/cascade effect
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.03,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 30,
+    scale: 0.8,
+    rotateX: -15,
+  },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    rotateX: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 12,
+      delay: Math.floor(i / 10) * 0.1 + (i % 10) * 0.03, // Wave effect by rows
+    },
+  }),
+};
+
+const pulseVariants = {
+  initial: { boxShadow: "0 0 0 0 rgba(0, 200, 150, 0)" },
+  pulse: {
+    boxShadow: [
+      "0 0 0 0 rgba(0, 200, 150, 0.4)",
+      "0 0 0 10px rgba(0, 200, 150, 0)",
+    ],
+    transition: {
+      duration: 1.5,
+      repeat: Infinity,
+      repeatDelay: 2,
+    },
+  },
+};
+
 export const IntegrationsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const controls = useAnimation();
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible");
+    }
+  }, [isInView, controls]);
+
+  // Ensure even grid - pad to multiple of 10 for lg screens
+  const paddedIntegrations = [...integrations];
+  while (paddedIntegrations.length % 10 !== 0) {
+    paddedIntegrations.push({ name: '', category: '', svg: null });
+  }
 
   return (
     <section id="integraciones" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+      {/* Animated Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+        <motion.div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/10 blur-[120px]"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
       
       <div className="container mx-auto px-6 relative z-10">
-        {/* Header */}
+        {/* Header with staggered animation */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
-            <Zap className="w-4 h-4 text-primary" />
+          <motion.div 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          >
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            >
+              <Zap className="w-4 h-4 text-primary" />
+            </motion.div>
             <span className="text-sm font-medium text-primary">+30 Integraciones</span>
-          </div>
+          </motion.div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6">
             Conectamos con <span className="text-gradient-primary">Todo</span>
           </h2>
@@ -203,65 +288,115 @@ export const IntegrationsSection = () => {
           </p>
         </motion.div>
 
-        {/* Categories pills */}
+        {/* Categories pills with cascade */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.2 }}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.05, delayChildren: 0.3 },
+            },
+          }}
           className="flex flex-wrap justify-center gap-2 mb-12"
         >
           {categories.slice(0, 7).map((cat, i) => (
-            <span
+            <motion.span
               key={cat}
-              className="px-4 py-2 rounded-full text-xs font-medium glass-card border border-white/10 text-muted-foreground"
+              variants={{
+                hidden: { opacity: 0, y: 20, scale: 0.8 },
+                visible: { 
+                  opacity: 1, 
+                  y: 0, 
+                  scale: 1,
+                  transition: { type: "spring", stiffness: 150, damping: 12 }
+                },
+              }}
+              whileHover={{ scale: 1.05, y: -2 }}
+              className="px-4 py-2 rounded-full text-xs font-medium glass-card border border-white/10 text-muted-foreground hover:border-primary/30 hover:text-primary transition-colors cursor-default"
             >
               {cat}
-            </span>
+            </motion.span>
           ))}
         </motion.div>
 
-        {/* Logos Grid */}
+        {/* Logos Grid with Wave Animation */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.3 }}
-          className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-4 max-w-6xl mx-auto mb-12"
+          variants={containerVariants}
+          initial="hidden"
+          animate={controls}
+          className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-3 md:gap-4 max-w-6xl mx-auto mb-12"
         >
-          {integrations.map((integration, i) => (
-            <motion.div
-              key={integration.name}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.4 + i * 0.02, duration: 0.3 }}
-              whileHover={{ scale: 1.15, y: -4 }}
-              className="group flex flex-col items-center gap-2"
-            >
-              <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-muted-foreground/70 group-hover:text-primary group-hover:border-primary/30 group-hover:bg-primary/5 transition-all duration-300 p-3">
-                {integration.svg}
-              </div>
-              <span className="text-[9px] md:text-[10px] text-muted-foreground/60 group-hover:text-muted-foreground text-center transition-colors leading-tight">
-                {integration.name}
-              </span>
-            </motion.div>
+          {paddedIntegrations.map((integration, i) => (
+            integration.name ? (
+              <motion.div
+                key={integration.name}
+                custom={i}
+                variants={itemVariants}
+                whileHover={{ 
+                  scale: 1.15, 
+                  y: -8,
+                  transition: { type: "spring", stiffness: 400, damping: 10 }
+                }}
+                className="group flex flex-col items-center gap-2 perspective-1000"
+              >
+                <motion.div 
+                  className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-muted-foreground/70 group-hover:text-primary group-hover:border-primary/40 group-hover:bg-primary/10 transition-all duration-300 p-3 relative overflow-hidden"
+                  whileHover="pulse"
+                  variants={pulseVariants}
+                >
+                  {/* Shine effect on hover */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full"
+                    whileHover={{ translateX: "200%" }}
+                    transition={{ duration: 0.6 }}
+                  />
+                  <div className="relative z-10">
+                    {integration.svg}
+                  </div>
+                </motion.div>
+                <motion.span 
+                  className="text-[9px] md:text-[10px] text-muted-foreground/60 group-hover:text-muted-foreground text-center transition-colors leading-tight"
+                  initial={{ opacity: 0.6 }}
+                  whileHover={{ opacity: 1 }}
+                >
+                  {integration.name}
+                </motion.span>
+              </motion.div>
+            ) : (
+              <div key={`empty-${i}`} className="w-12 h-12 md:w-14 md:h-14" />
+            )
           ))}
         </motion.div>
 
-        {/* CTA */}
+        {/* CTA with bounce animation */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 1, type: "spring", stiffness: 100 }}
           className="text-center"
         >
           <p className="text-muted-foreground mb-6">
             ¿No ves tu herramienta? <span className="text-primary font-medium">Desarrollamos integraciones custom.</span>
           </p>
-          <Button variant="outline" className="rounded-xl px-6" asChild>
-            <a href="#contacto">
-              Consultar por integración
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </a>
-          </Button>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Button variant="outline" className="rounded-xl px-6 group" asChild>
+              <a href="#contacto">
+                Consultar por integración
+                <motion.span
+                  className="ml-2 inline-block"
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <ArrowRight className="w-4 h-4" />
+                </motion.span>
+              </a>
+            </Button>
+          </motion.div>
         </motion.div>
       </div>
     </section>

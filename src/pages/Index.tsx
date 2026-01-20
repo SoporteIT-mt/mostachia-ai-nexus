@@ -17,14 +17,7 @@ import { StickyCTA } from '@/components/StickyCTA';
 import { ParallaxBackground } from '@/components/ParallaxSection';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ScrollToTop } from '@/components/ScrollToTop';
-
-// Soft section separator
-const SectionGlow = () => (
-  <div className="relative h-20 flex items-center justify-center overflow-hidden">
-    <div className="w-full max-w-lg h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
-    <div className="absolute w-1.5 h-1.5 rounded-full bg-primary/40 shadow-lg shadow-primary/30" />
-  </div>
-);
+import { SectionTransition, AnimatedDivider } from '@/components/SectionTransition';
 
 const Index = () => {
   return (
@@ -35,49 +28,73 @@ const Index = () => {
       <main className="relative z-10">
         {/* 1. Hero - Primera impresión */}
         <HeroSection />
-        <MetricsTicker />
+        <SectionTransition direction="up" delay={0.1}>
+          <MetricsTicker />
+        </SectionTransition>
         
         {/* 2. Demos - Demostración inmediata de valor */}
-        <SectionGlow />
-        <IntegratedDemoHub />
+        <AnimatedDivider />
+        <SectionTransition direction="up" delay={0.1}>
+          <IntegratedDemoHub />
+        </SectionTransition>
         
         {/* 3. Casos de Éxito - Prueba social con resultados */}
-        <SectionGlow />
-        <CasosExitoSection />
+        <AnimatedDivider />
+        <SectionTransition direction="left" delay={0.1}>
+          <CasosExitoSection />
+        </SectionTransition>
         
         {/* 4. Pricing - Decisión de compra */}
-        <SectionGlow />
-        <PricingSection />
+        <AnimatedDivider />
+        <SectionTransition direction="scale" delay={0.1}>
+          <PricingSection />
+        </SectionTransition>
         
         {/* 5. Testimonios - Refuerzo social */}
-        <SectionGlow />
-        <TestimonialsSection />
+        <AnimatedDivider />
+        <SectionTransition direction="right" delay={0.1}>
+          <TestimonialsSection />
+        </SectionTransition>
         
         {/* 6. Integraciones - Credibilidad técnica */}
-        <SectionGlow />
-        <IntegrationsSection />
+        <AnimatedDivider />
+        <SectionTransition direction="blur" delay={0.1}>
+          <IntegrationsSection />
+        </SectionTransition>
         
         {/* 7. Features - Detalles técnicos */}
-        <SectionGlow />
-        <FeaturesSection />
+        <AnimatedDivider />
+        <SectionTransition direction="up" delay={0.1}>
+          <FeaturesSection />
+        </SectionTransition>
         
         {/* 8. Cómo funciona */}
-        <SectionGlow />
-        <HowItWorksSection />
+        <AnimatedDivider />
+        <SectionTransition direction="left" delay={0.1}>
+          <HowItWorksSection />
+        </SectionTransition>
         
         {/* 9. Confianza y Garantías */}
-        <SectionGlow />
-        <TrustSection />
+        <AnimatedDivider />
+        <SectionTransition direction="scale" delay={0.1}>
+          <TrustSection />
+        </SectionTransition>
         
         {/* 10. FAQ - Resolver objeciones */}
-        <SectionGlow />
-        <FAQSection />
+        <AnimatedDivider />
+        <SectionTransition direction="up" delay={0.1}>
+          <FAQSection />
+        </SectionTransition>
         
         {/* 11. Blog - SEO y autoridad */}
-        <SectionGlow />
-        <BlogSection />
+        <AnimatedDivider />
+        <SectionTransition direction="right" delay={0.1}>
+          <BlogSection />
+        </SectionTransition>
       </main>
-      <Footer />
+      <SectionTransition direction="fade" delay={0.2}>
+        <Footer />
+      </SectionTransition>
       <FloatingWhatsApp />
       <StickyCTA />
       <ScrollToTop />

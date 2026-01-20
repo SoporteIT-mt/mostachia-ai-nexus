@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Sparkles, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { AnimatedHeroBackground } from '@/components/ui/animated-hero-background';
+import { Web3HeroBackground } from '@/components/ui/animated-web3-landing-page';
 import { TechLogosBar } from './TechLogos';
 
 const CAL_LINK = 'https://cal.com/mostachia/consultoria';
@@ -61,7 +61,7 @@ const fadeUpSpring = {
 
 export const HeroSection = () => {
   return (
-    <AnimatedHeroBackground>
+    <Web3HeroBackground>
       {/* Main Content */}
       <div className="container relative z-10 mx-auto px-6 py-20 min-h-screen flex flex-col justify-center">
         <div className="max-w-4xl mx-auto text-center">
@@ -226,6 +226,6 @@ export const HeroSection = () => {
           />
         </motion.div>
       </motion.div>
-    </AnimatedHeroBackground>
+    </Web3HeroBackground>
   );
 };

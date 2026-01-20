@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Check, ArrowRight, Sparkles, Crown, Building2, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Depth3DCard } from './ParallaxEffects';
 
 const plans = [
   {
@@ -136,18 +137,17 @@ export const PricingSection = () => {
               variants={cardVariants}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              whileHover={{ 
-                y: -8, 
-                transition: { duration: 0.3, type: "spring", stiffness: 300 }
-              }}
               data-plan={plan.id}
-              className={`relative ${
-                plan.isHighlighted 
-                  ? 'pricing-highlight' 
-                  : plan.isEnterprise 
-                    ? 'pricing-enterprise' 
-                    : 'glass-card hover:border-primary/30 shadow-lg dark:shadow-none'
-              } p-6 flex flex-col group cursor-pointer transition-all duration-300`}
+            >
+              <Depth3DCard 
+                depth={8}
+                className={`relative h-full ${
+                  plan.isHighlighted 
+                    ? 'pricing-highlight' 
+                    : plan.isEnterprise 
+                      ? 'pricing-enterprise' 
+                      : 'glass-card hover:border-primary/30 shadow-lg dark:shadow-none'
+                } p-6 flex flex-col group cursor-pointer`}
             >
               {/* Badge - moved outside overflow */}
               {plan.badge && (
@@ -241,6 +241,7 @@ export const PricingSection = () => {
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </a>
               </Button>
+              </Depth3DCard>
             </motion.div>
           ))}
         </div>

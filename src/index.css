@@ -90,7 +90,7 @@
     --sidebar-ring: 160 100% 39%;
   }
 
-  /* Light Theme */
+  /* Light Theme - Premium & Polished */
   .light {
     --primary: 160 100% 32%;
     --primary-foreground: 0 0% 100%;
@@ -99,7 +99,7 @@
     --accent: 262 84% 50%;
     --accent-foreground: 0 0% 100%;
     
-    --background: 0 0% 98%;
+    --background: 210 20% 98%;
     --foreground: 222 47% 11%;
     
     --card: 0 0% 100%;
@@ -120,22 +120,28 @@
     --success: 160 84% 32%;
     --success-foreground: 0 0% 100%;
     
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
+    --border: 220 13% 87%;
+    --input: 220 13% 87%;
     --ring: 160 100% 32%;
     
-    --glass-bg: 0 0% 0% / 0.02;
-    --glass-border: 0 0% 0% / 0.06;
+    /* Light mode glass - more visible */
+    --glass-bg: 0 0% 100% / 0.7;
+    --glass-border: 220 13% 80%;
+    --blur-strength: 12px;
     
-    --shadow-color: 220 13% 80%;
-    --shadow-card: 0 10px 40px -10px hsl(var(--shadow-color) / 0.3);
-    --shadow-card-hover: 0 25px 50px -12px hsl(var(--shadow-color) / 0.4);
+    /* Light mode shadows - refined and elegant */
+    --shadow-color: 220 25% 70%;
+    --shadow-glow-primary: 0 0 40px hsl(160 100% 39% / 0.2);
+    --shadow-glow-accent: 0 0 40px hsl(262 84% 58% / 0.15);
+    --shadow-card: 0 4px 20px -4px hsl(var(--shadow-color) / 0.15), 0 8px 32px -8px hsl(var(--shadow-color) / 0.1);
+    --shadow-card-hover: 0 12px 40px -8px hsl(var(--shadow-color) / 0.2), 0 20px 50px -12px hsl(160 100% 39% / 0.12);
     
+    /* Light mode gradient - subtle and clean */
     --gradient-mesh: 
-      radial-gradient(at 40% 20%, hsl(160 100% 39% / 0.08) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, hsl(262 84% 58% / 0.06) 0px, transparent 50%),
-      radial-gradient(at 0% 50%, hsl(160 100% 39% / 0.05) 0px, transparent 50%),
-      radial-gradient(at 90% 90%, hsl(262 84% 58% / 0.04) 0px, transparent 40%);
+      radial-gradient(at 40% 20%, hsl(160 100% 50% / 0.06) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsl(262 84% 58% / 0.04) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsl(160 100% 50% / 0.04) 0px, transparent 50%),
+      radial-gradient(at 90% 90%, hsl(262 84% 58% / 0.03) 0px, transparent 40%);
       
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 222 47% 11%;
@@ -143,7 +149,7 @@
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 220 14% 96%;
     --sidebar-accent-foreground: 222 47% 11%;
-    --sidebar-border: 220 13% 91%;
+    --sidebar-border: 220 13% 87%;
     --sidebar-ring: 160 100% 32%;
   }
 }
@@ -204,7 +210,7 @@
     background-clip: text;
   }
 
-  /* Glass Card - Premium Dark */
+  /* Glass Card - Premium with Light Mode Support */
   .glass-card {
     @apply relative rounded-2xl;
     background: hsl(var(--glass-bg));
@@ -212,12 +218,23 @@
     -webkit-backdrop-filter: blur(var(--blur-strength));
     border: 1px solid hsl(var(--glass-border));
     box-shadow: var(--shadow-card);
-    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .light .glass-card {
+    background: hsl(0 0% 100% / 0.85);
+    border: 1px solid hsl(220 13% 90%);
+    box-shadow: 0 4px 24px -4px hsl(220 25% 70% / 0.12), 0 8px 32px -8px hsl(220 25% 70% / 0.08);
   }
 
   .glass-card:hover {
     box-shadow: var(--shadow-card-hover);
-    border-color: hsl(160 100% 39% / 0.2);
+    border-color: hsl(160 100% 39% / 0.3);
+  }
+
+  .light .glass-card:hover {
+    box-shadow: 0 12px 40px -8px hsl(220 25% 70% / 0.18), 0 0 30px -10px hsl(160 100% 39% / 0.15);
+    border-color: hsl(160 100% 39% / 0.4);
   }
 
   /* Glass Card with Glow */

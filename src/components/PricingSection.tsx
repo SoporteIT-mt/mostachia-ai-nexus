@@ -80,26 +80,46 @@ const plans = [
   },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+      delay: 0.1 + i * 0.1,
+    },
+  }),
+};
+
 export const PricingSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="precios" ref={ref} className="py-24 relative overflow-hidden">
+    <section id="precios" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
       {/* Background glows */}
       <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
       
       <div className="container relative z-10 mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+          >
             <span className="text-sm font-medium text-primary">Precios Transparentes</span>
-          </div>
+          </motion.div>
           <h2 className="section-title mb-4">
             Tu Nuevo <span className="text-primary">Sistema Operativo</span> Empresarial
           </h2>
@@ -108,29 +128,26 @@ export const PricingSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto pt-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 max-w-7xl mx-auto pt-6">
           {plans.map((plan, i) => (
             <motion.div
               key={plan.id}
-              initial={{ opacity: 0, y: 30, scale: 0.95 }}
-              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-              transition={{ 
-                duration: 0.6, 
-                delay: 0.1 + i * 0.1,
-                type: "spring",
-                stiffness: 100
-              }}
+              custom={i}
+              variants={cardVariants}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
               whileHover={{ 
                 y: -8, 
                 transition: { duration: 0.3, type: "spring", stiffness: 300 }
               }}
+              data-plan={plan.id}
               className={`relative ${
                 plan.isHighlighted 
                   ? 'pricing-highlight' 
                   : plan.isEnterprise 
                     ? 'pricing-enterprise' 
-                    : 'glass-card hover:border-primary/30'
-              } p-6 flex flex-col group cursor-pointer`}
+                    : 'glass-card hover:border-primary/30 shadow-lg dark:shadow-none'
+              } p-6 flex flex-col group cursor-pointer transition-all duration-300`}
             >
               {/* Badge - moved outside overflow */}
               {plan.badge && (
@@ -149,17 +166,20 @@ export const PricingSection = () => {
 
               {/* Header */}
               <div className="mb-6">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
-                  plan.isHighlighted 
-                    ? 'bg-gradient-to-br from-primary to-accent' 
-                    : plan.isEnterprise
-                      ? 'bg-gradient-to-br from-accent to-primary'
-                      : 'bg-primary/10'
-                }`}>
+                <motion.div 
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 ${
+                    plan.isHighlighted 
+                      ? 'bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/30' 
+                      : plan.isEnterprise
+                        ? 'bg-gradient-to-br from-accent to-primary shadow-lg shadow-accent/30'
+                        : 'bg-primary/10 group-hover:bg-primary group-hover:shadow-lg group-hover:shadow-primary/30'
+                  }`}
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                >
                   <plan.icon className={`w-6 h-6 ${
-                    plan.isHighlighted || plan.isEnterprise ? 'text-white' : 'text-primary'
+                    plan.isHighlighted || plan.isEnterprise ? 'text-white' : 'text-primary group-hover:text-white'
                   }`} />
-                </div>
+                </motion.div>
                 <h3 className="text-xl font-bold font-display">{plan.name}</h3>
                 <p className="text-sm text-muted-foreground mt-1">{plan.description}</p>
               </div>
@@ -181,7 +201,13 @@ export const PricingSection = () => {
               {/* Features */}
               <div className="space-y-3 flex-1 mb-6">
                 {plan.features.map((feature, j) => (
-                  <div key={j} className="flex items-start gap-3">
+                  <motion.div 
+                    key={j} 
+                    className="flex items-start gap-3"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ delay: 0.3 + i * 0.1 + j * 0.05 }}
+                  >
                     <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
                       plan.isHighlighted 
                         ? 'bg-primary/20' 
@@ -194,18 +220,18 @@ export const PricingSection = () => {
                       }`} />
                     </div>
                     <span className="text-sm text-muted-foreground">{feature}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
               {/* CTA */}
               <Button
-                className={`w-full rounded-xl ${
+                className={`w-full rounded-xl transition-all duration-300 ${
                   plan.isHighlighted 
                     ? 'btn-glow' 
                     : plan.isEnterprise
-                      ? 'bg-accent hover:bg-accent/90 text-white'
-                      : ''
+                      ? 'bg-accent hover:bg-accent/90 text-white shadow-lg shadow-accent/30'
+                      : 'shadow-md hover:shadow-lg'
                 }`}
                 variant={plan.isHighlighted || plan.isEnterprise ? 'default' : 'outline'}
                 asChild
@@ -223,7 +249,7 @@ export const PricingSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
           className="text-center mt-12"
         >
           <p className="text-sm text-muted-foreground">

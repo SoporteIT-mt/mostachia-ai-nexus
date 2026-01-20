@@ -23,78 +23,82 @@
 
 @layer base {
   :root {
-    /* ===== LIGHT MODE - Premium Refined ===== */
-    --background: 220 20% 97%;
-    --foreground: 220 30% 12%;
+    /* ===== LIGHT MODE - Premium Enhanced ===== */
+    --background: 220 18% 96%;
+    --foreground: 220 35% 10%;
     
     --card: 0 0% 100%;
-    --card-foreground: 220 30% 12%;
+    --card-foreground: 220 35% 10%;
     
     --popover: 0 0% 100%;
-    --popover-foreground: 220 30% 12%;
+    --popover-foreground: 220 35% 10%;
     
-    --primary: 162 100% 35%;
+    --primary: 162 100% 32%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 162 100% 35%;
+    --primary-glow: 162 100% 40%;
     
-    --secondary: 220 15% 92%;
-    --secondary-foreground: 220 30% 20%;
+    --secondary: 220 15% 90%;
+    --secondary-foreground: 220 30% 18%;
     
-    --muted: 220 15% 92%;
-    --muted-foreground: 220 15% 45%;
+    --muted: 220 15% 90%;
+    --muted-foreground: 220 18% 40%;
     
-    --accent: 262 83% 58%;
+    --accent: 262 85% 55%;
     --accent-foreground: 0 0% 100%;
     
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
     
-    --success: 160 84% 39%;
+    --success: 160 84% 35%;
     --success-foreground: 0 0% 100%;
     
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 162 100% 35%;
+    --border: 220 18% 85%;
+    --input: 220 18% 85%;
+    --ring: 162 100% 32%;
     
     --radius: 1rem;
     
-    /* Light Mode Glass */
-    --glass-bg: 0 0% 100% / 0.9;
-    --glass-border: 220 15% 85%;
-    --blur-strength: 16px;
+    /* Light Mode Glass - Enhanced Visibility */
+    --glass-bg: 0 0% 100% / 0.95;
+    --glass-border: 220 20% 80%;
+    --blur-strength: 20px;
     
-    /* Light Mode Shadows - Sophisticated Elevation System */
-    --shadow-color: 220 30% 50%;
-    --shadow-glow-primary: 0 0 30px hsl(162 100% 35% / 0.15);
-    --shadow-glow-accent: 0 0 30px hsl(262 83% 58% / 0.12);
+    /* Light Mode Shadows - Darker & More Sophisticated */
+    --shadow-color: 220 40% 35%;
+    --shadow-glow-primary: 0 0 35px hsl(162 100% 32% / 0.2);
+    --shadow-glow-accent: 0 0 35px hsl(262 85% 55% / 0.18);
     --shadow-card: 
-      0 1px 3px hsl(220 30% 50% / 0.04),
-      0 4px 8px hsl(220 30% 50% / 0.04),
-      0 8px 24px hsl(220 30% 50% / 0.06);
+      0 1px 2px hsl(220 40% 35% / 0.06),
+      0 3px 8px hsl(220 40% 35% / 0.08),
+      0 8px 20px hsl(220 40% 35% / 0.1);
     --shadow-card-hover: 
-      0 4px 12px hsl(220 30% 50% / 0.06),
-      0 12px 32px hsl(220 30% 50% / 0.08),
-      0 0 40px hsl(162 100% 35% / 0.08);
+      0 4px 12px hsl(220 40% 35% / 0.1),
+      0 12px 28px hsl(220 40% 35% / 0.14),
+      0 0 50px hsl(162 100% 32% / 0.12);
+    --shadow-icon: 
+      0 4px 12px hsl(220 40% 35% / 0.12),
+      0 2px 4px hsl(220 40% 35% / 0.08);
     
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(162 100% 35%), hsl(162 80% 42%));
-    --gradient-accent: linear-gradient(135deg, hsl(262 83% 58%), hsl(280 70% 50%));
-    --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(162 100% 35% / 0.1), transparent);
+    /* Gradients - More Visible */
+    --gradient-primary: linear-gradient(135deg, hsl(162 100% 32%), hsl(162 85% 40%));
+    --gradient-accent: linear-gradient(135deg, hsl(262 85% 55%), hsl(280 75% 48%));
+    --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(162 100% 32% / 0.18), transparent);
     --gradient-mesh: 
-      radial-gradient(at 40% 20%, hsl(162 100% 50% / 0.05) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, hsl(262 83% 58% / 0.04) 0px, transparent 50%),
-      radial-gradient(at 0% 50%, hsl(162 100% 50% / 0.03) 0px, transparent 50%),
-      radial-gradient(at 90% 90%, hsl(262 83% 58% / 0.02) 0px, transparent 40%);
+      radial-gradient(at 40% 20%, hsl(162 100% 45% / 0.12) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsl(262 85% 55% / 0.1) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsl(162 100% 45% / 0.08) 0px, transparent 50%),
+      radial-gradient(at 90% 90%, hsl(262 85% 55% / 0.06) 0px, transparent 40%),
+      radial-gradient(at 50% 80%, hsl(162 100% 50% / 0.05) 0px, transparent 60%);
     
     /* Sidebar */
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 220 30% 20%;
-    --sidebar-primary: 162 100% 35%;
+    --sidebar-foreground: 220 35% 18%;
+    --sidebar-primary: 162 100% 32%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 94%;
-    --sidebar-accent-foreground: 220 30% 20%;
-    --sidebar-border: 220 15% 90%;
-    --sidebar-ring: 162 100% 35%;
+    --sidebar-accent: 220 15% 92%;
+    --sidebar-accent-foreground: 220 35% 18%;
+    --sidebar-border: 220 18% 88%;
+    --sidebar-ring: 162 100% 32%;
   }
 
   .dark {
@@ -233,21 +237,33 @@
   }
 
   :root .glass-card {
-    background: hsl(0 0% 100% / 0.92);
-    border: 1px solid hsl(220 15% 88%);
+    background: hsl(0 0% 100% / 0.95);
+    border: 1px solid hsl(220 20% 82%);
     box-shadow: 
-      0 1px 3px hsl(220 30% 50% / 0.04),
-      0 4px 12px hsl(220 30% 50% / 0.06),
-      0 8px 24px hsl(220 30% 50% / 0.04);
+      0 1px 2px hsl(220 40% 35% / 0.05),
+      0 4px 12px hsl(220 40% 35% / 0.08),
+      0 10px 28px hsl(220 40% 35% / 0.08);
   }
 
   :root .glass-card:hover {
     box-shadow: 
-      0 4px 12px hsl(220 30% 50% / 0.06),
-      0 12px 32px hsl(220 30% 50% / 0.1),
-      0 0 40px hsl(162 100% 35% / 0.1);
-    border-color: hsl(162 100% 35% / 0.35);
-    transform: translateY(-2px);
+      0 4px 12px hsl(220 40% 35% / 0.1),
+      0 14px 36px hsl(220 40% 35% / 0.14),
+      0 0 50px hsl(162 100% 32% / 0.15);
+    border-color: hsl(162 100% 32% / 0.45);
+    transform: translateY(-3px);
+  }
+
+  /* Light mode icon shadows */
+  :root .shadow-lg {
+    box-shadow: 
+      0 4px 12px hsl(220 40% 35% / 0.1),
+      0 2px 4px hsl(220 40% 35% / 0.06) !important;
+  }
+
+  /* Light mode enhanced backgrounds */
+  :root section::before {
+    opacity: 1.4;
   }
 
   .dark .glass-card {

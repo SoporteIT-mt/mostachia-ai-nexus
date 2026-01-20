@@ -76,11 +76,11 @@ const integrations = [
   { name: 'Google AI', category: 'IA', icon: 'https://cdn.simpleicons.org/googlegemini' },
   { name: 'Hugging Face', category: 'IA', icon: 'https://cdn.simpleicons.org/huggingface' },
   { name: 'LangChain', category: 'IA', icon: 'https://cdn.simpleicons.org/langchain' },
-  // Analytics
+  // Analytics (removed Mixpanel, Amplitude, Segment)
   { name: 'Google Analytics', category: 'Analytics', icon: 'https://cdn.simpleicons.org/googleanalytics' },
-  { name: 'Mixpanel', category: 'Analytics', icon: 'https://cdn.simpleicons.org/mixpanel' },
-  { name: 'Amplitude', category: 'Analytics', icon: 'https://cdn.simpleicons.org/amplitude' },
-  { name: 'Segment', category: 'Analytics', icon: 'https://cdn.simpleicons.org/segment' },
+  { name: 'Hotjar', category: 'Analytics', icon: 'https://cdn.simpleicons.org/hotjar' },
+  { name: 'Plausible', category: 'Analytics', icon: 'https://cdn.simpleicons.org/plausible' },
+  { name: 'PostHog', category: 'Analytics', icon: 'https://cdn.simpleicons.org/posthog' },
 ];
 
 const categories = ['Todos', 'Cloud', 'Pagos', 'Comunicación', 'Productividad', 'CRM', 'Automatización', 'Email', 'Database', 'E-commerce', 'Desarrollo', 'Diseño', 'IA', 'Analytics'];

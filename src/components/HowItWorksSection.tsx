@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { MessageSquare, Wrench, Rocket, TrendingUp, Check } from 'lucide-react';
+import { MessageSquare, Wrench, Rocket, TrendingUp, Check, ArrowRight } from 'lucide-react';
 
 const steps = [
   {
@@ -33,9 +33,38 @@ const steps = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const stepVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 50,
+    scale: 0.9,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 80,
+      damping: 15,
+    },
+  },
+};
+
 export const HowItWorksSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
   const [activeStep, setActiveStep] = useState(-1);
 
   useEffect(() => {
@@ -51,23 +80,51 @@ export const HowItWorksSection = () => {
   }, [isInView]);
 
   return (
-    <section ref={ref} className="py-32 relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-primary/10 rounded-full blur-3xl" />
+    <section ref={ref} className="py-24 md:py-32 relative overflow-hidden">
+      {/* Background effects with animations */}
+      <motion.div 
+        className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[100px]"
+        animate={{ 
+          x: [0, 50, 0],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div 
+        className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[80px]"
+        animate={{ 
+          y: [0, -30, 0],
+          opacity: [0.2, 0.4, 0.2],
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      />
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          transition={{ 
+            type: "spring",
+            stiffness: 60,
+            damping: 15,
+          }}
+          className="text-center mb-16 md:mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6">
-            <Rocket className="w-4 h-4 text-accent" />
+          <motion.div 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ delay: 0.15, type: "spring", stiffness: 150 }}
+          >
+            <motion.div
+              animate={{ y: [0, -3, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Rocket className="w-4 h-4 text-accent" />
+            </motion.div>
             <span className="text-sm font-medium text-accent">Proceso Simple</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+          </motion.div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-4">
             ¿Cómo <span className="text-gradient-primary">Funciona</span>?
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

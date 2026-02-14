@@ -74,7 +74,7 @@ export const HeroSection = () => {
     <Web3HeroBackground>
       <motion.div
         ref={containerRef}
-        className="container relative z-10 mx-auto px-6 py-20 min-h-screen flex flex-col justify-center"
+        className="container relative z-10 mx-auto px-6 py-20 min-h-screen flex flex-col justify-center overflow-hidden"
         style={{ opacity, scale }}
       >
         <div className="max-w-4xl mx-auto text-center">
@@ -93,7 +93,7 @@ export const HeroSection = () => {
 
           {/* ── H1 ──────────────────────────────── */}
           <motion.div style={{ y: titleY }}>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold font-display tracking-tight mb-6 md:mb-8 leading-[1.1]">
+            <h1 className="text-[1.75rem] sm:text-5xl md:text-6xl lg:text-7xl font-extrabold font-display tracking-tight mb-6 md:mb-8 leading-[1.1]">
               <span className="block text-foreground">
                 <AnimatedWords text="Tu Negocio con" delay={0} />
                 <motion.span

@@ -1,9 +1,10 @@
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
-import { IntegratedDemoHub } from '@/components/IntegratedDemoHub';
-import { IntegrationsSection } from '@/components/IntegrationsSection';
 import { ServiciosSection } from '@/components/ServiciosSection';
+import { IntegratedDemoHub } from '@/components/IntegratedDemoHub';
 import { HowItWorksSection } from '@/components/HowItWorksSection';
+import { IndustriasSection } from '@/components/IndustriasSection';
+import { IntegrationsSection } from '@/components/IntegrationsSection';
 import { TrustSection } from '@/components/TrustSection';
 import { FAQSection } from '@/components/FAQSection';
 import { Footer } from '@/components/Footer';
@@ -24,7 +25,7 @@ const Index = () => {
         {/* 1. Hero */}
         <HeroSection />
 
-        {/* 2. Servicios (FeaturesSection) */}
+        {/* 2. Servicios */}
         <AnimatedDivider />
         <SectionTransition type="slideUp">
           <ServiciosSection />
@@ -42,19 +43,25 @@ const Index = () => {
           <HowItWorksSection />
         </SectionTransition>
 
-        {/* 5. Integraciones */}
+        {/* 5. Industrias */}
+        <AnimatedDivider />
+        <SectionTransition type="scale">
+          <IndustriasSection />
+        </SectionTransition>
+
+        {/* 6. Integraciones */}
         <AnimatedDivider />
         <SectionTransition type="fade">
           <IntegrationsSection />
         </SectionTransition>
 
-        {/* 6. Confianza */}
+        {/* 7. Confianza */}
         <AnimatedDivider />
         <SectionTransition type="scale">
           <TrustSection />
         </SectionTransition>
 
-        {/* 7. FAQ */}
+        {/* 8. FAQ */}
         <AnimatedDivider />
         <SectionTransition type="slideUp">
           <FAQSection />

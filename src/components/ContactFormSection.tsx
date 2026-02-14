@@ -192,6 +192,7 @@ export const ContactFormSection = () => {
                     background="hsl(162 100% 32%)"
                     borderRadius="12px"
                     className="w-full py-4 text-lg font-semibold"
+                    type="submit"
                   >
                     {isSubmitting ? (
                       <>

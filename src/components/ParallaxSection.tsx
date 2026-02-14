@@ -46,19 +46,19 @@ export const ParallaxBackground = () => {
       {/* Floating orb 1 */}
       <motion.div
         style={{ y: y1 }}
-        className="absolute top-1/4 left-1/4 w-[400px] h-[400px] md:w-[400px] md:h-[400px] w-[200px] h-[200px] rounded-full bg-primary/3 blur-3xl will-change-transform"
+        className="absolute top-1/4 left-1/4 w-[200px] h-[200px] md:w-[400px] md:h-[400px] rounded-full bg-primary/3 blur-3xl will-change-transform"
       />
       
       {/* Floating orb 2 */}
       <motion.div
         style={{ y: y2 }}
-        className="absolute top-1/2 right-1/4 w-[300px] h-[300px] md:w-[300px] md:h-[300px] w-[150px] h-[150px] rounded-full bg-accent/3 blur-3xl will-change-transform"
+        className="absolute top-1/2 right-1/4 w-[150px] h-[150px] md:w-[300px] md:h-[300px] rounded-full bg-accent/3 blur-3xl will-change-transform"
       />
       
       {/* Floating orb 3 */}
       <motion.div
         style={{ y: y3, rotate }}
-        className="absolute bottom-1/4 left-1/3 w-[500px] h-[500px] md:w-[500px] md:h-[500px] w-[250px] h-[250px] rounded-full bg-primary/3 blur-3xl will-change-transform"
+        className="absolute bottom-1/4 left-1/3 w-[250px] h-[250px] md:w-[500px] md:h-[500px] rounded-full bg-primary/3 blur-3xl will-change-transform"
       />
 
       {/* Gradient mesh that moves with scroll */}

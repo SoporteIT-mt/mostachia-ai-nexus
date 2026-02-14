@@ -39,12 +39,12 @@ const getVariants = (type: TransitionType, duration: number): Variants => {
       };
     case 'slideLeft':
       return {
-        hidden: { opacity: 0, x: 50 },
+        hidden: { opacity: 0, x: 30 },
         visible: { opacity: 1, x: 0, transition: springTransition }
       };
     case 'slideRight':
       return {
-        hidden: { opacity: 0, x: -50 },
+        hidden: { opacity: 0, x: -30 },
         visible: { opacity: 1, x: 0, transition: springTransition }
       };
     case 'scale':

@@ -138,6 +138,7 @@ export const IntegratedDemoHub = () => {
                 key={activeDemo.id}
                 src={activeDemo.file}
                 className="w-full border-none min-h-[350px] md:min-h-[500px]"
+                loading="lazy"
                 title={activeDemo.label}
                 onLoad={() => setIframeLoading(false)}
                 initial={{ opacity: 0 }}

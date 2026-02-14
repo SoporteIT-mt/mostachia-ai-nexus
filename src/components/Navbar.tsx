@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { Menu, X, Calendar, Zap, Play, Settings, Factory, HelpCircle, MessageCircle } from 'lucide-react';
+import { Menu, X, Calendar, Zap, Play, Settings, Factory, HelpCircle, MessageCircle, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ThemeToggle } from './ThemeToggle';
 import { CONFIG } from '@/config/constants';
 
 interface NavLink {
@@ -17,6 +16,7 @@ const navLinks: NavLink[] = [
   { href: '#proceso', label: 'Cómo Funciona', icon: Settings },
   { href: '#industrias', label: 'Industrias', icon: Factory },
   { href: '#faq', label: 'FAQ', icon: HelpCircle },
+  { href: '#contacto', label: 'Contacto', icon: Mail },
 ];
 
 export const Navbar = () => {
@@ -199,7 +199,6 @@ export const Navbar = () => {
 
           {/* CTA Buttons & Theme Toggle */}
           <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle />
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.92 }}>
               <Button
                 variant="outline"
@@ -297,7 +296,6 @@ export const Navbar = () => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <ThemeToggle />
                   <Button
                     variant="outline"
                     className="w-full border-[#25D366]/40 text-[#25D366] hover:bg-[#25D366]/10"

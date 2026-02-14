@@ -34,7 +34,7 @@ const Index = () => {
 
         {/* 3. Demos */}
         <AnimatedDivider />
-        <SectionTransition type="slideUp">
+        <SectionTransition type="scale">
           <IntegratedDemoHub />
         </SectionTransition>
 
@@ -46,7 +46,7 @@ const Index = () => {
 
         {/* 5. Industrias */}
         <AnimatedDivider />
-        <SectionTransition type="scale">
+        <SectionTransition type="slideUp">
           <IndustriasSection />
         </SectionTransition>
 
@@ -74,9 +74,7 @@ const Index = () => {
           <ContactFormSection />
         </SectionTransition>
       </main>
-      <SectionTransition type="fade">
-        <Footer />
-      </SectionTransition>
+      <Footer />
       <FloatingWhatsApp />
       <StickyCTA />
       <ScrollToTop />

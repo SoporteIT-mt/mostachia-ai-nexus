@@ -2,7 +2,7 @@ import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
 import { IntegratedDemoHub } from '@/components/IntegratedDemoHub';
 import { IntegrationsSection } from '@/components/IntegrationsSection';
-import { FeaturesSection } from '@/components/FeaturesSection';
+import { ServiciosSection } from '@/components/ServiciosSection';
 import { HowItWorksSection } from '@/components/HowItWorksSection';
 import { TrustSection } from '@/components/TrustSection';
 import { FAQSection } from '@/components/FAQSection';
@@ -27,7 +27,7 @@ const Index = () => {
         {/* 2. Servicios (FeaturesSection) */}
         <AnimatedDivider />
         <SectionTransition type="slideUp">
-          <FeaturesSection />
+          <ServiciosSection />
         </SectionTransition>
 
         {/* 3. Demos */}

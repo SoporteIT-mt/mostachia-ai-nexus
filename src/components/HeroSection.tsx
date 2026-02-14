@@ -68,14 +68,14 @@ export const HeroSection = () => {
   return (
     <AuroraBackground className="min-h-screen overflow-hidden">
       {/* Spotlight behind title */}
-      <Spotlight className="z-0" size={500} fill="hsl(162 100% 39% / 0.08)" />
+      <Spotlight className="z-0 hidden sm:block" size={500} fill="hsl(162 100% 39% / 0.08)" />
 
       <motion.div
         ref={containerRef}
-        className="container relative z-10 mx-auto px-4 sm:px-6 py-20 min-h-screen flex flex-col justify-center"
+        className="container relative z-10 mx-auto px-4 sm:px-6 py-20 min-h-screen flex flex-col justify-center max-w-full overflow-hidden"
         style={{ opacity, scale }}
       >
-        <div className="max-w-4xl mx-auto text-center overflow-hidden">
+        <div className="w-full max-w-4xl mx-auto text-center">
           {/* ── Badge ────────────────────────────── */}
           <motion.div
             variants={fadeUp(0)}
@@ -140,7 +140,7 @@ export const HeroSection = () => {
                   shimmerColor="hsl(162 100% 70%)"
                   background="hsl(162 100% 32%)"
                   borderRadius="12px"
-                  className="px-8 py-4 text-lg font-semibold shadow-[0_4px_20px_hsl(160_100%_39%/0.4)]"
+                  className="px-6 sm:px-8 py-4 text-base sm:text-lg font-semibold shadow-[0_4px_20px_hsl(160_100%_39%/0.4)]"
                 >
                   <Calendar className="mr-2 w-5 h-5" />
                   Agendar Consultoría Gratis

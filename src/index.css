@@ -21,6 +21,11 @@
    PREMIUM DESIGN SYSTEM - MOSTACHIA 2026
    ======================================== */
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 @layer base {
   :root {
     /* ===== LIGHT MODE - Premium Enhanced ===== */

@@ -1,8 +1,9 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Calendar, MessageCircle } from 'lucide-react';
+import { Calendar, MessageCircle, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Web3HeroBackground } from '@/components/ui/animated-web3-landing-page';
+import { AuroraBackground } from '@/components/ui/aurora-background';
+import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { TechLogosBar } from './TechLogos';
 import { CONFIG } from '@/config/constants';
 
@@ -71,7 +72,7 @@ export const HeroSection = () => {
   const scale = useTransform(scrollY, [0, 400], [1, 0.95]);
 
   return (
-    <Web3HeroBackground>
+    <AuroraBackground className="min-h-screen">
       <motion.div
         ref={containerRef}
         className="container relative z-10 mx-auto px-6 py-20 min-h-screen flex flex-col justify-center overflow-hidden"
@@ -133,16 +134,18 @@ export const HeroSection = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
           >
             <motion.div variants={fadeUp(0.8)} initial="hidden" animate="visible" whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.98 }}>
-              <Button
-                size="lg"
-                className="btn-glow rounded-xl px-8 py-6 text-lg w-full sm:w-auto"
-                asChild
-              >
-                <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
+              <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
+                <ShimmerButton
+                  shimmerColor="hsl(162 100% 70%)"
+                  background="hsl(162 100% 32%)"
+                  borderRadius="12px"
+                  className="px-8 py-4 text-lg font-semibold shadow-[0_4px_20px_hsl(160_100%_39%/0.4)]"
+                >
                   <Calendar className="mr-2 w-5 h-5" />
                   Agendar Consultoría Gratis
-                </a>
-              </Button>
+                  <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </ShimmerButton>
+              </a>
             </motion.div>
 
             <motion.div variants={fadeUp(0.9)} initial="hidden" animate="visible" whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.98 }}>
@@ -228,6 +231,6 @@ export const HeroSection = () => {
           Scroll para explorar
         </motion.p>
       </motion.div>
-    </Web3HeroBackground>
+    </AuroraBackground>
   );
 };

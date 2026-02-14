@@ -1,110 +1,28 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Send, MapPin, Mail, Linkedin, Twitter, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { CONFIG } from '@/config/constants';
+import { Instagram, Linkedin, MapPin, Mail, Phone, Calendar } from 'lucide-react';
 
-const footerLinks = {
-  producto: [
-    { label: 'Hub de Demos', href: '#demos' },
-    { label: 'Precios', href: '#precios' },
-    { label: 'Integraciones', href: '#' },
-    { label: 'API', href: '#' },
-  ],
-  empresa: [
-    { label: 'Sobre Nosotros', href: '#' },
-    { label: 'Blog', href: '#blog' },
-    { label: 'Carreras', href: '#' },
-    { label: 'Empezar Transformación', href: '#contacto' },
-  ],
-  legal: [
-    { label: 'Privacidad', href: '#' },
-    { label: 'Términos', href: '#' },
-    { label: 'Cookies', href: '#' },
-  ],
-};
+const serviciosLinks = [
+  { label: 'Dashboards IA', href: '#servicios' },
+  { label: 'Agentes WhatsApp', href: '#servicios' },
+  { label: 'Automatización', href: '#servicios' },
+  { label: 'Migración de Datos', href: '#servicios' },
+];
+
+const empresaLinks = [
+  { label: 'Cómo Funciona', href: '#proceso' },
+  { label: 'Industrias', href: '#industrias' },
+  { label: 'Demos', href: '#demos' },
+  { label: 'FAQ', href: '#faq' },
+];
 
 export const Footer = () => {
-  const [email, setEmail] = useState('');
-  const { toast } = useToast();
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    
-    // TODO: Connect to n8n webhook for newsletter subscription
-    toast({
-      title: '¡Suscripción exitosa!',
-      description: 'Recibirás nuestros hacks de automatización semanalmente.',
-    });
-    setEmail('');
-  };
-
   return (
-    <footer id="contacto" className="relative pt-24 pb-8 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background to-transparent" />
-      {/* Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl" />
-      
-      <div className="container relative z-10 mx-auto px-6">
-        {/* Newsletter Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass-card-glow p-8 md:p-12 mb-16 text-center"
-        >
-          <h3 className="text-2xl md:text-3xl font-bold mb-4 font-display">
-            Recibí hacks de <span className="text-primary">automatización</span> semanalmente
-          </h3>
-          <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-            Tips prácticos de IA, casos de uso y novedades de Automatización IA Argentina directamente en tu inbox.
-          </p>
-          
-          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="tu@email.com"
-              className="flex-1 px-6 py-3 rounded-xl bg-background/50 border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50"
-              required
-            />
-            <Button type="submit" className="btn-glow rounded-xl px-8">
-              Suscribirse
-              <Send className="w-4 h-4 ml-2" />
-            </Button>
-          </form>
-        </motion.div>
-
-        {/* CTA Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass-card p-8 md:p-12 mb-16 flex flex-col md:flex-row items-center justify-between gap-8"
-        >
+    <footer className="relative pt-20 pb-8 bg-black/40">
+      <div className="container mx-auto px-6">
+        {/* 4-Column Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          {/* Col 1 — Logo */}
           <div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-2 font-display">
-              ¿Listo para empezar tu transformación?
-            </h3>
-            <p className="text-muted-foreground">
-              Agenda una consultoría gratuita de 30 minutos con nuestro equipo.
-            </p>
-          </div>
-          <Button className="btn-glow rounded-xl px-8 py-6 text-lg whitespace-nowrap" asChild>
-            <a href="https://cal.com/mostachia" target="_blank" rel="noopener noreferrer">
-              Agendar Ahora
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </a>
-          </Button>
-          {/* TODO: Add Cal.com embed script for consultation booking */}
-        </motion.div>
-
-        {/* Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-16">
-          {/* Brand Column */}
-          <div className="col-span-2">
             <a href="#" className="flex items-center gap-2 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/25">
                 <span className="text-xl font-bold text-white">M</span>
@@ -113,92 +31,86 @@ export const Footer = () => {
                 Mostach<span className="text-primary">IA</span>
               </span>
             </a>
-            <p className="text-sm text-muted-foreground mb-4 max-w-xs">
-              Tu nuevo sistema operativo empresarial. Automatización IA Argentina para empresas que escalan.
+            <p className="text-sm text-muted-foreground mb-5">
+              Automatización Inteligente para Negocios
             </p>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-              <MapPin className="w-4 h-4" />
-              Buenos Aires, Argentina
-            </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Mail className="w-4 h-4" />
-              hola@mostachia.com
+            <div className="flex items-center gap-3">
+              <a
+                href={CONFIG.INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-white/5 hover:bg-primary/20 flex items-center justify-center transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a
+                href={CONFIG.LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-white/5 hover:bg-primary/20 flex items-center justify-center transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
             </div>
           </div>
 
-          {/* Producto */}
+          {/* Col 2 — Servicios */}
           <div>
-            <h4 className="font-semibold mb-4 font-display">Producto</h4>
+            <h4 className="font-display font-semibold mb-4">Servicios</h4>
             <ul className="space-y-3">
-              {footerLinks.producto.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </a>
+              {serviciosLinks.map((l) => (
+                <li key={l.label}>
+                  <a href={l.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">{l.label}</a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Empresa */}
+          {/* Col 3 — Empresa */}
           <div>
-            <h4 className="font-semibold mb-4 font-display">Empresa</h4>
+            <h4 className="font-display font-semibold mb-4">Empresa</h4>
             <ul className="space-y-3">
-              {footerLinks.empresa.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </a>
+              {empresaLinks.map((l) => (
+                <li key={l.label}>
+                  <a href={l.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">{l.label}</a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Col 4 — Contacto */}
           <div>
-            <h4 className="font-semibold mb-4 font-display">Legal</h4>
+            <h4 className="font-display font-semibold mb-4">Contacto</h4>
             <ul className="space-y-3">
-              {footerLinks.legal.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a href={CONFIG.WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <Phone className="w-4 h-4 shrink-0" /> +54 3564 66-7968
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${CONFIG.EMAIL}`} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <Mail className="w-4 h-4 shrink-0" /> {CONFIG.EMAIL}
+                </a>
+              </li>
+              <li>
+                <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <Calendar className="w-4 h-4 shrink-0" /> Agendar Reunión
+                </a>
+              </li>
+              <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                <MapPin className="w-4 h-4 shrink-0" /> Córdoba, Argentina 🇦🇷
+              </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            © 2026 MostachIA. Todos los derechos reservados.
+        {/* Copyright */}
+        <div className="pt-6 border-t border-white/10 text-center">
+          <p className="text-xs text-muted-foreground">
+            © 2025 MostachIA. Automatización Inteligente para Negocios.
           </p>
-          <div className="flex items-center gap-4">
-            <a
-              href="#"
-              className="w-10 h-10 rounded-full bg-muted hover:bg-primary/20 flex items-center justify-center transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 rounded-full bg-muted hover:bg-primary/20 flex items-center justify-center transition-colors"
-              aria-label="Twitter"
-            >
-              <Twitter className="w-5 h-5" />
-            </a>
-          </div>
         </div>
       </div>
     </footer>

@@ -1,8 +1,8 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CONFIG } from '@/config/constants';
+import { BlurFade } from '@/components/ui/blur-fade';
+import { Spotlight } from '@/components/ui/spotlight';
 import {
   Accordion,
   AccordionContent,
@@ -45,50 +45,30 @@ const faqs = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: 0.2 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20, scale: 0.98 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 100, damping: 15 } },
-};
-
 export const FAQSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-
   return (
-    <section id="faq" ref={ref} className="py-24 relative overflow-hidden">
+    <section id="faq" className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
-            Preguntas <span className="text-gradient-primary">Frecuentes</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Lo que todos nos preguntan antes de arrancar.
-          </p>
-        </motion.div>
+        {/* Header with Spotlight */}
+        <div className="relative text-center mb-16">
+          <Spotlight size={600} fill="hsl(262 83% 58% / 0.08)" />
+          <BlurFade>
+            <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+              Preguntas <span className="text-gradient-primary">Frecuentes</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Lo que todos nos preguntan antes de arrancar.
+            </p>
+          </BlurFade>
+        </div>
 
-        {/* Accordion */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="max-w-3xl mx-auto"
-        >
+        {/* Accordion with BlurFade per item */}
+        <div className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, i) => (
-              <motion.div key={i} variants={itemVariants}>
+              <BlurFade key={i} delay={i * 0.06}>
                 <AccordionItem
                   value={`item-${i}`}
                   className="bg-white/[0.05] backdrop-blur-md border border-white/[0.1] rounded-xl px-6 data-[state=open]:border-primary/30 transition-all duration-300"
@@ -102,30 +82,21 @@ export const FAQSection = () => {
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
-              </motion.div>
+              </BlurFade>
             ))}
           </Accordion>
-        </motion.div>
+        </div>
 
         {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.5, duration: 0.6 }}
-          className="text-center mt-12"
-        >
+        <BlurFade delay={0.5} className="text-center mt-12">
           <p className="text-muted-foreground mb-4">¿Tenés otra pregunta?</p>
           <Button variant="outline" className="rounded-xl px-6 border-white/20 hover:border-primary/50" asChild>
-            <a
-              href={CONFIG.WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={CONFIG.WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
               <MessageCircle className="w-4 h-4 mr-2" />
               Preguntanos por WhatsApp
             </a>
           </Button>
-        </motion.div>
+        </BlurFade>
       </div>
     </section>
   );

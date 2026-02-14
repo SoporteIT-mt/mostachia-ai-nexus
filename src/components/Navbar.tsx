@@ -13,9 +13,7 @@ interface NavLink {
 const navLinks: NavLink[] = [
   { href: '#servicios', label: 'Servicios', icon: Zap },
   { href: '#demos', label: 'Demos', icon: Play },
-  { href: '#proceso', label: 'Cómo Funciona', icon: Settings },
-  { href: '#industrias', label: 'Industrias', icon: Factory },
-  { href: '#faq', label: 'FAQ', icon: HelpCircle },
+  { href: '#proceso', label: 'Proceso', icon: Settings },
   { href: '#contacto', label: 'Contacto', icon: Mail },
 ];
 
@@ -211,8 +209,8 @@ export const Navbar = () => {
             </motion.div>
             <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.92 }}>
               <Button
-                className="rounded-xl px-6 font-medium text-white"
-                style={{ backgroundColor: '#60B99A' }}
+                className="rounded-xl px-6 font-medium text-primary-foreground"
+                style={{ backgroundColor: '#F7C667' }}
                 onClick={handleBooking}
               >
                 <Calendar className="w-4 h-4 mr-2" />
@@ -305,8 +303,8 @@ export const Navbar = () => {
                     WhatsApp
                   </Button>
                   <Button
-                    className="w-full rounded-xl font-medium text-white"
-                    style={{ backgroundColor: '#60B99A' }}
+                    className="w-full rounded-xl font-medium text-primary-foreground"
+                    style={{ backgroundColor: '#F7C667' }}
                     onClick={handleBooking}
                   >
                     <Calendar className="w-4 h-4 mr-2" />

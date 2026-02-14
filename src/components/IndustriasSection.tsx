@@ -115,22 +115,16 @@ export const IndustriasSection = () => {
                       ))}
                     </ul>
 
-                    {/* Slide-up CTA on hover */}
-                    <motion.div
-                      className="overflow-hidden"
-                      initial={{ height: 0, opacity: 0 }}
-                      whileHover={{ height: 'auto', opacity: 1 }}
+                    {/* CTA link */}
+                    <a
+                      href={CONFIG.CALCOM_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-primary opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
                     >
-                      <a
-                        href={CONFIG.CALCOM_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:gap-3 transition-all pt-2"
-                      >
-                        Consultar para este rubro
-                        <ArrowRight className="w-4 h-4" />
-                      </a>
-                    </motion.div>
+                      Consultar para este rubro
+                      <ArrowRight className="w-4 h-4" />
+                    </a>
                   </div>
                 </MagicCard>
               </motion.div>

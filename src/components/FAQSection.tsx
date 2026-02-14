@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { CONFIG } from '@/config/constants';
 import {
   Accordion,
   AccordionContent,
@@ -116,7 +117,7 @@ export const FAQSection = () => {
           <p className="text-muted-foreground mb-4">¿Tenés otra pregunta?</p>
           <Button variant="outline" className="rounded-xl px-6 border-white/20 hover:border-primary/50" asChild>
             <a
-              href="https://wa.me/5493564667968?text=Hola!%20Tengo%20una%20consulta%20sobre%20MostachIA"
+              href={CONFIG.WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
             >

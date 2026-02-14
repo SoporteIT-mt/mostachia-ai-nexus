@@ -7,6 +7,7 @@ import { IndustriasSection } from '@/components/IndustriasSection';
 import { IntegrationsSection } from '@/components/IntegrationsSection';
 import { TrustSection } from '@/components/TrustSection';
 import { FAQSection } from '@/components/FAQSection';
+import { ContactFormSection } from '@/components/ContactFormSection';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { StickyCTA } from '@/components/StickyCTA';
@@ -65,6 +66,12 @@ const Index = () => {
         <AnimatedDivider />
         <SectionTransition type="slideUp">
           <FAQSection />
+        </SectionTransition>
+
+        {/* 9. Contacto */}
+        <AnimatedDivider />
+        <SectionTransition type="slideUp">
+          <ContactFormSection />
         </SectionTransition>
       </main>
       <SectionTransition type="fade">

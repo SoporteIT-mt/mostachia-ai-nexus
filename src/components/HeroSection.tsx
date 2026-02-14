@@ -217,33 +217,6 @@ export const HeroSection = () => {
         </div>
       </motion.div>
 
-      {/* ── Scroll indicator ─────────────────────── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.5 }}
-        style={{ opacity }}
-        className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-7 h-11 rounded-full border-2 border-white/20 flex items-start justify-center p-2 backdrop-blur-sm bg-white/5"
-        >
-          <motion.div
-            className="w-1.5 h-3 rounded-full bg-gradient-to-b from-primary to-primary/50"
-            animate={{ opacity: [1, 0.3, 1], y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        </motion.div>
-        <motion.p
-          className="text-xs text-muted-foreground mt-3 text-center"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          Scroll para explorar
-        </motion.p>
-      </motion.div>
     </AuroraBackground>
   );
 };

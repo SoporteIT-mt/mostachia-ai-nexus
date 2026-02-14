@@ -1,5 +1,6 @@
 import { CONFIG } from '@/config/constants';
 import { Instagram, Linkedin, MapPin, Mail, Phone, Calendar } from 'lucide-react';
+import { DotPattern } from '@/components/ui/dot-pattern';
 
 const serviciosLinks = [
   { label: 'Dashboards IA', href: '#servicios' },
@@ -17,8 +18,11 @@ const empresaLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="relative pt-20 pb-8 bg-black/40">
-      <div className="container mx-auto px-6">
+    <footer className="relative pt-20 pb-8 bg-black/40 overflow-hidden">
+      {/* DotPattern background */}
+      <DotPattern className="opacity-30 [mask-image:radial-gradient(ellipse_at_center,white,transparent_80%)]" />
+
+      <div className="container mx-auto px-6 relative z-10">
         {/* 4-Column Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Col 1 — Logo */}
@@ -62,7 +66,7 @@ export const Footer = () => {
             <ul className="space-y-3">
               {serviciosLinks.map((l) => (
                 <li key={l.label}>
-                  <a href={l.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">{l.label}</a>
+                  <a href={l.href} className="text-sm text-muted-foreground hover:text-primary transition-colors link-underline">{l.label}</a>
                 </li>
               ))}
             </ul>
@@ -74,7 +78,7 @@ export const Footer = () => {
             <ul className="space-y-3">
               {empresaLinks.map((l) => (
                 <li key={l.label}>
-                  <a href={l.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">{l.label}</a>
+                  <a href={l.href} className="text-sm text-muted-foreground hover:text-primary transition-colors link-underline">{l.label}</a>
                 </li>
               ))}
             </ul>

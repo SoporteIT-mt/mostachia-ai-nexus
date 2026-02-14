@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useInView } from 'framer-motion';
 import { Send, MapPin, Clock, Mail, MessageCircle, Calendar, ArrowRight, Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,6 +11,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { toast } from 'sonner';
 import { CONFIG } from '@/config/constants';
+import { BlurFade } from '@/components/ui/blur-fade';
+import { MagicCard } from '@/components/ui/magic-card';
+import { Ripple } from '@/components/ui/ripple';
+import { ShimmerButton } from '@/components/ui/shimmer-button';
 
 const formSchema = z.object({
   nombre: z.string().trim().min(1, 'El nombre es requerido').max(100),
@@ -74,17 +78,14 @@ export const ContactFormSection = () => {
   };
 
   return (
-    <section id="contacto" ref={ref} className="py-24 md:py-32 relative">
+    <section id="contacto" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
+      {/* Ripple background */}
+      <Ripple color="hsl(162 100% 39% / 0.06)" count={6} />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-14"
-        >
+        <BlurFade className="text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
             ¿Listo para Automatizar{' '}
             <span className="text-gradient-primary">tu Negocio</span>?
@@ -92,16 +93,11 @@ export const ContactFormSection = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Dejanos tus datos y te contactamos en menos de 24 horas.
           </p>
-        </motion.div>
+        </BlurFade>
 
         <div className="grid lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
           {/* Form — left 3 cols */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="lg:col-span-3"
-          >
+          <BlurFade delay={0.1} className="lg:col-span-3">
             <div className="p-6 md:p-8 rounded-2xl bg-white/[0.05] backdrop-blur-md border border-white/[0.1]">
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -113,7 +109,7 @@ export const ContactFormSection = () => {
                         <FormItem>
                           <FormLabel>Nombre *</FormLabel>
                           <FormControl>
-                            <Input placeholder="Tu nombre" {...field} className="bg-white/[0.05] border-white/[0.1]" />
+                            <Input placeholder="Tu nombre" {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -126,7 +122,7 @@ export const ContactFormSection = () => {
                         <FormItem>
                           <FormLabel>Email *</FormLabel>
                           <FormControl>
-                            <Input placeholder="tu@email.com" type="email" {...field} className="bg-white/[0.05] border-white/[0.1]" />
+                            <Input placeholder="tu@email.com" type="email" {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -142,7 +138,7 @@ export const ContactFormSection = () => {
                         <FormItem>
                           <FormLabel>Empresa</FormLabel>
                           <FormControl>
-                            <Input placeholder="Nombre de tu empresa" {...field} className="bg-white/[0.05] border-white/[0.1]" />
+                            <Input placeholder="Nombre de tu empresa" {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -183,7 +179,7 @@ export const ContactFormSection = () => {
                             placeholder="Contanos brevemente qué procesos te gustaría mejorar..."
                             rows={3}
                             {...field}
-                            className="bg-white/[0.05] border-white/[0.1] resize-none"
+                            className="bg-white/[0.05] border-white/[0.1] resize-none focus:ring-2 focus:ring-primary/30 transition-shadow"
                           />
                         </FormControl>
                         <FormMessage />
@@ -191,10 +187,11 @@ export const ContactFormSection = () => {
                     )}
                   />
 
-                  <Button
-                    type="submit"
-                    className="btn-glow rounded-xl w-full py-6 text-lg"
-                    disabled={isSubmitting}
+                  <ShimmerButton
+                    shimmerColor="hsl(162 100% 70%)"
+                    background="hsl(162 100% 32%)"
+                    borderRadius="12px"
+                    className="w-full py-4 text-lg font-semibold"
                   >
                     {isSubmitting ? (
                       <>
@@ -207,7 +204,7 @@ export const ContactFormSection = () => {
                         Enviar Consulta
                       </>
                     )}
-                  </Button>
+                  </ShimmerButton>
 
                   <p className="text-xs text-muted-foreground text-center">
                     🔒 No compartimos tu información. Respuesta en menos de 24hs.
@@ -215,63 +212,62 @@ export const ContactFormSection = () => {
                 </form>
               </Form>
             </div>
-          </motion.div>
+          </BlurFade>
 
           {/* Info — right 2 cols */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="lg:col-span-2 space-y-6"
-          >
-            {/* Contact info card */}
-            <div className="p-6 rounded-2xl bg-white/[0.05] backdrop-blur-md border border-white/[0.1] space-y-5">
-              <h3 className="font-display font-semibold text-lg">Contacto directo</h3>
+          <BlurFade delay={0.3} className="lg:col-span-2 space-y-6">
+            {/* Contact info card with MagicCard */}
+            <MagicCard>
+              <div className="p-6 space-y-5">
+                <h3 className="font-display font-semibold text-lg">Contacto directo</h3>
 
-              <a
-                href={CONFIG.WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                <MessageCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                +54 3564 66-7968
-              </a>
+                <a
+                  href={CONFIG.WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <MessageCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                  +54 3564 66-7968
+                </a>
 
-              <a
-                href={`mailto:${CONFIG.EMAIL}`}
-                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                {CONFIG.EMAIL}
-              </a>
+                <a
+                  href={`mailto:${CONFIG.EMAIL}`}
+                  className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+                  {CONFIG.EMAIL}
+                </a>
 
-              <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
-                Córdoba, Argentina 🇦🇷
+                <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
+                  Córdoba, Argentina 🇦🇷
+                </div>
+
+                <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <Clock className="w-5 h-5 text-primary flex-shrink-0" />
+                  Lun-Vie, 9:00-18:00 (GMT-3)
+                </div>
               </div>
-
-              <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                <Clock className="w-5 h-5 text-primary flex-shrink-0" />
-                Lun-Vie, 9:00-18:00 (GMT-3)
-              </div>
-            </div>
+            </MagicCard>
 
             {/* CTA card */}
-            <div className="p-6 rounded-2xl bg-white/[0.05] backdrop-blur-md border border-white/[0.1]">
-              <p className="font-display font-semibold mb-3">¿Preferís hablar directo?</p>
-              <Button className="btn-glow rounded-xl w-full" asChild>
-                <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  Agendar Videollamada
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </a>
-              </Button>
-              <p className="text-xs text-muted-foreground text-center mt-3">
-                30 min · Gratuita · Sin compromiso
-              </p>
-            </div>
-          </motion.div>
+            <MagicCard>
+              <div className="p-6">
+                <p className="font-display font-semibold mb-3">¿Preferís hablar directo?</p>
+                <Button className="btn-glow rounded-xl w-full" asChild>
+                  <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
+                    <Calendar className="w-4 h-4 mr-2" />
+                    Agendar Videollamada
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </a>
+                </Button>
+                <p className="text-xs text-muted-foreground text-center mt-3">
+                  30 min · Gratuita · Sin compromiso
+                </p>
+              </div>
+            </MagicCard>
+          </BlurFade>
         </div>
       </div>
     </section>

@@ -4,7 +4,11 @@ import { Calendar, MessageCircle, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AuroraBackground } from '@/components/ui/aurora-background';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
-import { TechLogosBar } from './TechLogos';
+import { NumberTicker } from '@/components/ui/number-ticker';
+import { Marquee } from '@/components/ui/marquee';
+import { Spotlight } from '@/components/ui/spotlight';
+import { BlurFade } from '@/components/ui/blur-fade';
+import { techLogos } from './TechLogos';
 import { CONFIG } from '@/config/constants';
 
 // ─── Animation variants ───────────────────────────────────────
@@ -42,22 +46,12 @@ const fadeUp = (delay: number) => ({
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay, ease: [0.25, 0.4, 0.25, 1] } },
 });
 
-const staggerStats = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.2, delayChildren: 1.2 } },
-};
-
-const statCard = {
-  hidden: { opacity: 0, y: 24, scale: 0.95 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 120, damping: 14 } },
-};
-
 // ─── Stats data ───────────────────────────────────────────────
 const stats = [
-  { value: '+10', label: 'Clientes activos' },
-  { value: '6', label: 'Industrias cubiertas' },
-  { value: '24/7', label: 'Agentes automatizados' },
-  { value: '1-4 sem', label: 'Implementación' },
+  { value: 10, prefix: '+', suffix: '', label: 'Clientes activos' },
+  { value: 6, prefix: '', suffix: '', label: 'Industrias cubiertas' },
+  { value: 24, prefix: '', suffix: '/7', label: 'Agentes automatizados' },
+  { value: 4, prefix: '1-', suffix: ' sem', label: 'Implementación' },
 ];
 
 // ─── Component ────────────────────────────────────────────────
@@ -73,6 +67,9 @@ export const HeroSection = () => {
 
   return (
     <AuroraBackground className="min-h-screen">
+      {/* Spotlight behind title */}
+      <Spotlight className="z-0" size={800} fill="hsl(162 100% 39% / 0.08)" />
+
       <motion.div
         ref={containerRef}
         className="container relative z-10 mx-auto px-6 py-20 min-h-screen flex flex-col justify-center overflow-hidden"
@@ -121,10 +118,14 @@ export const HeroSection = () => {
             </h1>
           </motion.div>
 
-          {/* ── Subtitle ────────────────────────── */}
+          {/* ── Subtitle with animated gradient ── */}
           <motion.div style={{ y: subtitleY }} variants={fadeUp(0.6)} initial="hidden" animate="visible">
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground/80 max-w-2xl mx-auto font-light leading-relaxed mb-10">
-              Automatizamos procesos, generamos dashboards inteligentes y conectamos agentes de IA a tus datos reales. Todo desde WhatsApp.
+              Automatizamos procesos, generamos dashboards inteligentes y conectamos{' '}
+              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-[gradient-shift_4s_ease_infinite] bg-clip-text text-transparent font-medium">
+                agentes de IA
+              </span>{' '}
+              a tus datos reales. Todo desde WhatsApp.
             </p>
           </motion.div>
 
@@ -174,33 +175,45 @@ export const HeroSection = () => {
             </p>
           </motion.div>
 
-          {/* ── Stats ────────────────────────────── */}
-          <motion.div
-            variants={staggerStats}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-16 max-w-3xl mx-auto"
-          >
-            {stats.map((s) => (
-              <motion.div
-                key={s.label}
-                variants={statCard}
-                whileHover={{ scale: 1.06, y: -4 }}
-                className="rounded-xl bg-white/[0.05] backdrop-blur-sm border border-white/[0.1] px-4 py-5 text-center cursor-default"
-              >
-                <div className="text-2xl md:text-3xl font-extrabold font-display text-foreground">{s.value}</div>
-                <div className="text-[10px] md:text-xs font-mono uppercase tracking-wider text-muted-foreground mt-1">{s.label}</div>
-              </motion.div>
+          {/* ── Stats with NumberTicker ───────────── */}
+          <BlurFade delay={1.2} className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-16 max-w-3xl mx-auto">
+            {stats.map((s, i) => (
+              <BlurFade key={s.label} delay={1.2 + i * 0.15}>
+                <motion.div
+                  whileHover={{ scale: 1.06, y: -4 }}
+                  className="rounded-xl bg-white/[0.05] backdrop-blur-sm border border-white/[0.1] px-4 py-5 text-center cursor-default"
+                >
+                  <div className="text-2xl md:text-3xl font-extrabold font-display text-foreground">
+                    <NumberTicker value={s.value} prefix={s.prefix} suffix={s.suffix} duration={2} />
+                  </div>
+                  <div className="text-[10px] md:text-xs font-mono uppercase tracking-wider text-muted-foreground mt-1">{s.label}</div>
+                </motion.div>
+              </BlurFade>
             ))}
-          </motion.div>
+          </BlurFade>
 
-          {/* ── Tech logos ────────────────────────── */}
-          <motion.div variants={fadeUp(2)} initial="hidden" animate="visible">
-            <TechLogosBar
-              title="Integramos con las herramientas que ya usás"
-              variant="marquee"
-            />
-          </motion.div>
+          {/* ── Tech logos with Marquee ───────────── */}
+          <BlurFade delay={1.8}>
+            <p className="text-sm text-muted-foreground text-center mb-8">
+              Integramos con las herramientas que ya usás
+            </p>
+            <div className="relative">
+              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
+              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
+              <Marquee pauseOnHover speed={25}>
+                {techLogos.map((logo) => (
+                  <motion.div
+                    key={logo.name}
+                    whileHover={{ scale: 1.2, y: -4 }}
+                    className="flex-shrink-0 w-12 h-12 mx-6 text-foreground/50 hover:text-primary transition-all duration-300 cursor-default"
+                    title={logo.name}
+                  >
+                    {logo.svg}
+                  </motion.div>
+                ))}
+              </Marquee>
+            </div>
+          </BlurFade>
         </div>
       </motion.div>
 

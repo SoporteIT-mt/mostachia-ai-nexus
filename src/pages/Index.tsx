@@ -15,6 +15,7 @@ import { ParallaxBackground } from '@/components/ParallaxSection';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { SectionTransition, AnimatedDivider } from '@/components/SectionTransition';
+import { StatsSection } from '@/components/StatsSection';
 
 const Index = () => {
   return (
@@ -25,6 +26,9 @@ const Index = () => {
       <main id="main" className="relative z-10">
         {/* 1. Hero */}
         <HeroSection />
+
+        {/* 1.5 Stats */}
+        <StatsSection />
 
         {/* 2. Servicios */}
         <AnimatedDivider />

@@ -32,7 +32,7 @@ function createBeam(width: number, height: number): Beam {
     length: height * 2.5,
     angle,
     speed: 0.5 + Math.random() * 1.2,
-    opacity: 0.18 + Math.random() * 0.22,
+    opacity: 0.22 + Math.random() * 0.25,
     hue: 190 + Math.random() * 70,
     pulse: Math.random() * Math.PI * 2,
     pulseSpeed: 0.02 + Math.random() * 0.03,
@@ -124,7 +124,7 @@ export function BeamsBackground({
       if (!canvas || !ctx) return;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.filter = "blur(35px)";
+      ctx.filter = "blur(30px)";
 
       const totalBeams = beamsRef.current.length;
       beamsRef.current.forEach((beam, index) => {
@@ -170,7 +170,7 @@ export function BeamsBackground({
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 50% at 50% -20%, transparent 40%, hsl(200 45% 11%) 100%)",
+            "radial-gradient(ellipse 80% 50% at 50% -20%, transparent 60%, hsl(200 45% 11%) 100%)",
         }}
       />
 

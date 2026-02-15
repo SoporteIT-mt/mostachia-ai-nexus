@@ -56,7 +56,7 @@ export const HeroSection = () => {
     <BeamsBackground intensity="strong">
       <motion.div
         ref={containerRef}
-        className="container relative z-10 mx-auto px-4 sm:px-6 pt-28 pb-16 min-h-screen flex flex-col justify-center max-w-full overflow-hidden"
+        className="container relative z-10 mx-auto px-4 sm:px-6 pt-28 pb-16 min-h-[85vh] flex flex-col justify-center max-w-full overflow-hidden"
         style={{ opacity, scale }}
       >
         <div className="w-full max-w-4xl mx-auto text-center">
@@ -75,8 +75,8 @@ export const HeroSection = () => {
 
           {/* ── H1 ──────────────────────────────── */}
           <motion.div style={{ y: titleY }}>
-            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold font-display tracking-tight mb-6 md:mb-8 leading-[1.15]">
-              <span className="block text-foreground">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold font-display tracking-tight mb-6 md:mb-8 leading-[1.1]">
+              <span className="text-foreground">
                 <AnimatedWords text="Tu Negocio con" delay={0} />
                 <motion.span
                   className="text-primary"
@@ -87,16 +87,17 @@ export const HeroSection = () => {
                 >
                   {' '}IA,
                 </motion.span>
+                {' '}
+                <AnimatedWords text="Otro Nivel de" delay={0.3} />
               </span>
               <span className="block mt-1">
-                <AnimatedWords text="Otro Nivel de" delay={0.3} />
                 <motion.span
                   className="text-gradient-primary"
                   initial={{ opacity: 0, filter: 'blur(6px)' }}
                   animate={{ opacity: 1, filter: 'blur(0px)' }}
                   transition={{ duration: 0.5, delay: 0.48, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  {' '}Resultados.
+                  Resultados.
                 </motion.span>
               </span>
             </h1>

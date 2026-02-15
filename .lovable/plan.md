@@ -1,187 +1,236 @@
 
-# Plan Maestro: Rediseno Premium Completo — 8 Fases
+# MostachIA Landing V3 — Transformacion Total
 
-## Resumen
-Transformar cada seccion de la landing page de MostachIA implementando componentes premium inspirados en Aceternity UI, Magic UI y 21st.dev. Todo se implementa como source code propio (sin dependencias externas adicionales), usando Framer Motion + Tailwind CSS + CSS custom properties. La paleta permanece navy (#0B0F19) + mint (#60B99A / hsl 162) + violeta (#7C3AED) con dark theme permanente.
-
----
-
-## Fase 1: Componentes Base Reutilizables
-
-Crear 7 componentes atomicos en `src/components/ui/` que se reutilizaran en todas las fases siguientes:
-
-**Archivos nuevos:**
-- `blur-fade.tsx` — Wrapper con animacion blur(6px) a blur(0) + fade-in + translateY, disparado con `whileInView`. Acepta prop `delay` para stagger. Reemplaza los patrones manuales de `useInView` + `initial/animate` repetidos en cada seccion.
-- `border-beam.tsx` — Pseudo-elemento con `conic-gradient` rotante que crea un orbe luminoso recorriendo el borde de un contenedor. Puro CSS con keyframes.
-- `magic-card.tsx` — Card que trackea `onMouseMove`, calcula posicion relativa del cursor, y aplica un `radial-gradient` via CSS custom properties `--mouse-x` y `--mouse-y`. Gradiente mint/navy.
-- `number-ticker.tsx` — Hook `useMotionValue` + `useTransform` + `useInView`. Anima un valor numerico de 0 al target con spring easing al entrar en viewport.
-- `marquee.tsx` — Componente de scroll infinito horizontal. Dos copias del contenido con `animation: marquee Xs linear infinite`. Props: `pauseOnHover`, `reverse`, `vertical`, `speed`.
-- `spotlight.tsx` — Efecto de luz conica CSS tipo Linear/Lamp para headers de seccion. Conic gradient que ilumina el titulo desde arriba.
-- `pulsating-button.tsx` — Boton con pulso radiante expandiendose (pseudo-elemento con scale animation). `pulseColor` configurable.
-- `dot-pattern.tsx` — Pattern SVG de puntos como fondo sutil para footer y secciones de credibilidad.
-- `ripple.tsx` — Ondas concentricas expandiendose desde el centro. CSS keyframes con circulos concentricos.
-
-**Archivo modificado:**
-- `src/index.css` — Agregar keyframes para `border-beam-rotate`, `ripple-expand`, `dot-fade`. Agregar clases utilitarias `.animate-border-beam`, `.animate-ripple`.
+## Objetivo
+Transformar la landing completa de MostachIA con la identidad visual real de la marca: paleta Navy/Mint/Dorado, dark mode obligatorio, glassmorphism premium, y componentes pulidos a nivel enterprise.
 
 ---
 
-## Fase 2: Hero Section (Pulido)
-
-El Hero ya tiene Aurora Background y Shimmer Button. Se mejora con los nuevos componentes:
-
-**Modificar `src/components/HeroSection.tsx`:**
-- Reemplazar el subtitulo "Automatizamos procesos..." con `AnimatedGradientText` (texto con gradiente mint/gold que fluye animado) para que destaque mas.
-- Reemplazar los 4 stats cards estaticos con `NumberTicker` para que los valores "+10", "6", "24/7" se animen contando al entrar en viewport.
-- Reemplazar el marquee custom de `TechLogosBar` con el nuevo componente `Marquee` (mas robusto, con `pauseOnHover` real y velocidad configurable).
-- Agregar un `Spotlight` sutil detras del H1 para crear un efecto de iluminacion conica.
+## Prerequisito: Logos
+Los logos no estan subidos aun. La implementacion usara el logo de texto actual ("M" + "MostachIA") con los nuevos colores. Las etiquetas `<img>` quedaran preparadas para cuando se suban los archivos a `public/`.
 
 ---
 
-## Fase 3: Servicios con Magic Cards + Bento Layout
+## Fase 1: Sistema de Diseno Global
 
-**Modificar `src/components/ServiciosSection.tsx`:**
-- Reemplazar las 4 glass-cards con `MagicCard` (cursor spotlight tracking con gradiente radial mint).
-- Cambiar layout a Bento: la card "Dashboards IA" (mas popular) ocupa 2 columnas en desktop, las demas 1 columna cada una.
-- Agregar `Spotlight` / Lamp Effect al header de la seccion (cono de luz iluminando el titulo).
-- Cada icono emoji se envuelve en un contenedor con glow animado (pulse-glow).
-- Envolver cada card en `BlurFade` con delays escalonados (0, 0.1, 0.2, 0.3).
-- CTA banner inferior: agregar `BorderBeam` alrededor del contenedor para que el orbe luminoso recorra el borde.
+### 1.1 Variables CSS y Paleta (`src/index.css`)
+- Reemplazar TODA la paleta de variables CSS (:root y .dark) con los colores reales de MostachIA
+- Navy: #0F1E27 / #172D38 / #203D4B / #2A4F5F / #356173
+- Mint: #5CB8A5 / #73D7CB / #93E2D8 / #B3ECE5
+- Gold: #E5A832 / #F7C667 / #F9D68F
+- Steel: #5A7B8C / #7293A4 / #8FABB8
+- Eliminar la rama `:root` (light mode) — solo dark mode permanente
+- Actualizar gradientes (.text-gradient-primary) para usar mint #73D7CB
+- Fondo del body: gradiente navy #0F1E27 a #172D38
+- Glass cards: bg rgba(32,61,75,0.3), bordes rgba(115,215,203,0.1)
+- Glows: mint rgba(115,215,203,0.3-0.5)
+- Eliminar toda referencia a colores genéricos verdes (hsl 160/162)
 
----
+### 1.2 Tailwind Config (`tailwind.config.ts`)
+- Agregar colores custom: navy, mint, gold, steel con todas sus variantes
+- Actualizar shadows (glow, glow-lg) para usar mint #73D7CB
+- Mantener animaciones existentes
 
-## Fase 4: Demos con Border Beam + Tabs Mejoradas
+### 1.3 Theme Provider (`src/hooks/useTheme.tsx`)
+- Forzar dark mode permanente — eliminar toggle y light mode
 
-**Modificar `src/components/IntegratedDemoHub.tsx`:**
-- Agregar `BorderBeam` al contenedor del iframe (orbe mint/gold recorriendo el borde continuamente).
-- Mejorar las tabs con underline deslizante animada usando `motion.div` con `layoutId="activeTab"` para que la barra se deslice entre tabs.
-- El video placeholder: convertirlo en un "Hero Video Dialog" preparado — al hacer click abre un modal fullscreen con animacion scale-up (listo para cuando tengan video real).
-- Envolver header y descripcion en `BlurFade`.
-
----
-
-## Fase 5: Proceso con Timeline Mejorado
-
-**Modificar `src/components/HowItWorksSection.tsx`:**
-- Agregar efecto "Tracing Beam" en la linea de timeline: un gradiente luminoso (orbe) que sigue el progreso de scroll usando `useScroll` + `useTransform`, en lugar de solo llenar la barra.
-- Cada step card: envolver en `MagicCard` con cursor spotlight tracking.
-- Los numeros 01-04: usar `NumberTicker` para que se animen.
-- Aplicar `BlurFade` con delays individuales a cada step.
-- CTA final: reemplazar `btn-glow` con `PulsatingButton` con glow mint radiante.
+### 1.4 Botones Globales (`src/index.css`)
+- Primary: bg gradient #73D7CB a #5CB8A5, texto #0F1E27
+- Outline: transparente, border mint 30%, texto mint
+- WhatsApp: bg #25D366, texto blanco
+- Actualizar .btn-glow, .glass-card, .glass-nav con nuevos colores
 
 ---
 
-## Fase 6: Industrias + Integraciones + Confianza
-
-Tres secciones de credibilidad mejoradas:
-
-**Modificar `src/components/IndustriasSection.tsx`:**
-- Cards con `MagicCard` y cursor tracking.
-- Quitar el overlay hover opaco y reemplazarlo con un CTA que aparece con slide-up suave dentro de la card (mas elegante).
-- Aplicar `BlurFade` escalonado.
-
-**Modificar `src/components/IntegrationsSection.tsx`:**
-- Reemplazar el grid estatico con `Marquee` horizontal por categoria: dos filas de logos scrolleando en direcciones opuestas (una normal, una `reverse`).
-- Corregir los 3 iconos con 404 (SQL Server, OpenAI, TiendaNube) usando SVGs inline como ya se hace en `TechLogos.tsx`.
-- Agregar `Spotlight` al header.
-
-**Modificar `src/components/TrustSection.tsx`:**
-- Cards con `MagicCard` spotlight.
-- Garantias chips: envolver en `BlurFade` escalonado para entrada con blur premium.
-- Agregar `Spotlight` sutil en el header.
+## Fase 2: Navbar (`src/components/Navbar.tsx`)
+- Fondo: rgba(15, 30, 39, 0.8) con backdrop-blur-xl
+- Logo: mantener texto "M MostachIA" con nuevos colores mint (preparar `<img>` para despues)
+- Links: color #D9DADC, hover #73D7CB
+- Boton WhatsApp: outline con borde #73D7CB
+- Boton Agendar: bg gradient mint, texto navy #0F1E27
+- Borde inferior: rgba(115, 215, 203, 0.1)
+- Progress bar: gradiente mint
+- Mobile menu: bg rgba(15, 30, 39, 0.98)
 
 ---
 
-## Fase 7: FAQ + Contacto + Footer
+## Fase 3: Hero Section (`src/components/HeroSection.tsx`)
+- Mantener estructura actual (badge, H1, subtitle, CTAs, stats, marquee)
+- Actualizar TODOS los colores:
+  - Badge: bg rgba(115,215,203,0.1), borde rgba(115,215,203,0.3), texto #73D7CB
+  - H1 palabras "IA" y "Resultados": color #73D7CB con text-shadow glow pulsante
+  - Subtitle: color #D9DADC
+  - Micro-proof: color #7293A4
+  - Stats cards: bg rgba(32,61,75,0.3), numeros en #73D7CB
+  - Marquee: iconos en steel, hover mint
+- CTA primary: shimmer button con background mint #73D7CB
+- CTA secondary: outline mint
+- Aurora background: actualizar colores a navy/mint
 
-**Modificar `src/components/FAQSection.tsx`:**
-- Agregar `Spotlight` al header de la seccion.
-- Envolver cada AccordionItem en `BlurFade` con delay escalonado (reemplazando el stagger manual actual).
-- Mejorar la animacion del Accordion con `AnimatePresence` + `layout` prop para transiciones de altura mas suaves.
-
-**Modificar `src/components/ContactFormSection.tsx`:**
-- Agregar componente `Ripple` como fondo detras del formulario (ondas concentricas emanando del centro).
-- Form inputs: agregar focus glow animado con ring + transition suave (CSS `focus-within` con box-shadow primary).
-- CTA submit: reemplazar `btn-glow` con `ShimmerButton` (ya existe el componente, solo importarlo).
-- Card de contacto derecha: envolver en `MagicCard`.
-
-**Modificar `src/components/Footer.tsx`:**
-- Agregar `DotPattern` como fondo sutil del footer.
-- Links con clase `link-underline` al hover (ya existe en CSS, solo aplicarla).
+### 3.1 Aurora Background (`src/components/ui/aurora-background.tsx`)
+- Recolorear radiales a tonos navy y mint tenues
 
 ---
 
-## Fase 8: Efectos Globales + Performance + Cleanup
+## Fase 4: Servicios (`src/components/ServiciosSection.tsx`)
+- Mantener layout split actual (lista izquierda + preview derecha)
+- Actualizar todos los colores de cards, badges, tech pills
+- Badge "Mas Popular": bg rgba(247,198,103,0.15), borde gold, texto #F7C667
+- Badge "Demo Interactiva": bg rgba(115,215,203,0.1), texto #73D7CB
+- Cards: bg rgba(32,61,75,0.25), borde rgba(115,215,203,0.08)
+- Hover: borde rgba(115,215,203,0.25), sombra mint
+- Tech pills: font mono, color #7293A4
+- CTAs: texto #73D7CB
+- Preview panel: actualizar colores internos de las mini-demos
+- Banner inferior: borde dorado sutil rgba(247,198,103,0.2)
 
-**Modificar `src/components/ParallaxSection.tsx`:**
-- Reducir opacidad de orbs flotantes de /5 a /3.
-- Agregar `will-change: transform` para GPU acceleration.
-- Reducir tamano de blurs en mobile via responsive classes.
+---
 
-**Modificar `src/App.tsx`:**
-- Envolver la app con `LazyMotion` de `framer-motion` con `domAnimation` features para reducir bundle de ~34KB a ~5KB.
-- Agregar `MotionConfig reducedMotion="user"` para accesibilidad (respeta `prefers-reduced-motion`).
+## Fase 5: Demos (`src/components/IntegratedDemoHub.tsx`)
+- Tabs: activo bg #73D7CB texto #0F1E27, inactivo texto #7293A4
+- Browser chrome: bg rgba(15,30,39,0.8), dots y texto #7293A4
+- Iframe container: borde rgba(115,215,203,0.1)
+- BorderBeam: colores mint y gold
+- CTA card: borde mint glow
+- Video placeholder: gradiente navy, icono play #73D7CB con glow pulsante
 
-**Modificar `src/components/Navbar.tsx`:**
-- Reducir links a 4 (Servicios, Demos, Proceso, Contacto) para CRO — menos links = mas conversion segun research.
-- Cambiar el CTA "Agendar Consultoria" a color gold (#F7C667) para maximo contraste y conversion (segun data de A/B tests).
+---
 
-**Modificar `src/components/ScrollProgress.tsx`:**
-- Agregar porcentaje numerico visible junto a la barra de progreso.
+## Fase 6: Como Trabajamos (`src/components/HowItWorksSection.tsx`)
+- Timeline: linea base rgba(115,215,203,0.1), progreso mint gradient
+- Nodos: circulo mint cuando activo, rgba(115,215,203,0.2) inactivo
+- Cards: bg rgba(32,61,75,0.25), borde rgba(115,215,203,0.08)
+- Numeros watermark: rgba(115,215,203,0.15)
+- Badges: bg rgba(115,215,203,0.1) texto #73D7CB
+- CTA: PulsatingButton con colores mint
 
-**Eliminar archivos obsoletos:**
-- `DemosSection.tsx`, `DemoCard.tsx`, `DemoModal.tsx`, `DemoHubSection.tsx`
-- `ThemeToggle.tsx`, `NavLink.tsx`
-- `AnimatedGradientBackground.tsx`, `ConstellationBackground.tsx`, `ParallaxEffects.tsx`
-- Verificar que ningun import los referencia.
+---
+
+## Fase 7: Industrias (`src/components/IndustriasSection.tsx`)
+- Cards: mismo estilo glass con nuevos colores
+- Icono en circulo: bg rgba(115,215,203,0.1)
+- Bullets: dot mint #73D7CB
+- Hover CTA: "Consultar para este rubro" en mint
+- Banner inferior: borde dorado sutil
+
+---
+
+## Fase 8: Integraciones (`src/components/IntegrationsSection.tsx`)
+- Badge "Integraciones Reales": bg mint/10, borde mint/20, texto mint
+- Marquee icons: en glass circles bg rgba(32,61,75,0.5), hover mint
+- Nombres: #7293A4, hover foreground
+- Fade edges: gradiente navy (no background generico)
+
+---
+
+## Fase 9: Trust / Confianza (`src/components/TrustSection.tsx`)
+- Cards: glass con nuevos colores
+- Iconos: circulo bg rgba(115,215,203,0.1), size 48px
+- Titulo: blanco, descripcion #D9DADC
+- Garantias chips: bg rgba(115,215,203,0.05), borde rgba(115,215,203,0.15), checkmarks #73D7CB
+
+---
+
+## Fase 10: FAQ (`src/components/FAQSection.tsx`)
+- Accordion: trigger cerrado con border-bottom rgba(115,215,203,0.08), texto blanco
+- Trigger abierto: texto #73D7CB
+- ChevronDown: #73D7CB
+- Content: texto #D9DADC
+- CTA WhatsApp: boton verde #25D366
+
+---
+
+## Fase 11: Contacto (`src/components/ContactFormSection.tsx`)
+- Titulo: "Hablemos de **tu Proyecto**" (mint con glow)
+- Inputs: bg rgba(32,61,75,0.4), border rgba(115,215,203,0.15), focus glow mint
+- Placeholder: #7293A4
+- Submit: shimmer button mint
+- Info cards: glass con nuevos colores
+- Horarios: Lun-Vie 9:00-18:00 (GMT-3) (ya existe)
+
+---
+
+## Fase 12: Footer (`src/components/Footer.tsx`)
+- Fondo: #0A1820 (mas oscuro que body)
+- Borde superior: rgba(115,215,203,0.08)
+- Logo: texto "MostachIA" con colores nuevos (preparado para img)
+- Links: color #7293A4, hover #73D7CB
+- Titulos columna: blanco, Sora 600, uppercase
+- Copyright: "Procesos inteligentes, resultados superiores." en #5A7B8C
+
+---
+
+## Fase 13: Chat Widget (`src/components/FloatingWhatsApp.tsx`)
+- FAB: gradiente #73D7CB a #5CB8A5, icono #0F1E27
+- Punto online: verde pulsante
+- Chat window: bg rgba(15,30,39,0.95), borde rgba(115,215,203,0.15)
+- Header: gradiente mint (no primary generico)
+- Avatar: emoji 🤖 (preparado para isotipo-mint.png)
+- Mensajes bot: bg rgba(32,61,75,0.5), texto #D9DADC
+- Mensajes user: bg rgba(115,215,203,0.2), texto blanco
+- Quick replies: bg rgba(115,215,203,0.1), borde rgba(115,215,203,0.2), texto #73D7CB
+- Typing dots: color #73D7CB
+- Input: bg rgba(32,61,75,0.4), placeholder #5A7B8C
+- Send button: bg #73D7CB, icono #0F1E27
+
+---
+
+## Fase 14: Componentes de Soporte
+- **StickyCTA** (`src/components/StickyCTA.tsx`): bg rgba(15,30,39,0.9), borde-top mint, boton primary mint
+- **ScrollToTop** (`src/components/ScrollToTop.tsx`): bg gradiente mint, icono #0F1E27
+- **MagicCard** (`src/components/ui/magic-card.tsx`): bg rgba(32,61,75,0.3), borde rgba(115,215,203,0.1), hover rgba(115,215,203,0.25)
+- **ParallaxBackground** (`src/components/ParallaxSection.tsx`): orbes en tonos navy/mint tenues
+- **SectionTransition / AnimatedDivider**: linea via mint en lugar de border generico
+
+---
+
+## Fase 15: SEO y Polish Final
+
+### 15.1 index.html
+- Ya tiene buena estructura SEO — actualizar meta description si es necesario
+- Schema.org ya existe — verificar que este completo
+- Eliminar IBM Plex Mono del preconnect fonts (mantener solo Sora + Inter)
+
+### 15.2 Cleanup
+- Eliminar App.css (no se usa)
+- Eliminar referencia a light mode en ThemeProvider
+- Verificar voseo argentino en todos los textos
 
 ---
 
 ## Detalles Tecnicos
 
-### MagicCard
-Escucha `onMouseMove`, calcula `(e.clientX - rect.left) / rect.width * 100` para X e Y, y setea CSS custom properties `--mouse-x` y `--mouse-y`. Un pseudo-elemento `::before` aplica `radial-gradient(600px circle at var(--mouse-x)% var(--mouse-y)%, hsl(162 100% 39% / 0.15), transparent 40%)`.
+### Archivos a modificar (en orden):
+1. `src/index.css` — paleta completa, variables, componentes base
+2. `tailwind.config.ts` — colores custom navy/mint/gold/steel
+3. `src/hooks/useTheme.tsx` — forzar dark mode
+4. `src/components/Navbar.tsx` — colores nuevos
+5. `src/components/HeroSection.tsx` — colores nuevos
+6. `src/components/ui/aurora-background.tsx` — recolorear
+7. `src/components/ServiciosSection.tsx` — colores nuevos
+8. `src/components/IntegratedDemoHub.tsx` — colores nuevos
+9. `src/components/HowItWorksSection.tsx` — colores nuevos
+10. `src/components/IndustriasSection.tsx` — colores nuevos
+11. `src/components/IntegrationsSection.tsx` — colores nuevos
+12. `src/components/TrustSection.tsx` — colores nuevos
+13. `src/components/FAQSection.tsx` — colores nuevos
+14. `src/components/ContactFormSection.tsx` — colores nuevos
+15. `src/components/Footer.tsx` — colores nuevos + copyright
+16. `src/components/FloatingWhatsApp.tsx` — colores nuevos
+17. `src/components/StickyCTA.tsx` — colores nuevos
+18. `src/components/ScrollToTop.tsx` — colores nuevos
+19. `src/components/ui/magic-card.tsx` — colores nuevos
+20. `src/components/ParallaxSection.tsx` — colores nuevos
+21. `src/components/SectionTransition.tsx` — colores nuevos
+22. `src/App.css` — eliminar (no usado)
 
-### BlurFade
-Wrapper Framer Motion: `initial={{ opacity: 0, y: 6, filter: 'blur(6px)' }}`, `whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}`, `viewport={{ once: true }}`. Prop `delay` controla el timing.
+### Lo que NO cambia:
+- Estructura de componentes y layout general
+- Logica de webhooks (n8n), formularios (zod), chat widget
+- Animaciones (framer-motion) — solo colores
+- Estructura SEO de index.html (ya esta bien)
+- Config de constantes (ya correcta)
+- Orden de secciones en Index.tsx
 
-### BorderBeam
-Contenedor con `overflow: hidden` y borde interior. Un div absoluto con `conic-gradient(from var(--angle), transparent 80%, hsl(162 100% 50%) 100%)` que rota con `@keyframes border-beam { to { --angle: 360deg } }` usando `@property --angle`.
-
-### NumberTicker
-`useMotionValue(0)` + `animate(motionValue, targetValue, { duration: 2, ease: 'easeOut' })` disparado con `useInView`. Display: `useTransform(motionValue, v => Math.round(v))`.
-
-### Marquee
-Dos copias del children en un flex container. CSS animation `translateX(0) -> translateX(-50%)`. `pauseOnHover` via `hover:animation-play-state: paused`. `reverse` via `animation-direction: reverse`.
-
-### Performance
-- Todo es CSS + Framer Motion. CERO Canvas/WebGL.
-- Solo se animan `transform` y `opacity` (GPU-accelerated).
-- `BlurFade` usa `whileInView` nativo (Intersection Observer interno).
-- `LazyMotion` reduce bundle de animaciones en ~85%.
-- `MotionConfig reducedMotion="user"` para accesibilidad.
-
-### Paleta (sin cambios)
-- Primario: hsl(162 100% 39%) — Mint/Verde MostachIA
-- Acento: hsl(262 83% 58%) — Violeta
-- Gold para CTA primario: #F7C667 (nuevo, solo en botones CTA del navbar)
-- Background: hsl(222 47% 7%) — Navy oscuro
-- Glass: bg-white/5, backdrop-blur-xl, border-white/10
-- Dark theme SIEMPRE activo
-
----
-
-## Orden de Ejecucion
-
-Las fases se ejecutan secuencialmente. Cada fase se completa antes de pasar a la siguiente:
-
-1. Fase 1 — Componentes base (fundacion para todo lo demas)
-2. Fase 2 — Hero
-3. Fase 3 — Servicios
-4. Fase 4 — Demos
-5. Fase 5 — Proceso
-6. Fase 6 — Industrias + Integraciones + Confianza
-7. Fase 7 — FAQ + Contacto + Footer
-8. Fase 8 — Global + Performance + Cleanup
-
-Estimacion: ~8 ciclos de implementacion, uno por fase.
+### Riesgo principal:
+La cantidad de archivos es grande pero los cambios son mayormente de color/estilo, no de logica. Se implementara en tandas paralelas para eficiencia.

@@ -31,8 +31,8 @@ function createBeam(width: number, height: number): Beam {
     width: 30 + Math.random() * 60,
     length: height * 2.5,
     angle,
-    speed: 0.6 + Math.random() * 1.2,
-    opacity: 0.12 + Math.random() * 0.16,
+    speed: 0.5 + Math.random() * 1.2,
+    opacity: 0.18 + Math.random() * 0.22,
     hue: 190 + Math.random() * 70,
     pulse: Math.random() * Math.PI * 2,
     pulseSpeed: 0.02 + Math.random() * 0.03,
@@ -93,7 +93,7 @@ export function BeamsBackground({
       beam.width = 100 + Math.random() * 100;
       beam.speed = 0.5 + Math.random() * 0.4;
       beam.hue = 190 + (index * 70) / totalBeams;
-      beam.opacity = 0.2 + Math.random() * 0.1;
+      beam.opacity = 0.25 + Math.random() * 0.15;
       return beam;
     }
 

@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { Check, Calendar, MessageSquare, PenTool, Rocket, TrendingUp } from 'lucide-react';
+import { Check, Calendar, MessageSquare, PenTool, Rocket, TrendingUp, ArrowRight } from 'lucide-react';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { DotPattern } from '@/components/ui/dot-pattern';
@@ -260,8 +260,8 @@ export const HowItWorksSection = () => {
 
         {/* CTA */}
         <BlurFade delay={0.8} className="mt-16 max-w-lg mx-auto text-center">
-          <div className="relative p-10 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-primary/20 overflow-hidden"
-            style={{ boxShadow: '0 0 60px -20px hsla(162, 100%, 39%, 0.15)' }}
+          <div className="relative p-10 rounded-3xl bg-white/[0.04] backdrop-blur-md border border-primary/20 overflow-hidden"
+            style={{ boxShadow: '0 0 60px -15px hsla(162, 100%, 39%, 0.2), 0 8px 32px rgba(0,0,0,0.4)' }}
           >
             <DotPattern className="opacity-[0.04]" width={24} height={24} cr={0.8} />
             <p className="text-2xl font-display font-bold mb-2 relative z-10">
@@ -273,26 +273,22 @@ export const HowItWorksSection = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 1.2, type: 'spring', stiffness: 200, damping: 15 }}
-              className="relative z-10"
+              transition={{ delay: 1.2, type: 'spring', stiffness: 150, damping: 20 }}
+              whileHover={{ scale: 1.04, y: -2 }}
+              className="relative z-10 inline-block"
             >
               <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
                 <ShimmerButton
                   shimmerColor="hsl(162 100% 70%)"
                   shimmerDuration="2.5s"
                   borderRadius="9999px"
-                  background="linear-gradient(135deg, hsl(162 100% 39%), hsl(172 80% 35%))"
-                  className="text-lg font-bold px-10 py-5 group"
-                  style={{ boxShadow: '0 0 40px rgba(115,215,203,0.4), 0 4px 20px rgba(0,0,0,0.3)' } as React.CSSProperties}
+                  background="linear-gradient(135deg, #73D7CB 0%, #5CB8A5 50%, #4AA394 100%)"
+                  className="text-lg font-bold px-12 py-6 group"
+                  style={{ boxShadow: '0 0 30px rgba(115,215,203,0.35), 0 8px 32px rgba(0,0,0,0.4)' } as React.CSSProperties}
                 >
-                  <motion.span
-                    className="inline-block mr-2"
-                    whileHover={{ rotate: [0, -10, 10, 0] }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <Calendar className="w-5 h-5" />
-                  </motion.span>
+                  <Calendar className="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" />
                   Agendar Consultoría Gratuita
+                  <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </ShimmerButton>
               </a>
             </motion.div>

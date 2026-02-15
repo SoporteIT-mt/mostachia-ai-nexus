@@ -40,7 +40,7 @@ export const ScrollProgress = () => {
       {/* Progress track */}
       <div className="relative w-1 h-32 bg-border/30 rounded-full overflow-hidden">
         <motion.div
-          className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary to-accent rounded-full origin-bottom"
+          className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-mint-400 to-mint-300 rounded-full origin-bottom"
           style={{ scaleY }}
         />
       </div>

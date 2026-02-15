@@ -36,7 +36,7 @@ export const ScrollToTop = () => {
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
           whileHover={{ 
             scale: 1.1,
-            boxShadow: '0 0 30px rgba(0, 200, 150, 0.4)'
+            boxShadow: '0 0 30px rgba(115, 215, 203, 0.4)'
           }}
           whileTap={{ scale: 0.9 }}
           transition={{
@@ -45,7 +45,7 @@ export const ScrollToTop = () => {
             damping: 25
           }}
           onClick={scrollToTop}
-          className="fixed bottom-24 right-6 z-50 w-12 h-12 rounded-full bg-primary/90 backdrop-blur-sm border border-primary/30 shadow-lg shadow-primary/25 flex items-center justify-center group cursor-pointer"
+          className="fixed bottom-24 right-6 z-50 w-12 h-12 rounded-full bg-gradient-to-r from-mint-400 to-mint-500 backdrop-blur-sm border border-mint-400/30 shadow-lg shadow-mint-400/25 flex items-center justify-center group cursor-pointer"
           aria-label="Scroll to top"
         >
           {/* Progress ring */}
@@ -91,7 +91,7 @@ export const ScrollToTop = () => {
               ease: 'easeInOut'
             }}
           >
-            <ArrowUp className="w-5 h-5 text-white relative z-10" />
+            <ArrowUp className="w-5 h-5 text-navy-900 relative z-10" />
           </motion.div>
           
           {/* Glow effect on hover */}

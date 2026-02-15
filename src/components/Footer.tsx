@@ -18,7 +18,7 @@ const empresaLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="relative pt-20 pb-8 bg-black/40 overflow-hidden">
+    <footer className="relative pt-20 pb-8 overflow-hidden" style={{ backgroundColor: '#0A1820' }}>
       {/* DotPattern background */}
       <DotPattern className="opacity-30 [mask-image:radial-gradient(ellipse_at_center,white,transparent_80%)]" />
 
@@ -28,8 +28,8 @@ export const Footer = () => {
           {/* Col 1 — Logo */}
           <div>
             <a href="#" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/25">
-                <span className="text-xl font-bold text-white">M</span>
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-mint-400 to-mint-500 flex items-center justify-center shadow-lg shadow-mint-400/25">
+                <span className="text-xl font-bold text-navy-900">M</span>
               </div>
               <span className="font-display font-bold text-xl">
                 Mostach<span className="text-primary">IA</span>
@@ -62,7 +62,7 @@ export const Footer = () => {
 
           {/* Col 2 — Servicios */}
           <div>
-            <h4 className="font-display font-semibold mb-4">Servicios</h4>
+            <h4 className="font-display font-semibold mb-4 text-white uppercase text-sm tracking-wider">Servicios</h4>
             <ul className="space-y-3">
               {serviciosLinks.map((l) => (
                 <li key={l.label}>
@@ -74,7 +74,7 @@ export const Footer = () => {
 
           {/* Col 3 — Empresa */}
           <div>
-            <h4 className="font-display font-semibold mb-4">Empresa</h4>
+            <h4 className="font-display font-semibold mb-4 text-white uppercase text-sm tracking-wider">Empresa</h4>
             <ul className="space-y-3">
               {empresaLinks.map((l) => (
                 <li key={l.label}>
@@ -86,7 +86,7 @@ export const Footer = () => {
 
           {/* Col 4 — Contacto */}
           <div>
-            <h4 className="font-display font-semibold mb-4">Contacto</h4>
+            <h4 className="font-display font-semibold mb-4 text-white uppercase text-sm tracking-wider">Contacto</h4>
             <ul className="space-y-3">
               <li>
                 <a href={CONFIG.WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
@@ -111,9 +111,9 @@ export const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="pt-6 border-t border-white/10 text-center">
-          <p className="text-xs text-muted-foreground">
-            © 2025 MostachIA. Automatización Inteligente para Negocios.
+        <div className="pt-6 border-t border-[rgba(115,215,203,0.08)] text-center">
+          <p className="text-xs text-steel-500">
+            © 2025 MostachIA. Procesos inteligentes, resultados superiores.
           </p>
         </div>
       </div>

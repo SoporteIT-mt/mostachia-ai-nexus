@@ -116,7 +116,7 @@ export const AnimatedDivider = () => {
   return (
     <div ref={ref} className="relative h-16 flex items-center justify-center overflow-hidden my-4">
       <motion.div 
-        className="w-full max-w-md h-[1px] bg-gradient-to-r from-transparent via-border to-transparent"
+        className="w-full max-w-md h-[1px] bg-gradient-to-r from-transparent via-mint-400/15 to-transparent"
         style={{ scaleX: lineScale }}
       />
       <motion.div 

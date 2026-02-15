@@ -28,7 +28,7 @@ export const StickyCTA = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="fixed bottom-0 left-0 right-0 z-30 md:hidden backdrop-blur-xl bg-background/80 border-t border-white/10 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]"
+          className="fixed bottom-0 left-0 right-0 z-30 md:hidden backdrop-blur-xl bg-[rgba(15,30,39,0.9)] border-t border-[rgba(115,215,203,0.1)] px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]"
         >
           <div className="flex gap-3">
             <Button

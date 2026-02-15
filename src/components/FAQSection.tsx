@@ -48,12 +48,12 @@ const faqs = [
 export const FAQSection = () => {
   return (
     <section id="faq" className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Header with Spotlight */}
         <div className="relative text-center mb-16">
-          <Spotlight size={600} fill="hsl(262 83% 58% / 0.08)" />
+          <Spotlight size={600} fill="rgba(115, 215, 203, 0.08)" />
           <BlurFade>
             <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
               Preguntas <span className="text-gradient-primary">Frecuentes</span>

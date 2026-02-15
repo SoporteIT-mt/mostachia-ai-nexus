@@ -9,7 +9,7 @@ interface PulsatingButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const PulsatingButton = ({
   children,
-  pulseColor = "hsl(162 100% 39%)",
+  pulseColor = "rgba(115, 215, 203, 0.7)",
   className,
   ...props
 }: PulsatingButtonProps) => {

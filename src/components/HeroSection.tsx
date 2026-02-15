@@ -2,13 +2,8 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Calendar, MessageCircle, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { AuroraBackground } from '@/components/ui/aurora-background';
+import { BeamsBackground } from '@/components/ui/beams-background';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
-import { NumberTicker } from '@/components/ui/number-ticker';
-import { Marquee } from '@/components/ui/marquee';
-import { Spotlight } from '@/components/ui/spotlight';
-import { BlurFade } from '@/components/ui/blur-fade';
-import { techLogos } from './TechLogos';
 import { CONFIG } from '@/config/constants';
 
 // ─── Animation variants ───────────────────────────────────────
@@ -46,14 +41,6 @@ const fadeUp = (delay: number) => ({
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay, ease: [0.25, 0.4, 0.25, 1] } },
 });
 
-// ─── Stats data ───────────────────────────────────────────────
-const stats = [
-  { value: 10, prefix: '+', suffix: '', label: 'Clientes activos' },
-  { value: 6, prefix: '', suffix: '', label: 'Industrias cubiertas' },
-  { value: 24, prefix: '', suffix: '/7', label: 'Agentes automatizados' },
-  { value: 4, prefix: '1-', suffix: ' sem', label: 'Implementación' },
-];
-
 // ─── Component ────────────────────────────────────────────────
 export const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -66,10 +53,7 @@ export const HeroSection = () => {
   const scale = useTransform(scrollY, [0, 400], [1, 0.95]);
 
   return (
-    <AuroraBackground className="min-h-screen overflow-hidden">
-      {/* Spotlight behind title */}
-      <Spotlight className="z-0 hidden sm:block" size={500} fill="rgba(115, 215, 203, 0.08)" />
-
+    <BeamsBackground intensity="medium">
       <motion.div
         ref={containerRef}
         className="container relative z-10 mx-auto px-4 sm:px-6 py-20 min-h-screen flex flex-col justify-center max-w-full overflow-hidden"
@@ -118,7 +102,7 @@ export const HeroSection = () => {
             </h1>
           </motion.div>
 
-          {/* ── Subtitle with animated gradient ── */}
+          {/* ── Subtitle ── */}
           <motion.div style={{ y: subtitleY }} variants={fadeUp(0.6)} initial="hidden" animate="visible">
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground/80 max-w-2xl mx-auto font-light leading-relaxed mb-10">
               Automatizamos procesos, generamos dashboards inteligentes y conectamos{' '}
@@ -165,7 +149,7 @@ export const HeroSection = () => {
           </motion.div>
 
           {/* ── Micro-proof ──────────────────────── */}
-          <motion.div variants={fadeUp(1.0)} initial="hidden" animate="visible" className="mb-14">
+          <motion.div variants={fadeUp(1.0)} initial="hidden" animate="visible">
             <p className="text-sm text-muted-foreground flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
               <span>✅ Consultoría gratuita de 30 min</span>
               <span className="hidden sm:inline text-white/20">·</span>
@@ -174,49 +158,8 @@ export const HeroSection = () => {
               <span>🇦🇷 Equipo 100% argentino</span>
             </p>
           </motion.div>
-
-          {/* ── Stats with NumberTicker ───────────── */}
-          <BlurFade delay={1.2} className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-16 max-w-3xl mx-auto">
-            {stats.map((s, i) => (
-              <BlurFade key={s.label} delay={1.2 + i * 0.15}>
-                <motion.div
-                  whileHover={{ scale: 1.06, y: -4 }}
-                  className="rounded-xl bg-white/[0.05] backdrop-blur-sm border border-white/[0.1] px-4 py-5 text-center cursor-default"
-                >
-                  <div className="text-2xl md:text-3xl font-extrabold font-display text-mint-400">
-                    <NumberTicker value={s.value} prefix={s.prefix} suffix={s.suffix} duration={2} />
-                  </div>
-                  <div className="text-[10px] md:text-xs font-mono uppercase tracking-wider text-muted-foreground mt-1">{s.label}</div>
-                </motion.div>
-              </BlurFade>
-            ))}
-          </BlurFade>
-
-          {/* ── Tech logos with Marquee ───────────── */}
-          <BlurFade delay={1.8}>
-            <p className="text-sm text-muted-foreground text-center mb-8">
-              Integramos con las herramientas que ya usás
-            </p>
-            <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
-              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
-              <Marquee pauseOnHover speed={25}>
-                {techLogos.map((logo) => (
-                  <motion.div
-                    key={logo.name}
-                    whileHover={{ scale: 1.2, y: -4 }}
-                    className="flex-shrink-0 w-12 h-12 mx-6 text-foreground/50 hover:text-primary transition-all duration-300 cursor-default"
-                    title={logo.name}
-                  >
-                    {logo.svg}
-                  </motion.div>
-                ))}
-              </Marquee>
-            </div>
-          </BlurFade>
         </div>
       </motion.div>
-
-    </AuroraBackground>
+    </BeamsBackground>
   );
 };

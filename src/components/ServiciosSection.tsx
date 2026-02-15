@@ -11,7 +11,7 @@ const servicios = [
     id: 'dashboards',
     icon: BarChart3,
     badge: '⭐ Más Popular',
-    title: 'Dashboards Inteligentes con IA',
+    title: 'Agente de Estadísticas y Dashboards',
     description: 'Hacé preguntas sobre tu negocio en lenguaje natural y recibí dashboards interactivos con gráficos, KPIs y tablas.',
     tech: ['MySQL', 'SQL Server', 'MongoDB', 'PostgreSQL'],
     cta: { text: 'Ver Demo en Vivo', href: '#demos' },
@@ -19,7 +19,7 @@ const servicios = [
   {
     id: 'agentes',
     icon: Bot,
-    title: 'Agentes de IA para WhatsApp',
+    title: 'Agente de Soporte y Ventas',
     description: 'Atención al cliente, analytics y soporte 24/7. El agente se conecta a tus datos reales y resuelve consultas.',
     tech: ['GPT-4', 'Claude', 'RAG', 'n8n'],
     cta: { text: 'Agendar Demo', href: CONFIG.CALCOM_URL, external: true },
@@ -27,8 +27,8 @@ const servicios = [
   {
     id: 'automatizacion',
     icon: Zap,
-    title: 'Automatización de Procesos',
-    description: 'Conectamos tus sistemas y eliminamos tareas manuales. Leads, inventario, facturación y más.',
+    title: 'Agente de Marketing y Contenido',
+    description: 'Generamos contenido, campañas y estrategias de marketing automatizadas con IA conectada a tus métricas.',
     tech: ['n8n', 'Make', 'APIs REST', 'Webhooks'],
     cta: { text: 'Consultar', href: CONFIG.CALCOM_URL, external: true },
   },
@@ -36,8 +36,8 @@ const servicios = [
     id: 'migracion',
     icon: Database,
     badge: '🎮 Demo Interactiva',
-    title: 'Migración de Bases de Datos',
-    description: 'Migramos, conectamos y optimizamos tus bases de datos. Validación automática con IA para cero errores.',
+    title: 'Generación y Seguimiento de Leads',
+    description: 'Capturamos, calificamos y hacemos seguimiento automático de leads con IA. Integración directa con tu CRM.',
     tech: ['MySQL', 'SQL Server', 'MongoDB', 'Supabase'],
     cta: { text: 'Probar Demo', href: '#demos' },
   },
@@ -45,15 +45,30 @@ const servicios = [
 
 // ── Enhanced Dashboard Preview ──
 const DashboardPreview = () => {
-  const [animatedValues, setAnimatedValues] = useState([0, 0, 0]);
+  const [animatedValues, setAnimatedValues] = useState([0, 0, 0, 0]);
   const metrics = [
     { label: 'Ventas Hoy', value: 48200, prefix: '$', suffix: '', change: '+12.4%', icon: TrendingUp, color: 'text-primary' },
     { label: 'Clientes Activos', value: 1847, prefix: '', suffix: '', change: '+5.2%', icon: Users, color: 'text-blue-400' },
     { label: 'Tickets Resueltos', value: 94, prefix: '', suffix: '%', change: '+3.1%', icon: CheckCircle2, color: 'text-emerald-400' },
+    { label: 'Leads Nuevos', value: 127, prefix: '', suffix: '', change: '+8.7%', icon: Sparkles, color: 'text-accent' },
   ];
 
   const barData = [40, 65, 45, 80, 55, 92, 70];
   const days = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+
+  // Donut chart data
+  const donutSegments = [
+    { label: 'Online', value: 42, color: 'hsl(162 100% 39%)' },
+    { label: 'WhatsApp', value: 28, color: 'hsl(43 92% 68%)' },
+    { label: 'Presencial', value: 18, color: 'hsl(210 80% 60%)' },
+    { label: 'Email', value: 12, color: 'hsl(220 20% 55%)' },
+  ];
+
+  const topProducts = [
+    { rank: 1, name: 'Pack Premium', units: 127, revenue: '$4.2K' },
+    { rank: 2, name: 'Servicio Plus', units: 94, revenue: '$3.1K' },
+    { rank: 3, name: 'Plan Básico', units: 81, revenue: '$1.8K' },
+  ];
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -68,10 +83,15 @@ const DashboardPreview = () => {
     return `${formatted}${m.suffix}`;
   };
 
+  // Calculate donut paths
+  const radius = 40;
+  const circumference = 2 * Math.PI * radius;
+  let cumulativeOffset = 0;
+
   return (
-    <div className="space-y-4">
-      {/* KPI Cards */}
-      <div className="grid grid-cols-3 gap-2">
+    <div className="space-y-3">
+      {/* KPI Cards - 2x2 grid */}
+      <div className="grid grid-cols-2 gap-2">
         {metrics.map((m, i) => {
           const Icon = m.icon;
           return (
@@ -79,45 +99,115 @@ const DashboardPreview = () => {
               key={m.label}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.12 }}
-              className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08]"
+              transition={{ delay: i * 0.1 }}
+              className="p-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08]"
             >
-              <div className="flex items-center gap-1.5 mb-2">
-                <Icon className={`w-3.5 h-3.5 ${m.color}`} />
-                <span className="text-[9px] text-muted-foreground uppercase tracking-wider">{m.label}</span>
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <Icon className={`w-3 h-3 ${m.color}`} />
+                <span className="text-[8px] text-muted-foreground uppercase tracking-wider">{m.label}</span>
               </div>
               <motion.div
-                className="text-base font-bold font-mono text-foreground"
+                className="text-sm font-bold font-mono text-foreground"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 + i * 0.15 }}
+                transition={{ delay: 0.3 + i * 0.1 }}
               >
                 {formatNumber(animatedValues[i], i)}
               </motion.div>
-              <span className="text-[10px] font-mono text-primary">{m.change}</span>
+              <span className="text-[9px] font-mono text-primary">{m.change}</span>
             </motion.div>
           );
         })}
       </div>
 
-      {/* Mini bar chart */}
+      {/* Donut Chart + Bar Chart row */}
+      <div className="grid grid-cols-2 gap-2">
+        {/* Donut Chart */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08]"
+        >
+          <span className="text-[9px] text-muted-foreground mb-2 block">Ventas por Canal</span>
+          <div className="flex justify-center mb-2">
+            <svg width="90" height="90" viewBox="0 0 100 100">
+              {donutSegments.map((seg, i) => {
+                const segLength = (seg.value / 100) * circumference;
+                const offset = cumulativeOffset;
+                cumulativeOffset += segLength;
+                return (
+                  <motion.circle
+                    key={i}
+                    cx="50" cy="50" r={radius}
+                    fill="none"
+                    stroke={seg.color}
+                    strokeWidth="10"
+                    strokeDasharray={`${segLength} ${circumference - segLength}`}
+                    strokeDashoffset={-offset}
+                    strokeLinecap="round"
+                    initial={{ opacity: 0, pathLength: 0 }}
+                    animate={{ opacity: 1, pathLength: 1 }}
+                    transition={{ delay: 0.7 + i * 0.15, duration: 0.6 }}
+                    transform="rotate(-90 50 50)"
+                  />
+                );
+              })}
+              <text x="50" y="48" textAnchor="middle" className="fill-foreground text-[10px] font-bold font-mono">$48.2K</text>
+              <text x="50" y="58" textAnchor="middle" className="fill-muted-foreground text-[6px]">total</text>
+            </svg>
+          </div>
+          <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">
+            {donutSegments.map((seg, i) => (
+              <div key={i} className="flex items-center gap-1">
+                <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: seg.color }} />
+                <span className="text-[7px] text-muted-foreground truncate">{seg.label} {seg.value}%</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Bar chart */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08]"
+        >
+          <span className="text-[9px] text-muted-foreground mb-2 block">Ventas Semanal</span>
+          <div className="flex items-end gap-1 h-[90px]">
+            {barData.map((h, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
+                <motion.div
+                  className="w-full rounded-sm bg-gradient-to-t from-primary/60 to-primary relative group"
+                  initial={{ height: 0 }}
+                  animate={{ height: `${h}%` }}
+                  transition={{ delay: 0.8 + i * 0.06, duration: 0.5, ease: 'easeOut' }}
+                />
+                <span className="text-[7px] text-muted-foreground/60">{days[i]}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Top Products Mini Table */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1 }}
         className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08]"
       >
-        <span className="text-[10px] text-muted-foreground mb-2 block">Ventas de la semana</span>
-        <div className="flex items-end gap-1.5 h-16">
-          {barData.map((h, i) => (
-            <div key={i} className="flex-1 flex flex-col items-center gap-1">
-              <motion.div
-                className="w-full rounded-sm bg-gradient-to-t from-primary/60 to-primary"
-                initial={{ height: 0 }}
-                animate={{ height: `${h}%` }}
-                transition={{ delay: 0.8 + i * 0.08, duration: 0.5, ease: 'easeOut' }}
-              />
-              <span className="text-[8px] text-muted-foreground/60">{days[i]}</span>
+        <span className="text-[9px] text-muted-foreground mb-2 block">Top Productos</span>
+        <div className="space-y-1.5">
+          {topProducts.map((p) => (
+            <div key={p.rank} className="flex items-center gap-2">
+              <span className={`text-[9px] font-black font-mono w-4 text-center ${
+                p.rank === 1 ? 'text-accent' : p.rank === 2 ? 'text-muted-foreground' : 'text-muted-foreground/50'
+              }`}>#{p.rank}</span>
+              <span className="text-[10px] text-foreground flex-1 truncate">{p.name}</span>
+              <span className="text-[9px] font-mono text-muted-foreground">{p.units}u</span>
+              <span className="text-[9px] font-mono font-bold text-primary">{p.revenue}</span>
             </div>
           ))}
         </div>

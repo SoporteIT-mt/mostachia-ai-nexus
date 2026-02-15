@@ -2,7 +2,8 @@ import { useRef, useState, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Check, Calendar, MessageSquare, PenTool, Rocket, TrendingUp } from 'lucide-react';
 import { BlurFade } from '@/components/ui/blur-fade';
-import { PulsatingButton } from '@/components/ui/pulsating-button';
+import { ShimmerButton } from '@/components/ui/shimmer-button';
+import { DotPattern } from '@/components/ui/dot-pattern';
 import { CONFIG } from '@/config/constants';
 
 const steps = [
@@ -259,17 +260,49 @@ export const HowItWorksSection = () => {
 
         {/* CTA */}
         <BlurFade delay={0.8} className="mt-16 max-w-lg mx-auto text-center">
-          <div className="p-8 rounded-2xl glass-card border border-white/[0.08]">
-            <p className="text-xl font-display font-bold mb-5">¿Listo para arrancar?</p>
-            <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
-              <PulsatingButton className="text-lg px-8 py-4">
-                <Calendar className="w-5 h-5 mr-2" />
-                Agendar Consultoría Gratuita
-              </PulsatingButton>
-            </a>
-            <p className="text-xs text-muted-foreground mt-4">
-              30 minutos · Sin compromiso · 100% gratuito
+          <div className="relative p-10 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-primary/20 overflow-hidden"
+            style={{ boxShadow: '0 0 60px -20px hsla(162, 100%, 39%, 0.15)' }}
+          >
+            <DotPattern className="opacity-[0.04]" width={24} height={24} cr={0.8} />
+            <p className="text-2xl font-display font-bold mb-2 relative z-10">
+              🚀 ¿Listo para arrancar?
             </p>
+            <p className="text-sm text-muted-foreground mb-6 relative z-10">
+              Transformá tu negocio con IA en menos de lo que pensás.
+            </p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 1.2, type: 'spring', stiffness: 200, damping: 15 }}
+              className="relative z-10"
+            >
+              <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
+                <ShimmerButton
+                  shimmerColor="hsl(162 100% 70%)"
+                  shimmerDuration="2.5s"
+                  borderRadius="9999px"
+                  background="linear-gradient(135deg, hsl(162 100% 39%), hsl(172 80% 35%))"
+                  className="text-lg font-bold px-10 py-5 group"
+                  style={{ boxShadow: '0 0 40px rgba(115,215,203,0.4), 0 4px 20px rgba(0,0,0,0.3)' } as React.CSSProperties}
+                >
+                  <motion.span
+                    className="inline-block mr-2"
+                    whileHover={{ rotate: [0, -10, 10, 0] }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <Calendar className="w-5 h-5" />
+                  </motion.span>
+                  Agendar Consultoría Gratuita
+                </ShimmerButton>
+              </a>
+            </motion.div>
+            <div className="flex items-center justify-center gap-3 mt-5 relative z-10">
+              <span className="text-xs text-muted-foreground">30 minutos</span>
+              <span className="text-primary text-xs">|</span>
+              <span className="text-xs text-muted-foreground">Sin compromiso</span>
+              <span className="text-primary text-xs">|</span>
+              <span className="text-xs text-muted-foreground">100% gratuito</span>
+            </div>
           </div>
         </BlurFade>
       </div>

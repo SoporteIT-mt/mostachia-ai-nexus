@@ -42,7 +42,7 @@ const TypingIndicator = () => (
       {[0, 1, 2].map(i => (
         <motion.span
           key={i}
-          className="w-2 h-2 rounded-full bg-muted-foreground/60"
+          className="w-2 h-2 rounded-full bg-mint-400"
           animate={{ scale: [1, 1.3, 1], opacity: [0.4, 1, 0.4] }}
           transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.2 }}
         />
@@ -187,8 +187,8 @@ export const FloatingWhatsApp = () => {
             exit={{ scale: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             onClick={() => setIsOpen(prev => !prev)}
-            className="fixed bottom-6 right-6 z-40 w-[60px] h-[60px] rounded-full text-white shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-110 transition-all duration-300 flex items-center justify-center"
-            style={{ background: 'linear-gradient(135deg, hsl(var(--primary)), #4A9D80)' }}
+            className="fixed bottom-6 right-6 z-40 w-[60px] h-[60px] rounded-full text-navy-900 shadow-lg shadow-mint-400/30 hover:shadow-xl hover:shadow-mint-400/40 hover:scale-110 transition-all duration-300 flex items-center justify-center"
+            style={{ background: 'linear-gradient(135deg, #73D7CB, #5CB8A5)' }}
             aria-label={isOpen ? 'Cerrar chat' : 'Abrir chat'}
           >
             <AnimatePresence mode="wait">
@@ -223,12 +223,12 @@ export const FloatingWhatsApp = () => {
             style={{ height: '520px', maxHeight: 'calc(100vh - 150px)' }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 shrink-0" style={{ background: 'linear-gradient(135deg, hsl(var(--primary)), #4A9D80)' }}>
+            <div className="flex items-center justify-between px-4 py-3 shrink-0" style={{ background: 'linear-gradient(135deg, #73D7CB, #5CB8A5)' }}>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white">
+                <div className="w-10 h-10 rounded-full bg-navy-900/20 flex items-center justify-center text-navy-900">
                   <span className="text-lg font-bold">🤖</span>
                 </div>
-                <div className="text-white">
+                <div className="text-navy-900">
                   <p className="font-display font-semibold text-sm">MostachIA</p>
                   <p className="text-xs opacity-80 flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-green-300 animate-pulse" />
@@ -236,16 +236,16 @@ export const FloatingWhatsApp = () => {
                   </p>
                 </div>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="w-8 h-8 rounded-full hover:bg-white/20 flex items-center justify-center transition-colors text-white"
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="w-8 h-8 rounded-full hover:bg-navy-900/20 flex items-center justify-center transition-colors text-navy-900"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-black/20">
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-navy-900/40">
               {messages.map((msg) => (
                 <motion.div
                   key={msg.id}
@@ -328,7 +328,7 @@ export const FloatingWhatsApp = () => {
               <button
                 onClick={handleSend}
                 disabled={isTyping || !input.trim()}
-                className="w-10 h-10 rounded-xl flex items-center justify-center text-primary hover:bg-primary/10 transition-colors disabled:opacity-30"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-mint-400 text-navy-900 hover:bg-mint-300 transition-colors disabled:opacity-30"
               >
                 <Send className="w-5 h-5" />
               </button>

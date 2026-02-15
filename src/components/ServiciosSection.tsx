@@ -447,8 +447,8 @@ export const ServiciosSection = () => {
                     {s.badge && (
                       <span className={`absolute -top-2.5 right-4 px-2.5 py-0.5 text-[10px] font-bold rounded-full border ${
                         s.id === 'dashboards'
-                          ? 'bg-primary/20 text-primary border-primary/30'
-                          : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
+                          ? 'bg-[rgba(247,198,103,0.15)] text-gold-400 border-[rgba(247,198,103,0.3)]'
+                          : 'bg-[rgba(115,215,203,0.1)] text-mint-400 border-[rgba(115,215,203,0.3)]'
                       }`}>
                         {s.badge}
                       </span>

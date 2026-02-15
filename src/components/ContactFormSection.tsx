@@ -80,15 +80,15 @@ export const ContactFormSection = () => {
   return (
     <section id="contacto" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
       {/* Ripple background */}
-      <Ripple color="hsl(162 100% 39% / 0.06)" count={6} />
+      <Ripple color="rgba(115, 215, 203, 0.06)" count={6} />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
         <BlurFade className="text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
-            ¿Listo para Automatizar{' '}
-            <span className="text-gradient-primary">tu Negocio</span>?
+            Hablemos de{' '}
+            <span className="text-gradient-primary">tu Proyecto</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Dejanos tus datos y te contactamos en menos de 24 horas.
@@ -187,9 +187,9 @@ export const ContactFormSection = () => {
                     )}
                   />
 
-                  <ShimmerButton
-                    shimmerColor="hsl(162 100% 70%)"
-                    background="hsl(162 100% 32%)"
+                    <ShimmerButton
+                    shimmerColor="rgba(147, 226, 216, 0.8)"
+                    background="linear-gradient(135deg, #73D7CB, #5CB8A5)"
                     borderRadius="12px"
                     className="w-full py-4 text-lg font-semibold"
                     type="submit"

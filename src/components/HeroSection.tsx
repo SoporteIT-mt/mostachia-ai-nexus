@@ -68,7 +68,7 @@ export const HeroSection = () => {
   return (
     <AuroraBackground className="min-h-screen overflow-hidden">
       {/* Spotlight behind title */}
-      <Spotlight className="z-0 hidden sm:block" size={500} fill="hsl(162 100% 39% / 0.08)" />
+      <Spotlight className="z-0 hidden sm:block" size={500} fill="rgba(115, 215, 203, 0.08)" />
 
       <motion.div
         ref={containerRef}
@@ -99,7 +99,7 @@ export const HeroSection = () => {
                   initial={{ opacity: 0, filter: 'blur(6px)' }}
                   animate={{ opacity: 1, filter: 'blur(0px)' }}
                   transition={{ duration: 0.5, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ textShadow: '0 0 30px hsl(162 100% 39% / 0.5)' }}
+                  style={{ textShadow: '0 0 40px rgba(115, 215, 203, 0.6), 0 0 80px rgba(115, 215, 203, 0.3)' }}
                 >
                   {' '}IA,
                 </motion.span>
@@ -137,10 +137,10 @@ export const HeroSection = () => {
             <motion.div variants={fadeUp(0.8)} initial="hidden" animate="visible" whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.98 }}>
               <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
                 <ShimmerButton
-                  shimmerColor="hsl(162 100% 70%)"
-                  background="hsl(162 100% 32%)"
+                  shimmerColor="rgba(147, 226, 216, 0.8)"
+                  background="linear-gradient(135deg, #73D7CB, #5CB8A5)"
                   borderRadius="12px"
-                  className="px-6 sm:px-8 py-4 text-base sm:text-lg font-semibold shadow-[0_4px_20px_hsl(160_100%_39%/0.4)]"
+                  className="px-6 sm:px-8 py-4 text-base sm:text-lg font-semibold shadow-[0_4px_20px_rgba(115,215,203,0.4)]"
                 >
                   <Calendar className="mr-2 w-5 h-5" />
                   Agendar Consultoría Gratis
@@ -183,7 +183,7 @@ export const HeroSection = () => {
                   whileHover={{ scale: 1.06, y: -4 }}
                   className="rounded-xl bg-white/[0.05] backdrop-blur-sm border border-white/[0.1] px-4 py-5 text-center cursor-default"
                 >
-                  <div className="text-2xl md:text-3xl font-extrabold font-display text-foreground">
+                  <div className="text-2xl md:text-3xl font-extrabold font-display text-mint-400">
                     <NumberTicker value={s.value} prefix={s.prefix} suffix={s.suffix} duration={2} />
                   </div>
                   <div className="text-[10px] md:text-xs font-mono uppercase tracking-wider text-muted-foreground mt-1">{s.label}</div>

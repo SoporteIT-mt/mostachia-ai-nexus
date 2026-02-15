@@ -127,24 +127,7 @@ export const Navbar = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <motion.div
-              className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-mint-400 to-mint-500 flex items-center justify-center overflow-hidden shadow-lg shadow-mint-400/25"
-              whileHover={{
-                rotate: [0, -5, 5, 0],
-                transition: { duration: 0.5 },
-              }}
-            >
-              <span className="text-xl font-bold text-navy-900">M</span>
-              <motion.div
-                className="absolute inset-0 bg-white/20"
-                initial={{ y: '100%' }}
-                whileHover={{ y: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-            </motion.div>
-            <span className="font-display font-bold text-xl">
-              Mostach<span className="text-primary">IA</span>
-            </span>
+            <img src="/logo-horizontal-oscuro.png" alt="MostachIA" className="h-9 w-auto" />
           </motion.a>
 
           {/* Desktop Navigation */}

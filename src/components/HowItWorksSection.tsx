@@ -12,8 +12,6 @@ const steps = [
     title: 'Conversamos',
     description: 'Agendás una videollamada gratuita de 30 minutos. Entendemos tu negocio, tus datos y qué querés lograr.',
     badge: 'Sin compromiso',
-    color: 'from-blue-500 to-cyan-400',
-    glowColor: 'blue-500',
   },
   {
     number: '02',
@@ -21,8 +19,6 @@ const steps = [
     title: 'Diseñamos',
     description: 'Analizamos tu base de datos y procesos. Te presentamos una propuesta con alcance, precio cerrado y timeline.',
     badge: 'Propuesta en 48-72hs',
-    color: 'from-violet-500 to-purple-400',
-    glowColor: 'violet-500',
   },
   {
     number: '03',
@@ -30,8 +26,6 @@ const steps = [
     title: 'Implementamos',
     description: 'Configuramos agentes, conectamos bases de datos, armamos dashboards y capacitamos a tu equipo.',
     badge: '1 a 4 semanas',
-    color: 'from-primary to-emerald-400',
-    glowColor: 'primary',
   },
   {
     number: '04',
@@ -39,8 +33,6 @@ const steps = [
     title: 'Optimizamos',
     description: 'Monitoreamos resultados, ajustamos prompts, ampliamos funcionalidades y acompañamos tu crecimiento.',
     badge: 'Acompañamiento continuo',
-    color: 'from-amber-500 to-orange-400',
-    glowColor: 'amber-500',
   },
 ];
 
@@ -52,26 +44,21 @@ export const HowItWorksSection = () => {
 
   useEffect(() => {
     if (!isInView) return;
-    // Smooth progress counter
     let frame: number;
     let start: number;
-    const duration = 3000; // 3s total
+    const duration = 3200;
 
     const animate = (timestamp: number) => {
       if (!start) start = timestamp;
       const elapsed = timestamp - start;
       const pct = Math.min(elapsed / duration, 1);
-      
-      // Eased progress
       const eased = 1 - Math.pow(1 - pct, 3);
       setProgress(eased * 100);
 
-      // Reveal steps at thresholds
-      const stepThresholds = [0.1, 0.3, 0.55, 0.8];
-      for (let i = 0; i < stepThresholds.length; i++) {
-        if (eased >= stepThresholds[i]) setActiveStep(prev => Math.max(prev, i));
+      const thresholds = [0.08, 0.3, 0.55, 0.8];
+      for (let i = 0; i < thresholds.length; i++) {
+        if (eased >= thresholds[i]) setActiveStep(prev => Math.max(prev, i));
       }
-
       if (pct < 1) frame = requestAnimationFrame(animate);
     };
 
@@ -92,123 +79,93 @@ export const HowItWorksSection = () => {
           </p>
         </BlurFade>
 
-        {/* ── Desktop: Vertical progressive timeline ── */}
-        <div className="hidden lg:block max-w-4xl mx-auto">
-          {/* Overall progress indicator */}
+        {/* ── Desktop ── */}
+        <div className="hidden lg:block max-w-5xl mx-auto">
+          {/* Top progress */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2 }}
-            className="flex items-center justify-between mb-12 px-4"
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.15 }}
+            className="flex items-center gap-4 mb-14"
           >
-            <span className="text-xs font-mono text-muted-foreground">INICIO</span>
-            <div className="flex-1 mx-4 relative h-1 rounded-full bg-white/[0.06] overflow-hidden">
+            <div className="flex items-center gap-2">
+              {steps.map((_, i) => (
+                <motion.div
+                  key={i}
+                  className={`w-2 h-2 rounded-full transition-all duration-500 ${
+                    activeStep >= i ? 'bg-primary shadow-[0_0_6px_hsl(162_100%_39%/0.6)]' : 'bg-white/10'
+                  }`}
+                />
+              ))}
+            </div>
+            <div className="flex-1 relative h-px bg-white/[0.06]">
               <motion.div
-                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary via-accent to-primary"
+                className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary/80 to-primary"
                 style={{ width: `${progress}%` }}
               />
-              {/* Glow pulse at the tip */}
-              <motion.div
-                className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary"
-                style={{ left: `${progress}%`, transform: 'translate(-50%, -50%)' }}
-                animate={{ boxShadow: ['0 0 8px hsl(162 100% 39% / 0.6)', '0 0 20px hsl(162 100% 39% / 0.9)', '0 0 8px hsl(162 100% 39% / 0.6)'] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              />
             </div>
-            <motion.span
-              className="text-xs font-mono font-bold text-primary"
-              key={Math.round(progress)}
-            >
+            <span className="text-[11px] font-mono text-primary/80 tabular-nums w-10 text-right">
               {Math.round(progress)}%
-            </motion.span>
+            </span>
           </motion.div>
 
-          {/* Steps */}
+          {/* Steps grid - alternating layout */}
           <div className="relative">
-            {/* Vertical connecting line */}
-            <div className="absolute left-[39px] top-0 bottom-0 w-[2px] bg-white/[0.06]">
+            {/* Center vertical line */}
+            <div className="absolute left-1/2 -translate-x-px top-0 bottom-0 w-[2px] bg-white/[0.04]">
               <motion.div
-                className="w-full bg-gradient-to-b from-primary to-accent"
-                style={{ height: `${Math.min(progress * 1.1, 100)}%` }}
+                className="w-full bg-gradient-to-b from-primary via-primary/80 to-accent/60"
+                style={{ height: `${Math.min(progress * 1.05, 100)}%` }}
               />
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-4">
               {steps.map((step, i) => {
                 const isActive = activeStep >= i;
                 const isCurrent = activeStep === i;
                 const Icon = step.icon;
+                const isLeft = i % 2 === 0;
 
                 return (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0.2, x: 0 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative flex items-start gap-6"
+                    initial={{ opacity: 0 }}
+                    animate={isActive ? { opacity: 1 } : { opacity: 0.15 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-0"
                   >
-                    {/* Node */}
-                    <div className="relative z-10 flex-shrink-0">
+                    {/* Left content or spacer */}
+                    <div className={isLeft ? 'pr-10' : ''}>
+                      {isLeft && (
+                        <StepCard step={step} isActive={isActive} isCurrent={isCurrent} align="right" />
+                      )}
+                    </div>
+
+                    {/* Center node */}
+                    <div className="relative z-10 flex items-center justify-center">
                       <motion.div
-                        className={`w-[80px] h-[80px] rounded-2xl flex flex-col items-center justify-center border-2 transition-all duration-500 ${
+                        className={`w-11 h-11 rounded-xl flex items-center justify-center border transition-all duration-500 ${
                           isCurrent
-                            ? 'border-primary bg-primary/10 shadow-[0_0_30px_-5px] shadow-primary/40'
+                            ? 'border-primary/60 bg-primary/15 shadow-[0_0_24px_-4px_hsl(162_100%_39%/0.5)]'
                             : isActive
-                              ? 'border-primary/40 bg-primary/5'
-                              : 'border-white/10 bg-white/[0.02]'
+                              ? 'border-primary/30 bg-primary/8'
+                              : 'border-white/[0.08] bg-white/[0.02]'
                         }`}
-                        animate={isCurrent ? { scale: [1, 1.05, 1] } : {}}
-                        transition={{ duration: 2, repeat: Infinity }}
+                        animate={isCurrent ? { scale: [1, 1.08, 1] } : {}}
+                        transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
                       >
-                        <Icon className={`w-6 h-6 mb-1 ${isActive ? 'text-primary' : 'text-muted-foreground/30'}`} />
-                        <span className={`text-[10px] font-mono font-bold ${isActive ? 'text-primary' : 'text-muted-foreground/30'}`}>
-                          {step.number}
-                        </span>
+                        <Icon className={`w-[18px] h-[18px] transition-colors duration-500 ${
+                          isActive ? 'text-primary' : 'text-white/20'
+                        }`} />
                       </motion.div>
                     </div>
 
-                    {/* Content card */}
-                    <motion.div
-                      className={`flex-1 p-6 rounded-xl border transition-all duration-500 ${
-                        isCurrent
-                          ? 'bg-white/[0.06] border-primary/30 shadow-lg shadow-primary/5'
-                          : isActive
-                            ? 'bg-white/[0.04] border-white/[0.1]'
-                            : 'bg-white/[0.02] border-white/[0.05]'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className={`text-xl font-bold font-display ${isActive ? 'text-foreground' : 'text-foreground/30'}`}>
-                          {step.title}
-                        </h3>
-                        <AnimatePresence>
-                          {isActive && (
-                            <motion.span
-                              initial={{ opacity: 0, scale: 0.8, x: 10 }}
-                              animate={{ opacity: 1, scale: 1, x: 0 }}
-                              exit={{ opacity: 0, scale: 0.8 }}
-                              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-semibold"
-                            >
-                              <Check className="w-3 h-3" />
-                              {step.badge}
-                            </motion.span>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                      <p className={`text-sm leading-relaxed transition-colors ${isActive ? 'text-muted-foreground' : 'text-muted-foreground/20'}`}>
-                        {step.description}
-                      </p>
-
-                      {/* Loading indicator for current step */}
-                      {isCurrent && (
-                        <motion.div
-                          initial={{ opacity: 0, width: 0 }}
-                          animate={{ opacity: 1, width: '100%' }}
-                          className="mt-4 h-0.5 rounded-full bg-gradient-to-r from-primary/60 via-primary to-primary/60 origin-left"
-                          transition={{ duration: 1, ease: 'easeOut' }}
-                        />
+                    {/* Right content or spacer */}
+                    <div className={!isLeft ? 'pl-10' : ''}>
+                      {!isLeft && (
+                        <StepCard step={step} isActive={isActive} isCurrent={isCurrent} align="left" />
                       )}
-                    </motion.div>
+                    </div>
                   </motion.div>
                 );
               })}
@@ -216,33 +173,31 @@ export const HowItWorksSection = () => {
           </div>
         </div>
 
-        {/* ── Mobile: Vertical Timeline ── */}
+        {/* ── Mobile ── */}
         <div className="lg:hidden max-w-md mx-auto">
-          {/* Mobile progress bar */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             className="flex items-center gap-3 mb-8"
           >
-            <div className="flex-1 h-1 rounded-full bg-white/[0.06] overflow-hidden">
+            <div className="flex-1 h-px bg-white/[0.06] overflow-hidden relative">
               <motion.div
-                className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
+                className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary to-accent"
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <span className="text-xs font-mono font-bold text-primary">{Math.round(progress)}%</span>
+            <span className="text-[10px] font-mono font-bold text-primary tabular-nums">{Math.round(progress)}%</span>
           </motion.div>
 
           <div className="relative pl-10">
-            {/* Vertical line */}
-            <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-white/[0.06]">
+            <div className="absolute left-[14px] top-0 bottom-0 w-[2px] bg-white/[0.04]">
               <motion.div
-                className="w-full bg-gradient-to-b from-primary to-accent"
-                style={{ height: `${Math.min(progress * 1.1, 100)}%` }}
+                className="w-full bg-gradient-to-b from-primary to-accent/60"
+                style={{ height: `${Math.min(progress * 1.05, 100)}%` }}
               />
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-5">
               {steps.map((step, i) => {
                 const isActive = activeStep >= i;
                 const isCurrent = activeStep === i;
@@ -251,48 +206,49 @@ export const HowItWorksSection = () => {
                 return (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0.2, y: 0 }}
-                    transition={{ duration: 0.5 }}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={isActive ? { opacity: 1, x: 0 } : { opacity: 0.15, x: 0 }}
+                    transition={{ duration: 0.4 }}
                     className="relative"
                   >
-                    {/* Node dot */}
                     <motion.div
-                      className={`absolute -left-[30px] top-5 w-7 h-7 rounded-full flex items-center justify-center border-2 transition-all ${
+                      className={`absolute -left-[26px] top-4 w-7 h-7 rounded-lg flex items-center justify-center border transition-all duration-500 ${
                         isCurrent
-                          ? 'border-primary bg-primary/20 shadow-[0_0_12px] shadow-primary/40'
+                          ? 'border-primary/60 bg-primary/15 shadow-[0_0_16px_-3px_hsl(162_100%_39%/0.5)]'
                           : isActive
-                            ? 'border-primary/50 bg-primary/10'
-                            : 'border-white/10 bg-background'
+                            ? 'border-primary/30 bg-primary/8'
+                            : 'border-white/[0.08] bg-white/[0.02]'
                       }`}
                     >
-                      {isActive ? (
-                        <Icon className="w-3 h-3 text-primary" />
-                      ) : (
-                        <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
-                      )}
+                      <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-primary' : 'text-white/20'}`} />
                     </motion.div>
 
-                    {/* Card */}
-                    <div className={`p-4 rounded-xl border transition-all duration-300 ${
-                      isCurrent ? 'bg-white/[0.06] border-primary/30' : 'bg-white/[0.03] border-white/[0.06]'
+                    <div className={`p-4 rounded-xl border backdrop-blur-sm transition-all duration-500 ${
+                      isCurrent
+                        ? 'bg-white/[0.05] border-primary/20 shadow-[0_0_40px_-12px_hsl(162_100%_39%/0.15)]'
+                        : isActive
+                          ? 'bg-white/[0.03] border-white/[0.08]'
+                          : 'bg-white/[0.01] border-white/[0.04]'
                     }`}>
                       <div className="flex items-center gap-2 mb-2">
-                        <span className={`text-2xl font-black font-mono ${isActive ? 'text-primary/40' : 'text-white/10'}`}>{step.number}</span>
-                        <h3 className={`text-base font-bold font-display ${isActive ? 'text-foreground' : 'text-foreground/30'}`}>{step.title}</h3>
+                        <span className={`text-lg font-black font-mono transition-colors ${isActive ? 'text-primary/30' : 'text-white/[0.06]'}`}>{step.number}</span>
+                        <h3 className={`text-base font-bold font-display transition-colors ${isActive ? 'text-foreground' : 'text-foreground/20'}`}>{step.title}</h3>
                       </div>
-                      <p className={`text-xs leading-relaxed mb-3 ${isActive ? 'text-muted-foreground' : 'text-muted-foreground/20'}`}>
+                      <p className={`text-xs leading-relaxed mb-3 transition-colors ${isActive ? 'text-muted-foreground' : 'text-muted-foreground/15'}`}>
                         {step.description}
                       </p>
-                      {isActive && (
-                        <motion.span
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-semibold"
-                        >
-                          <Check className="w-3 h-3" /> {step.badge}
-                        </motion.span>
-                      )}
+                      <AnimatePresence>
+                        {isActive && (
+                          <motion.span
+                            initial={{ opacity: 0, y: 4 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0 }}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-medium"
+                          >
+                            <Check className="w-2.5 h-2.5" /> {step.badge}
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
                     </div>
                   </motion.div>
                 );
@@ -303,7 +259,7 @@ export const HowItWorksSection = () => {
 
         {/* CTA */}
         <BlurFade delay={0.8} className="mt-16 max-w-lg mx-auto text-center">
-          <div className="p-8 rounded-2xl glass-card border border-white/[0.1]">
+          <div className="p-8 rounded-2xl glass-card border border-white/[0.08]">
             <p className="text-xl font-display font-bold mb-5">¿Listo para arrancar?</p>
             <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
               <PulsatingButton className="text-lg px-8 py-4">
@@ -320,3 +276,63 @@ export const HowItWorksSection = () => {
     </section>
   );
 };
+
+// ── Step Card sub-component ──
+const StepCard = ({
+  step,
+  isActive,
+  isCurrent,
+  align,
+}: {
+  step: typeof steps[0];
+  isActive: boolean;
+  isCurrent: boolean;
+  align: 'left' | 'right';
+}) => (
+  <motion.div
+    initial={{ opacity: 0, x: align === 'right' ? 15 : -15 }}
+    animate={isActive ? { opacity: 1, x: 0 } : {}}
+    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    className={`p-5 rounded-xl border backdrop-blur-sm transition-all duration-500 ${
+      isCurrent
+        ? 'bg-white/[0.05] border-primary/20 shadow-[0_0_40px_-12px_hsl(162_100%_39%/0.15)]'
+        : isActive
+          ? 'bg-white/[0.03] border-white/[0.08]'
+          : 'bg-white/[0.01] border-white/[0.04]'
+    }`}
+  >
+    <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center gap-3">
+        <span className={`text-2xl font-black font-mono transition-colors ${isActive ? 'text-primary/25' : 'text-white/[0.04]'}`}>
+          {step.number}
+        </span>
+        <h3 className={`text-lg font-bold font-display transition-colors ${isActive ? 'text-foreground' : 'text-foreground/20'}`}>
+          {step.title}
+        </h3>
+      </div>
+      <AnimatePresence>
+        {isActive && (
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-medium whitespace-nowrap"
+          >
+            <Check className="w-2.5 h-2.5" /> {step.badge}
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </div>
+    <p className={`text-sm leading-relaxed transition-colors ${isActive ? 'text-muted-foreground' : 'text-muted-foreground/15'}`}>
+      {step.description}
+    </p>
+    {isCurrent && (
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        className="mt-3 h-[2px] rounded-full bg-gradient-to-r from-primary/60 to-primary/0 origin-left"
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+      />
+    )}
+  </motion.div>
+);

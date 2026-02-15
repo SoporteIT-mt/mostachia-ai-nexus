@@ -53,7 +53,7 @@ export const HeroSection = () => {
   const scale = useTransform(scrollY, [0, 400], [1, 0.95]);
 
   return (
-    <BeamsBackground intensity="medium">
+    <BeamsBackground intensity="strong">
       <motion.div
         ref={containerRef}
         className="container relative z-10 mx-auto px-4 sm:px-6 py-20 min-h-screen flex flex-col justify-center max-w-full overflow-hidden"

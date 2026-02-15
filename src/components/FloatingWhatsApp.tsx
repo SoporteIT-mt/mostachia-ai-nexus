@@ -225,8 +225,8 @@ export const FloatingWhatsApp = () => {
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 shrink-0" style={{ background: 'linear-gradient(135deg, #73D7CB, #5CB8A5)' }}>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-navy-900/20 flex items-center justify-center text-navy-900">
-                  <span className="text-lg font-bold">🤖</span>
+                <div className="w-10 h-10 rounded-full bg-navy-900/20 flex items-center justify-center">
+                  <img src="/isotipo-mint.png" alt="MostachIA" className="w-7 h-7" />
                 </div>
                 <div className="text-navy-900">
                   <p className="font-display font-semibold text-sm">MostachIA</p>

@@ -27,13 +27,8 @@ export const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Col 1 — Logo */}
           <div>
-            <a href="#" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-mint-400 to-mint-500 flex items-center justify-center shadow-lg shadow-mint-400/25">
-                <span className="text-xl font-bold text-navy-900">M</span>
-              </div>
-              <span className="font-display font-bold text-xl">
-                Mostach<span className="text-primary">IA</span>
-              </span>
+            <a href="#" className="block mb-4">
+              <img src="/logo-slogan.png" alt="MostachIA - Procesos inteligentes, resultados superiores" className="h-[50px] w-auto" />
             </a>
             <p className="text-sm text-muted-foreground mb-5">
               Automatización Inteligente para Negocios

@@ -1,95 +1,94 @@
+# Hero Profesional + Stats Section + CTA Polish
 
-# Hero con BeamsBackground + Limpieza + CTA Mejorado
+## Problemas identificados
 
-## Resumen
-Reemplazar el fondo Aurora del hero por el componente BeamsBackground (rayos de luz animados con canvas), limpiar elementos que ensucian la seccion, y mejorar el boton CTA de "Como Trabajamos".
-
----
-
-## 1. Nuevo componente: BeamsBackground
-
-### Archivo: `src/components/ui/beams-background.tsx`
-- Crear el componente BeamsBackground adaptado del codigo proporcionado
-- Cambiar `import { motion } from "motion/react"` por `import { motion } from "framer-motion"` (ya instalado, no necesitamos instalar "motion")
-- Adaptar los hues de los beams para que sean tonos mint/teal (hue 160-190 en vez de 190-260)
-- El componente renderiza un canvas con beams animados que se mueven hacia arriba con blur y pulso
-- Acepta `children` para colocar contenido encima
-- Acepta `intensity` prop ("subtle" | "medium" | "strong")
-- Incluir overlays de gradiente navy en la parte superior e inferior para transiciones suaves
-- Fondo base: el navy oscuro del design system (#0F1E27)
-
-### Estructura del componente:
-```
-div (relative, min-h-screen, overflow-hidden, bg navy)
-  canvas (absolute, inset-0, pointer-events-none)
-  div overlay superior (radial gradient vignette)
-  div overlay inferior (gradient fade to background)
-  div children (relative z-10)
-```
+1. **H1 en 3 lineas** - "Tu Negocio con IA," / "Otro Nivel de" / "Resultados." deberia ser 2 lineas
+2. **Beams apenas visibles** - la opacidad y el vignette overlay los tapan demasiado
+3. **Espacio vacio excesivo** debajo de los CTAs y micro-proof
+4. **Falta la seccion de estadisticas** (KPIs) que se removio del Hero
 
 ---
 
-## 2. Hero limpio y profesional
+## 1. Hero H1 en 2 lineas (HeroSection.tsx)
 
-### Archivo: `src/components/HeroSection.tsx`
+Reestructurar el titulo para que quede en exactamente 2 lineas:
 
-**Reemplazar** `AuroraBackground` por `BeamsBackground` como wrapper.
+- **Linea 1:** "Tu Negocio con IA, Otro Nivel de"
+- **Linea 2:** "Resultados."
 
-**Eliminar** estos elementos que ensucian:
-- Spotlight (ya no necesario con beams)
-- Stats grid (4 cards con NumberTicker) - se mueven a otra seccion o se eliminan
-- Tech logos Marquee ("Integramos con las herramientas que ya usas") - ya existe en IntegrationsSection
-- BlurFade wrappers innecesarios
+Cambiar la estructura de 2 `<span className="block">` a:
 
-**Mantener** (simplificado):
-- Badge "Empresa argentina de automatizacion con IA"
-- H1 con AnimatedWords ("Tu Negocio con IA, Otro Nivel de Resultados.")
-- Subtitulo
-- Los 2 CTAs (Shimmer "Agendar Consultoria" + Outline "WhatsApp")
-- Micro-proof (consultoria gratuita, implementacion, equipo argentino)
-- Parallax effects en titulo/subtitulo/CTAs
+- Linea 1: todo junto en un solo bloque con `AnimatedWords("Tu Negocio con")` +  `IA,` (mint) + `AnimatedWords(" Otro Nivel de")` 
+- Linea 2: "Resultados." en gradient, centrado y mas grande visualmente
 
-**Resultado**: Hero mucho mas limpio, solo badge + titulo + subtitulo + 2 botones + micro-proof sobre el fondo de beams animados.
+Aumentar el tamano tipografico para desktop: `lg:text-8xl` para que sea mas impactante.
 
----
+## 2. Beams mas visibles (beams-background.tsx)
 
-## 3. CTA de "Como Trabajamos" mejorado
+- Reducir la opacidad del vignette overlay: cambiar `transparent 40%` a `transparent 60%` para que los beams sean mas visibles en el centro
+- Aumentar blur de `35px` a `30px` para beams mas definidos
+- Base opacity de beams: `0.22 + Math.random() * 0.25` (mas intensos)
 
-### Archivo: `src/components/HowItWorksSection.tsx`
+## 3. Eliminar espacio vacio del Hero (HeroSection.tsx)
 
-El boton ShimmerButton actual se ve "medio mal". Mejoras:
+- Cambiar `min-h-screen` a `min-h-[85vh]` para que el Hero no tenga tanto espacio vacio debajo
+- Ajustar padding bottom
 
-- Aumentar el `borderRadius` a `"9999px"` (pill shape) -- ya esta asi, verificar
-- Mejorar el gradiente: usar `linear-gradient(135deg, #73D7CB 0%, #5CB8A5 50%, #4AA394 100%)`
-- Sombra glow mas definida: `0 0 30px rgba(115,215,203,0.35), 0 8px 32px rgba(0,0,0,0.4)`
-- Agregar `ArrowRight` icon despues del texto con animacion de translate en hover
-- Mejorar la animacion de entrada: spring con bounce mas suave (stiffness 150, damping 20)
-- Padding mas generoso: `px-12 py-6`
-- Agregar hover effect con `whileHover` de framer-motion: `scale: 1.04, y: -2`
-- El card contenedor: aumentar el border-radius, mejorar el glow perimetral
+## 4. Nueva StatsSection entre Hero y Servicios
+
+Crear `src/components/StatsSection.tsx` con los 4 KPIs en un grid horizontal:
+
+
+| KPI              | Valor | Sufijo |
+| ---------------- | ----- | ------ |
+| Clientes Activos | 30    | +      |
+| Industrias       | 8     | +      |
+| Agentes IA 24/7  | 50    | +      |
+| Implementacion   | 1-4   | sem    |
+
+
+- Grid de 4 columnas (desktop) / 2x2 (mobile)
+- Cada KPI usa `NumberTicker` para la animacion de conteo
+- Fondo sutil glass con borde tenue
+- Separadores verticales entre KPIs en desktop
+- Colores: numeros en mint (#73D7CB), labels en muted
+
+Insertar en Index.tsx entre `<HeroSection />` y el primer `<AnimatedDivider />`.
+
+## 5. CTA "Como Trabajamos" - polish final (HowItWorksSection.tsx)
+
+El boton ya tiene buen estilo pero:
+
+- Verificar que el `group` class funciona para la animacion de flecha
+- Asegurar que el hover glow se intensifica correctamente
 
 ---
 
 ## Archivos a modificar
 
-| Archivo | Cambio |
-|---|---|
-| `src/components/ui/beams-background.tsx` | CREAR - componente canvas con beams animados |
-| `src/components/HeroSection.tsx` | Reemplazar Aurora por Beams, eliminar stats y marquee |
-| `src/components/HowItWorksSection.tsx` | Mejorar CTA button styling y animacion |
 
-## Lo que NO cambia
-- Navbar, Footer, servicios, demos, industrias, FAQ, contacto, chat widget
-- Colores del design system (index.css, tailwind.config)
-- Logica de scroll, parallax, animaciones de texto
+| Archivo                                  | Cambio                                               |
+| ---------------------------------------- | ---------------------------------------------------- |
+| `src/components/HeroSection.tsx`         | H1 en 2 lineas, reducir min-h, tipografia mas grande |
+| `src/components/ui/beams-background.tsx` | Beams mas visibles, reducir vignette                 |
+| `src/components/StatsSection.tsx`        | CREAR - 4 KPIs con NumberTicker                      |
+| `src/pages/Index.tsx`                    | Insertar StatsSection entre Hero y Servicios         |
+
 
 ## Detalle tecnico
 
-### BeamsBackground - Adaptaciones:
-- `framer-motion` en vez de `motion/react` (ya instalado)
-- Hue range: 160-230 (mint a teal/blue) en vez de 190-260
-- Canvas usa `blur(35px)` para efecto difuso
-- 30 beams (MINIMUM_BEAMS * 1.5) con velocidad 0.5-1.7
-- Angulo de beams: -35 +/- 10 grados
-- Overlays: radial gradient vignette + bottom fade to --background
-- Intensidad "medium" para el hero (no demasiado agresivo)
+### H1 nueva estructura:
+
+```text
+Linea 1: "Tu Negocio con IA, Otro Nivel de"
+Linea 2: "Resultados."
+```
+
+El truco es poner todo en la linea 1 como `inline` y dejar que "Resultados." sea un `block` separado. Aumentar a `lg:text-8xl` para impacto visual.
+
+### StatsSection:
+
+- Usa `NumberTicker` del componente existente (`src/components/ui/number-ticker.tsx`)
+- Background: `bg-white/[0.02]` con `backdrop-blur-sm` y `border border-white/[0.06]`
+- Padding: `py-12` para que sea compacto
+- Animacion: `BlurFade` staggered para cada KPI

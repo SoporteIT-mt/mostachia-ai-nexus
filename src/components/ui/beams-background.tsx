@@ -33,7 +33,7 @@ function createBeam(width: number, height: number): Beam {
     angle,
     speed: 0.6 + Math.random() * 1.2,
     opacity: 0.12 + Math.random() * 0.16,
-    hue: 160 + Math.random() * 70,
+    hue: 190 + Math.random() * 70,
     pulse: Math.random() * Math.PI * 2,
     pulseSpeed: 0.02 + Math.random() * 0.03,
   };
@@ -42,7 +42,7 @@ function createBeam(width: number, height: number): Beam {
 export function BeamsBackground({
   className,
   children,
-  intensity = "medium",
+  intensity = "strong",
 }: BeamsBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const beamsRef = useRef<Beam[]>([]);
@@ -92,7 +92,7 @@ export function BeamsBackground({
         (Math.random() - 0.5) * spacing * 0.5;
       beam.width = 100 + Math.random() * 100;
       beam.speed = 0.5 + Math.random() * 0.4;
-      beam.hue = 160 + (index * 70) / totalBeams;
+      beam.hue = 190 + (index * 70) / totalBeams;
       beam.opacity = 0.2 + Math.random() * 0.1;
       return beam;
     }

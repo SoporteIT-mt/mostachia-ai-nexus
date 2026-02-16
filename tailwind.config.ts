@@ -18,29 +18,6 @@ export default {
         mono: ['IBM Plex Mono', 'monospace'],
       },
       colors: {
-        navy: {
-          900: '#0F1E27',
-          800: '#172D38',
-          700: '#203D4B',
-          600: '#2A4F5F',
-          500: '#356173',
-        },
-        mint: {
-          500: '#5CB8A5',
-          400: '#73D7CB',
-          300: '#93E2D8',
-          200: '#B3ECE5',
-        },
-        gold: {
-          500: '#E5A832',
-          400: '#F7C667',
-          300: '#F9D68F',
-        },
-        steel: {
-          500: '#5A7B8C',
-          400: '#7293A4',
-          300: '#8FABB8',
-        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -97,8 +74,8 @@ export default {
         "3xl": "2rem",
       },
       boxShadow: {
-        'glow': '0 0 40px rgba(115, 215, 203, 0.25)',
-        'glow-lg': '0 0 60px rgba(115, 215, 203, 0.35)',
+        'glow': '0 0 40px hsl(160 100% 39% / 0.25)',
+        'glow-lg': '0 0 60px hsl(160 100% 39% / 0.35)',
         'card': 'var(--shadow-card)',
         'card-hover': 'var(--shadow-card-hover)',
       },

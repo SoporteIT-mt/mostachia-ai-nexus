@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { Menu, X, Calendar, Zap, Play, Settings, Factory, HelpCircle, MessageCircle, Mail } from 'lucide-react';
+import { Menu, X, Calendar, Zap, Play, Settings, Factory, HelpCircle, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from './ThemeToggle';
 import { CONFIG } from '@/config/constants';
 
 interface NavLink {
@@ -13,8 +14,9 @@ interface NavLink {
 const navLinks: NavLink[] = [
   { href: '#servicios', label: 'Servicios', icon: Zap },
   { href: '#demos', label: 'Demos', icon: Play },
-  { href: '#proceso', label: 'Proceso', icon: Settings },
-  { href: '#contacto', label: 'Contacto', icon: Mail },
+  { href: '#proceso', label: 'Cómo Funciona', icon: Settings },
+  { href: '#industrias', label: 'Industrias', icon: Factory },
+  { href: '#faq', label: 'FAQ', icon: HelpCircle },
 ];
 
 export const Navbar = () => {
@@ -29,7 +31,7 @@ export const Navbar = () => {
   const headerBg = useTransform(
     scrollY,
     [0, 50, 100],
-    ['rgba(0,0,0,0)', 'rgba(15,30,39,0.7)', 'rgba(15,30,39,0.95)']
+    ['rgba(0,0,0,0)', 'rgba(11,15,25,0.7)', 'rgba(11,15,25,0.95)']
   );
 
   const headerBlur = useTransform(
@@ -41,7 +43,7 @@ export const Navbar = () => {
   const headerBorder = useTransform(
     scrollY,
     [0, 50, 100],
-    ['rgba(115,215,203,0)', 'rgba(115,215,203,0.05)', 'rgba(115,215,203,0.1)']
+    ['rgba(255,255,255,0)', 'rgba(255,255,255,0.05)', 'rgba(255,255,255,0.1)']
   );
 
   const headerShadow = useTransform(
@@ -127,7 +129,24 @@ export const Navbar = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <img src="/logo-horizontal-oscuro.png" alt="MostachIA" className="h-9 w-auto" />
+            <motion.div
+              className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center overflow-hidden shadow-lg shadow-primary/25"
+              whileHover={{
+                rotate: [0, -5, 5, 0],
+                transition: { duration: 0.5 },
+              }}
+            >
+              <span className="text-xl font-bold text-white">M</span>
+              <motion.div
+                className="absolute inset-0 bg-white/20"
+                initial={{ y: '100%' }}
+                whileHover={{ y: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.div>
+            <span className="font-display font-bold text-xl">
+              Mostach<span className="text-primary">IA</span>
+            </span>
           </motion.a>
 
           {/* Desktop Navigation */}
@@ -164,8 +183,8 @@ export const Navbar = () => {
 
                   <AnimatePresence>
                     {isActive && (
-                        <motion.span
-                        className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-mint-400 to-mint-500"
+                      <motion.span
+                        className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-accent"
                         initial={{ scaleX: 0, opacity: 0 }}
                         animate={{ scaleX: 1, opacity: 1 }}
                         exit={{ scaleX: 0, opacity: 0 }}
@@ -180,6 +199,7 @@ export const Navbar = () => {
 
           {/* CTA Buttons & Theme Toggle */}
           <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.92 }}>
               <Button
                 variant="outline"
@@ -192,7 +212,8 @@ export const Navbar = () => {
             </motion.div>
             <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.92 }}>
               <Button
-                className="rounded-xl px-6 font-semibold text-navy-900 bg-gradient-to-r from-mint-400 to-mint-500 hover:shadow-[0_0_25px_rgba(115,215,203,0.4)] hover:-translate-y-0.5 transition-all border-0"
+                className="rounded-xl px-6 font-medium text-white"
+                style={{ backgroundColor: '#60B99A' }}
                 onClick={handleBooking}
               >
                 <Calendar className="w-4 h-4 mr-2" />
@@ -244,7 +265,7 @@ export const Navbar = () => {
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="md:hidden overflow-hidden border-t border-border/30"
               style={{
-                backgroundColor: 'rgba(15,30,39,0.98)',
+                backgroundColor: 'rgba(11,15,25,0.98)',
                 backdropFilter: 'blur(20px)',
               }}
             >
@@ -276,6 +297,7 @@ export const Navbar = () => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
+                  <ThemeToggle />
                   <Button
                     variant="outline"
                     className="w-full border-[#25D366]/40 text-[#25D366] hover:bg-[#25D366]/10"
@@ -284,8 +306,9 @@ export const Navbar = () => {
                     <MessageCircle className="w-4 h-4 mr-2" />
                     WhatsApp
                   </Button>
-                   <Button
-                    className="w-full rounded-xl font-semibold text-navy-900 bg-gradient-to-r from-mint-400 to-mint-500 border-0"
+                  <Button
+                    className="w-full rounded-xl font-medium text-white"
+                    style={{ backgroundColor: '#60B99A' }}
                     onClick={handleBooking}
                   >
                     <Calendar className="w-4 h-4 mr-2" />

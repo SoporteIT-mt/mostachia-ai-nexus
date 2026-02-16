@@ -1,24 +1,26 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, MessageCircle } from 'lucide-react';
+import { ArrowRight, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { CONFIG } from '@/config/constants';
+
+const CAL_LINK = 'https://cal.com/mostachia/consultoria';
 
 export const StickyCTA = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const footer = document.querySelector('footer');
-      const footerTop = footer?.getBoundingClientRect().top ?? Infinity;
-      const pastHero = window.scrollY > 600;
-      const beforeFooter = footerTop > window.innerHeight;
-      setIsVisible(pastHero && beforeFooter);
+      // Show after scrolling past hero section
+      setIsVisible(window.scrollY > 600);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleBooking = () => {
+    window.open(CAL_LINK, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <AnimatePresence>
@@ -28,27 +30,24 @@ export const StickyCTA = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="fixed bottom-0 left-0 right-0 z-30 md:hidden backdrop-blur-xl bg-[rgba(15,30,39,0.9)] border-t border-[rgba(115,215,203,0.1)] px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]"
+          className="sticky-cta md:hidden"
         >
           <div className="flex gap-3">
             <Button
-              className="flex-1 rounded-xl py-5 font-semibold"
+              className="flex-1 btn-glow rounded-xl py-6"
               asChild
             >
-              <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
-                <Calendar className="w-4 h-4 mr-2" />
-                Agendar
+              <a href="#demos">
+                Probar Demos
+                <ArrowRight className="w-4 h-4 ml-2" />
               </a>
             </Button>
             <Button
               variant="outline"
-              className="rounded-xl py-5 px-4 border-white/20"
-              style={{ backgroundColor: '#25D366', borderColor: '#25D366', color: 'white' }}
-              asChild
+              className="rounded-xl py-6 px-4 border-primary/50"
+              onClick={handleBooking}
             >
-              <a href={CONFIG.WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="w-5 h-5" />
-              </a>
+              <Calendar className="w-5 h-5" />
             </Button>
           </div>
         </motion.div>

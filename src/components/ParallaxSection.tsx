@@ -46,19 +46,19 @@ export const ParallaxBackground = () => {
       {/* Floating orb 1 */}
       <motion.div
         style={{ y: y1 }}
-        className="absolute top-1/4 left-1/4 w-[200px] h-[200px] md:w-[400px] md:h-[400px] rounded-full bg-mint-400/[0.03] blur-3xl will-change-transform"
+        className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-primary/5 blur-3xl"
       />
       
       {/* Floating orb 2 */}
       <motion.div
         style={{ y: y2 }}
-        className="absolute top-1/2 right-1/4 w-[150px] h-[150px] md:w-[300px] md:h-[300px] rounded-full bg-mint-500/[0.03] blur-3xl will-change-transform"
+        className="absolute top-1/2 right-1/4 w-[300px] h-[300px] rounded-full bg-accent/5 blur-3xl"
       />
       
       {/* Floating orb 3 */}
       <motion.div
         style={{ y: y3, rotate }}
-        className="absolute bottom-1/4 left-1/3 w-[250px] h-[250px] md:w-[500px] md:h-[500px] rounded-full bg-navy-600/[0.05] blur-3xl will-change-transform"
+        className="absolute bottom-1/4 left-1/3 w-[500px] h-[500px] rounded-full bg-primary/3 blur-3xl"
       />
 
       {/* Gradient mesh that moves with scroll */}
@@ -66,7 +66,7 @@ export const ParallaxBackground = () => {
         style={{ y: y1 }}
         className="absolute inset-0 opacity-30"
       >
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-mint-400/[0.06] via-transparent to-mint-500/[0.04]" />
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
       </motion.div>
     </div>
   );

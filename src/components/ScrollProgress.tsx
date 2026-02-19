@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 
 export const ScrollProgress = () => {
   const { scrollYProgress } = useScroll();
@@ -10,6 +10,8 @@ export const ScrollProgress = () => {
   });
   
   const [isVisible, setIsVisible] = useState(false);
+  const percentage = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const [pct, setPct] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +21,11 @@ export const ScrollProgress = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = percentage.on('change', (v) => setPct(Math.round(v)));
+    return unsubscribe;
+  }, [percentage]);
 
   return (
     <motion.div
@@ -33,20 +40,15 @@ export const ScrollProgress = () => {
       {/* Progress track */}
       <div className="relative w-1 h-32 bg-border/30 rounded-full overflow-hidden">
         <motion.div
-          className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary to-accent rounded-full origin-bottom"
+          className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-mint-400 to-mint-300 rounded-full origin-bottom"
           style={{ scaleY }}
         />
       </div>
       
       {/* Percentage indicator */}
-      <motion.div 
-        className="text-[10px] font-mono text-muted-foreground"
-        style={{ opacity: scrollYProgress }}
-      >
-        <motion.span>
-          {/* Will be updated by CSS counter */}
-        </motion.span>
-      </motion.div>
+      <span className="text-[10px] font-mono text-muted-foreground tabular-nums">
+        {pct}%
+      </span>
     </motion.div>
   );
 };

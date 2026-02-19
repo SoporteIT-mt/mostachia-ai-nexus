@@ -1,379 +1,199 @@
-import { useRef, useEffect, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Sparkles, ArrowRight, Utensils, PieChart, Leaf, X, Lock, Database, MessageCircle, BarChart3, ShoppingCart } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, ExternalLink, Play, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { BlurFade } from '@/components/ui/blur-fade';
+import { BorderBeam } from '@/components/ui/border-beam';
+import { CONFIG } from '@/config/constants';
 
 const demos = [
   {
-    id: 'migration',
-    title: 'Migración Inteligente',
-    desc: 'Migración SQL masiva con razonamiento de IA. Detecta esquemas, resuelve conflictos y ejecuta en segundos.',
-    icon: Database,
-    tag: 'Database',
+    id: 'migracion',
+    label: '🔄 Migración de Datos',
     file: '/demos/migracion-db.html',
-    isLocked: false,
+    description: 'Probá la herramienta que migra y valida bases de datos con IA. Cargá un esquema y mirá la magia.',
   },
   {
     id: 'resto',
-    title: 'Agente Restaurante',
-    desc: 'Bot de WhatsApp para restaurantes: menú del día, reservas y delivery automático 24/7.',
-    icon: Utensils,
-    tag: 'Gastronomía',
+    label: '🍽️ Analytics Restaurante',
     file: '/demos/resto.html',
-    isLocked: true,
+    description: 'Consultá datos de ventas de un restaurante real. Escribí preguntas como "¿cuáles fueron los platos más vendidos?" y mirá las respuestas.',
   },
   {
     id: 'contable',
-    title: 'Asistente Contable',
-    desc: 'Dashboard inteligente para estudios contables: vencimientos, clientes y automatización.',
-    icon: PieChart,
-    tag: 'Finanzas',
+    label: '📊 Asistente Contable',
     file: '/demos/contable.html',
-    isLocked: true,
-  },
-  {
-    id: 'analytics',
-    title: 'Analytics IA',
-    desc: 'Dashboard de métricas en tiempo real con insights predictivos generados por IA.',
-    icon: BarChart3,
-    tag: 'Analytics',
-    file: '/demos/demo3.html',
-    isLocked: true,
-  },
-  {
-    id: 'whatsapp',
-    title: 'Agente WhatsApp',
-    desc: 'Atención al cliente 24/7 con IA conversacional que resuelve el 70% de consultas.',
-    icon: MessageCircle,
-    tag: 'Atención',
-    file: '/demos/hubdemos.html',
-    isLocked: true,
-  },
-  {
-    id: 'ecommerce',
-    title: 'Automatización E-commerce',
-    desc: 'Gestión automatizada de inventario, pedidos y atención al cliente con IA integrada.',
-    icon: ShoppingCart,
-    tag: 'Ventas',
-    file: '/demos/demo3.html',
-    isLocked: true,
+    description: 'Dashboard inteligente para estudios contables. Gestión de clientes, vencimientos y más.',
   },
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.95 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 15,
-      delay: 0.1 + i * 0.08,
-    },
-  }),
-};
-
 export const IntegratedDemoHub = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-  const [viewerOpen, setViewerOpen] = useState(false);
-  const [viewerUrl, setViewerUrl] = useState('');
-  const [viewerTitle, setViewerTitle] = useState('');
+  const [activeTab, setActiveTab] = useState(0);
+  const [iframeLoading, setIframeLoading] = useState(true);
 
-  const scrollToPricing = () => {
-    const pricingSection = document.getElementById('precios');
-    if (pricingSection) {
-      // Find the Growth plan element
-      const growthPlan = pricingSection.querySelector('[data-plan="growth"]');
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-      // Add highlight effect
-      setTimeout(() => {
-        if (growthPlan) {
-          growthPlan.classList.add('ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-background');
-          setTimeout(() => {
-            growthPlan.classList.remove('ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-background');
-          }, 2000);
-        }
-      }, 800);
-    }
+  const activeDemo = demos[activeTab];
+
+  const handleTabChange = (idx: number) => {
+    if (idx === activeTab) return;
+    setIframeLoading(true);
+    setActiveTab(idx);
   };
-
-  const openViewer = (file: string, title: string, isLocked: boolean) => {
-    if (isLocked) {
-      scrollToPricing();
-      return;
-    }
-    setViewerUrl(file);
-    setViewerTitle(title);
-    setViewerOpen(true);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeViewer = () => {
-    setViewerOpen(false);
-    document.body.style.overflow = '';
-    setTimeout(() => {
-      setViewerUrl('');
-      setViewerTitle('');
-    }, 300);
-  };
-
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeViewer();
-    };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, []);
 
   return (
     <section id="demos" ref={ref} className="py-24 md:py-32 relative">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
-      
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-16"
-        >
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
-          >
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Demos Interactivas</span>
-          </motion.div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6">
-            Hub de <span className="text-gradient-primary">Innovación</span>
+        {/* Header */}
+        <BlurFade className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
+            Probá Nuestra Tecnología{' '}
+            <span className="text-gradient-primary">en Vivo</span>
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Probá nuestras herramientas en vivo. Sin registro, sin compromiso.
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Demos reales funcionando ahora mismo. Sin registro, sin compromiso, sin trucos.
           </p>
-        </motion.div>
+        </BlurFade>
 
-        {/* Demo Grid - 6 cards, 2x3 */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 max-w-6xl mx-auto">
-          {demos.map((demo, i) => {
-            const Icon = demo.icon;
-            return (
-              <motion.div
-                key={demo.id}
-                custom={i}
-                variants={cardVariants}
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                whileHover={{ 
-                  y: demo.isLocked ? -4 : -8, 
-                  transition: { duration: 0.25, type: "spring", stiffness: 300 } 
-                }}
-                onClick={() => openViewer(demo.file, demo.title, demo.isLocked)}
-                className="group cursor-pointer"
+        {/* Tabs with sliding underline */}
+        <BlurFade delay={0.1} className="flex flex-wrap justify-center gap-2 mb-6">
+          {demos.map((demo, idx) => (
+            <button
+              key={demo.id}
+              onClick={() => handleTabChange(idx)}
+              className={`relative px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 border ${
+                idx === activeTab
+                  ? 'border-primary/50 text-foreground'
+                  : 'bg-white/[0.05] border-white/[0.1] text-muted-foreground hover:border-primary/30 hover:text-foreground'
+              }`}
+            >
+              {idx === activeTab && (
+                <motion.div
+                  layoutId="activeTab"
+                  className="absolute inset-0 rounded-full bg-primary/20 border border-primary/30 shadow-[0_0_20px_hsl(162_100%_39%/0.3)]"
+                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10">{demo.label}</span>
+            </button>
+          ))}
+        </BlurFade>
+
+        {/* Demo description */}
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={activeDemo.id}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25 }}
+            className="text-center text-sm text-muted-foreground max-w-xl mx-auto mb-6"
+          >
+            {activeDemo.description}
+          </motion.p>
+        </AnimatePresence>
+
+        {/* Iframe viewer with BorderBeam */}
+        <BlurFade delay={0.2}>
+          <div className="relative max-w-5xl mx-auto rounded-2xl border border-white/[0.1] bg-white/[0.02] backdrop-blur-sm overflow-hidden">
+            <BorderBeam size={200} duration={14} colorFrom="hsl(162 100% 50%)" colorTo="hsl(42 90% 70%)" />
+
+            {/* Top bar */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.08] bg-white/[0.03]">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-destructive/60" />
+                <div className="w-3 h-3 rounded-full bg-accent/60" />
+                <div className="w-3 h-3 rounded-full bg-primary/60" />
+              </div>
+              <span className="text-xs font-mono text-muted-foreground hidden sm:block">
+                {activeDemo.file}
+              </span>
+              <a
+                href={activeDemo.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors"
               >
-                <div className={`relative h-full p-6 rounded-2xl border transition-all duration-300 overflow-hidden ${
-                  demo.isLocked 
-                    ? 'glass-card border-border/50 dark:border-white/5' 
-                    : 'glass-card border-primary/20 hover:border-primary/40 hover:shadow-[0_0_50px_-15px] hover:shadow-primary/40 dark:hover:shadow-primary/30'
-                }`}>
-                  {/* Locked overlay - improved design */}
-                  {demo.isLocked && (
-                    <div className="absolute inset-0 bg-background/70 dark:bg-background/60 backdrop-blur-[3px] z-20 flex flex-col items-center justify-center gap-2 transition-all group-hover:bg-background/80 dark:group-hover:bg-background/70">
-                      <motion.div
-                        initial={{ scale: 0.8 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 200 }}
-                        className="w-14 h-14 rounded-full bg-muted/80 dark:bg-white/10 flex items-center justify-center mb-1 shadow-lg"
-                      >
-                        <Lock className="w-6 h-6 text-muted-foreground" />
-                      </motion.div>
-                      <span className="text-base font-bold text-foreground">Plan Growth</span>
-                      <span className="text-xs text-primary font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Ver planes <ArrowRight className="w-3 h-3" />
-                      </span>
-                    </div>
-                  )}
-                  
-                  {/* Shine effect */}
-                  <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/5 dark:via-white/5 to-transparent group-hover:left-[100%] transition-all duration-700" />
-                  
-                  <div className="relative z-10">
-                    <div className="flex justify-between items-start mb-4">
-                      <motion.div 
-                        className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 ${
-                          demo.isLocked 
-                            ? 'bg-muted/50 dark:bg-white/5 text-muted-foreground' 
-                            : 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-110 group-hover:rotate-[-5deg] group-hover:shadow-lg group-hover:shadow-primary/30'
-                        }`}
-                        whileHover={!demo.isLocked ? { scale: 1.1, rotate: -5 } : {}}
-                      >
-                        <Icon className="w-6 h-6" />
-                      </motion.div>
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
-                        demo.isLocked 
-                          ? 'bg-muted/50 dark:bg-white/5 text-muted-foreground' 
-                          : 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground'
-                      }`}>
-                        {demo.tag}
-                      </span>
-                    </div>
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Abrir en nueva pestaña</span>
+              </a>
+            </div>
 
-                    <h3 className={`text-xl font-bold mb-2 font-display transition-colors ${
-                      demo.isLocked ? '' : 'group-hover:text-primary'
-                    }`}>
-                      {demo.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                      {demo.desc}
-                    </p>
-
-                    <div className="flex items-center justify-between pt-4 border-t border-border/50 dark:border-white/5">
-                      <span className={`font-semibold text-sm flex items-center gap-2 group-hover:gap-3 transition-all ${
-                        demo.isLocked ? 'text-muted-foreground' : 'text-primary'
-                      }`}>
-                        {demo.isLocked ? 'Desbloquear' : 'Probar ahora'} <ArrowRight className="w-4 h-4" />
-                      </span>
-                    </div>
-                  </div>
+            {/* Iframe */}
+            <div className="relative min-h-[350px] md:min-h-[500px]">
+              {iframeLoading && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background/80 z-10">
+                  <div className="w-10 h-10 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
+                  <span className="text-sm text-muted-foreground">Cargando demo...</span>
                 </div>
-              </motion.div>
-            );
-          })}
-        </div>
+              )}
+              <AnimatePresence mode="wait">
+                <motion.iframe
+                  key={activeDemo.id}
+                  src={activeDemo.file}
+                  className="w-full border-none min-h-[350px] md:min-h-[500px]"
+                  loading="lazy"
+                  title={activeDemo.label}
+                  onLoad={() => setIframeLoading(false)}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </AnimatePresence>
+            </div>
+          </div>
+        </BlurFade>
 
-        {/* CTA after grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.8, duration: 0.5 }}
-          className="text-center mt-12"
-        >
-          <p className="text-muted-foreground mb-4">
-            ¿Querés acceso a todas las herramientas?
+        {/* CTA card */}
+        <BlurFade delay={0.4} className="mt-12 max-w-5xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center gap-6 p-6 md:p-8 rounded-2xl bg-white/[0.05] backdrop-blur-md border border-white/[0.1] border-l-4 border-l-primary">
+            <div className="flex-1 text-center md:text-left">
+              <p className="text-foreground font-display font-semibold text-lg mb-1">
+                ¿Querés ver cómo se adaptaría a tu negocio?
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Te mostramos una demo personalizada con tus datos reales en una videollamada de 30 minutos.
+              </p>
+            </div>
+            <Button className="btn-glow rounded-xl px-6 whitespace-nowrap" asChild>
+              <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
+                <Calendar className="w-4 h-4 mr-2" />
+                Agendar Demo Personalizada
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </a>
+            </Button>
+          </div>
+        </BlurFade>
+
+        {/* Video placeholder */}
+        <BlurFade delay={0.5} className="mt-16 max-w-4xl mx-auto text-center">
+          <h3 className="text-2xl md:text-3xl font-bold font-display mb-2">
+            Mirá Cómo Funciona en <span className="text-gradient-primary">2 Minutos</span>
+          </h3>
+          <p className="text-muted-foreground mb-8">
+            Un recorrido rápido por nuestros sistemas en acción.
           </p>
-          <Button 
-            variant="outline" 
-            className="rounded-xl px-6"
-            onClick={scrollToPricing}
-          >
-            Ver planes completos
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-        </motion.div>
-      </div>
 
-      {/* Viewer Modal with zoom animation */}
-      <motion.div 
-        className="fixed inset-0 z-[100]"
-        initial={false}
-        animate={viewerOpen ? { 
-          opacity: 1, 
-          scale: 1,
-          pointerEvents: 'auto' as const
-        } : { 
-          opacity: 0, 
-          scale: 0.9,
-          pointerEvents: 'none' as const
-        }}
-        transition={{ 
-          type: 'spring', 
-          stiffness: 300, 
-          damping: 30,
-          opacity: { duration: 0.2 }
-        }}
-        style={{ 
-          transformOrigin: 'center center',
-        }}
-      >
-        {/* Backdrop */}
-        <motion.div 
-          className="absolute inset-0 bg-background/95 backdrop-blur-xl"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: viewerOpen ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-          onClick={closeViewer}
-        />
-        
-        {/* Modal content */}
-        <motion.div 
-          className="relative h-full flex flex-col"
-          initial={{ y: 50, opacity: 0 }}
-          animate={viewerOpen ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-          transition={{ 
-            type: 'spring', 
-            stiffness: 250, 
-            damping: 25,
-            delay: viewerOpen ? 0.1 : 0
-          }}
-        >
-          {/* Header with slide-in animation */}
-          <motion.div 
-            className="flex items-center justify-between px-6 py-4 glass-card border-b border-border dark:border-white/10 relative z-10"
-            initial={{ y: -20, opacity: 0 }}
-            animate={viewerOpen ? { y: 0, opacity: 1 } : { y: -20, opacity: 0 }}
-            transition={{ delay: viewerOpen ? 0.15 : 0, duration: 0.3 }}
-          >
-            <motion.button 
-              onClick={closeViewer} 
-              className="flex items-center gap-2 px-4 py-2 rounded-xl glass-card border border-border dark:border-white/10 hover:border-primary/30 transition-all text-sm font-medium group"
-              whileHover={{ scale: 1.02, x: -3 }}
-              whileTap={{ scale: 0.98 }}
-            >
+          <div className="relative aspect-video rounded-2xl bg-white/[0.03] border border-white/[0.1] overflow-hidden flex flex-col items-center justify-center gap-4 cursor-pointer group">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+            <div className="relative z-10 flex flex-col items-center gap-4">
               <motion.div
-                animate={{ x: [0, -3, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                whileHover={{ scale: 1.1 }}
+                className="w-20 h-20 rounded-full bg-white/[0.08] border border-white/[0.15] flex items-center justify-center group-hover:bg-primary/20 transition-colors"
               >
-                <ArrowRight className="w-4 h-4 rotate-180" />
+                <Play className="w-8 h-8 text-muted-foreground ml-1 group-hover:text-primary transition-colors" />
               </motion.div>
-              Volver
-            </motion.button>
-            
-            <motion.span 
-              className="font-bold font-display text-lg"
-              initial={{ scale: 0.9 }}
-              animate={viewerOpen ? { scale: 1 } : { scale: 0.9 }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
-              {viewerTitle}
-            </motion.span>
-            
-            <motion.button 
-              onClick={closeViewer} 
-              className="p-2 rounded-xl glass-card border border-border dark:border-white/10 hover:border-destructive/30 hover:text-destructive transition-all"
-              whileHover={{ scale: 1.1, rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <X className="w-5 h-5" />
-            </motion.button>
-          </motion.div>
-          
-          {/* Iframe container with fade-in */}
-          <motion.div 
-            className="flex-1 bg-white dark:bg-white overflow-hidden relative"
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={viewerOpen ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98 }}
-            transition={{ delay: viewerOpen ? 0.2 : 0, duration: 0.4 }}
-          >
-            {/* Loading shimmer */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent"
-              animate={{ x: ['-100%', '100%'] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
-              style={{ display: viewerUrl ? 'none' : 'block' }}
-            />
-            {viewerUrl && (
-              <iframe 
-                src={viewerUrl} 
-                className="w-full h-full border-none" 
-                title={viewerTitle}
-              />
-            )}
-          </motion.div>
-        </motion.div>
-      </motion.div>
+              <span className="text-sm text-muted-foreground font-mono">▶ Ver demostración (2:30)</span>
+              <span className="text-xs text-muted-foreground/60 mt-2">Próximamente</span>
+              <a href="#demos" className="text-xs text-primary hover:underline mt-1">
+                Mientras tanto, probá las demos en vivo arriba ↑
+              </a>
+            </div>
+          </div>
+        </BlurFade>
+      </div>
     </section>
   );
 };

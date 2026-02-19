@@ -1,11 +1,13 @@
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
+import { ServiciosSection } from '@/components/ServiciosSection';
 import { IntegratedDemoHub } from '@/components/IntegratedDemoHub';
-import { IntegrationsSection } from '@/components/IntegrationsSection';
-import { FeaturesSection } from '@/components/FeaturesSection';
 import { HowItWorksSection } from '@/components/HowItWorksSection';
+import { IndustriasSection } from '@/components/IndustriasSection';
+import { IntegrationsSection } from '@/components/IntegrationsSection';
 import { TrustSection } from '@/components/TrustSection';
 import { FAQSection } from '@/components/FAQSection';
+import { ContactFormSection } from '@/components/ContactFormSection';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { StickyCTA } from '@/components/StickyCTA';
@@ -13,6 +15,7 @@ import { ParallaxBackground } from '@/components/ParallaxSection';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { SectionTransition, AnimatedDivider } from '@/components/SectionTransition';
+import { StatsSection } from '@/components/StatsSection';
 
 const Index = () => {
   return (
@@ -24,15 +27,18 @@ const Index = () => {
         {/* 1. Hero */}
         <HeroSection />
 
-        {/* 2. Servicios (FeaturesSection) */}
+        {/* 1.5 Stats */}
+        <StatsSection />
+
+        {/* 2. Servicios */}
         <AnimatedDivider />
         <SectionTransition type="slideUp">
-          <FeaturesSection />
+          <ServiciosSection />
         </SectionTransition>
 
         {/* 3. Demos */}
         <AnimatedDivider />
-        <SectionTransition type="slideUp">
+        <SectionTransition type="scale">
           <IntegratedDemoHub />
         </SectionTransition>
 
@@ -42,27 +48,37 @@ const Index = () => {
           <HowItWorksSection />
         </SectionTransition>
 
-        {/* 5. Integraciones */}
+        {/* 5. Industrias */}
+        <AnimatedDivider />
+        <SectionTransition type="slideUp">
+          <IndustriasSection />
+        </SectionTransition>
+
+        {/* 6. Integraciones */}
         <AnimatedDivider />
         <SectionTransition type="fade">
           <IntegrationsSection />
         </SectionTransition>
 
-        {/* 6. Confianza */}
+        {/* 7. Confianza */}
         <AnimatedDivider />
         <SectionTransition type="scale">
           <TrustSection />
         </SectionTransition>
 
-        {/* 7. FAQ */}
+        {/* 8. FAQ */}
         <AnimatedDivider />
         <SectionTransition type="slideUp">
           <FAQSection />
         </SectionTransition>
+
+        {/* 9. Contacto */}
+        <AnimatedDivider />
+        <SectionTransition type="slideUp">
+          <ContactFormSection />
+        </SectionTransition>
       </main>
-      <SectionTransition type="fade">
-        <Footer />
-      </SectionTransition>
+      <Footer />
       <FloatingWhatsApp />
       <StickyCTA />
       <ScrollToTop />

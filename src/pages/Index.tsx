@@ -1,7 +1,7 @@
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
 import { ServiciosSection } from '@/components/ServiciosSection';
-import { IntegratedDemoHub } from '@/components/IntegratedDemoHub';
+import { AgentVideoShowcase } from '@/components/AgentVideoShowcase';
 import { HowItWorksSection } from '@/components/HowItWorksSection';
 import { IndustriasSection } from '@/components/IndustriasSection';
 import { IntegrationsSection } from '@/components/IntegrationsSection';
@@ -39,7 +39,7 @@ const Index = () => {
         {/* 3. Demos */}
         <AnimatedDivider />
         <SectionTransition type="scale">
-          <IntegratedDemoHub />
+          <AgentVideoShowcase />
         </SectionTransition>
 
         {/* 4. Cómo Funciona */}

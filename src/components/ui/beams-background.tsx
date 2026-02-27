@@ -157,7 +157,7 @@ export function BeamsBackground({
         "relative min-h-screen w-full overflow-hidden",
         className
       )}
-      style={{ backgroundColor: "hsl(200 45% 11%)" }}
+      style={{ backgroundColor: "hsl(199 42% 14%)" }}
     >
       {/* Canvas */}
       <canvas
@@ -170,7 +170,7 @@ export function BeamsBackground({
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 50% at 50% -20%, transparent 60%, hsl(200 45% 11%) 100%)",
+            "radial-gradient(ellipse 80% 50% at 50% -20%, transparent 60%, hsl(199 42% 14%) 100%)",
         }}
       />
 

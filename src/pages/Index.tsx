@@ -21,7 +21,7 @@ const Index = () => {
   return (
     <div className="relative min-h-screen overflow-x-hidden scroll-smooth">
       <ScrollProgress />
-      <ParallaxBackground />
+      {/* ParallaxBackground removed — caused broken light artifacts */}
       <Navbar />
       <main id="main" className="relative z-10">
         {/* 1. Hero */}

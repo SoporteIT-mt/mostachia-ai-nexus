@@ -24,7 +24,7 @@ export const HeroSection = () => {
       className="relative w-full min-h-[90vh] flex flex-col items-center justify-center overflow-hidden"
       style={{ backgroundColor: '#1f3d4b' }}
     >
-      {/* ── Subtle dot texture at ~10% opacity ── */}
+      {/* Subtle dot texture */}
       <DotPattern
         width={24}
         height={24}
@@ -32,7 +32,7 @@ export const HeroSection = () => {
         className="opacity-[0.07] text-white"
       />
 
-      {/* ── Radial vignette for depth ── */}
+      {/* Radial vignette */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -40,7 +40,7 @@ export const HeroSection = () => {
         }}
       />
 
-      {/* ── Bottom fade to page bg ── */}
+      {/* Bottom fade */}
       <div
         className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
         style={{
@@ -48,8 +48,8 @@ export const HeroSection = () => {
         }}
       />
 
-      {/* ── Content ── */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-24 lg:py-32 flex flex-col items-center text-center">
+      {/* Content — pt-32 clears the fixed navbar */}
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 pt-32 pb-24 lg:pt-40 lg:pb-32 flex flex-col items-center text-center">
 
         {/* Badge */}
         <motion.div
@@ -64,18 +64,19 @@ export const HeroSection = () => {
           </span>
         </motion.div>
 
-        {/* H1 — exactly 2 lines */}
+        {/* H1 — forced to exactly 2 lines with block spans */}
         <motion.h1
           variants={fadeUp(0.1)}
           initial="hidden"
           animate="visible"
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-display tracking-tight leading-[1.1] mb-6"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display tracking-tight leading-[1.15] mb-6"
         >
-          <span className="text-white">Tu equipo digital con </span>
-          <span className="text-mint-400">IA</span>
-          <span className="text-white">,</span>
-          <br />
+          <span className="block text-white">
+            Tu equipo digital con{' '}
+            <span className="text-mint-400">IA</span>,
+          </span>
           <span
+            className="block"
             style={{
               background: 'linear-gradient(135deg, #60b99a 0%, #f6c667 100%)',
               WebkitBackgroundClip: 'text',
@@ -173,10 +174,10 @@ export const HeroSection = () => {
                 <img src="/isotipo-mint.png" alt="MostachIA" className="w-7 h-7 object-contain" />
               </div>
               <span className="text-lg font-display font-semibold text-white/60">
-                Interfaz de MostachIA
+                Plataforma MostachIA
               </span>
               <span className="text-sm text-steel-400">
-                Próximamente — Captura de pantalla de la plataforma
+                Próximamente
               </span>
             </div>
           </div>

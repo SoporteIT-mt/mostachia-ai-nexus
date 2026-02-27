@@ -108,7 +108,7 @@ export const Footer = () => {
         {/* Copyright */}
         <div className="pt-6 border-t border-[rgba(115,215,203,0.08)] text-center">
           <p className="text-xs text-steel-500">
-            © 2025 MostachIA. Procesos inteligentes, resultados superiores.
+            © {new Date().getFullYear()} MostachIA. Procesos inteligentes, resultados superiores.
           </p>
         </div>
       </div>

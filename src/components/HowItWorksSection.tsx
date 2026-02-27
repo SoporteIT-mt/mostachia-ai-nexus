@@ -363,3 +363,5 @@ const StepCard = ({
     )}
   </motion.div>
 );
+
+export default HowItWorksSection;

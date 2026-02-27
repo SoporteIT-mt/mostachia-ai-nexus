@@ -219,3 +219,5 @@ export const IntegrationsSection = () => {
     </section>
   );
 };
+
+export default IntegrationsSection;

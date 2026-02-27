@@ -1,19 +1,23 @@
+import { lazy, Suspense } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
-import { ServiciosSection } from '@/components/ServiciosSection';
-import { AgentVideoShowcase } from '@/components/AgentVideoShowcase';
-import { HowItWorksSection } from '@/components/HowItWorksSection';
-import { IndustriasSection } from '@/components/IndustriasSection';
-import { IntegrationsSection } from '@/components/IntegrationsSection';
-import { TeamShowcase } from '@/components/TeamShowcase';
-import { FAQSection } from '@/components/FAQSection';
-import { ContactFormSection } from '@/components/ContactFormSection';
+import { StatsSection } from '@/components/StatsSection';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { StickyCTA } from '@/components/StickyCTA';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ScrollToTop } from '@/components/ScrollToTop';
-import { StatsSection } from '@/components/StatsSection';
+
+const ServiciosSection = lazy(() => import('@/components/ServiciosSection'));
+const AgentVideoShowcase = lazy(() => import('@/components/AgentVideoShowcase'));
+const HowItWorksSection = lazy(() => import('@/components/HowItWorksSection'));
+const IndustriasSection = lazy(() => import('@/components/IndustriasSection'));
+const IntegrationsSection = lazy(() => import('@/components/IntegrationsSection'));
+const TeamShowcase = lazy(() => import('@/components/TeamShowcase'));
+const FAQSection = lazy(() => import('@/components/FAQSection'));
+const ContactFormSection = lazy(() => import('@/components/ContactFormSection'));
+
+const LazyFallback = () => <div className="min-h-[400px]" />;
 
 const Index = () => {
   return (
@@ -23,14 +27,30 @@ const Index = () => {
       <main id="main" className="relative z-10">
         <HeroSection />
         <StatsSection />
-        <ServiciosSection />
-        <AgentVideoShowcase />
-        <HowItWorksSection />
-        <IndustriasSection />
-        <IntegrationsSection />
-        <TeamShowcase />
-        <FAQSection />
-        <ContactFormSection />
+        <Suspense fallback={<LazyFallback />}>
+          <ServiciosSection />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <AgentVideoShowcase />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <HowItWorksSection />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <IndustriasSection />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <IntegrationsSection />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <TeamShowcase />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <FAQSection />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <ContactFormSection />
+        </Suspense>
       </main>
       <Footer />
       <FloatingWhatsApp />

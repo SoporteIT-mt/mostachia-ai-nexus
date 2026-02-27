@@ -31,36 +31,28 @@ const AGENTS = [
   },
 ];
 
-// Variantes 3D Extremas — vuelan fuera del viewport
+// Variantes 3D Extremas — píxeles fijos masivos
 const slideVariants = {
   enter: (direction: number) => ({
-    x: direction > 0 ? '100vw' : '-100vw',
-    scale: 0.2,
-    rotateY: direction > 0 ? 45 : -45,
+    x: direction > 0 ? 2000 : -2000,
     opacity: 0,
-    zIndex: 0,
+    scale: 0.5,
+    rotateY: direction > 0 ? 45 : -45,
   }),
   center: {
+    zIndex: 1,
     x: 0,
+    opacity: 1,
     scale: 1,
     rotateY: 0,
-    opacity: 1,
-    zIndex: 10,
   },
   exit: (direction: number) => ({
-    x: direction < 0 ? '100vw' : '-100vw',
-    scale: 0.2,
-    rotateY: direction < 0 ? 45 : -45,
-    opacity: 0,
     zIndex: 0,
+    x: direction < 0 ? 2000 : -2000,
+    opacity: 0,
+    scale: 0.5,
+    rotateY: direction < 0 ? 45 : -45,
   }),
-};
-
-const springTransition = {
-  type: 'spring' as const,
-  stiffness: 150,
-  damping: 20,
-  mass: 0.8,
 };
 
 export const AgentVideoShowcase = () => {
@@ -144,8 +136,8 @@ export const AgentVideoShowcase = () => {
         </div>
 
         {/* Contenedor de Videos con perspectiva 3D */}
-        <div className="relative w-full max-w-6xl mx-auto aspect-video flex items-center justify-center">
-          <AnimatePresence mode="popLayout" custom={direction}>
+        <div className="relative w-full max-w-6xl mx-auto aspect-video flex items-center justify-center" style={{ perspective: '2000px', transformStyle: 'preserve-3d' }}>
+          <AnimatePresence initial={false} custom={direction} mode="popLayout">
             <motion.div
               key={current}
               custom={direction}
@@ -153,9 +145,8 @@ export const AgentVideoShowcase = () => {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={springTransition}
-              className="absolute inset-0 w-full h-full"
-              style={{ transformStyle: 'preserve-3d' }}
+              transition={{ type: "spring", stiffness: 200, damping: 25, mass: 1 }}
+              className="absolute inset-0 w-full h-full rounded-2xl sm:rounded-[2rem] overflow-hidden border border-white/10 shadow-[0_0_80px_rgba(96,185,154,0.15)] bg-[#0B151C]"
             >
               {agent.videoSrc ? (
                 <video

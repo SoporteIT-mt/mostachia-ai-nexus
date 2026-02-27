@@ -6,6 +6,7 @@ import { HowItWorksSection } from '@/components/HowItWorksSection';
 import { IndustriasSection } from '@/components/IndustriasSection';
 import { IntegrationsSection } from '@/components/IntegrationsSection';
 import { TrustSection } from '@/components/TrustSection';
+import { TeamSection } from '@/components/TeamSection';
 import { FAQSection } from '@/components/FAQSection';
 import { ContactFormSection } from '@/components/ContactFormSection';
 import { Footer } from '@/components/Footer';
@@ -58,6 +59,12 @@ const Index = () => {
         <AnimatedDivider />
         <SectionTransition type="fade">
           <IntegrationsSection />
+        </SectionTransition>
+
+        {/* 6.5 Quiénes Somos (Equipo) */}
+        <AnimatedDivider />
+        <SectionTransition type="slideUp">
+          <TeamSection />
         </SectionTransition>
 
         {/* 7. Confianza */}

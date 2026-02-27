@@ -392,3 +392,5 @@ export const AgentVideoShowcase = () => {
     </section>
   );
 };
+
+export default AgentVideoShowcase;

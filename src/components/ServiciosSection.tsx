@@ -663,3 +663,5 @@ export const ServiciosSection = () => {
     </section>
   );
 };
+
+export default ServiciosSection;

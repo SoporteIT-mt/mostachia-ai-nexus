@@ -262,3 +262,5 @@ export const TeamShowcase = () => {
     </section>
   );
 };
+
+export default TeamShowcase;

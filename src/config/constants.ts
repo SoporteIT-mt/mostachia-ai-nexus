@@ -26,3 +26,14 @@ export const trackEvent = (event: string, params?: Record<string, any>) => {
   // Descomentar cuando GA4 esté listo:
   // window.gtag?.('event', event, params);
 };
+
+export const CRO_EVENTS = {
+  CTA_HERO_CLICK: 'cta_hero_click',
+  CTA_WHATSAPP_CLICK: 'cta_whatsapp_click',
+  FORM_SUBMIT: 'form_submit',
+  VIDEO_CAROUSEL_INTERACT: 'video_carousel_interact',
+  TEAM_MEMBER_VIEW: 'team_member_view',
+  FAQ_OPEN: 'faq_open',
+  SCROLL_DEPTH_50: 'scroll_depth_50',
+  SCROLL_DEPTH_100: 'scroll_depth_100',
+} as const;

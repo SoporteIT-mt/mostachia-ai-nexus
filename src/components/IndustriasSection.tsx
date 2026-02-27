@@ -161,3 +161,5 @@ export const IndustriasSection = () => {
     </section>
   );
 };
+
+export default IndustriasSection;

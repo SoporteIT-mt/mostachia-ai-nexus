@@ -1,21 +1,23 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Calendar, MessageCircle, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Calendar, ArrowRight } from 'lucide-react';
 import { BeamsBackground } from '@/components/ui/beams-background';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { CONFIG } from '@/config/constants';
 
 // ─── Animation variants ───────────────────────────────────────
-const wordReveal = {
+const fadeUp = (delay: number) => ({
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay, ease: [0.25, 0.4, 0.25, 1] } },
+});
+
+const letterReveal = {
   hidden: {},
-  visible: (delay: number) => ({
-    transition: { staggerChildren: 0.045, delayChildren: delay },
-  }),
+  visible: { transition: { staggerChildren: 0.03, delayChildren: 0.2 } },
 };
 
-const wordChild = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(6px)' },
+const letterChild = {
+  hidden: { opacity: 0, y: 30, filter: 'blur(8px)' },
   visible: {
     opacity: 1,
     y: 0,
@@ -23,23 +25,6 @@ const wordChild = {
     transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
   },
 };
-
-function AnimatedWords({ text, delay = 0 }: { text: string; delay?: number }) {
-  return (
-    <motion.span className="inline" custom={delay} variants={wordReveal} initial="hidden" animate="visible">
-      {text.split(' ').map((word, i) => (
-        <motion.span key={i} variants={wordChild} className="inline-block mr-[0.25em]">
-          {word}
-        </motion.span>
-      ))}
-    </motion.span>
-  );
-}
-
-const fadeUp = (delay: number) => ({
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay, ease: [0.25, 0.4, 0.25, 1] } },
-});
 
 // ─── Component ────────────────────────────────────────────────
 export const HeroSection = () => {
@@ -52,6 +37,8 @@ export const HeroSection = () => {
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
   const scale = useTransform(scrollY, [0, 400], [1, 0.95]);
 
+  const brandName = "MostachIA";
+
   return (
     <BeamsBackground intensity="strong">
       <motion.div
@@ -59,7 +46,7 @@ export const HeroSection = () => {
         className="container relative z-10 mx-auto px-4 sm:px-6 pt-28 pb-16 min-h-[85vh] flex flex-col justify-center max-w-full overflow-hidden"
         style={{ opacity, scale }}
       >
-        <div className="w-full max-w-6xl mx-auto text-center">
+        <div className="w-full max-w-5xl mx-auto text-center">
           {/* ── Badge ────────────────────────────── */}
           <motion.div
             variants={fadeUp(0)}
@@ -73,86 +60,84 @@ export const HeroSection = () => {
             </span>
           </motion.div>
 
-          {/* ── H1 ──────────────────────────────── */}
+          {/* ── H1 — Brand Name ──────────────────── */}
           <motion.div style={{ y: titleY }}>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold font-display tracking-tighter mb-6 md:mb-8 leading-[1.1]">
-              <span className="text-foreground">
-                <AnimatedWords text="Tu Negocio con" delay={0} />
+            <motion.h1
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold font-display tracking-tighter mb-4 md:mb-6 leading-[0.95]"
+              variants={letterReveal}
+              initial="hidden"
+              animate="visible"
+            >
+              {brandName.split('').map((char, i) => (
                 <motion.span
-                  className="text-primary"
-                  initial={{ opacity: 0, filter: 'blur(6px)' }}
-                  animate={{ opacity: 1, filter: 'blur(0px)' }}
-                  transition={{ duration: 0.5, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ textShadow: '0 0 40px rgba(115, 215, 203, 0.6), 0 0 80px rgba(115, 215, 203, 0.3)' }}
+                  key={i}
+                  variants={letterChild}
+                  className="inline-block"
+                  style={{
+                    background: 'linear-gradient(135deg, #60b99a 0%, #7fcdb3 40%, #60b99a 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    textShadow: 'none',
+                    filter: 'drop-shadow(0 0 40px rgba(96, 185, 154, 0.4))',
+                  }}
                 >
-                  {' '}IA,
+                  {char}
                 </motion.span>
-                {' '}
-                <AnimatedWords text="Otro Nivel de" delay={0.3} />
-              </span>
-              <span className="block mt-1">
-                <motion.span
-                  className="text-gradient-primary"
-                  initial={{ opacity: 0, filter: 'blur(6px)' }}
-                  animate={{ opacity: 1, filter: 'blur(0px)' }}
-                  transition={{ duration: 0.5, delay: 0.48, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  Resultados.
-                </motion.span>
-              </span>
-            </h1>
+              ))}
+            </motion.h1>
           </motion.div>
 
-          {/* ── Subtitle ── */}
-          <motion.div style={{ y: subtitleY }} variants={fadeUp(0.6)} initial="hidden" animate="visible">
+          {/* ── H2 — Tagline ─────────────────────── */}
+          <motion.div style={{ y: subtitleY }}>
+            <motion.h2
+              variants={fadeUp(0.5)}
+              initial="hidden"
+              animate="visible"
+              className="text-xl sm:text-2xl md:text-3xl font-light tracking-tight mb-8 md:mb-10"
+              style={{ color: '#dadada' }}
+            >
+              Procesos inteligentes, resultados superiores.
+            </motion.h2>
+          </motion.div>
+
+          {/* ── Copy Persuasivo ──────────────────── */}
+          <motion.div variants={fadeUp(0.7)} initial="hidden" animate="visible">
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground/80 max-w-2xl mx-auto font-light leading-relaxed mb-10">
-              Automatizamos procesos, generamos dashboards inteligentes y conectamos{' '}
-              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-[gradient-shift_4s_ease_infinite] bg-clip-text text-transparent font-medium">
-                agentes de IA
+              No vendemos software, construimos el equipo digital que tu empresa necesita.{' '}
+              <span className="text-gradient-primary font-medium">
+                Agentes de IA diseñados a medida
               </span>{' '}
-              a tus datos reales. Todo desde WhatsApp.
+              para escalar tus ventas, automatizar tus redes y optimizar tu tiempo.
+              Sin complicaciones técnicas, resultados desde el día uno.
             </p>
           </motion.div>
 
-          {/* ── CTAs ─────────────────────────────── */}
+          {/* ── CTA ──────────────────────────────── */}
           <motion.div
             style={{ y: ctaY }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
           >
-            <motion.div variants={fadeUp(0.8)} initial="hidden" animate="visible" whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.98 }}>
+            <motion.div variants={fadeUp(0.9)} initial="hidden" animate="visible" whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.98 }}>
               <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
                 <ShimmerButton
-                  shimmerColor="rgba(147, 226, 216, 0.8)"
-                  background="linear-gradient(135deg, #73D7CB, #5CB8A5)"
+                  shimmerColor="rgba(127, 205, 179, 0.8)"
+                  background="linear-gradient(135deg, #60b99a, #4a9e82)"
                   borderRadius="12px"
-                  className="px-6 sm:px-8 py-4 text-base sm:text-lg font-semibold shadow-[0_4px_20px_rgba(115,215,203,0.4)]"
+                  className="px-6 sm:px-8 py-4 text-base sm:text-lg font-semibold shadow-[0_4px_20px_rgba(96,185,154,0.4)]"
                 >
                   <Calendar className="mr-2 w-5 h-5" />
-                  Agendar Consultoría Gratis
+                  Agendar Diagnóstico Gratuito
                   <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </ShimmerButton>
               </a>
-            </motion.div>
-
-            <motion.div variants={fadeUp(0.9)} initial="hidden" animate="visible" whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.98 }}>
-              <Button
-                size="lg"
-                variant="outline"
-                className="rounded-xl px-8 py-6 text-lg border-2 border-white/20 hover:border-primary/50 bg-white/5 backdrop-blur-sm w-full sm:w-auto"
-                asChild
-              >
-                <a href={CONFIG.WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="mr-2 w-5 h-5" />
-                  Escribinos por WhatsApp
-                </a>
-              </Button>
             </motion.div>
           </motion.div>
 
           {/* ── Micro-proof ──────────────────────── */}
           <motion.div variants={fadeUp(1.0)} initial="hidden" animate="visible">
             <p className="text-sm text-muted-foreground flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-              <span>✅ Consultoría gratuita de 30 min</span>
+              <span>✅ Diagnóstico gratuito de 30 min</span>
               <span className="hidden sm:inline text-white/20">·</span>
               <span>⚡ Implementación en 1-4 semanas</span>
               <span className="hidden sm:inline text-white/20">·</span>

@@ -17,7 +17,7 @@ export const StatsSection = () => {
             {stats.map((stat, i) => (
               <BlurFade key={stat.label} delay={0.1 + i * 0.15}>
                 <div className={`flex flex-col items-center text-center ${i < 3 ? 'lg:border-r lg:border-border/20' : ''}`}>
-                  <span className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary mb-2" style={{ textShadow: '0 0 30px rgba(115, 215, 203, 0.4)' }}>
+                  <span className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary mb-2" style={{ textShadow: '0 0 30px rgba(96, 185, 154, 0.4)' }}>
                     {stat.custom ? (
                       stat.custom
                     ) : (

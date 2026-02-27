@@ -59,14 +59,34 @@ export const FloatingWhatsApp = () => {
   const [showQuickReplies, setShowQuickReplies] = useState(true);
   const [hasInitialized, setHasInitialized] = useState(false);
   const [fabVisible, setFabVisible] = useState(false);
+  const [hiddenBySticky, setHiddenBySticky] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const sessionId = useRef(getSessionId());
 
-  // FAB entrance delay
+  // FAB entrance delay + hide when StickyCTA visible on mobile
   useEffect(() => {
-    const timer = setTimeout(() => setFabVisible(true), 2000);
-    return () => clearTimeout(timer);
+    const entranceTimer = setTimeout(() => setFabVisible(true), 2000);
+
+    const handleScroll = () => {
+      const footer = document.querySelector('footer');
+      const footerTop = footer?.getBoundingClientRect().top ?? Infinity;
+      const isMobile = window.innerWidth < 768;
+      const pastHero = window.scrollY > 600;
+      const beforeFooter = footerTop > window.innerHeight;
+      // Hide FAB on mobile when StickyCTA is visible
+      setHiddenBySticky(isMobile && pastHero && beforeFooter);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      clearTimeout(entranceTimer);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   // Load from sessionStorage
@@ -180,7 +200,7 @@ export const FloatingWhatsApp = () => {
     <>
       {/* FAB */}
       <AnimatePresence>
-        {fabVisible && (
+        {fabVisible && !hiddenBySticky && (
           <motion.button
             initial={{ scale: 0, y: 20 }}
             animate={{ scale: 1, y: 0 }}

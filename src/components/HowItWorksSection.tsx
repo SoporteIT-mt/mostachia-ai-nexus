@@ -279,15 +279,13 @@ export const HowItWorksSection = () => {
             >
               <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
                 <ShimmerButton
-                  shimmerColor="hsl(162 100% 70%)"
-                  shimmerDuration="2.5s"
-                  borderRadius="9999px"
-                  background="linear-gradient(135deg, #73D7CB 0%, #5CB8A5 50%, #4AA394 100%)"
-                  className="text-lg font-bold px-12 py-6 group"
-                  style={{ boxShadow: '0 0 30px rgba(115,215,203,0.35), 0 8px 32px rgba(0,0,0,0.4)' } as React.CSSProperties}
+                  shimmerColor="rgba(127, 205, 179, 0.8)"
+                  background="linear-gradient(135deg, #60b99a, #4a9e82)"
+                  borderRadius="12px"
+                  className="text-lg font-bold px-12 py-6 group shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
                 >
                   <Calendar className="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" />
-                  Agendar Consultoría Gratuita
+                  Agendar Diagnóstico Gratis
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </ShimmerButton>
               </a>

@@ -90,10 +90,10 @@ export const FAQSection = () => {
         {/* CTA */}
         <BlurFade delay={0.5} className="text-center mt-12">
           <p className="text-muted-foreground mb-4">¿Tenés otra pregunta?</p>
-          <Button variant="outline" className="rounded-xl px-6 border-white/20 hover:border-primary/50" asChild>
+          <Button variant="outline" className="rounded-xl px-6 border-white/20 hover:border-mint-400/50" asChild>
             <a href={CONFIG.WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
               <MessageCircle className="w-4 h-4 mr-2" />
-              Preguntanos por WhatsApp
+              Escribinos por WhatsApp
             </a>
           </Button>
         </BlurFade>

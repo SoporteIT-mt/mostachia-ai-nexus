@@ -1,9 +1,9 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { MagicCard } from '@/components/ui/magic-card';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { Spotlight } from '@/components/ui/spotlight';
+import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { CONFIG } from '@/config/constants';
 
 const industrias = [
@@ -143,12 +143,18 @@ export const IndustriasSection = () => {
                 Si tenés datos y procesos, podemos automatizarlos.
               </p>
             </div>
-            <Button className="btn-glow rounded-xl px-6 whitespace-nowrap" asChild>
-              <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
-                Contanos tu caso
+            <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
+              <ShimmerButton
+                shimmerColor="rgba(127, 205, 179, 0.8)"
+                background="linear-gradient(135deg, #60b99a, #4a9e82)"
+                borderRadius="12px"
+                className="px-6 py-3 font-semibold whitespace-nowrap shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+                Agendar Diagnóstico Gratis
                 <ArrowRight className="w-4 h-4 ml-2" />
-              </a>
-            </Button>
+              </ShimmerButton>
+            </a>
           </div>
         </BlurFade>
       </div>

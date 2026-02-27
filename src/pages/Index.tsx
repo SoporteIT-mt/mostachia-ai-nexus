@@ -15,14 +15,12 @@ import { StickyCTA } from '@/components/StickyCTA';
 import { ParallaxBackground } from '@/components/ParallaxSection';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ScrollToTop } from '@/components/ScrollToTop';
-import { SectionTransition, AnimatedDivider } from '@/components/SectionTransition';
 import { StatsSection } from '@/components/StatsSection';
 
 const Index = () => {
   return (
     <div className="relative min-h-screen overflow-x-hidden scroll-smooth">
       <ScrollProgress />
-      {/* ParallaxBackground removed — caused broken light artifacts */}
       <Navbar />
       <main id="main" className="relative z-10">
         {/* 1. Hero */}
@@ -32,58 +30,31 @@ const Index = () => {
         <StatsSection />
 
         {/* 2. Servicios */}
-        <AnimatedDivider />
-        <SectionTransition type="slideUp">
-          <ServiciosSection />
-        </SectionTransition>
+        <ServiciosSection />
 
         {/* 3. Demos */}
-        <AnimatedDivider />
-        <SectionTransition type="scale">
-          <AgentVideoShowcase />
-        </SectionTransition>
+        <AgentVideoShowcase />
 
         {/* 4. Cómo Funciona */}
-        <AnimatedDivider />
-        <SectionTransition type="slideLeft">
-          <HowItWorksSection />
-        </SectionTransition>
+        <HowItWorksSection />
 
         {/* 5. Industrias */}
-        <AnimatedDivider />
-        <SectionTransition type="slideUp">
-          <IndustriasSection />
-        </SectionTransition>
+        <IndustriasSection />
 
         {/* 6. Integraciones */}
-        <AnimatedDivider />
-        <SectionTransition type="fade">
-          <IntegrationsSection />
-        </SectionTransition>
+        <IntegrationsSection />
 
         {/* 6.5 Quiénes Somos (Equipo) */}
-        <AnimatedDivider />
-        <SectionTransition type="slideUp">
-          <TeamSection />
-        </SectionTransition>
+        <TeamSection />
 
         {/* 7. Confianza */}
-        <AnimatedDivider />
-        <SectionTransition type="scale">
-          <TrustSection />
-        </SectionTransition>
+        <TrustSection />
 
         {/* 8. FAQ */}
-        <AnimatedDivider />
-        <SectionTransition type="slideUp">
-          <FAQSection />
-        </SectionTransition>
+        <FAQSection />
 
         {/* 9. Contacto */}
-        <AnimatedDivider />
-        <SectionTransition type="slideUp">
-          <ContactFormSection />
-        </SectionTransition>
+        <ContactFormSection />
       </main>
       <Footer />
       <FloatingWhatsApp />

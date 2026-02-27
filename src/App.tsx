@@ -1,5 +1,4 @@
 import { LazyMotion, domAnimation, MotionConfig } from 'framer-motion';
-import { AnimatedToaster } from "@/components/ui/animated-toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -16,7 +15,6 @@ const App = () => (
       <LazyMotion features={domAnimation}>
         <MotionConfig reducedMotion="user">
           <TooltipProvider>
-            <AnimatedToaster />
             <Sonner />
             <BrowserRouter>
               <Routes>

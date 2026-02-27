@@ -6,7 +6,7 @@ import { HowItWorksSection } from '@/components/HowItWorksSection';
 import { IndustriasSection } from '@/components/IndustriasSection';
 import { IntegrationsSection } from '@/components/IntegrationsSection';
 import { TrustSection } from '@/components/TrustSection';
-import { TeamSection } from '@/components/TeamSection';
+import { TeamShowcase } from '@/components/TeamShowcase';
 import { FAQSection } from '@/components/FAQSection';
 import { ContactFormSection } from '@/components/ContactFormSection';
 import { Footer } from '@/components/Footer';
@@ -45,7 +45,7 @@ const Index = () => {
         <IntegrationsSection />
 
         {/* 6.5 Quiénes Somos (Equipo) */}
-        <TeamSection />
+        <TeamShowcase />
 
         {/* 7. Confianza */}
         <TrustSection />

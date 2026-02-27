@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { ArrowRight, Cpu, BarChart3, Bot, Zap, Database, Play, TrendingUp, Users, CheckCircle2, Clock, Send, Sparkles } from 'lucide-react';
+import { ArrowRight, Cpu, BarChart3, Bot, Zap, Database, Play, TrendingUp, Users, CheckCircle2, Clock, Send, Sparkles, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { BorderBeam } from '@/components/ui/border-beam';
+import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { CONFIG } from '@/config/constants';
 
 const servicios = [
@@ -645,12 +645,18 @@ export const ServiciosSection = () => {
               ¿No encontrás lo que buscás?{' '}
               <span className="text-muted-foreground font-normal text-base">Hacemos desarrollos a medida.</span>
             </p>
-            <Button className="btn-glow rounded-xl px-6 whitespace-nowrap" asChild>
-              <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
-                Contanos tu proyecto
+            <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
+              <ShimmerButton
+                shimmerColor="rgba(127, 205, 179, 0.8)"
+                background="linear-gradient(135deg, #60b99a, #4a9e82)"
+                borderRadius="12px"
+                className="px-6 py-3 font-semibold whitespace-nowrap shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+                Agendar Diagnóstico Gratis
                 <ArrowRight className="w-4 h-4 ml-2" />
-              </a>
-            </Button>
+              </ShimmerButton>
+            </a>
           </div>
         </BlurFade>
       </div>

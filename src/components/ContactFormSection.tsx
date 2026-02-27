@@ -7,34 +7,20 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { toast } from 'sonner';
 import { CONFIG } from '@/config/constants';
 import { BlurFade } from '@/components/ui/blur-fade';
-import { MagicCard } from '@/components/ui/magic-card';
-import { Ripple } from '@/components/ui/ripple';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 
 const formSchema = z.object({
-  nombre: z.string().trim().min(1, 'El nombre es requerido').max(100),
-  email: z.string().trim().email('Email inválido').max(255),
-  empresa: z.string().trim().max(100).optional().or(z.literal('')),
-  rubro: z.string().min(1, 'Seleccioná un rubro'),
-  mensaje: z.string().trim().max(1000).optional().or(z.literal('')),
+  nombre: z.string().trim().min(1, 'Requerido').max(100),
+  email: z.string().trim().email('Email inválido'),
+  whatsapp: z.string().trim().max(20).optional().or(z.literal('')),
+  mensaje: z.string().trim().max(500).optional().or(z.literal('')),
 });
 
 type FormValues = z.infer<typeof formSchema>;
-
-const rubros = [
-  'Gastronomía',
-  'Retail / E-commerce',
-  'Salud / Farmacias',
-  'Contable / Legal',
-  'Entretenimiento',
-  'Educación',
-  'Otro',
-];
 
 export const ContactFormSection = () => {
   const ref = useRef(null);
@@ -43,7 +29,7 @@ export const ContactFormSection = () => {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: { nombre: '', email: '', empresa: '', rubro: '', mensaje: '' },
+    defaultValues: { nombre: '', email: '', whatsapp: '', mensaje: '' },
   });
 
   const onSubmit = async (data: FormValues) => {
@@ -79,8 +65,6 @@ export const ContactFormSection = () => {
 
   return (
     <section id="contacto" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
-      {/* Ripple background */}
-      <Ripple color="rgba(115, 215, 203, 0.06)" count={6} />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
@@ -130,43 +114,20 @@ export const ContactFormSection = () => {
                     />
                   </div>
 
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <FormField
-                      control={form.control}
-                      name="empresa"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Empresa</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Nombre de tu empresa" {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="rubro"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Rubro *</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="bg-white/[0.05] border-white/[0.1]">
-                                <SelectValue placeholder="Seleccioná un rubro" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent className="bg-background border-white/[0.15] backdrop-blur-xl z-50">
-                              {rubros.map((r) => (
-                                <SelectItem key={r} value={r}>{r}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="whatsapp"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>WhatsApp</FormLabel>
+                        <FormControl>
+                          <Input placeholder="+54 9 ..." {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
+                        </FormControl>
+                        <p className="text-xs text-muted-foreground mt-1">Te contactamos por WhatsApp</p>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
                   <FormField
                     control={form.control}
@@ -176,7 +137,7 @@ export const ContactFormSection = () => {
                         <FormLabel>Mensaje</FormLabel>
                         <FormControl>
                           <Textarea
-                            placeholder="Contanos brevemente qué procesos te gustaría mejorar..."
+                            placeholder="Contanos brevemente qué necesitás"
                             rows={3}
                             {...field}
                             className="bg-white/[0.05] border-white/[0.1] resize-none focus:ring-2 focus:ring-primary/30 transition-shadow"
@@ -187,9 +148,9 @@ export const ContactFormSection = () => {
                     )}
                   />
 
-                    <ShimmerButton
-                    shimmerColor="rgba(147, 226, 216, 0.8)"
-                    background="linear-gradient(135deg, #73D7CB, #5CB8A5)"
+                  <ShimmerButton
+                    shimmerColor="rgba(127, 205, 179, 0.8)"
+                    background="linear-gradient(135deg, #60b99a, #4a9e82)"
                     borderRadius="12px"
                     className="w-full py-4 text-lg font-semibold"
                     type="submit"
@@ -217,57 +178,58 @@ export const ContactFormSection = () => {
 
           {/* Info — right 2 cols */}
           <BlurFade delay={0.3} className="lg:col-span-2 space-y-6">
-            {/* Contact info card with MagicCard */}
-            <MagicCard>
-              <div className="p-6 space-y-5">
-                <h3 className="font-display font-semibold text-lg">Contacto directo</h3>
+            {/* Contact info card */}
+            <div className="p-6 rounded-2xl bg-white/[0.05] backdrop-blur-md border border-white/[0.1] space-y-5">
+              <h3 className="font-display font-semibold text-lg">Contacto directo</h3>
 
-                <a
-                  href={CONFIG.WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <MessageCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                  +54 3564 66-7968
-                </a>
+              <a
+                href={CONFIG.WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <MessageCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                +54 3564 66-7968
+              </a>
 
-                <a
-                  href={`mailto:${CONFIG.EMAIL}`}
-                  className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                  {CONFIG.EMAIL}
-                </a>
+              <a
+                href={`mailto:${CONFIG.EMAIL}`}
+                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+                {CONFIG.EMAIL}
+              </a>
 
-                <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                  <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
-                  Córdoba, Argentina 🇦🇷
-                </div>
-
-                <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                  <Clock className="w-5 h-5 text-primary flex-shrink-0" />
-                  Lun-Vie, 9:00-18:00 (GMT-3)
-                </div>
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
+                Córdoba, Argentina 🇦🇷
               </div>
-            </MagicCard>
+
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                <Clock className="w-5 h-5 text-primary flex-shrink-0" />
+                Lun-Vie, 9:00-18:00 (GMT-3)
+              </div>
+            </div>
 
             {/* CTA card */}
-            <MagicCard>
-              <div className="p-6">
-                <p className="font-display font-semibold mb-3">¿Preferís hablar directo?</p>
-                <Button className="btn-glow rounded-xl w-full" asChild>
-                  <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
-                    <Calendar className="w-4 h-4 mr-2" />
-                    Agendar Videollamada
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </a>
-                </Button>
-                <p className="text-xs text-muted-foreground text-center mt-3">
-                  30 min · Gratuita · Sin compromiso
-                </p>
-              </div>
-            </MagicCard>
+            <div className="p-6 rounded-2xl bg-white/[0.05] backdrop-blur-md border border-white/[0.1]">
+              <p className="font-display font-semibold mb-3">¿Preferís hablar directo?</p>
+              <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
+                <ShimmerButton
+                  shimmerColor="rgba(127, 205, 179, 0.8)"
+                  background="linear-gradient(135deg, #60b99a, #4a9e82)"
+                  borderRadius="12px"
+                  className="w-full py-4 font-semibold"
+                >
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Agendar Diagnóstico Gratis
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </ShimmerButton>
+              </a>
+              <p className="text-xs text-muted-foreground text-center mt-3">
+                30 min · Gratuita · Sin compromiso
+              </p>
+            </div>
           </BlurFade>
         </div>
       </div>

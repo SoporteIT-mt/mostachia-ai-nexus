@@ -31,12 +31,12 @@ const AGENTS = [
   },
 ];
 
-// Variantes 3D Extremas
+// Variantes 3D Extremas — vuelan fuera del viewport
 const slideVariants = {
   enter: (direction: number) => ({
-    x: direction > 0 ? '120%' : '-120%',
-    scale: 0.65,
-    rotateY: direction > 0 ? 25 : -25,
+    x: direction > 0 ? '100vw' : '-100vw',
+    scale: 0.2,
+    rotateY: direction > 0 ? 45 : -45,
     opacity: 0,
     zIndex: 0,
   }),
@@ -48,9 +48,9 @@ const slideVariants = {
     zIndex: 10,
   },
   exit: (direction: number) => ({
-    x: direction < 0 ? '120%' : '-120%',
-    scale: 0.65,
-    rotateY: direction < 0 ? 25 : -25,
+    x: direction < 0 ? '100vw' : '-100vw',
+    scale: 0.2,
+    rotateY: direction < 0 ? 45 : -45,
     opacity: 0,
     zIndex: 0,
   }),
@@ -58,9 +58,9 @@ const slideVariants = {
 
 const springTransition = {
   type: 'spring' as const,
-  stiffness: 250,
-  damping: 30,
-  mass: 1,
+  stiffness: 150,
+  damping: 20,
+  mass: 0.8,
 };
 
 export const AgentVideoShowcase = () => {
@@ -78,7 +78,7 @@ export const AgentVideoShowcase = () => {
   const agent = AGENTS[current];
 
   return (
-    <section className="relative w-full py-20 lg:py-28 bg-background">
+    <section className="relative w-full py-20 lg:py-28 bg-background overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6">
 
         {/* Encabezado */}
@@ -144,7 +144,7 @@ export const AgentVideoShowcase = () => {
         </div>
 
         {/* Contenedor de Videos con perspectiva 3D */}
-        <div className="relative w-full max-w-6xl mx-auto aspect-video">
+        <div className="relative w-full max-w-6xl mx-auto aspect-video flex items-center justify-center">
           <AnimatePresence mode="popLayout" custom={direction}>
             <motion.div
               key={current}

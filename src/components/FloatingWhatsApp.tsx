@@ -74,8 +74,9 @@ export const FloatingWhatsApp = () => {
       const isMobile = window.innerWidth < 768;
       const pastHero = window.scrollY > 600;
       const beforeFooter = footerTop > window.innerHeight;
-      // Hide FAB on mobile when StickyCTA is visible
-      setHiddenBySticky(isMobile && pastHero && beforeFooter);
+      const scrolledDeep = window.scrollY > 2000;
+      // Hide FAB on mobile when StickyCTA is visible OR ScrollToTop is visible (scroll > 2000)
+      setHiddenBySticky(isMobile && (scrolledDeep || (pastHero && beforeFooter)));
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });

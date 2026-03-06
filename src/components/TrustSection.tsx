@@ -1,4 +1,4 @@
-import { MagicCard } from '@/components/ui/magic-card';
+
 import { BlurFade } from '@/components/ui/blur-fade';
 import { Spotlight } from '@/components/ui/spotlight';
 import { motion } from 'framer-motion';
@@ -59,15 +59,13 @@ export const TrustSection = () => {
                 whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300 } }}
                 className="group h-full"
               >
-                <MagicCard className="h-full">
-                  <div className="p-6 text-center">
+                <div className="glass-card p-8 text-center h-full group">
                     <div className="w-16 h-16 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
                       {d.emoji}
                     </div>
                     <h3 className="text-lg font-semibold font-display mb-2">{d.title}</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{d.description}</p>
-                  </div>
-                </MagicCard>
+                </div>
               </motion.div>
             </BlurFade>
           ))}

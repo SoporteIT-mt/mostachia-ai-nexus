@@ -82,7 +82,7 @@ export const ContactFormSection = () => {
         <div className="grid lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
           {/* Form — left 3 cols */}
           <BlurFade delay={0.1} className="lg:col-span-3">
-            <div className="p-6 md:p-8 rounded-2xl bg-white/[0.05] backdrop-blur-md border border-white/[0.1]">
+            <div className="glass-card p-6 md:p-8">
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                   <div className="grid sm:grid-cols-2 gap-4">
@@ -91,7 +91,7 @@ export const ContactFormSection = () => {
                       name="nombre"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Nombre *</FormLabel>
+                          <FormLabel className="text-white/90">Nombre *</FormLabel>
                           <FormControl>
                             <Input placeholder="Tu nombre" {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
                           </FormControl>
@@ -104,7 +104,7 @@ export const ContactFormSection = () => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email *</FormLabel>
+                          <FormLabel className="text-white/90">Email *</FormLabel>
                           <FormControl>
                             <Input placeholder="tu@email.com" type="email" {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
                           </FormControl>
@@ -119,7 +119,7 @@ export const ContactFormSection = () => {
                     name="whatsapp"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>WhatsApp</FormLabel>
+                        <FormLabel className="text-white/90">WhatsApp</FormLabel>
                         <FormControl>
                           <Input placeholder="+54 9 ..." {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
                         </FormControl>
@@ -134,7 +134,7 @@ export const ContactFormSection = () => {
                     name="mensaje"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Mensaje</FormLabel>
+                        <FormLabel className="text-white/90">Mensaje</FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="Contanos brevemente qué necesitás"
@@ -179,7 +179,7 @@ export const ContactFormSection = () => {
           {/* Info — right 2 cols */}
           <BlurFade delay={0.3} className="lg:col-span-2 space-y-6">
             {/* Contact info card */}
-            <div className="p-6 rounded-2xl bg-white/[0.05] backdrop-blur-md border border-white/[0.1] space-y-5">
+            <div className="glass-card p-6 space-y-5">
               <h3 className="font-display font-semibold text-lg">Contacto directo</h3>
 
               <a
@@ -212,7 +212,7 @@ export const ContactFormSection = () => {
             </div>
 
             {/* CTA card */}
-            <div className="p-6 rounded-2xl bg-white/[0.05] backdrop-blur-md border border-white/[0.1]">
+            <div className="glass-card p-6">
               <p className="font-display font-semibold mb-3">¿Preferís hablar directo?</p>
               <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
                 <ShimmerButton

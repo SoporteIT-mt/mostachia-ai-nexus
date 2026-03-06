@@ -49,6 +49,7 @@ export const FAQSection = () => {
   return (
     <section id="faq" className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Header with Spotlight */}
@@ -71,10 +72,10 @@ export const FAQSection = () => {
               <BlurFade key={i} delay={i * 0.06}>
                 <AccordionItem
                   value={`item-${i}`}
-                  className="bg-white/[0.05] backdrop-blur-md border border-white/[0.1] rounded-xl px-6 data-[state=open]:border-primary/30 transition-all duration-300"
+                  className="bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] transition-colors rounded-xl mb-4 px-6 data-[state=open]:border-primary/30"
                 >
                   <AccordionTrigger className="text-left py-5 hover:no-underline group">
-                    <span className="text-base font-semibold font-display pr-4 group-hover:text-primary transition-colors">
+                    <span className="text-base font-semibold font-display pr-4 text-foreground/90 group-hover:text-primary transition-colors">
                       {faq.question}
                     </span>
                   </AccordionTrigger>

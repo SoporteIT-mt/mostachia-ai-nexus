@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BlurFade } from '@/components/ui/blur-fade';
+import { DotPattern } from '@/components/ui/dot-pattern';
 
 const TEAM_DATA = [
   { name: 'Juan Cruz Bertorello', role: 'CEO & Co-founder', image: '/team/juan-cruz.jpg', bio: 'Liderando la visión de automatización inteligente para LATAM.', highlight: 'Estrategia & Ventas' },
@@ -16,8 +17,9 @@ const getInitials = (name: string) =>
   name.split(' ').map(w => w[0]).join('').slice(0, 2);
 
 const FallbackAvatar = ({ name, className = '' }: { name: string; className?: string }) => (
-  <div className={`bg-gradient-to-br from-[hsl(199,40%,18%)] to-[hsl(199,38%,24%)] flex items-center justify-center ${className}`}>
-    <span className="text-6xl font-display text-white/10 select-none">{getInitials(name)}</span>
+  <div className={`relative bg-gradient-to-br from-[hsl(199,30%,14%)] via-[hsl(199,35%,10%)] to-[hsl(199,40%,7%)] flex items-center justify-center overflow-hidden ${className}`}>
+    <DotPattern className="opacity-[0.03]" />
+    <span className="text-8xl font-display text-white/[0.08] select-none relative z-10">{getInitials(name)}</span>
   </div>
 );
 
@@ -112,9 +114,9 @@ export const TeamShowcase = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
-                initial={{ opacity: 0, scale: 1.05, filter: 'blur(12px)' }}
+                initial={{ opacity: 0, scale: 1.03, filter: 'blur(12px)' }}
                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, scale: 1.05, filter: 'blur(12px)' }}
+                exit={{ opacity: 0, scale: 1.03, filter: 'blur(12px)' }}
                 transition={{ duration: 0.4, ease: 'easeInOut' }}
                 className="absolute inset-0 w-full h-full"
               >
@@ -220,9 +222,9 @@ export const TeamShowcase = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
-                initial={{ opacity: 0, scale: 1.05, filter: 'blur(12px)' }}
+                initial={{ opacity: 0, scale: 1.03, filter: 'blur(12px)' }}
                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, scale: 1.05, filter: 'blur(12px)' }}
+                exit={{ opacity: 0, scale: 1.03, filter: 'blur(12px)' }}
                 transition={{ duration: 0.4, ease: 'easeInOut' }}
                 className="absolute inset-0 w-full h-full"
               >

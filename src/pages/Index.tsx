@@ -8,8 +8,10 @@ import { StickyCTA } from '@/components/StickyCTA';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ScrollToTop } from '@/components/ScrollToTop';
 
-const ServiciosSection = lazy(() => import('@/components/ServiciosSection'));
+const PainSection = lazy(() => import('@/components/PainSection'));
+const TrustSection = lazy(() => import('@/components/TrustSection').then(m => ({ default: m.TrustSection })));
 const AgentVideoShowcase = lazy(() => import('@/components/AgentVideoShowcase'));
+const ServiciosSection = lazy(() => import('@/components/ServiciosSection'));
 const HowItWorksSection = lazy(() => import('@/components/HowItWorksSection'));
 const IndustriasSection = lazy(() => import('@/components/IndustriasSection'));
 const IntegrationsSection = lazy(() => import('@/components/IntegrationsSection'));
@@ -28,10 +30,16 @@ const Index = () => {
         <HeroSection />
         <StatsSection />
         <Suspense fallback={<LazyFallback />}>
-          <ServiciosSection />
+          <PainSection />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <TrustSection />
         </Suspense>
         <Suspense fallback={<LazyFallback />}>
           <AgentVideoShowcase />
+        </Suspense>
+        <Suspense fallback={<LazyFallback />}>
+          <ServiciosSection />
         </Suspense>
         <Suspense fallback={<LazyFallback />}>
           <HowItWorksSection />

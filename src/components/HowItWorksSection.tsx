@@ -69,6 +69,7 @@ export const HowItWorksSection = () => {
 
   return (
     <section id="proceso" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
         <BlurFade className="text-center mb-16 md:mb-20">
@@ -115,7 +116,7 @@ export const HowItWorksSection = () => {
             {/* Center vertical line */}
             <div className="absolute left-1/2 -translate-x-px top-0 bottom-0 w-[2px] bg-white/[0.04]">
               <motion.div
-                className="w-full bg-gradient-to-b from-primary via-primary/80 to-accent/60"
+                className="w-full bg-gradient-to-b from-primary via-primary/80 to-accent/50"
                 style={{ height: `${Math.min(progress * 1.05, 100)}%` }}
               />
             </div>

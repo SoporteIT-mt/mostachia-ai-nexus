@@ -56,7 +56,6 @@ export const HeroSection = () => {
   return (
     <section
       className="relative w-full min-h-[90vh] flex flex-col items-center justify-center overflow-hidden"
-      style={{ backgroundColor: '#1f3d4b' }}
     >
       {/* Background: DotPattern */}
       <DotPattern width={24} height={24} cr={0.8} className="opacity-[0.07] text-white" />

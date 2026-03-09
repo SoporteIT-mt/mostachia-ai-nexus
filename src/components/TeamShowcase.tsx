@@ -86,7 +86,7 @@ export const TeamShowcase = () => {
   };
 
   return (
-    <section id="equipo" className="relative w-full py-20 lg:py-28 bg-background">
+    <section id="equipo" className="relative w-full py-20 lg:py-28">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center mb-12 lg:mb-16">

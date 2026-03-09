@@ -39,7 +39,7 @@ const AGENTS: FocusRailItem[] = [
 
 export const AgentVideoShowcase = () => {
   return (
-    <section id="agentes" className="relative w-full py-20 lg:py-28 bg-background overflow-hidden">
+    <section id="agentes" className="relative w-full py-20 lg:py-28 overflow-hidden">
       {/* Header */}
       <div className="container mx-auto px-4 sm:px-6 text-center mb-8 lg:mb-12">
         <BlurFade delay={0}>

@@ -1,64 +1,47 @@
-import { lazy, Suspense } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
 import { StatsSection } from '@/components/StatsSection';
+import { PainSection } from '@/components/PainSection';
+import { TrustSection } from '@/components/TrustSection';
+import { AgentVideoShowcase } from '@/components/AgentVideoShowcase';
+import { ServiciosSection } from '@/components/ServiciosSection';
+import { HowItWorksSection } from '@/components/HowItWorksSection';
+import { IndustriasSection } from '@/components/IndustriasSection';
+import { IntegrationsSection } from '@/components/IntegrationsSection';
+import { TeamShowcase } from '@/components/TeamShowcase';
+import { FAQSection } from '@/components/FAQSection';
+import { ContactFormSection } from '@/components/ContactFormSection';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { StickyCTA } from '@/components/StickyCTA';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ScrollToTop } from '@/components/ScrollToTop';
 
-const PainSection = lazy(() => import('@/components/PainSection'));
-const TrustSection = lazy(() => import('@/components/TrustSection').then(m => ({ default: m.TrustSection })));
-const AgentVideoShowcase = lazy(() => import('@/components/AgentVideoShowcase'));
-const ServiciosSection = lazy(() => import('@/components/ServiciosSection'));
-const HowItWorksSection = lazy(() => import('@/components/HowItWorksSection'));
-const IndustriasSection = lazy(() => import('@/components/IndustriasSection'));
-const IntegrationsSection = lazy(() => import('@/components/IntegrationsSection'));
-const TeamShowcase = lazy(() => import('@/components/TeamShowcase'));
-const FAQSection = lazy(() => import('@/components/FAQSection'));
-const ContactFormSection = lazy(() => import('@/components/ContactFormSection'));
-
-const LazyFallback = () => <div className="min-h-[400px]" />;
-
 const Index = () => {
   return (
     <div className="relative min-h-screen overflow-x-hidden scroll-smooth">
       <ScrollProgress />
       <Navbar />
+
+      {/* Global Canvas Background */}
+      <div className="fixed inset-0 -z-10 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1f3d4b] via-[hsl(var(--background))] to-[hsl(var(--background))]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-primary/[0.07] rounded-full blur-[150px]" />
+      </div>
+
       <main id="main" className="relative z-10">
         <HeroSection />
         <StatsSection />
-        <Suspense fallback={<LazyFallback />}>
-          <PainSection />
-        </Suspense>
-        <Suspense fallback={<LazyFallback />}>
-          <TrustSection />
-        </Suspense>
-        <Suspense fallback={<LazyFallback />}>
-          <AgentVideoShowcase />
-        </Suspense>
-        <Suspense fallback={<LazyFallback />}>
-          <ServiciosSection />
-        </Suspense>
-        <Suspense fallback={<LazyFallback />}>
-          <HowItWorksSection />
-        </Suspense>
-        <Suspense fallback={<LazyFallback />}>
-          <IndustriasSection />
-        </Suspense>
-        <Suspense fallback={<LazyFallback />}>
-          <IntegrationsSection />
-        </Suspense>
-        <Suspense fallback={<LazyFallback />}>
-          <TeamShowcase />
-        </Suspense>
-        <Suspense fallback={<LazyFallback />}>
-          <FAQSection />
-        </Suspense>
-        <Suspense fallback={<LazyFallback />}>
-          <ContactFormSection />
-        </Suspense>
+        <PainSection />
+        <TrustSection />
+        <AgentVideoShowcase />
+        <ServiciosSection />
+        <HowItWorksSection />
+        <IndustriasSection />
+        <IntegrationsSection />
+        <TeamShowcase />
+        <FAQSection />
+        <ContactFormSection />
       </main>
       <Footer />
       <FloatingWhatsApp />

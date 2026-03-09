@@ -50,7 +50,7 @@ export function FocusRail({
 }: FocusRailProps) {
   const [active, setActive] = React.useState(initialIndex);
   const [isHovering, setIsHovering] = React.useState(false);
-  const lastWheelTime = React.useRef(0);
+  
 
   const count = items.length;
   const activeIndex = wrap(0, count, active);

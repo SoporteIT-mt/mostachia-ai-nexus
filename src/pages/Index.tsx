@@ -8,7 +8,7 @@ import { ServiciosSection } from '@/components/ServiciosSection';
 import { HowItWorksSection } from '@/components/HowItWorksSection';
 import { IndustriasSection } from '@/components/IndustriasSection';
 import { IntegrationsSection } from '@/components/IntegrationsSection';
-import { TeamShowcase } from '@/components/TeamShowcase';
+import { TeamSection } from '@/components/TeamSection';
 import { FAQSection } from '@/components/FAQSection';
 import { ContactFormSection } from '@/components/ContactFormSection';
 import { Footer } from '@/components/Footer';
@@ -39,7 +39,7 @@ const Index = () => {
         <HowItWorksSection />
         <IndustriasSection />
         <IntegrationsSection />
-        <TeamShowcase />
+        <TeamSection />
         <FAQSection />
         <ContactFormSection />
       </main>

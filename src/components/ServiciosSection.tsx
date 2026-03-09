@@ -347,6 +347,7 @@ const MockupSupport = () => {
   ];
 
   useEffect(() => {
+    setVisibleMsgs(0);
     let i = 0;
     const show = () => {
       if (i < msgs.length) {
@@ -461,8 +462,8 @@ export const ServiciosSection = () => {
                   onClick={() => { setActive(idx); setIsHovered(true); }}
                   className={`w-full text-left p-4 md:p-5 rounded-2xl border transition-all duration-300 relative overflow-hidden group ${
                     isActive
-                      ? `bg-white/[0.04] ${agente.border} shadow-[0_0_30px_rgba(255,255,255,0.02)]`
-                      : 'bg-transparent border-transparent hover:bg-white/[0.02]'
+                      ? `bg-white/[0.06] ${agente.border} shadow-[0_0_30px_rgba(255,255,255,0.02)]`
+                      : 'bg-transparent border-transparent hover:bg-white/[0.03]'
                   }`}
                 >
                   {isActive && (
@@ -492,7 +493,7 @@ export const ServiciosSection = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-transparent" />
 
             <div className="relative z-10 h-full flex flex-col">
-              {/* Terminal Header */}
+              {/* Dot pattern background */}
               <div className="absolute inset-0 opacity-[0.015] pointer-events-none"
                 style={{
                   backgroundImage: 'radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)',
@@ -500,6 +501,7 @@ export const ServiciosSection = () => {
                 }}
               />
 
+              {/* macOS Header */}
               <div className="flex items-center gap-2 px-5 py-3 border-b border-white/[0.06] relative z-10">
                 <div className="flex items-center gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-red-400/50" />

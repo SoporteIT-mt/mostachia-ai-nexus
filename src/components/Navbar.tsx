@@ -27,7 +27,7 @@ export const Navbar = () => {
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[95%] max-w-5xl rounded-full border ${
         isScrolled
-          ? 'bg-navy-900/70 backdrop-blur-xl border-white/[0.08] py-3 shadow-[0_8px_32px_rgba(0,0,0,0.4)]'
+          ? 'bg-black/40 backdrop-blur-xl border-white/[0.08] py-3 shadow-[0_8px_32px_rgba(0,0,0,0.6)]'
           : 'bg-transparent border-transparent py-4'
       }`}
     >
@@ -43,7 +43,7 @@ export const Navbar = () => {
             <a
               key={link.href}
               href={link.href}
-              className="px-4 py-2 text-sm font-medium text-white/60 hover:text-white rounded-full hover:bg-white/[0.06] transition-all duration-300"
+              className="px-4 py-2 text-sm font-medium text-white/60 hover:text-primary rounded-full hover:bg-white/[0.06] transition-all duration-300"
             >
               {link.label}
             </a>
@@ -62,10 +62,10 @@ export const Navbar = () => {
           </Button>
           <Button
             size="sm"
-            className="rounded-full bg-gradient-to-r from-mint-400 to-mint-500 text-navy-900 font-semibold hover:shadow-[0_0_20px_rgba(115,215,203,0.4)]"
+            className="rounded-full bg-gradient-to-r from-primary to-primary text-primary-foreground font-semibold hover:shadow-[0_0_20px_rgba(96,185,154,0.4)]"
             onClick={() => window.open(CONFIG.CALCOM_URL, '_blank')}
           >
-            <Calendar className="w-4 h-4 mr-1.5" /> Agendar
+            <Calendar className="w-4 h-4 mr-1.5" /> Agendar Demo
           </Button>
         </div>
 
@@ -85,19 +85,24 @@ export const Navbar = () => {
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            className="absolute top-full left-0 right-0 mt-4 p-4 bg-navy-900/95 backdrop-blur-2xl border border-white/[0.08] rounded-3xl shadow-2xl flex flex-col gap-4 md:hidden"
+            className="absolute top-full left-0 right-0 mt-4 p-4 bg-black/60 backdrop-blur-2xl border border-white/[0.08] rounded-3xl shadow-2xl flex flex-col gap-4 md:hidden"
           >
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href} onClick={() => setIsMobileOpen(false)} className="text-lg font-medium text-white p-2 rounded-xl hover:bg-white/5">
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsMobileOpen(false)}
+                className="text-lg font-medium text-white p-2 rounded-xl hover:bg-white/5"
+              >
                 {link.label}
               </a>
             ))}
             <div className="border-t border-white/10 pt-4" />
             <Button
-              className="w-full rounded-full bg-gradient-to-r from-mint-400 to-mint-500 text-navy-900 font-semibold"
+              className="w-full rounded-full bg-gradient-to-r from-primary to-primary text-primary-foreground font-semibold"
               onClick={() => window.open(CONFIG.CALCOM_URL, '_blank')}
             >
-              Agendar Consultoría
+              Agendar Demo
             </Button>
           </motion.div>
         )}

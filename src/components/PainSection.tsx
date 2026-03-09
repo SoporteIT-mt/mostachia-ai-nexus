@@ -21,7 +21,7 @@ const pains = [
 
 export const PainSection = () => {
   return (
-    <section className="py-24 md:py-32 bg-background relative overflow-hidden">
+    <section className="py-16 md:py-24 lg:py-32 bg-background relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="container mx-auto px-6 relative z-10">
         <BlurFade className="text-center mb-14">
@@ -34,7 +34,7 @@ export const PainSection = () => {
           </h2>
         </BlurFade>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
           {pains.map((pain, i) => (
             <BlurFade key={pain.title} delay={i * 0.12}>
               <div className="glass-card p-8 flex flex-col items-center text-center group h-full">

@@ -109,28 +109,29 @@ export function FocusRail({
       onKeyDown={onKeyDown}
       
     >
-      {/* Background Ambience */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <AnimatePresence mode="sync">
+      {/* Background Ambience — crossfade between active images */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <AnimatePresence initial={false}>
           <motion.div
             key={`bg-${activeIndex}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1.0, ease: "easeInOut" }}
             className="absolute inset-0"
           >
             <img
               src={activeItem.imageSrc}
               alt=""
-              className="h-full w-full object-cover blur-[80px] saturate-200 opacity-30 scale-125"
+              className="h-full w-full object-cover blur-[80px] saturate-[1.8] opacity-40 scale-[1.3]"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = "none";
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 via-neutral-950/60 to-neutral-950/80" />
           </motion.div>
         </AnimatePresence>
+        {/* Overlay to tint but not kill the color */}
+        <div className="absolute inset-0 bg-neutral-950/50" />
       </div>
 
       {/* Main Stage */}
@@ -165,7 +166,7 @@ export function FocusRail({
 
             return (
               <motion.div
-                key={`card-${index}-${offset}`}
+                key={offset}
                 className={cn(
                   "absolute w-[280px] h-[380px] sm:w-[320px] sm:h-[420px] lg:w-[380px] lg:h-[500px] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/[0.08]",
                   isCenter

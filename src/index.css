@@ -105,25 +105,25 @@ html, body {
 
 @layer base {
   :root {
-    /* ===== MOSTACHIA 2026 — Premium Dark ===== */
+    /* ===== MOSTACHIA 2026 — Premium Deep Navy ===== */
     /* Principal: #1f3d4b | Accent: #60b99a | Secondary: #f6c667 | Neutral: #dadada */
-    --background: 199 42% 14%;
+    --background: 202 50% 6%;
     --foreground: 0 0% 86%;
 
-    --card: 199 40% 18%;
+    --card: 202 40% 10%;
     --card-foreground: 0 0% 86%;
 
-    --popover: 199 40% 18%;
+    --popover: 202 40% 10%;
     --popover-foreground: 0 0% 86%;
 
     --primary: 159 37% 55%;
-    --primary-foreground: 199 42% 14%;
+    --primary-foreground: 202 50% 6%;
     --primary-glow: 159 37% 55%;
 
     --secondary: 199 38% 24%;
     --secondary-foreground: 0 0% 86%;
 
-    --muted: 199 30% 28%;
+    --muted: 202 30% 15%;
     --muted-foreground: 0 0% 65%;
 
     --accent: 40 90% 68%;

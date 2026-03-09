@@ -576,27 +576,26 @@ export const ServiciosSection = () => {
         </motion.div>
 
         {/* Global CTA */}
-        <BlurFade delay={0.4} className="mt-14 max-w-6xl mx-auto">
-          <div className="relative flex flex-col sm:flex-row items-center justify-between gap-4 p-6 md:p-8 rounded-3xl bg-white/[0.03] backdrop-blur-md border border-white/[0.06]">
-            <BorderBeam size={150} duration={10} />
-            <p className="text-foreground font-display font-semibold text-lg text-center sm:text-left">
-              ¿No encontrás lo que buscás?{' '}
-              <span className="text-muted-foreground font-normal text-base">Hacemos desarrollos a medida.</span>
-            </p>
-            <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
-              <ShimmerButton
-                shimmerColor="rgba(127, 205, 179, 0.8)"
-                background="linear-gradient(135deg, #60b99a, #4a9e82)"
-                borderRadius="12px"
-                className="px-6 py-3 font-semibold whitespace-nowrap shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
-              >
-                <Sparkles className="w-4 h-4 mr-2" />
-                Diseñar mi Arquitectura IA
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </ShimmerButton>
-            </a>
-          </div>
-        </BlurFade>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6 }}
+          className="mt-16 md:mt-24 flex justify-center"
+        >
+          <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
+            <ShimmerButton
+              shimmerColor="rgba(127, 205, 179, 0.8)"
+              background="linear-gradient(135deg, #60b99a, #4a9e82)"
+              borderRadius="9999px"
+              className="px-8 py-4 text-base font-semibold shadow-glow hover:-translate-y-1 transition-transform duration-300"
+            >
+              <Calendar className="w-5 h-5 mr-2" />
+              Diseñar mi Arquitectura IA
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </ShimmerButton>
+          </a>
+        </motion.div>
       </div>
     </section>
   );

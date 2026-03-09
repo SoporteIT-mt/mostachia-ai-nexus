@@ -66,25 +66,6 @@ export function FocusRail({
     setActive((p) => p + 1);
   }, [loop, active, count]);
 
-  const onWheel = React.useCallback(
-    (e: React.WheelEvent) => {
-      const now = Date.now();
-      if (now - lastWheelTime.current < 400) return;
-
-      const isHorizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
-      const delta = isHorizontal ? e.deltaX : e.deltaY;
-
-      if (Math.abs(delta) > 20) {
-        if (delta > 0) {
-          handleNext();
-        } else {
-          handlePrev();
-        }
-        lastWheelTime.current = now;
-      }
-    },
-    [handleNext, handlePrev]
-  );
 
   React.useEffect(() => {
     if (!autoPlay || isHovering) return;

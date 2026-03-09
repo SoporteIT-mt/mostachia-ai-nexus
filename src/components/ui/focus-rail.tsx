@@ -166,7 +166,7 @@ export function FocusRail({
 
             return (
               <motion.div
-                key={`card-${index}-${offset}`}
+                key={offset}
                 className={cn(
                   "absolute w-[280px] h-[380px] sm:w-[320px] sm:h-[420px] lg:w-[380px] lg:h-[500px] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/[0.08]",
                   isCenter

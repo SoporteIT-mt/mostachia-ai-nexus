@@ -199,9 +199,13 @@ export function FocusRail({
                   opacity,
                   filter: `blur(${blur}px) brightness(${brightness})`,
                 }}
-                transition={(val: string) => {
-                  if (val === "scale") return TAP_SPRING;
-                  return BASE_SPRING;
+                transition={{
+                  x: BASE_SPRING,
+                  z: BASE_SPRING,
+                  rotateY: BASE_SPRING,
+                  opacity: BASE_SPRING,
+                  filter: BASE_SPRING,
+                  scale: TAP_SPRING,
                 }}
                 style={{
                   transformStyle: "preserve-3d",
@@ -249,11 +253,11 @@ export function FocusRail({
                 transition={{ duration: 0.3 }}
               >
                 {activeItem.meta && (
-                  <span className="inline-block rounded-full border border-mint-400/30 bg-mint-400/10 px-3 py-1 text-xs font-semibold tracking-wide text-mint-400 mb-2">
+                  <span className="inline-block rounded-full border border-white/20 bg-white/[0.06] px-3 py-1 text-xs font-semibold tracking-wide text-neutral-300 mb-2">
                     {activeItem.meta}
                   </span>
                 )}
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-display tracking-tight text-white">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-white">
                   {activeItem.title}
                 </h3>
                 {activeItem.description && (
@@ -270,7 +274,7 @@ export function FocusRail({
               <button
                 onClick={handlePrev}
                 className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-400 transition-colors hover:bg-white/10 hover:text-white"
-                aria-label="Anterior"
+                aria-label="Previous"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
@@ -280,7 +284,7 @@ export function FocusRail({
               <button
                 onClick={handleNext}
                 className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-400 transition-colors hover:bg-white/10 hover:text-white"
-                aria-label="Siguiente"
+                aria-label="Next"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
@@ -291,7 +295,7 @@ export function FocusRail({
                 href={activeItem.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-neutral-400 backdrop-blur-sm transition-all hover:border-mint-400/30 hover:bg-mint-400/10 hover:text-mint-400"
+                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-neutral-400 backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
               >
                 Explore
                 <ArrowUpRight className="h-4 w-4" />

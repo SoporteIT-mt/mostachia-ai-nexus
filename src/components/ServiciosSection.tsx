@@ -56,7 +56,6 @@ const DashboardPreview = () => {
   const barData = [40, 65, 45, 80, 55, 92, 70];
   const days = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
-  // Donut chart data
   const donutSegments = [
     { label: 'Online', value: 42, color: 'hsl(162 100% 39%)' },
     { label: 'WhatsApp', value: 28, color: 'hsl(43 92% 68%)' },
@@ -83,14 +82,12 @@ const DashboardPreview = () => {
     return `${formatted}${m.suffix}`;
   };
 
-  // Calculate donut paths
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   let cumulativeOffset = 0;
 
   return (
     <div className="space-y-3">
-      {/* KPI Cards - 2x2 grid */}
       <div className="grid grid-cols-2 gap-2">
         {metrics.map((m, i) => {
           const Icon = m.icon;
@@ -120,9 +117,7 @@ const DashboardPreview = () => {
         })}
       </div>
 
-      {/* Donut Chart + Bar Chart row */}
       <div className="grid grid-cols-2 gap-2">
-        {/* Donut Chart */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -167,7 +162,6 @@ const DashboardPreview = () => {
           </div>
         </motion.div>
 
-        {/* Bar chart */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -191,7 +185,6 @@ const DashboardPreview = () => {
         </motion.div>
       </div>
 
-      {/* Top Products Mini Table */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
@@ -251,7 +244,6 @@ const ChatPreview = () => {
 
   return (
     <div className="space-y-2.5">
-      {/* Chat header */}
       <div className="flex items-center gap-2 pb-2 border-b border-white/[0.06]">
         <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center">
           <Bot className="w-3.5 h-3.5 text-primary" />
@@ -265,7 +257,6 @@ const ChatPreview = () => {
         </div>
       </div>
 
-      {/* Messages */}
       <div className="space-y-2 min-h-[120px]">
         {messages.slice(0, visibleMsgs).map((m, i) => (
           <motion.div
@@ -294,7 +285,6 @@ const ChatPreview = () => {
         )}
       </div>
 
-      {/* Input bar */}
       <div className="flex items-center gap-2 p-2 rounded-xl bg-white/[0.03] border border-white/[0.06]">
         <span className="flex-1 text-[10px] text-muted-foreground/40 pl-2">Escribí tu consulta...</span>
         <div className="w-7 h-7 rounded-lg bg-primary/20 flex items-center justify-center">
@@ -327,7 +317,6 @@ const FlowPreview = () => {
 
   return (
     <div className="space-y-3">
-      {/* Flow nodes */}
       <div className="space-y-2">
         {nodes.map((node, i) => {
           const Icon = node.icon;
@@ -336,7 +325,6 @@ const FlowPreview = () => {
           return (
             <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }}>
               <div className="flex items-center gap-3">
-                {/* Connector line */}
                 <div className="flex flex-col items-center w-6">
                   <motion.div
                     className={`w-6 h-6 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
@@ -358,7 +346,6 @@ const FlowPreview = () => {
                   )}
                 </div>
 
-                {/* Node card */}
                 <motion.div
                   className={`flex-1 flex items-center justify-between px-3 py-2 rounded-lg border transition-all duration-300 ${
                     isCurrent ? 'bg-primary/10 border-primary/30' : 'bg-white/[0.03] border-white/[0.06]'
@@ -380,7 +367,6 @@ const FlowPreview = () => {
         })}
       </div>
 
-      {/* Stats */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -425,7 +411,6 @@ const MigrationPreview = () => {
 
   return (
     <div className="space-y-3">
-      {/* Source → Target */}
       <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08]">
         <div className="text-center">
           <div className="text-[10px] text-muted-foreground mb-0.5">Origen</div>
@@ -440,7 +425,6 @@ const MigrationPreview = () => {
         </div>
       </div>
 
-      {/* Progress bar */}
       <div>
         <div className="flex justify-between mb-1.5">
           <span className="text-[10px] text-muted-foreground">Progreso general</span>
@@ -460,7 +444,6 @@ const MigrationPreview = () => {
         </div>
       </div>
 
-      {/* Table list */}
       <div className="space-y-1">
         {tables.map((t, i) => (
           <motion.div
@@ -490,20 +473,23 @@ const MigrationPreview = () => {
   );
 };
 
-const previews: Record<string, React.FC> = {
-  dashboards: DashboardPreview,
-  agentes: ChatPreview,
-  automatizacion: FlowPreview,
-  migracion: MigrationPreview,
+// ── Variants ──
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } }
 };
 
 export const ServiciosSection = () => {
-  const [activeCard, setActiveCard] = useState(0);
-
   return (
-    <section id="servicios" className="py-28 md:py-32 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-
+    <section id="servicios" className="py-24 md:py-32 relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
         <BlurFade className="text-center mb-16">
@@ -515,131 +501,92 @@ export const ServiciosSection = () => {
           </p>
         </BlurFade>
 
-        {/* Split layout */}
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_1.1fr] gap-6 lg:gap-8">
-          {/* Left: service cards */}
-          <div className="space-y-3">
-            {servicios.map((s, i) => {
-              const Icon = s.icon;
-              const isActive = activeCard === i;
-              return (
-                <BlurFade key={s.id} delay={i * 0.08}>
-                  <motion.button
-                    onClick={() => setActiveCard(i)}
-                    className={`relative w-full text-left p-5 rounded-xl border transition-all duration-300 ${
-                      isActive
-                        ? 'bg-white/[0.07] border-primary/40 shadow-lg shadow-primary/5'
-                        : 'bg-white/[0.03] border-white/[0.08] hover:border-white/[0.15] hover:bg-white/[0.05]'
-                    }`}
-                    whileHover={{ x: isActive ? 0 : 4 }}
-                    transition={{ type: 'spring', stiffness: 400 }}
-                  >
-                    {s.badge && (
-                      <span className={`absolute -top-2.5 right-4 px-2.5 py-0.5 text-[10px] font-bold rounded-full border ${
-                        s.id === 'dashboards'
-                          ? 'bg-[rgba(247,198,103,0.15)] text-gold-400 border-[rgba(247,198,103,0.3)]'
-                          : 'bg-[rgba(115,215,203,0.1)] text-mint-400 border-[rgba(115,215,203,0.3)]'
-                      }`}>
-                        {s.badge}
-                      </span>
-                    )}
-                    <div className="flex items-start gap-4">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors ${
-                        isActive ? 'bg-primary/20 text-primary' : 'bg-white/[0.06] text-muted-foreground'
-                      }`}>
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className={`text-sm font-semibold font-display mb-1 transition-colors ${
-                          isActive ? 'text-foreground' : 'text-foreground/80'
-                        }`}>{s.title}</h3>
-                        <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">{s.description}</p>
-                        <div className="flex items-center gap-1.5 mt-2">
-                          <Cpu className="w-3 h-3 text-muted-foreground/50 flex-shrink-0" />
-                          <span className="text-[10px] font-mono text-muted-foreground/60 truncate">{s.tech.join(' · ')}</span>
-                        </div>
-                      </div>
-                      {isActive && (
-                        <motion.div
-                          layoutId="activeIndicator"
-                          className="w-1 h-8 rounded-full bg-primary self-center flex-shrink-0"
-                          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                        />
-                      )}
-                    </div>
-                  </motion.button>
-                </BlurFade>
-              );
-            })}
-          </div>
+        {/* The Aura Bento Grid */}
+        <motion.div
+          className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[minmax(280px,auto)]"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          {/* Card 1: Dashboards (Large, spans 2 cols, 2 rows) */}
+          <motion.div
+            variants={itemVariants}
+            className="relative md:col-span-2 md:row-span-2 rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-6 overflow-hidden group"
+          >
+            <BorderBeam size={200} duration={14} />
 
-          {/* Right: interactive preview panel */}
-          <BlurFade delay={0.2}>
-            <div className="relative rounded-2xl border border-white/[0.1] bg-white/[0.03] backdrop-blur-sm overflow-hidden h-full min-h-[400px] flex flex-col">
-              <BorderBeam size={150} duration={12} />
-
-              {/* Header bar */}
-              <div className="flex items-center justify-between px-5 py-3 border-b border-white/[0.08] bg-white/[0.02]">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-destructive/50" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-accent/50" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-primary/50" />
-                </div>
-                <span className="text-[10px] font-mono text-muted-foreground/60">
-                  preview — {servicios[activeCard].id}.mostachia.ai
-                </span>
-                <div className="flex items-center gap-1 text-[10px] text-primary/60">
-                  <Play className="w-3 h-3" />
-                  <span>Live</span>
-                </div>
+            <div className="relative z-10 mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 mb-3">
+                <span className="text-[10px] font-bold text-accent uppercase tracking-wider">⭐ Más Popular</span>
               </div>
+              <h3 className="text-xl font-bold font-display text-foreground mb-2">{servicios[0].title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-md">{servicios[0].description}</p>
+            </div>
 
-              {/* Content */}
-              <div className="flex-1 p-5 flex flex-col">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={servicios[activeCard].id}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -12 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex-1 flex flex-col"
-                  >
-                    <div className="mb-4">
-                      <h4 className="text-base font-display font-semibold text-foreground mb-0.5">
-                        {servicios[activeCard].title}
-                      </h4>
-                      <p className="text-[10px] text-muted-foreground">Vista previa interactiva</p>
-                    </div>
+            <div className="relative z-10">
+              <DashboardPreview />
+            </div>
+          </motion.div>
 
-                    <div className="flex-1">
-                      {(() => {
-                        const Preview = previews[servicios[activeCard].id];
-                        return Preview ? <Preview /> : null;
-                      })()}
-                    </div>
+          {/* Card 2: Agentes (Medium, spans 1 col, 1 row) */}
+          <motion.div
+            variants={itemVariants}
+            className="relative rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-5 overflow-hidden group"
+          >
+            <div className="relative z-10 mb-3">
+              <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3">
+                <Bot className="w-4.5 h-4.5 text-primary" />
+              </div>
+              <h3 className="text-base font-bold font-display text-foreground mb-1">{servicios[1].title}</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">{servicios[1].description}</p>
+            </div>
 
-                    <div className="mt-4 pt-3 border-t border-white/[0.06]">
-                      <a
-                        href={servicios[activeCard].cta.href}
-                        target={servicios[activeCard].cta.external ? '_blank' : undefined}
-                        rel={servicios[activeCard].cta.external ? 'noopener noreferrer' : undefined}
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:gap-3 transition-all"
-                      >
-                        {servicios[activeCard].cta.text}
-                        <ArrowRight className="w-4 h-4" />
-                      </a>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
+            <div className="relative z-10">
+              <ChatPreview />
+            </div>
+          </motion.div>
+
+          {/* Card 3: Automatización (Medium, spans 1 col, 1 row) */}
+          <motion.div
+            variants={itemVariants}
+            className="relative rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-5 overflow-hidden group"
+          >
+            <BorderBeam size={120} duration={16} colorFrom="hsl(40 90% 68%)" colorTo="hsl(162 100% 50%)" />
+            <div className="relative z-10 mb-3">
+              <div className="w-9 h-9 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-3">
+                <Zap className="w-4.5 h-4.5 text-accent" />
+              </div>
+              <h3 className="text-base font-bold font-display text-foreground mb-1">{servicios[2].title}</h3>
+              <div className="relative z-10 mt-2">
+                <FlowPreview />
               </div>
             </div>
-          </BlurFade>
-        </div>
+          </motion.div>
 
-        {/* CTA Banner */}
+          {/* Card 4: Migración / Leads (Medium, spans 1 col, 1 row) */}
+          <motion.div
+            variants={itemVariants}
+            className="relative md:col-span-2 lg:col-span-2 rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-5 overflow-hidden group"
+          >
+            <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-3">
+                  <span className="text-[10px] font-bold text-primary uppercase tracking-wider">🎮 Demo Interactiva</span>
+                </div>
+                <h3 className="text-base font-bold font-display text-foreground mb-1">{servicios[3].title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed mb-3">{servicios[3].description}</p>
+              </div>
+              <div className="relative z-10">
+                <MigrationPreview />
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Global CTA */}
         <BlurFade delay={0.4} className="mt-14 max-w-6xl mx-auto">
-          <div className="relative flex flex-col sm:flex-row items-center justify-between gap-4 p-6 md:p-8 rounded-2xl bg-white/[0.05] backdrop-blur-md border border-white/[0.1]">
+          <div className="relative flex flex-col sm:flex-row items-center justify-between gap-4 p-6 md:p-8 rounded-3xl bg-white/[0.03] backdrop-blur-md border border-white/[0.06]">
             <BorderBeam size={150} duration={10} />
             <p className="text-foreground font-display font-semibold text-lg text-center sm:text-left">
               ¿No encontrás lo que buscás?{' '}
@@ -652,8 +599,8 @@ export const ServiciosSection = () => {
                 borderRadius="12px"
                 className="px-6 py-3 font-semibold whitespace-nowrap shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
               >
-                <Calendar className="w-4 h-4 mr-2" />
-                Agendar Diagnóstico Gratis
+                <Sparkles className="w-4 h-4 mr-2" />
+                Diseñar mi Arquitectura IA
                 <ArrowRight className="w-4 h-4 ml-2" />
               </ShimmerButton>
             </a>

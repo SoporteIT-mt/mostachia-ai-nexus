@@ -1,4 +1,4 @@
-import { Calendar, ArrowRight, Linkedin } from 'lucide-react';
+import { Calendar, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { FocusRail, type FocusRailItem } from '@/components/ui/focus-rail';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
@@ -9,7 +9,8 @@ const TEAM_MEMBERS: FocusRailItem[] = [
   {
     id: 'juan-cruz',
     title: 'Juan Cruz Bertorello',
-    description: 'Liderando la visión de automatización inteligente para LATAM. Estrategia comercial, desarrollo de negocio y relación con clientes.',
+    description:
+      'Liderando la visión de automatización inteligente para LATAM. Estrategia comercial, desarrollo de negocio y relación con clientes.',
     meta: 'CEO & Co-founder',
     imageSrc: '/team/juan-cruz.jpg',
     href: 'https://www.linkedin.com/in/juancruzbertorello/',
@@ -17,7 +18,8 @@ const TEAM_MEMBERS: FocusRailItem[] = [
   {
     id: 'diego',
     title: 'Diego González',
-    description: 'Arquitecto de las soluciones técnicas y la plataforma de agentes. Infraestructura, bases de datos y automatización avanzada.',
+    description:
+      'Arquitecto de las soluciones técnicas y la plataforma de agentes. Infraestructura, bases de datos y automatización avanzada.',
     meta: 'CTO & Co-founder',
     imageSrc: '/team/diego.jpg',
     href: 'https://www.linkedin.com/in/diego-gonzalez/',
@@ -25,7 +27,8 @@ const TEAM_MEMBERS: FocusRailItem[] = [
   {
     id: 'florencia',
     title: 'Florencia Ferrer Cabrera',
-    description: 'Diseñando experiencias de usuario excepcionales y optimizando los procesos de entrega de cada proyecto.',
+    description:
+      'Diseñando experiencias de usuario excepcionales y optimizando los procesos de entrega de cada proyecto.',
     meta: 'Head of Ops & UX',
     imageSrc: '/team/florencia.jpg',
     href: 'https://www.linkedin.com/in/florencia-ferrer-cabrera/',
@@ -33,7 +36,8 @@ const TEAM_MEMBERS: FocusRailItem[] = [
   {
     id: 'juan-andres',
     title: 'Juan Andrés Huenz',
-    description: 'Construyendo los agentes de IA que potencian cada solución. Desarrollo, machine learning e integración de APIs.',
+    description:
+      'Construyendo los agentes de IA que potencian cada solución. Desarrollo, machine learning e integración de APIs.',
     meta: 'Lead AI Developer',
     imageSrc: '/team/juan-andres.jpg',
     href: 'https://www.linkedin.com/in/juan-andres-huenz/',
@@ -43,13 +47,13 @@ const TEAM_MEMBERS: FocusRailItem[] = [
 export const TeamSection = () => {
   return (
     <section id="quienes-somos" className="relative w-full py-20 lg:py-28 overflow-hidden">
-      {/* Subtle background */}
+      {/* Subtle radial glow behind section */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-background" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-mint-400/[0.04] rounded-full blur-[120px]" />
       </div>
 
+      {/* Section header */}
       <div className="container mx-auto px-4 sm:px-6">
-        {/* Section header */}
         <BlurFade delay={0.1} className="text-center mb-12">
           <span className="inline-flex items-center gap-2 rounded-full border border-mint-400/30 bg-mint-400/10 px-4 py-1.5 text-sm font-medium text-mint-400 mb-4">
             👥 El equipo detrás de MostachIA
@@ -63,10 +67,10 @@ export const TeamSection = () => {
         </BlurFade>
       </div>
 
-      {/* FocusRail — reutilizando el mismo componente que ya funciona */}
+      {/* FocusRail — the 3D card carousel */}
       <FocusRail items={TEAM_MEMBERS} autoPlay interval={5000} loop />
 
-      {/* CTA */}
+      {/* CTA button */}
       <div className="container mx-auto px-4 sm:px-6">
         <BlurFade delay={0.3} className="flex justify-center mt-12">
           <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }}>

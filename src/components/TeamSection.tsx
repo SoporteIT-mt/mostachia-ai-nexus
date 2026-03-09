@@ -20,7 +20,7 @@ const TEAM_MEMBERS: FocusRailItem[] = [
     description:
       "Es el puente entre lo que MostachIA puede hacer y lo que cada cliente realmente necesita. Escucha primero, propone después. Tiene la habilidad de traducir desafíos de negocio en soluciones concretas, y de generar confianza desde el primer café — o el primer mensaje de WhatsApp.",
     meta: "Business Lead",
-    imageSrc: "/team/diego.jpg",
+    imageSrc: "/team/diego.jpg.jpeg",
     href: "https://www.linkedin.com/in/diego-gonzalez/",
   },
   {

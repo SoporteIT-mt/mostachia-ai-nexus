@@ -1,45 +1,45 @@
-import { Calendar, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { FocusRail, type FocusRailItem } from '@/components/ui/focus-rail';
-import { ShimmerButton } from '@/components/ui/shimmer-button';
-import { CONFIG } from '@/config/constants';
+import { Calendar, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { FocusRail, type FocusRailItem } from "@/components/ui/focus-rail";
+import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { CONFIG } from "@/config/constants";
 
 const TEAM_MEMBERS: FocusRailItem[] = [
   {
-    id: 'juan-cruz',
-    title: 'Juan Cruz Bertorello',
+    id: "juan-cruz",
+    title: "Juan Cruz Bertorello",
     description:
-      'No espera que las herramientas existan — las construye. Como Chief AI Officer de MostachIA, diseña los sistemas de agentes que automatizan procesos, generan reportes y potencian negocios de industrias tan distintas como el cine, la gastronomía y el retail. Su motor es convertir problemas concretos en soluciones que funcionan solas.',
-    meta: 'Chief AI Officer',
-    imageSrc: '/team/juan-cruz.jpg',
-    href: 'https://www.linkedin.com/in/juancruzbertorello/',
+      "No espera que las herramientas existan — las construye. Como Chief AI Officer de MostachIA, diseña los sistemas de agentes que automatizan procesos, generan reportes y potencian negocios de industrias tan distintas como el cine, la gastronomía y el retail. Su motor es convertir problemas concretos en soluciones que funcionan solas.",
+    meta: "Chief AI Officer",
+    imageSrc: "/team/juan-cruz.jpg",
+    href: "https://www.linkedin.com/in/juancruzbertorello/",
   },
   {
-    id: 'diego',
-    title: 'Diego González',
+    id: "diego",
+    title: "Diego González",
     description:
-      'Es el puente entre lo que MostachIA puede hacer y lo que cada cliente realmente necesita. Escucha primero, propone después. Tiene la habilidad de traducir desafíos de negocio en soluciones concretas, y de generar confianza desde el primer café — o el primer mensaje de WhatsApp.',
-    meta: 'Business Lead',
-    imageSrc: '/team/diego.jpg',
-    href: 'https://www.linkedin.com/in/diego-gonzalez/',
+      "Es el puente entre lo que MostachIA puede hacer y lo que cada cliente realmente necesita. Escucha primero, propone después. Tiene la habilidad de traducir desafíos de negocio en soluciones concretas, y de generar confianza desde el primer café — o el primer mensaje de WhatsApp.",
+    meta: "Business Lead",
+    imageSrc: "/team/diego.jpg",
+    href: "https://www.linkedin.com/in/diego-gonzalez/",
   },
   {
-    id: 'florencia',
-    title: 'Florencia Ferrer Cabrera',
+    id: "florencia",
+    title: "Florencia Ferrer Cabrera",
     description:
-      'La que hace que MostachIA se vea, se sienta y se entienda. Detrás de cada pieza de comunicación hay una decisión estratégica suya. Combina criterio creativo con foco en resultados, y se asegura de que la marca diga exactamente lo que tiene que decir, en el momento y el lugar correctos.',
-    meta: 'Brand & Comms',
-    imageSrc: '/team/florencia.jpg',
-    href: 'https://www.linkedin.com/in/florencia-ferrer-cabrera/',
+      "La que hace que MostachIA se vea, se sienta y se entienda. Detrás de cada pieza de comunicación hay una decisión estratégica suya. Combina criterio creativo con foco en resultados, y se asegura de que la marca diga exactamente lo que tiene que decir, en el momento y el lugar correctos.",
+    meta: "Brand & Comms",
+    imageSrc: "/team/florencia.jpg",
+    href: "https://www.linkedin.com/in/florencia-ferrer-cabrera/",
   },
   {
-    id: 'juan-andres',
-    title: 'Juan Andrés Huenz',
+    id: "juan-andres",
+    title: "Juan Andrés Huenz",
     description:
-      'El que hace que todo funcione cuando nadie está mirando. Diseña y mantiene la infraestructura sobre la que corren los agentes, los flujos y las integraciones de cada cliente. Meticuloso, resolutivo y siempre un paso adelante de los problemas antes de que aparezcan.',
-    meta: 'Lead Infrastructure',
-    imageSrc: '/team/juan-andres.jpg',
-    href: 'https://www.linkedin.com/in/juan-andres-huenz/',
+      "El que hace que todo funcione cuando nadie está mirando. Diseña y mantiene la infraestructura sobre la que corren los agentes, los flujos y las integraciones de cada cliente. Meticuloso, resolutivo y siempre un paso adelante de los problemas antes de que aparezcan.",
+    meta: "Lead Infrastructure",
+    imageSrc: "/team/juan-andres.jpg",
+    href: "https://www.linkedin.com/in/juan-andres-huenz/",
   },
 ];
 
@@ -53,7 +53,7 @@ export const TeamSection = () => {
             👥 El equipo detrás de MostachIA
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-white">
-            Quiénes{' '}
+            Quiénes{" "}
             <span className="bg-gradient-to-r from-mint-400 to-emerald-300 bg-clip-text text-transparent">
               Somos
             </span>

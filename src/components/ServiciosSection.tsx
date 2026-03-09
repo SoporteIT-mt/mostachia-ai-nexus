@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowRight, Cpu, BarChart3, Bot, Zap, Database, Play, TrendingUp, Users, CheckCircle2, Clock, Send, Sparkles, Calendar } from 'lucide-react';
+import { ArrowRight, Cpu, BarChart3, Bot, Zap, Database, TrendingUp, Users, CheckCircle2, Clock, Send, Sparkles, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { BorderBeam } from '@/components/ui/border-beam';
@@ -14,7 +14,6 @@ const servicios = [
     title: 'Agente de Estadísticas y Dashboards',
     description: 'Hacé preguntas sobre tu negocio en lenguaje natural y recibí dashboards interactivos con gráficos, KPIs y tablas.',
     tech: ['MySQL', 'SQL Server', 'MongoDB', 'PostgreSQL'],
-    cta: { text: 'Ver Demo en Vivo', href: '#demos' },
   },
   {
     id: 'agentes',
@@ -22,7 +21,6 @@ const servicios = [
     title: 'Agente de Soporte y Ventas',
     description: 'Atención al cliente, analytics y soporte 24/7. El agente se conecta a tus datos reales y resuelve consultas.',
     tech: ['GPT-4', 'Claude', 'RAG', 'n8n'],
-    cta: { text: 'Agendar Demo', href: CONFIG.CALCOM_URL, external: true },
   },
   {
     id: 'automatizacion',
@@ -30,7 +28,6 @@ const servicios = [
     title: 'Agente de Marketing y Contenido',
     description: 'Generamos contenido, campañas y estrategias de marketing automatizadas con IA conectada a tus métricas.',
     tech: ['n8n', 'Make', 'APIs REST', 'Webhooks'],
-    cta: { text: 'Consultar', href: CONFIG.CALCOM_URL, external: true },
   },
   {
     id: 'migracion',
@@ -39,11 +36,10 @@ const servicios = [
     title: 'Generación y Seguimiento de Leads',
     description: 'Capturamos, calificamos y hacemos seguimiento automático de leads con IA. Integración directa con tu CRM.',
     tech: ['MySQL', 'SQL Server', 'MongoDB', 'Supabase'],
-    cta: { text: 'Probar Demo', href: '#demos' },
   },
 ];
 
-// ── Enhanced Dashboard Preview ──
+// ── Dashboard Preview ──
 const DashboardPreview = () => {
   const [animatedValues, setAnimatedValues] = useState([0, 0, 0, 0]);
   const metrics = [
@@ -52,17 +48,14 @@ const DashboardPreview = () => {
     { label: 'Tickets Resueltos', value: 94, prefix: '', suffix: '%', change: '+3.1%', icon: CheckCircle2, color: 'text-emerald-400' },
     { label: 'Leads Nuevos', value: 127, prefix: '', suffix: '', change: '+8.7%', icon: Sparkles, color: 'text-accent' },
   ];
-
   const barData = [40, 65, 45, 80, 55, 92, 70];
   const days = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
-
   const donutSegments = [
     { label: 'Online', value: 42, color: 'hsl(162 100% 39%)' },
     { label: 'WhatsApp', value: 28, color: 'hsl(43 92% 68%)' },
     { label: 'Presencial', value: 18, color: 'hsl(210 80% 60%)' },
     { label: 'Email', value: 12, color: 'hsl(220 20% 55%)' },
   ];
-
   const topProducts = [
     { rank: 1, name: 'Pack Premium', units: 127, revenue: '$4.2K' },
     { rank: 2, name: 'Servicio Plus', units: 94, revenue: '$3.1K' },
@@ -70,9 +63,7 @@ const DashboardPreview = () => {
   ];
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setAnimatedValues(metrics.map(m => m.value));
-    }, 200);
+    const timer = setTimeout(() => setAnimatedValues(metrics.map(m => m.value)), 200);
     return () => clearTimeout(timer);
   }, []);
 
@@ -209,7 +200,7 @@ const DashboardPreview = () => {
   );
 };
 
-// ── Enhanced Chat Preview ──
+// ── Chat Preview ──
 const ChatPreview = () => {
   const [visibleMsgs, setVisibleMsgs] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
@@ -217,7 +208,7 @@ const ChatPreview = () => {
     { role: 'user', text: '¿Cuántas ventas tuve ayer?' },
     { role: 'bot', text: 'Ayer registraste 47 ventas por $12,340. Un 15% más que el martes. 📈' },
     { role: 'user', text: '¿Cuál fue el producto más vendido?' },
-    { role: 'bot', text: 'El producto más vendido fue "Pack Premium" con 12 unidades. Representó el 34% de la facturación.' },
+    { role: 'bot', text: 'El producto más vendido fue "Pack Premium" con 12 unidades.' },
   ];
 
   useEffect(() => {
@@ -295,7 +286,7 @@ const ChatPreview = () => {
   );
 };
 
-// ── Enhanced Flow Preview ──
+// ── Flow Preview ──
 const FlowPreview = () => {
   const [activeNode, setActiveNode] = useState(-1);
   const nodes = [
@@ -388,7 +379,7 @@ const FlowPreview = () => {
   );
 };
 
-// ── Enhanced Migration Preview ──
+// ── Migration Preview ──
 const MigrationPreview = () => {
   const [progress, setProgress] = useState(0);
   const tables = [
@@ -396,7 +387,6 @@ const MigrationPreview = () => {
     { name: 'orders', rows: '84,201', status: 'done' },
     { name: 'products', rows: '3,847', status: 'done' },
     { name: 'analytics', rows: '241,003', status: 'migrating' },
-    { name: 'logs', rows: '1.2M', status: 'pending' },
   ];
 
   useEffect(() => {
@@ -473,13 +463,10 @@ const MigrationPreview = () => {
   );
 };
 
-// ── Variants ──
+// ── Variants & Main Component ──
 const containerVariants = {
   hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-  }
+  show: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } }
 };
 
 const itemVariants = {
@@ -493,11 +480,15 @@ export const ServiciosSection = () => {
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
         <BlurFade className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
-            Lo Que <span className="text-gradient-primary">Hacemos</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm mb-6">
+            <Cpu className="w-3.5 h-3.5 text-primary" />
+            <span className="text-xs font-semibold text-muted-foreground tracking-wider uppercase">Ecosistema de IA</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-4 text-foreground">
+            Tecnología que trabaja sola.
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Soluciones de IA que se conectan a tus datos reales y generan resultados medibles.
+            No vendemos software genérico. Construimos agentes autónomos integrados directamente en las venas de tu negocio.
           </p>
         </BlurFade>
 
@@ -515,6 +506,7 @@ export const ServiciosSection = () => {
             className="relative md:col-span-2 md:row-span-2 rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-6 overflow-hidden group"
           >
             <BorderBeam size={200} duration={14} />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.05] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
             <div className="relative z-10 mb-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 mb-3">
@@ -529,14 +521,14 @@ export const ServiciosSection = () => {
             </div>
           </motion.div>
 
-          {/* Card 2: Agentes (Medium, spans 1 col, 1 row) */}
+          {/* Card 2: Agentes (Medium, 1 col, 1 row) */}
           <motion.div
             variants={itemVariants}
-            className="relative rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-5 overflow-hidden group"
+            className="relative rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-5 overflow-hidden group lg:row-span-1"
           >
             <div className="relative z-10 mb-3">
               <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3">
-                <Bot className="w-4.5 h-4.5 text-primary" />
+                <Bot className="w-5 h-5 text-primary" />
               </div>
               <h3 className="text-base font-bold font-display text-foreground mb-1">{servicios[1].title}</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">{servicios[1].description}</p>
@@ -547,7 +539,7 @@ export const ServiciosSection = () => {
             </div>
           </motion.div>
 
-          {/* Card 3: Automatización (Medium, spans 1 col, 1 row) */}
+          {/* Card 3: Automatización (1 col, 1 row) */}
           <motion.div
             variants={itemVariants}
             className="relative rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-5 overflow-hidden group"
@@ -555,7 +547,7 @@ export const ServiciosSection = () => {
             <BorderBeam size={120} duration={16} colorFrom="hsl(40 90% 68%)" colorTo="hsl(162 100% 50%)" />
             <div className="relative z-10 mb-3">
               <div className="w-9 h-9 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-3">
-                <Zap className="w-4.5 h-4.5 text-accent" />
+                <Zap className="w-5 h-5 text-accent" />
               </div>
               <h3 className="text-base font-bold font-display text-foreground mb-1">{servicios[2].title}</h3>
               <div className="relative z-10 mt-2">
@@ -564,7 +556,7 @@ export const ServiciosSection = () => {
             </div>
           </motion.div>
 
-          {/* Card 4: Migración / Leads (Medium, spans 1 col, 1 row) */}
+          {/* Card 4: Leads / Migración (spans 2 cols) */}
           <motion.div
             variants={itemVariants}
             className="relative md:col-span-2 lg:col-span-2 rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-5 overflow-hidden group"
@@ -575,7 +567,7 @@ export const ServiciosSection = () => {
                   <span className="text-[10px] font-bold text-primary uppercase tracking-wider">🎮 Demo Interactiva</span>
                 </div>
                 <h3 className="text-base font-bold font-display text-foreground mb-1">{servicios[3].title}</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed mb-3">{servicios[3].description}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">{servicios[3].description}</p>
               </div>
               <div className="relative z-10">
                 <MigrationPreview />

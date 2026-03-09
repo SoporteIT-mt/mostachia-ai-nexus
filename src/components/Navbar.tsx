@@ -267,7 +267,16 @@ export const Navbar = () => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.08 }}
-                      onClick={() => setIsMobileOpen(false)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsMobileOpen(false);
+                        setTimeout(() => {
+                          const target = document.querySelector(link.href);
+                          if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          }
+                        }, 300);
+                      }}
                       className={`flex items-center gap-3 text-lg font-medium py-2 transition-colors ${
                         isActive ? 'text-primary' : 'hover:text-primary'
                       }`}

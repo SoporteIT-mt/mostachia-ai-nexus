@@ -34,7 +34,7 @@ export const PainSection = () => {
           </h2>
         </BlurFade>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
           {pains.map((pain, i) => (
             <BlurFade key={pain.title} delay={i * 0.12}>
               <div className="glass-card p-8 flex flex-col items-center text-center group h-full">

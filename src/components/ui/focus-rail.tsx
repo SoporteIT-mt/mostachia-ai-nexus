@@ -110,7 +110,7 @@ export function FocusRail({
       onKeyDown={onKeyDown}
     >
       {/* Background Ambience — ultra-soft blend, no visible edges */}
-      <div className="pointer-events-none absolute -inset-24 overflow-hidden">
+      <div className="pointer-events-none absolute -inset-40" style={{ overflow: 'visible' }}>
         <AnimatePresence initial={false}>
           <motion.div
             key={`bg-${activeIndex}`}
@@ -123,16 +123,16 @@ export function FocusRail({
             <img
               src={activeItem.imageSrc}
               alt=""
-              className="w-full h-full object-cover blur-[120px] saturate-[1.8] opacity-20 scale-[1.6]"
+              className="w-full h-full object-cover blur-[160px] saturate-[1.6] opacity-15 scale-[2]"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = "none";
               }}
             />
           </motion.div>
         </AnimatePresence>
-        {/* Multi-layer fade to page background — top, bottom, and sides */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, hsl(var(--background)) 0%, transparent 30%, transparent 70%, hsl(var(--background)) 100%)" }} />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, hsl(var(--background)) 0%, transparent 20%, transparent 80%, hsl(var(--background)) 100%)" }} />
+        {/* Multi-layer fade to page background — extra wide gradients for seamless blend */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, hsl(var(--background)) 0%, hsl(var(--background) / 0.7) 15%, transparent 35%, transparent 65%, hsl(var(--background) / 0.7) 85%, hsl(var(--background)) 100%)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, hsl(var(--background)) 0%, transparent 25%, transparent 75%, hsl(var(--background)) 100%)" }} />
       </div>
 
       {/* Main Stage */}

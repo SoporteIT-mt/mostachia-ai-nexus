@@ -1,318 +1,107 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { Menu, X, Calendar, Zap, Play, Settings, Factory, HelpCircle, MessageCircle, Mail } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, Calendar, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CONFIG } from '@/config/constants';
 
-interface NavLink {
-  href: string;
-  label: string;
-  icon: typeof Zap;
-}
-
-const navLinks: NavLink[] = [
-  { href: '#servicios', label: 'Servicios', icon: Zap },
-  { href: '#demos', label: 'Demos', icon: Play },
-  { href: '#proceso', label: 'Proceso', icon: Settings },
-  { href: '#contacto', label: 'Contacto', icon: Mail },
+const navLinks = [
+  { href: '#servicios', label: 'Ecosistema IA' },
+  { href: '#demos', label: 'En Acción' },
+  { href: '#proceso', label: 'Método' },
 ];
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
-  const navRef = useRef<HTMLElement>(null);
-
-  const { scrollY } = useScroll();
-
-  const headerBg = useTransform(
-    scrollY,
-    [0, 50, 100],
-    ['rgba(0,0,0,0)', 'rgba(15,30,39,0.7)', 'rgba(15,30,39,0.95)']
-  );
-
-  const headerBlur = useTransform(
-    scrollY,
-    [0, 50, 100],
-    ['blur(0px)', 'blur(12px)', 'blur(20px)']
-  );
-
-  const headerBorder = useTransform(
-    scrollY,
-    [0, 50, 100],
-    ['rgba(115,215,203,0)', 'rgba(115,215,203,0.05)', 'rgba(115,215,203,0.1)']
-  );
-
-  const headerShadow = useTransform(
-    scrollY,
-    [0, 100, 200],
-    ['0 0 0 0 rgba(0,0,0,0)', '0 4px 20px -5px rgba(0,0,0,0.3)', '0 8px 30px -5px rgba(0,0,0,0.5)']
-  );
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 20);
-      setScrollProgress(Math.min(scrollTop / 200, 1));
-
-      const sections = navLinks.map(link => link.href.replace('#', ''));
-      for (const section of [...sections].reverse()) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleWhatsApp = () => {
-    window.open(CONFIG.WHATSAPP_URL, '_blank', 'noopener,noreferrer');
-  };
-
-  const handleBooking = () => {
-    window.open(CONFIG.CALCOM_URL, '_blank', 'noopener,noreferrer');
-  };
-
   return (
-    <>
-      {/* Skip to content */}
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded"
-      >
-        Ir al contenido
-      </a>
+    <motion.nav
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[95%] max-w-5xl rounded-full border ${
+        isScrolled
+          ? 'bg-navy-900/70 backdrop-blur-xl border-white/[0.08] py-3 shadow-[0_8px_32px_rgba(0,0,0,0.4)]'
+          : 'bg-transparent border-transparent py-4'
+      }`}
+    >
+      <div className="flex items-center justify-between px-6">
+        {/* Logo */}
+        <a href="#" className="flex items-center">
+          <img src="/logo-horizontal-oscuro.png" alt="MostachIA" className="h-8 w-auto" />
+        </a>
 
-      <motion.nav
-        ref={navRef}
-        role="navigation"
-        aria-label="Navegación principal"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          backgroundColor: headerBg,
-          backdropFilter: headerBlur,
-          WebkitBackdropFilter: headerBlur,
-          borderBottomColor: headerBorder,
-          boxShadow: headerShadow,
-        }}
-        className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-500 ${
-          isScrolled ? 'py-3' : 'py-4 md:py-5'
-        }`}
-      >
-        {/* Progress bar */}
-        <motion.div
-          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-primary via-primary to-accent"
-          style={{
-            width: `${scrollProgress * 100}%`,
-            opacity: scrollProgress > 0.1 ? 1 : 0,
-          }}
-          transition={{ duration: 0.1 }}
-        />
-
-        <div className="container mx-auto px-6 flex items-center justify-between">
-          {/* Logo */}
-          <motion.a
-            href="#"
-            className="flex items-center gap-2 group"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <img src="/logo-horizontal-oscuro.png" alt="MostachIA" width={148} height={36} className="h-9 w-auto" />
-          </motion.a>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
-            {navLinks.map((link, i) => {
-              const isActive = activeSection === link.href.replace('#', '');
-              const IconComponent = link.icon;
-
-                  return (
-                    <motion.a
-                      key={link.href}
-                      href={link.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const target = document.querySelector(link.href);
-                        if (target) {
-                          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                      }}
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 + i * 0.05 }}
-                      whileHover={{ y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`relative flex items-center text-sm font-medium transition-colors ${
-                        isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-                      }`}
-                    >
-                  <motion.div
-                    className="w-4 h-4 mr-1.5"
-                    animate={isActive ? { scale: 1.2, rotate: 360 } : { scale: 1, rotate: 0 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                  >
-                    <IconComponent
-                      className={`w-4 h-4 transition-colors duration-300 ${
-                        isActive ? 'text-primary' : 'text-muted-foreground'
-                      }`}
-                    />
-                  </motion.div>
-                  <span className="relative z-10">{link.label}</span>
-
-                  <AnimatePresence>
-                    {isActive && (
-                        <motion.span
-                        className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-mint-400 to-mint-500"
-                        initial={{ scaleX: 0, opacity: 0 }}
-                        animate={{ scaleX: 1, opacity: 1 }}
-                        exit={{ scaleX: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                      />
-                    )}
-                  </AnimatePresence>
-                </motion.a>
-              );
-            })}
-          </div>
-
-          {/* CTA Buttons & Theme Toggle */}
-          <div className="hidden md:flex items-center gap-3">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.92 }}>
-              <Button
-                variant="outline"
-                className="font-medium border-[#25D366]/40 text-[#25D366] hover:bg-[#25D366]/10 hover:text-[#25D366]"
-                onClick={handleWhatsApp}
-              >
-                <MessageCircle className="w-4 h-4 mr-2" />
-                WhatsApp
-              </Button>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.92 }}>
-              <Button
-                className="rounded-xl px-6 font-semibold text-navy-900 bg-gradient-to-r from-mint-400 to-mint-500 hover:shadow-[0_0_25px_rgba(115,215,203,0.4)] hover:-translate-y-0.5 transition-all border-0"
-                onClick={handleBooking}
-              >
-                <Calendar className="w-4 h-4 mr-2" />
-                Agendar Consultoría
-              </Button>
-            </motion.div>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <motion.button
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors"
-            aria-label="Toggle menu"
-            whileTap={{ scale: 0.9 }}
-          >
-            <AnimatePresence mode="wait">
-              {isMobileOpen ? (
-                <motion.div
-                  key="close"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <X className="w-6 h-6" />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="menu"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Menu className="w-6 h-6" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.button>
+        {/* Desktop Links */}
+        <div className="hidden md:flex items-center gap-1">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="px-4 py-2 text-sm font-medium text-white/60 hover:text-white rounded-full hover:bg-white/[0.06] transition-all duration-300"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
 
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMobileOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="md:hidden overflow-hidden border-t border-border/30"
-              style={{
-                backgroundColor: 'rgba(15,30,39,0.98)',
-                backdropFilter: 'blur(20px)',
-              }}
-            >
-              <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
-                {navLinks.map((link, i) => {
-                  const IconComponent = link.icon;
-                  const isActive = activeSection === link.href.replace('#', '');
+        {/* Desktop CTAs */}
+        <div className="hidden md:flex items-center gap-3">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-[#25D366] hover:bg-[#25D366]/10 rounded-full"
+            onClick={() => window.open(CONFIG.WHATSAPP_URL, '_blank')}
+          >
+            <MessageCircle className="w-4 h-4 mr-1.5" /> WhatsApp
+          </Button>
+          <Button
+            size="sm"
+            className="rounded-full bg-gradient-to-r from-mint-400 to-mint-500 text-navy-900 font-semibold hover:shadow-[0_0_20px_rgba(115,215,203,0.4)]"
+            onClick={() => window.open(CONFIG.CALCOM_URL, '_blank')}
+          >
+            <Calendar className="w-4 h-4 mr-1.5" /> Agendar
+          </Button>
+        </div>
 
-                  return (
-                    <motion.a
-                      key={link.href}
-                      href={link.href}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.08 }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setIsMobileOpen(false);
-                        setTimeout(() => {
-                          const target = document.querySelector(link.href);
-                          if (target) {
-                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                          }
-                        }, 300);
-                      }}
-                      className={`flex items-center gap-3 text-lg font-medium py-2 transition-colors ${
-                        isActive ? 'text-primary' : 'hover:text-primary'
-                      }`}
-                    >
-                      <IconComponent className="w-5 h-5" />
-                      {link.label}
-                    </motion.a>
-                  );
-                })}
-                <motion.div
-                  className="flex flex-col gap-3 mt-4 pt-4 border-t border-border/30"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <Button
-                    variant="outline"
-                    className="w-full border-[#25D366]/40 text-[#25D366] hover:bg-[#25D366]/10"
-                    onClick={handleWhatsApp}
-                  >
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    WhatsApp
-                  </Button>
-                   <Button
-                    className="w-full rounded-xl font-semibold text-navy-900 bg-gradient-to-r from-mint-400 to-mint-500 border-0"
-                    onClick={handleBooking}
-                  >
-                    <Calendar className="w-4 h-4 mr-2" />
-                    Agendar Consultoría
-                  </Button>
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
-    </>
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMobileOpen(!isMobileOpen)}
+          className="md:hidden relative z-10 text-white p-2"
+        >
+          {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {/* Mobile Menu Dropdown */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            className="absolute top-full left-0 right-0 mt-4 p-4 bg-navy-900/95 backdrop-blur-2xl border border-white/[0.08] rounded-3xl shadow-2xl flex flex-col gap-4 md:hidden"
+          >
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href} onClick={() => setIsMobileOpen(false)} className="text-lg font-medium text-white p-2 rounded-xl hover:bg-white/5">
+                {link.label}
+              </a>
+            ))}
+            <div className="border-t border-white/10 pt-4" />
+            <Button
+              className="w-full rounded-full bg-gradient-to-r from-mint-400 to-mint-500 text-navy-900 font-semibold"
+              onClick={() => window.open(CONFIG.CALCOM_URL, '_blank')}
+            >
+              Agendar Consultoría
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 };

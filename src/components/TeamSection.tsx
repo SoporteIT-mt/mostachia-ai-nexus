@@ -2,7 +2,6 @@ import { Calendar, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { FocusRail, type FocusRailItem } from '@/components/ui/focus-rail';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
-import { BlurFade } from '@/components/ui/blur-fade';
 import { CONFIG } from '@/config/constants';
 
 const TEAM_MEMBERS: FocusRailItem[] = [
@@ -10,8 +9,8 @@ const TEAM_MEMBERS: FocusRailItem[] = [
     id: 'juan-cruz',
     title: 'Juan Cruz Bertorello',
     description:
-      'Liderando la visión de automatización inteligente para LATAM. Estrategia comercial, desarrollo de negocio y relación con clientes.',
-    meta: 'CEO & Co-founder',
+      'No espera que las herramientas existan — las construye. Como Chief AI Officer de MostachIA, diseña los sistemas de agentes que automatizan procesos, generan reportes y potencian negocios de industrias tan distintas como el cine, la gastronomía y el retail. Su motor es convertir problemas concretos en soluciones que funcionan solas.',
+    meta: 'Chief AI Officer',
     imageSrc: '/team/juan-cruz.jpg',
     href: 'https://www.linkedin.com/in/juancruzbertorello/',
   },
@@ -19,8 +18,8 @@ const TEAM_MEMBERS: FocusRailItem[] = [
     id: 'diego',
     title: 'Diego González',
     description:
-      'Arquitecto de las soluciones técnicas y la plataforma de agentes. Infraestructura, bases de datos y automatización avanzada.',
-    meta: 'CTO & Co-founder',
+      'Es el puente entre lo que MostachIA puede hacer y lo que cada cliente realmente necesita. Escucha primero, propone después. Tiene la habilidad de traducir desafíos de negocio en soluciones concretas, y de generar confianza desde el primer café — o el primer mensaje de WhatsApp.',
+    meta: 'Business Lead',
     imageSrc: '/team/diego.jpg',
     href: 'https://www.linkedin.com/in/diego-gonzalez/',
   },
@@ -28,8 +27,8 @@ const TEAM_MEMBERS: FocusRailItem[] = [
     id: 'florencia',
     title: 'Florencia Ferrer Cabrera',
     description:
-      'Diseñando experiencias de usuario excepcionales y optimizando los procesos de entrega de cada proyecto.',
-    meta: 'Head of Ops & UX',
+      'La que hace que MostachIA se vea, se sienta y se entienda. Detrás de cada pieza de comunicación hay una decisión estratégica suya. Combina criterio creativo con foco en resultados, y se asegura de que la marca diga exactamente lo que tiene que decir, en el momento y el lugar correctos.',
+    meta: 'Brand & Comms',
     imageSrc: '/team/florencia.jpg',
     href: 'https://www.linkedin.com/in/florencia-ferrer-cabrera/',
   },
@@ -37,8 +36,8 @@ const TEAM_MEMBERS: FocusRailItem[] = [
     id: 'juan-andres',
     title: 'Juan Andrés Huenz',
     description:
-      'Construyendo los agentes de IA que potencian cada solución. Desarrollo, machine learning e integración de APIs.',
-    meta: 'Lead AI Developer',
+      'El que hace que todo funcione cuando nadie está mirando. Diseña y mantiene la infraestructura sobre la que corren los agentes, los flujos y las integraciones de cada cliente. Meticuloso, resolutivo y siempre un paso adelante de los problemas antes de que aparezcan.',
+    meta: 'Lead Infrastructure',
     imageSrc: '/team/juan-andres.jpg',
     href: 'https://www.linkedin.com/in/juan-andres-huenz/',
   },
@@ -46,33 +45,31 @@ const TEAM_MEMBERS: FocusRailItem[] = [
 
 export const TeamSection = () => {
   return (
-    <section id="quienes-somos" className="relative w-full py-20 lg:py-28 overflow-hidden">
-      {/* Subtle radial glow behind section */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-mint-400/[0.04] rounded-full blur-[120px]" />
-      </div>
-
-      {/* Section header */}
-      <div className="container mx-auto px-4 sm:px-6">
-        <BlurFade delay={0.1} className="text-center mb-12">
+    <section id="quienes-somos" className="relative w-full overflow-hidden">
+      {/* Header — sits ON TOP of the FocusRail */}
+      <div className="relative z-10 bg-neutral-950 pt-20 lg:pt-28 pb-0">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-mint-400/30 bg-mint-400/10 px-4 py-1.5 text-sm font-medium text-mint-400 mb-4">
             👥 El equipo detrás de MostachIA
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-foreground">
-            Quiénes Somos
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-white">
+            Quiénes{' '}
+            <span className="bg-gradient-to-r from-mint-400 to-emerald-300 bg-clip-text text-transparent">
+              Somos
+            </span>
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground font-light leading-relaxed">
+          <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-neutral-400 font-light leading-relaxed">
             Un equipo argentino combinando tecnología de punta con visión de negocio.
           </p>
-        </BlurFade>
+        </div>
       </div>
 
-      {/* FocusRail — the 3D card carousel */}
+      {/* FocusRail — FULL immersive section */}
       <FocusRail items={TEAM_MEMBERS} autoPlay interval={5000} loop />
 
-      {/* CTA button */}
-      <div className="container mx-auto px-4 sm:px-6">
-        <BlurFade delay={0.3} className="flex justify-center mt-12">
+      {/* CTA — sits below the rail */}
+      <div className="relative z-10 bg-neutral-950 pb-20 lg:pb-28 pt-0">
+        <div className="flex justify-center">
           <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }}>
             <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
               <ShimmerButton
@@ -87,7 +84,7 @@ export const TeamSection = () => {
               </ShimmerButton>
             </a>
           </motion.div>
-        </BlurFade>
+        </div>
       </div>
     </section>
   );

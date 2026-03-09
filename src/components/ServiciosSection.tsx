@@ -32,10 +32,9 @@ const servicios = [
   {
     id: 'migracion',
     icon: Database,
-    badge: '🎮 Demo Interactiva',
-    title: 'Generación y Seguimiento de Leads',
-    description: 'Capturamos, calificamos y hacemos seguimiento automático de leads con IA. Integración directa con tu CRM.',
-    tech: ['MySQL', 'SQL Server', 'MongoDB', 'Supabase'],
+    title: 'Integraciones y Middleware IA',
+    description: 'Conectamos tus sistemas (CRM, ERP, Base de Datos) con agentes de IA para un flujo de datos autónomo.',
+    tech: ['n8n', 'REST APIs', 'Supabase', 'Migration'],
   },
 ];
 

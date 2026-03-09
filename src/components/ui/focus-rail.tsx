@@ -109,8 +109,8 @@ export function FocusRail({
       tabIndex={0}
       onKeyDown={onKeyDown}
     >
-      {/* Background Ambience — crossfade between active member images */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl">
+      {/* Background Ambience — crossfade, no hard edges */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <AnimatePresence initial={false}>
           <motion.div
             key={`bg-${activeIndex}`}
@@ -123,15 +123,22 @@ export function FocusRail({
             <img
               src={activeItem.imageSrc}
               alt=""
-              className="h-full w-full object-cover blur-[100px] saturate-[2] opacity-30 scale-[1.4]"
+              className="h-full w-full object-cover blur-[100px] saturate-[2] opacity-25 scale-[1.5]"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = "none";
               }}
             />
           </motion.div>
         </AnimatePresence>
-        {/* Soft overlay so the ambience doesn't overpower */}
-        <div className="absolute inset-0 bg-[hsl(var(--background))]/60" />
+        {/* Feathered edges so ambience blends into page background */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, hsl(var(--background)) 100%)
+            `,
+          }}
+        />
       </div>
 
       {/* Main Stage */}

@@ -109,8 +109,8 @@ export function FocusRail({
       tabIndex={0}
       onKeyDown={onKeyDown}
     >
-      {/* Background Ambience — crossfade, no hard edges */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* Background Ambience — ultra-soft blend, no visible edges */}
+      <div className="pointer-events-none absolute -inset-24 overflow-hidden">
         <AnimatePresence initial={false}>
           <motion.div
             key={`bg-${activeIndex}`}
@@ -118,27 +118,21 @@ export function FocusRail({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.2, ease: "easeInOut" }}
-            className="absolute inset-0"
+            className="absolute inset-0 flex items-center justify-center"
           >
             <img
               src={activeItem.imageSrc}
               alt=""
-              className="h-full w-full object-cover blur-[100px] saturate-[2] opacity-25 scale-[1.5]"
+              className="w-full h-full object-cover blur-[120px] saturate-[1.8] opacity-20 scale-[1.6]"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = "none";
               }}
             />
           </motion.div>
         </AnimatePresence>
-        {/* Feathered edges so ambience blends into page background */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `
-              radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, hsl(var(--background)) 100%)
-            `,
-          }}
-        />
+        {/* Multi-layer fade to page background — top, bottom, and sides */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, hsl(var(--background)) 0%, transparent 30%, transparent 70%, hsl(var(--background)) 100%)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, hsl(var(--background)) 0%, transparent 20%, transparent 80%, hsl(var(--background)) 100%)" }} />
       </div>
 
       {/* Main Stage */}

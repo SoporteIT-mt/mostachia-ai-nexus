@@ -136,19 +136,26 @@ export const Navbar = () => {
               const isActive = activeSection === link.href.replace('#', '');
               const IconComponent = link.icon;
 
-              return (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.05 }}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`relative flex items-center text-sm font-medium transition-colors ${
-                    isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >
+                  return (
+                    <motion.a
+                      key={link.href}
+                      href={link.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const target = document.querySelector(link.href);
+                        if (target) {
+                          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 + i * 0.05 }}
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`relative flex items-center text-sm font-medium transition-colors ${
+                        isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                      }`}
+                    >
                   <motion.div
                     className="w-4 h-4 mr-1.5"
                     animate={isActive ? { scale: 1.2, rotate: 360 } : { scale: 1, rotate: 0 }}

@@ -29,22 +29,24 @@ function wrap(min: number, max: number, v: number) {
 const BASE_SPRING = { type: "spring" as const, stiffness: 300, damping: 30, mass: 1 };
 const TAP_SPRING = { type: "spring" as const, stiffness: 450, damping: 18, mass: 1 };
 
-/* ─── Image with graceful fallback ─── */
+/* ─── Image with graceful fallback to initials ─── */
 const ImageWithFallback = ({
   src,
   alt,
   fallbackText,
+  className: extraClass,
 }: {
   src: string;
   alt: string;
   fallbackText: string;
+  className?: string;
 }) => {
   const [hasError, setHasError] = React.useState(false);
   const [loaded, setLoaded] = React.useState(false);
 
   if (hasError || !src) {
     return (
-      <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-[hsl(199,30%,14%)] via-[hsl(199,35%,10%)] to-[hsl(199,40%,7%)] relative overflow-hidden">
+      <div className={cn("flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-[hsl(199,30%,14%)] via-[hsl(199,35%,10%)] to-[hsl(199,40%,7%)] relative overflow-hidden", extraClass)}>
         <div className="absolute inset-0 opacity-[0.04]">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -63,7 +65,7 @@ const ImageWithFallback = ({
   }
 
   return (
-    <div className="relative h-full w-full">
+    <div className={cn("relative h-full w-full", extraClass)}>
       {!loaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[hsl(199,30%,14%)] to-[hsl(199,40%,7%)]">
           <span className="text-6xl font-bold font-display text-white/[0.12]">{fallbackText}</span>
@@ -80,7 +82,7 @@ const ImageWithFallback = ({
   );
 };
 
-/* ─── Main FocusRail Component ─── */
+/* ─── Main FocusRail ─── */
 export function FocusRail({
   items,
   initialIndex = 0,
@@ -107,6 +109,7 @@ export function FocusRail({
     setActive((p) => p + 1);
   }, [loop, active, count]);
 
+  /* Wheel with debounce */
   const onWheel = React.useCallback(
     (e: React.WheelEvent) => {
       const now = Date.now();
@@ -122,17 +125,20 @@ export function FocusRail({
     [handleNext, handlePrev]
   );
 
+  /* Autoplay */
   React.useEffect(() => {
     if (!autoPlay || isHovering) return;
     const timer = setInterval(() => handleNext(), interval);
     return () => clearInterval(timer);
   }, [autoPlay, isHovering, handleNext, interval]);
 
+  /* Keyboard */
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowLeft") handlePrev();
     if (e.key === "ArrowRight") handleNext();
   };
 
+  /* Swipe / Drag */
   const swipeConfidenceThreshold = 10000;
   const swipePower = (offset: number, velocity: number) =>
     Math.abs(offset) * velocity;
@@ -150,14 +156,14 @@ export function FocusRail({
 
   return (
     <div
-      className={cn("relative w-full select-none outline-none", className)}
+      className={cn("relative w-full min-h-screen select-none outline-none bg-neutral-950", className)}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       tabIndex={0}
       onKeyDown={onKeyDown}
       onWheel={onWheel}
     >
-      {/* ── Background Ambience ── */}
+      {/* ════════ BACKGROUND AMBIENCE ════════ */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <AnimatePresence mode="sync">
           <motion.div
@@ -171,21 +177,21 @@ export function FocusRail({
             <img
               src={activeItem.imageSrc}
               alt=""
-              className="h-full w-full object-cover blur-[80px] saturate-150 opacity-20 scale-125"
+              className="h-full w-full object-cover blur-[80px] saturate-200 opacity-30 scale-125"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/90" />
-            <div className="absolute inset-0 bg-background/50" />
+            <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 via-neutral-950/60 to-neutral-950/80" />
           </motion.div>
         </AnimatePresence>
-        {/* Extra gradient overlay to ensure readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
       </div>
 
-      {/* ── Main Stage ── */}
-      <div className="relative mx-auto w-full max-w-7xl h-[620px] overflow-hidden">
-        {/* DRAGGABLE RAIL — cards only, NO text inside */}
+      {/* ════════ MAIN STAGE ════════ */}
+      <div className="relative mx-auto w-full max-w-7xl h-screen flex flex-col justify-center overflow-hidden px-4 sm:px-8">
+        {/* ── DRAGGABLE 3D RAIL ── */}
         <motion.div
-          className="absolute inset-0 flex items-center justify-center"
+          className="relative flex items-center justify-center h-[500px] sm:h-[560px] lg:h-[620px]"
           style={{ perspective: "1200px" }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
@@ -202,15 +208,16 @@ export function FocusRail({
             const isCenter = offset === 0;
             const dist = Math.abs(offset);
 
-            const xOffset = offset * 280;
+            /* 3D transforms */
+            const xOffset = offset * 320;
             const zOffset = -dist * 180;
-            const scale = isCenter ? 1 : 0.82;
-            const rotateY = offset * -18;
-            const opacity = isCenter ? 1 : Math.max(0.15, 1 - dist * 0.45);
-            const blur = isCenter ? 0 : dist * 5;
+            const scale = isCenter ? 1 : 0.85;
+            const rotateY = offset * -20;
+            const opacity = isCenter ? 1 : Math.max(0.1, 1 - dist * 0.5);
+            const blur = isCenter ? 0 : dist * 6;
             const brightness = isCenter ? 1 : 0.5;
 
-            const fallbackInitials = item.title
+            const initials = item.title
               .split(" ")
               .map((w) => w[0])
               .join("")
@@ -220,7 +227,7 @@ export function FocusRail({
               <motion.div
                 key={`card-${index}-${offset}`}
                 className={cn(
-                  "absolute w-[300px] h-[400px] sm:w-[340px] sm:h-[440px] lg:w-[380px] lg:h-[500px] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/[0.08]",
+                  "absolute w-[280px] h-[380px] sm:w-[320px] sm:h-[420px] lg:w-[380px] lg:h-[500px] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/[0.08]",
                   isCenter
                     ? "z-20 cursor-grab active:cursor-grabbing"
                     : "z-10 cursor-pointer"
@@ -242,10 +249,10 @@ export function FocusRail({
                   if (offset !== 0) setActive((p) => p + offset);
                 }}
               >
-                {/* Image or fallback — NO text overlay */}
-                <ImageWithFallback src={item.imageSrc} alt={item.title} fallbackText={fallbackInitials} />
+                {/* Card content: ONLY the image, no text overlay */}
+                <ImageWithFallback src={item.imageSrc} alt={item.title} fallbackText={initials} />
 
-                {/* Lighting layers */}
+                {/* Lighting layers for 3D depth effect */}
                 <div
                   className="pointer-events-none absolute inset-0"
                   style={{
@@ -254,89 +261,79 @@ export function FocusRail({
                       : "linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%)",
                   }}
                 />
-
                 <div
                   className="pointer-events-none absolute inset-0"
                   style={{
                     background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)",
                   }}
                 />
-
-                {/* Subtle glow ring on center card */}
-                {isCenter && (
-                  <div className="pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl ring-1 ring-inset ring-white/[0.12]" />
-                )}
               </motion.div>
             );
           })}
         </motion.div>
 
-        {/* ── Info Panel + Controls (BELOW the rail, SEPARATE) ── */}
-        <div className="absolute bottom-0 inset-x-0 z-30 px-4 sm:px-8 pb-6">
-          <div className="mx-auto max-w-4xl flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
-            {/* Left: Active member info */}
-            <div className="flex-1 min-w-0">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`info-${activeIndex}`}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {activeItem.meta && (
-                    <span className="inline-block rounded-full border border-mint-400/30 bg-mint-400/10 px-3 py-1 text-xs font-semibold tracking-wide text-mint-400 mb-2">
-                      {activeItem.meta}
-                    </span>
-                  )}
-                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-display tracking-tight text-foreground">
-                    {activeItem.title}
-                  </h3>
-                  {activeItem.description && (
-                    <p className="mt-1.5 max-w-md text-sm text-muted-foreground font-light leading-relaxed line-clamp-2">
-                      {activeItem.description}
-                    </p>
-                  )}
-                </motion.div>
-              </AnimatePresence>
+        {/* ── INFO PANEL + CONTROLS (below the rail) ── */}
+        <div className="relative z-30 mt-8 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 max-w-4xl mx-auto w-full">
+          {/* Left side: member info */}
+          <div className="flex-1 min-w-0">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`info-${activeIndex}`}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3 }}
+              >
+                {activeItem.meta && (
+                  <span className="inline-block rounded-full border border-mint-400/30 bg-mint-400/10 px-3 py-1 text-xs font-semibold tracking-wide text-mint-400 mb-2">
+                    {activeItem.meta}
+                  </span>
+                )}
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-display tracking-tight text-white">
+                  {activeItem.title}
+                </h3>
+                {activeItem.description && (
+                  <p className="mt-1.5 max-w-md text-sm text-neutral-400 font-light leading-relaxed line-clamp-2">
+                    {activeItem.description}
+                  </p>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Right side: navigation + LinkedIn */}
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-sm p-1">
+              <button
+                onClick={handlePrev}
+                className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-400 transition-colors hover:bg-white/10 hover:text-white"
+                aria-label="Anterior"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <span className="min-w-[2.5rem] text-center font-mono text-xs text-neutral-500">
+                {activeIndex + 1} / {count}
+              </span>
+              <button
+                onClick={handleNext}
+                className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-400 transition-colors hover:bg-white/10 hover:text-white"
+                aria-label="Siguiente"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
             </div>
 
-            {/* Right: Navigation + LinkedIn */}
-            <div className="flex items-center gap-3 shrink-0">
-              {/* Prev/Next pill */}
-              <div className="flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-sm p-1">
-                <button
-                  onClick={handlePrev}
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
-                  aria-label="Anterior"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
-                <span className="min-w-[2.5rem] text-center font-mono text-xs text-muted-foreground">
-                  {activeIndex + 1}/{count}
-                </span>
-                <button
-                  onClick={handleNext}
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/10 hover:text-foreground"
-                  aria-label="Siguiente"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              </div>
-
-              {/* LinkedIn button */}
-              {activeItem.href && (
-                <a
-                  href={activeItem.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-muted-foreground backdrop-blur-sm transition-all hover:border-mint-400/30 hover:bg-mint-400/10 hover:text-mint-400"
-                >
-                  <Linkedin className="h-4 w-4" />
-                  LinkedIn
-                </a>
-              )}
-            </div>
+            {activeItem.href && (
+              <a
+                href={activeItem.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-neutral-400 backdrop-blur-sm transition-all hover:border-mint-400/30 hover:bg-mint-400/10 hover:text-mint-400"
+              >
+                <Linkedin className="h-4 w-4" />
+                LinkedIn
+              </a>
+            )}
           </div>
         </div>
       </div>

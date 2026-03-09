@@ -8,84 +8,88 @@ const fadeUpVariants = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 1,
-      delay: 0.2 + i * 0.15,
-      ease: [0.25, 0.4, 0.25, 1],
-    },
+    transition: { duration: 1, delay: 0.2 + i * 0.15, ease: [0.25, 0.4, 0.25, 1] }
   }),
 };
 
 export const HeroSection = () => {
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-background">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(96,185,154,0.08)_0%,_transparent_60%)]" />
+    <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4 md:px-8 overflow-hidden">
+      {/* Background accents */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
+      </div>
 
-      <div className="relative z-10 container mx-auto px-6 text-center pt-32 pb-24">
-        {/* Badge */}
+      <div className="max-w-4xl mx-auto text-center space-y-8">
+        {/* Etiqueta superior */}
         <motion.div
           custom={0}
-          variants={fadeUpVariants}
           initial="hidden"
           animate="visible"
+          variants={fadeUpVariants}
+          className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-mint-400/20 bg-mint-400/5 px-5 py-2 mb-10">
-            <Sparkles className="w-4 h-4 text-mint-400" />
-            <span className="text-sm font-medium text-mint-400/90">
-              Automatización Inteligente para Empresas
-            </span>
-          </div>
+          <Sparkles className="w-4 h-4 text-primary" />
+          <span className="text-sm font-medium text-white/70">
+            Automatización Inteligente para Empresas
+          </span>
         </motion.div>
 
-        {/* H1 */}
-        <motion.div
+        {/* Título Masivo */}
+        <motion.h1
           custom={1}
-          variants={fadeUpVariants}
           initial="hidden"
           animate="visible"
-        >
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold font-display tracking-tight leading-[1.1] mb-8">
-            <span className="text-white">Tu equipo digital</span>
-            <br />
-            <span className="text-gradient-primary">
-              que nunca duerme.
-            </span>
-          </h1>
-        </motion.div>
-
-        {/* Subtitle */}
-        <motion.div
-          custom={2}
           variants={fadeUpVariants}
-          initial="hidden"
-          animate="visible"
+          className="text-6xl md:text-8xl font-bold leading-tight tracking-tight"
         >
-          <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground font-light leading-relaxed mb-12">
-            Conectamos Agentes de IA a tu base de datos para responder a tus clientes, analizar tus métricas y operar tu negocio en piloto automático.
-          </p>
-        </motion.div>
+          <span className="block text-white">Tu equipo digital</span>
+          <motion.span
+            className="block bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent"
+            custom={2}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUpVariants}
+          >
+            que nunca duerme.
+          </motion.span>
+        </motion.h1>
 
-        {/* CTA */}
-        <motion.div
+        {/* Subtítulo */}
+        <motion.p
           custom={3}
-          variants={fadeUpVariants}
           initial="hidden"
           animate="visible"
+          variants={fadeUpVariants}
+          className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed"
         >
-          <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
-            <ShimmerButton
-              shimmerColor="rgba(127, 205, 179, 0.8)"
-              background="linear-gradient(135deg, #60b99a, #4a9e82)"
-              borderRadius="9999px"
-              className="px-8 py-4 text-base font-semibold shadow-glow hover:-translate-y-1 transition-transform duration-300"
-            >
-              <Calendar className="w-5 h-5 mr-2" />
-              Agendar Diagnóstico Gratis
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </ShimmerButton>
-          </a>
+          Conectamos Agentes de IA a tu base de datos para responder a tus clientes, analizar tus métricas y operar tu negocio en piloto automático.
+        </motion.p>
+
+        {/* CTA Principal Único */}
+        <motion.div
+          custom={4}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUpVariants}
+          className="pt-8 flex justify-center"
+        >
+          <ShimmerButton
+            shimmerColor="rgba(96, 185, 154, 0.8)"
+            background="linear-gradient(135deg, hsl(159 37% 55%), hsl(159 37% 45%))"
+            borderRadius="9999px"
+            className="px-8 py-4 text-base font-semibold shadow-glow hover:-translate-y-1 transition-transform duration-300"
+            onClick={() => window.open(CONFIG.CALCOM_URL, '_blank')}
+          >
+            <Calendar className="w-5 h-5 mr-2" />
+            Agendar Diagnóstico Gratis
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </ShimmerButton>
         </motion.div>
       </div>
     </section>
   );
 };
+
+export default HeroSection;

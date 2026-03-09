@@ -1,7 +1,7 @@
 // focus-rail.tsx
 import * as React from "react";
 import { motion, type PanInfo } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Linkedin } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export type FocusRailItem = {
@@ -31,6 +31,51 @@ function wrap(min: number, max: number, v: number) {
 
 const BASE_SPRING = { type: "spring" as const, stiffness: 300, damping: 30, mass: 1 };
 const TAP_SPRING = { type: "spring" as const, stiffness: 450, damping: 18, mass: 1 };
+
+/* ── Image with fallback initials ── */
+const ImageWithFallback = ({ src, alt, fallbackText }: { src: string; alt: string; fallbackText: string }) => {
+  const [hasError, setHasError] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(false);
+
+  if (hasError || !src) {
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-[hsl(199,30%,14%)] via-[hsl(199,35%,10%)] to-[hsl(199,40%,7%)] relative overflow-hidden">
+        {/* Subtle dot pattern */}
+        <div className="absolute inset-0 opacity-[0.04]">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id={`fb-dots-${fallbackText}`} width="12" height="12" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r="0.5" fill="currentColor" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill={`url(#fb-dots-${fallbackText})`} className="text-white" />
+          </svg>
+        </div>
+        {/* Initials */}
+        <span className="relative z-10 text-6xl sm:text-7xl lg:text-8xl font-bold font-display text-white/[0.12] select-none">
+          {fallbackText}
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {!loaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[hsl(199,30%,14%)] to-[hsl(199,40%,7%)]">
+          <span className="text-6xl font-bold font-display text-white/[0.12]">{fallbackText}</span>
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        className={cn("h-full w-full object-cover transition-opacity duration-500", loaded ? "opacity-100" : "opacity-0")}
+        onError={() => setHasError(true)}
+        onLoad={() => setLoaded(true)}
+      />
+    </>
+  );
+};
 
 export function FocusRail({
   items,
@@ -172,6 +217,12 @@ export function FocusRail({
             const blur = isCenter ? 0 : dist * 5;
             const brightness = isCenter ? 1 : 0.45;
 
+            const fallbackInitials = item.title
+              .split(' ')
+              .map((w) => w[0])
+              .join('')
+              .slice(0, 2);
+
             return (
               <motion.div
                 key={`card-${index}-${offset}`}
@@ -200,7 +251,7 @@ export function FocusRail({
                   if (offset !== 0) setActive((p) => p + offset);
                 }}
               >
-                {/* Content: Video > Image > Placeholder */}
+                {/* Content: Video > Image with Fallback > Placeholder */}
                 {item.videoSrc ? (
                   <video
                     src={item.videoSrc}
@@ -211,10 +262,10 @@ export function FocusRail({
                     playsInline
                   />
                 ) : item.imageSrc ? (
-                  <img
+                  <ImageWithFallback
                     src={item.imageSrc}
                     alt={item.title}
-                    className="h-full w-full object-cover"
+                    fallbackText={fallbackInitials}
                   />
                 ) : (
                   /* Clean placeholder for future video */
@@ -270,6 +321,17 @@ export function FocusRail({
                 <p className="mx-auto mt-2 max-w-lg text-sm text-muted-foreground sm:text-base font-light">
                   {activeItem.description}
                 </p>
+              )}
+              {activeItem.href && (
+                <a
+                  href={activeItem.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-muted-foreground transition-all hover:border-mint-400/30 hover:bg-mint-400/10 hover:text-mint-400"
+                >
+                  <Linkedin className="h-4 w-4" />
+                  LinkedIn
+                </a>
               )}
             </motion.div>
           </div>

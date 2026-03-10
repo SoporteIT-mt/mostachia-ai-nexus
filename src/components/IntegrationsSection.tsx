@@ -209,10 +209,12 @@ export const IntegrationsSection = () => {
           </div>
 
           {/* Inner ring — 6 core integrations */}
-          <OrbitRing items={INNER_RING} radius={150} duration={45} iconSize={44} />
+          <OrbitRing items={INNER_RING} radius={100} duration={45} iconSize={36} className="md:hidden" />
+          <OrbitRing items={INNER_RING} radius={150} duration={45} iconSize={44} className="hidden md:block" />
 
           {/* Outer ring — 12 additional integrations */}
-          <OrbitRing items={OUTER_RING} radius={240} duration={65} reverse iconSize={40} />
+          <OrbitRing items={OUTER_RING} radius={160} duration={65} reverse iconSize={32} className="md:hidden" />
+          <OrbitRing items={OUTER_RING} radius={240} duration={65} reverse iconSize={40} className="hidden md:block" />
         </div>
       </motion.div>
 

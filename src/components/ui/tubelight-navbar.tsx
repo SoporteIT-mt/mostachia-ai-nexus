@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -18,6 +18,7 @@ interface NavBarProps {
 export function NavBar({ items, className, logo }: NavBarProps) {
   const [activeTab, setActiveTab] = useState(items[0].name);
   const [isMobile, setIsMobile] = useState(false);
+  const manualOverride = useRef(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -28,13 +29,44 @@ export function NavBar({ items, className, logo }: NavBarProps) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleClick = (item: NavItem) => {
+  // IntersectionObserver — auto-detect visible section
+  useEffect(() => {
+    const hashItems = items.filter((item) => item.url.startsWith("#"));
+    const sections = hashItems
+      .map((item) => document.getElementById(item.url.slice(1)))
+      .filter(Boolean) as HTMLElement[];
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (manualOverride.current) return;
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const match = hashItems.find(
+              (item) => item.url === `#${entry.target.id}`
+            );
+            if (match) setActiveTab(match.name);
+          }
+        }
+      },
+      { threshold: 0.3, rootMargin: "-20% 0px -60% 0px" }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, [items]);
+
+  const handleClick = useCallback((item: NavItem) => {
     setActiveTab(item.name);
+    manualOverride.current = true;
+    setTimeout(() => { manualOverride.current = false; }, 1200);
+
     const element = document.querySelector(item.url);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
-  };
+  }, []);
 
   return (
     <div
@@ -45,7 +77,6 @@ export function NavBar({ items, className, logo }: NavBarProps) {
       )}
     >
       <div className="flex items-center gap-1 bg-background/5 border border-border/40 backdrop-blur-xl py-1.5 px-2 rounded-full shadow-lg">
-        {/* Logo — only on desktop */}
         {logo && (
           <a
             href="#"
@@ -66,9 +97,7 @@ export function NavBar({ items, className, logo }: NavBarProps) {
               href={item.url}
               {...(item.url.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               onClick={(e) => {
-                if (item.url.startsWith("http")) {
-                  return;
-                }
+                if (item.url.startsWith("http")) return;
                 e.preventDefault();
                 handleClick(item);
               }}

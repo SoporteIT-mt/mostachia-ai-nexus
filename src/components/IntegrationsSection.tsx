@@ -35,7 +35,7 @@ const OUTER_RING: Integration[] = [
 function OrbitIcon({ integration, size = 44 }: { integration: Integration; size?: number }) {
   return (
     <div
-      className="rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center
+      className="rounded-xl bg-white/[0.08] border border-white/[0.08] flex items-center justify-center
                   transition-all duration-300 group-hover:scale-125 group-hover:border-emerald-400/40
                   group-hover:shadow-[0_0_20px_rgba(52,211,153,0.25)] group-hover:bg-white/[0.1]"
       style={{ width: size, height: size }}
@@ -46,10 +46,10 @@ function OrbitIcon({ integration, size = 44 }: { integration: Integration; size?
         </svg>
       ) : (
         <span
-          className="font-bold leading-none"
+          className="font-bold leading-none opacity-90"
           style={{
             color: integration.color,
-            fontSize: integration.letter && integration.letter.length > 2 ? 9 : integration.letter && integration.letter.length > 1 ? 11 : 16,
+            fontSize: integration.letter && integration.letter.length > 2 ? 11 : integration.letter && integration.letter.length > 1 ? 13 : 16,
           }}
         >
           {integration.letter || integration.name[0]}
@@ -149,7 +149,7 @@ export const IntegrationsSection = () => {
           className="text-center mb-20"
         >
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 text-sm font-medium text-primary">
-            ⚡ Integraciones Reales
+            Integraciones Reales
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
             Se Integra con{" "}

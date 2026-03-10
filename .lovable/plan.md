@@ -1,84 +1,94 @@
+# Hero Profesional + Stats Section + CTA Polish
 
+## Problemas identificados
 
-## Plan: IntersectionObserver for Navbar + Full Emoji Cleanup
-
-This plan has two parts: (1) auto-detecting visible sections in the navbar, and (2) replacing all emojis with Lucide icons across the site.
-
----
-
-### Part 1: IntersectionObserver in Tubelight Navbar
-
-**File: `src/components/ui/tubelight-navbar.tsx`**
-
-Add an `IntersectionObserver` that watches all section IDs referenced by nav items and updates `activeTab` based on which section is most visible.
-
-- Filter items to only those with hash URLs (`#servicios`, `#agentes`, etc.) — skip external links like WhatsApp
-- Use `threshold: 0.3` and `rootMargin: "-20% 0px -60% 0px"` to favor sections near the top of the viewport
-- On intersection, update `activeTab` to the matching nav item's name
-- Allow manual clicks to temporarily override (set a flag that clears after 1 second of scrolling)
-- Clean up observer on unmount
-
-**Nav items map to these section IDs:**
-- "Ecosistema IA" → `#servicios`
-- "En Acción" → `#agentes`
-- "Método" → `#proceso`
-- "Equipo" → `#quienes-somos`
+1. **H1 en 3 lineas** - "Tu Negocio con IA," / "Otro Nivel de" / "Resultados." deberia ser 2 lineas
+2. **Beams apenas visibles** - la opacidad y el vignette overlay los tapan demasiado
+3. **Espacio vacio excesivo** debajo de los CTAs y micro-proof
+4. **Falta la seccion de estadisticas** (KPIs) que se removio del Hero
 
 ---
 
-### Part 2: Emoji Cleanup — Replace All Emojis with Lucide Icons
+## 1. Hero H1 en 2 lineas (HeroSection.tsx)
 
-**File: `src/components/TrustSection.tsx`**
-- Import `ShieldCheck, Zap, MapPin, Puzzle, Check` from lucide-react
-- Change `diferenciadores` data: replace `emoji` string field with a `icon` React component reference:
-  - `🔒` → `ShieldCheck`
-  - `⚡` → `Zap`
-  - `🇦🇷` → `MapPin`
-  - `🔧` → `Puzzle`
-- Render each icon in a `h-12 w-12 rounded-xl bg-primary/10 text-primary` container with `h-6 w-6` icon
-- Change `garantias` array: remove emoji prefixes (`✅`, `🧉`), store plain text
-- Render each garantia chip with `<Check className="h-3.5 w-3.5 text-emerald-400" />` prefix instead of emoji
+Reestructurar el titulo para que quede en exactamente 2 lineas:
 
-**File: `src/components/IndustriasSection.tsx`**
-- Import `Film, UtensilsCrossed, HeartPulse, Scale, ShoppingCart, GraduationCap` from lucide-react
-- Change `industrias` data: replace `emoji` string with `icon` component reference:
-  - `🎬` → `Film`
-  - `🍽️` → `UtensilsCrossed`
-  - `💊` → `HeartPulse`
-  - `📊` → `Scale`
-  - `🛒` → `ShoppingCart`
-  - `🎓` → `GraduationCap`
-- Render each in `h-12 w-12 rounded-xl bg-primary/10 text-primary` container
+- **Linea 1:** "Tu Negocio con IA, Otro Nivel de"
+- **Linea 2:** "Resultados."
 
-**File: `src/components/AgentVideoShowcase.tsx`**
-- Remove `emoji` field from `Agent` interface and data
-- Line 178: Remove `🤖` from badge text → just `"Nuestros Agentes en Acción"`
-- Line 314: Replace `{agent.emoji}` with the agent's existing `icon` field (already has Lucide icons)
+Cambiar la estructura de 2 `<span className="block">` a:
 
-**File: `src/components/TeamSection.tsx`**
-- Line 52: Remove `👥` from badge → just `"El equipo detrás de MostachIA"`
+- Linea 1: todo junto en un solo bloque con `AnimatedWords("Tu Negocio con")` +  `IA,` (mint) + `AnimatedWords(" Otro Nivel de")` 
+- Linea 2: "Resultados." en gradient, centrado y mas grande visualmente
 
-**File: `src/components/IntegrationsSection.tsx`**
-- Line 152: Remove `⚡` from badge → just `"Integraciones Reales"`
-- Improve letter-based orbit icons: change `bg-white/[0.06]` to `bg-white/[0.08]`, increase minimum font size, add `opacity-90`
+Aumentar el tamano tipografico para desktop: `lg:text-8xl` para que sea mas impactante.
 
-**Files that are already clean (no changes needed):**
-- `HeroSection.tsx` — uses `<Sparkles>` Lucide icon, no emoji
-- `PainSection.tsx` — uses Lucide icons, badge has no emoji
-- `ServiciosSection.tsx` — uses `<Sparkles>` Lucide icon, no emoji
-- `FAQSection.tsx` — no emoji
-- `ContactFormSection.tsx` — no emoji
+## 2. Beams mas visibles (beams-background.tsx)
+
+- Reducir la opacidad del vignette overlay: cambiar `transparent 40%` a `transparent 60%` para que los beams sean mas visibles en el centro
+- Aumentar blur de `35px` a `30px` para beams mas definidos
+- Base opacity de beams: `0.22 + Math.random() * 0.25` (mas intensos)
+
+## 3. Eliminar espacio vacio del Hero (HeroSection.tsx)
+
+- Cambiar `min-h-screen` a `min-h-[85vh]` para que el Hero no tenga tanto espacio vacio debajo
+- Ajustar padding bottom
+
+## 4. Nueva StatsSection entre Hero y Servicios
+
+Crear `src/components/StatsSection.tsx` con los 4 KPIs en un grid horizontal:
+
+
+| KPI              | Valor | Sufijo |
+| ---------------- | ----- | ------ |
+| Clientes Activos | 30    | +      |
+| Industrias       | 8     | +      |
+| Agentes IA 24/7  | 50    | +      |
+| Implementacion   | 1-4   | sem    |
+
+
+- Grid de 4 columnas (desktop) / 2x2 (mobile)
+- Cada KPI usa `NumberTicker` para la animacion de conteo
+- Fondo sutil glass con borde tenue
+- Separadores verticales entre KPIs en desktop
+- Colores: numeros en mint (#73D7CB), labels en muted
+
+Insertar en Index.tsx entre `<HeroSection />` y el primer `<AnimatedDivider />`.
+
+## 5. CTA "Como Trabajamos" - polish final (HowItWorksSection.tsx)
+
+El boton ya tiene buen estilo pero:
+
+- Verificar que el `group` class funciona para la animacion de flecha
+- Asegurar que el hover glow se intensifica correctamente
 
 ---
 
-### Summary of files to edit
+## Archivos a modificar
 
-| File | Changes |
-|------|---------|
-| `tubelight-navbar.tsx` | Add IntersectionObserver for auto-active tab |
-| `TrustSection.tsx` | Replace emoji icons + guarantee chips with Lucide |
-| `IndustriasSection.tsx` | Replace emoji icons with Lucide |
-| `AgentVideoShowcase.tsx` | Remove emoji field, clean badge |
-| `TeamSection.tsx` | Remove emoji from badge |
-| `IntegrationsSection.tsx` | Remove emoji from badge, improve letter icons |
 
+| Archivo                                  | Cambio                                               |
+| ---------------------------------------- | ---------------------------------------------------- |
+| `src/components/HeroSection.tsx`         | H1 en 2 lineas, reducir min-h, tipografia mas grande |
+| `src/components/ui/beams-background.tsx` | Beams mas visibles, reducir vignette                 |
+| `src/components/StatsSection.tsx`        | CREAR - 4 KPIs con NumberTicker                      |
+| `src/pages/Index.tsx`                    | Insertar StatsSection entre Hero y Servicios         |
+
+
+## Detalle tecnico
+
+### H1 nueva estructura:
+
+```text
+Linea 1: "Tu Negocio con IA, Otro Nivel de"
+Linea 2: "Resultados."
+```
+
+El truco es poner todo en la linea 1 como `inline` y dejar que "Resultados." sea un `block` separado. Aumentar a `lg:text-8xl` para impacto visual.
+
+### StatsSection:
+
+- Usa `NumberTicker` del componente existente (`src/components/ui/number-ticker.tsx`)
+- Background: `bg-white/[0.02]` con `backdrop-blur-sm` y `border border-white/[0.06]`
+- Padding: `py-12` para que sea compacto
+- Animacion: `BlurFade` staggered para cada KPI

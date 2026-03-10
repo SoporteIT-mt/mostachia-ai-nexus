@@ -10,7 +10,6 @@ import { cn } from '@/lib/utils';
 interface Agent {
   id: string;
   icon: React.ReactNode;
-  emoji: string;
   title: string;
   subtitle: string;
   description: string;
@@ -24,7 +23,6 @@ const AGENTS: Agent[] = [
   {
     id: 'analytics',
     icon: <BarChart3 className="w-5 h-5" />,
-    emoji: '📊',
     title: 'Agente de Analytics & Dashboards',
     subtitle: 'Tu negocio en tiempo real, sin tocar una planilla',
     description: 'Preguntale a tus datos como si le hablaras a una persona. Consulta tu base de datos en vivo, responde en lenguaje natural y genera dashboards interactivos.',
@@ -39,7 +37,6 @@ const AGENTS: Agent[] = [
   {
     id: 'marketing',
     icon: <Megaphone className="w-5 h-5" />,
-    emoji: '📢',
     title: 'Agente de Marketing',
     subtitle: 'Tu estrategia ejecutándose sola mientras vos crecés',
     description: 'Analizá campañas, planificá contenido con datos reales, enviá emails segmentados y optimizá anuncios en automático.',
@@ -54,7 +51,6 @@ const AGENTS: Agent[] = [
   {
     id: 'contenido',
     icon: <Palette className="w-5 h-5" />,
-    emoji: '🎨',
     title: 'Agente Creador de Contenido',
     subtitle: 'Contenido profesional en segundos, con tu identidad',
     description: 'Creá posts para Instagram con tu catálogo, carruseles adaptados a tu marca, videos de productos y avatares con IA — todo con tus colores y tu tono.',
@@ -69,7 +65,6 @@ const AGENTS: Agent[] = [
   {
     id: 'ventas',
     icon: <ShoppingCart className="w-5 h-5" />,
-    emoji: '💰',
     title: 'Agente de Ventas',
     subtitle: 'Tu vendedor más rápido, disponible 24/7',
     description: 'Calificá prospectos, agendá reuniones, gestioná pagos y seguimientos sin intervención humana. Del primer contacto al cierre.',
@@ -84,7 +79,6 @@ const AGENTS: Agent[] = [
   {
     id: 'soporte',
     icon: <Headphones className="w-5 h-5" />,
-    emoji: '🎧',
     title: 'Agente de Soporte',
     subtitle: 'Atención que no duerme y siempre está de buen humor',
     description: 'Respondé consultas, resolvé problemas, gestioná devoluciones y derivá casos complejos — con memoria de conversación y tono de tu marca.',
@@ -175,7 +169,7 @@ export const AgentVideoShowcase = () => {
         <div className="text-center mb-12 lg:mb-16">
           <BlurFade delay={0}>
             <span className="inline-flex items-center gap-2 rounded-full border border-mint-400/30 bg-mint-400/10 px-4 py-1.5 mb-6 text-sm font-medium text-mint-400">
-              🤖 Nuestros Agentes en Acción
+              Nuestros Agentes en Acción
             </span>
           </BlurFade>
           <BlurFade delay={0.1}>
@@ -311,7 +305,9 @@ export const AgentVideoShowcase = () => {
                           <rect width="100%" height="100%" fill={`url(#dots-${agent.id})`} className="text-foreground" />
                         </svg>
                       </div>
-                      <span className="text-5xl relative z-10">{agent.emoji}</span>
+                      <div className="relative z-10 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+                        {agent.icon}
+                      </div>
                       <div className="flex items-center gap-2 relative z-10">
                         <div className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center">
                           <Play className="w-4 h-4 text-muted-foreground ml-0.5" />

@@ -266,7 +266,7 @@ export const HowItWorksSection = () => {
           >
             <DotPattern className="opacity-[0.04]" width={24} height={24} cr={0.8} />
             <p className="text-2xl font-display font-bold mb-2 relative z-10">
-              🚀 ¿Listo para arrancar?
+              ¿Listo para arrancar?
             </p>
             <p className="text-sm text-muted-foreground mb-6 relative z-10">
               Transformá tu negocio con IA en menos de lo que pensás.

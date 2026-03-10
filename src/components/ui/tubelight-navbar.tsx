@@ -72,7 +72,7 @@ export function NavBar({ items, className, logo }: NavBarProps) {
     <div
       className={cn(
         "fixed z-50 left-1/2 -translate-x-1/2",
-        "bottom-6 sm:top-0 sm:bottom-auto sm:pt-4",
+        "bottom-0 sm:top-0 sm:bottom-auto sm:pt-4",
         className
       )}
     >

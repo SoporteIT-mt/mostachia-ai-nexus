@@ -35,7 +35,7 @@ export const ScrollToTop = () => {
           whileTap={{ scale: 0.9 }}
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
           onClick={scrollToTop}
-          className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-40 w-12 h-12 rounded-full bg-gradient-to-r from-mint-400 to-mint-500 backdrop-blur-sm border border-mint-400/30 shadow-lg shadow-mint-400/25 flex items-center justify-center group cursor-pointer"
+          className="hidden sm:flex fixed sm:bottom-6 sm:right-6 z-40 w-12 h-12 rounded-full bg-gradient-to-r from-mint-400 to-mint-500 backdrop-blur-sm border border-mint-400/30 shadow-lg shadow-mint-400/25 flex items-center justify-center group cursor-pointer"
           aria-label="Scroll to top"
         >
           <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 48 48">

@@ -30,7 +30,7 @@ const LOGOS_ROW_2 = [
 
 export const IntegrationsSection = () => {
   return (
-    <section id="integraciones" className="relative py-16 lg:py-20 overflow-hidden">
+    <section id="integraciones" className="relative py-16 lg:py-20">
       {/* Header */}
       <div className="container mx-auto px-6 relative z-10">
         <motion.div

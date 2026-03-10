@@ -76,7 +76,7 @@ export function NavBar({ items, className, logo }: NavBarProps) {
         className
       )}
     >
-      <div className="flex items-center gap-1 bg-background/5 border border-border/40 backdrop-blur-xl py-1.5 px-2 rounded-full shadow-lg">
+      <div className="flex items-center gap-1 bg-background/5 border border-border/40 backdrop-blur-xl py-1.5 px-2 rounded-full shadow-lg pb-[env(safe-area-inset-bottom)]">
         {logo && (
           <a
             href="#"

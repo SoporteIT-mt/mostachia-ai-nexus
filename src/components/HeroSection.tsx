@@ -42,7 +42,7 @@ export const HeroSection = () => {
           initial="hidden"
           animate="visible"
           variants={fadeUpVariants}
-          className="text-6xl md:text-8xl font-bold leading-tight tracking-tight"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold leading-tight tracking-tight"
         >
           <span className="block text-white">Tu equipo digital</span>
           <motion.span

@@ -79,7 +79,6 @@ const AGENTS: Agent[] = [
   {
     id: 'soporte',
     icon: <Headphones className="w-5 h-5" />,
-    emoji: '🎧',
     title: 'Agente de Soporte',
     subtitle: 'Atención que no duerme y siempre está de buen humor',
     description: 'Respondé consultas, resolvé problemas, gestioná devoluciones y derivá casos complejos — con memoria de conversación y tono de tu marca.',

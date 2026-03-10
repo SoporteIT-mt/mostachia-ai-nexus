@@ -44,7 +44,7 @@ const garantias = [
 
 export const TrustSection = () => {
   return (
-    <section id="confianza" className="py-24 md:py-32 relative overflow-hidden">
+    <section id="confianza" className="py-16 lg:py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">

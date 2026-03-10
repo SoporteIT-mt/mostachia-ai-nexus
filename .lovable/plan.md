@@ -1,113 +1,94 @@
+# Hero Profesional + Stats Section + CTA Polish
 
+## Problemas identificados
 
-## Plan: Optimización Integral — 7 Fases
-
-### Phase 1: Spacing Standardization
-
-**`src/components/HeroSection.tsx`** — Change `min-h-screen` to `min-h-[85vh]` and reduce `pb-20` to `pb-10` to bring Stats closer.
-
-**`src/components/PainSection.tsx`** — Change `py-16 md:py-24 lg:py-32` to `py-16 lg:py-20`.
-
-**`src/components/TrustSection.tsx`** — Standardize to `py-16 lg:py-20`.
-
-**`src/components/HowItWorksSection.tsx`** — Change `py-24 md:py-32` to `py-16 lg:py-20`.
-
-**`src/components/IndustriasSection.tsx`** — Change `py-24 md:py-32` to `py-16 lg:py-20`.
-
-**`src/components/IntegrationsSection.tsx`** — Change `py-24 md:py-32` to `py-16 lg:py-20`.
-
-**`src/components/ServiciosSection.tsx`** — Standardize to `py-16 lg:py-20`.
-
-**`src/components/ContactFormSection.tsx`** — Standardize to `py-16 lg:py-20`.
-
-**`src/components/FAQSection.tsx`** — Standardize to `py-16 lg:py-20`.
-
-Leave TeamSection and AgentVideoShowcase untouched.
+1. **H1 en 3 lineas** - "Tu Negocio con IA," / "Otro Nivel de" / "Resultados." deberia ser 2 lineas
+2. **Beams apenas visibles** - la opacidad y el vignette overlay los tapan demasiado
+3. **Espacio vacio excesivo** debajo de los CTAs y micro-proof
+4. **Falta la seccion de estadisticas** (KPIs) que se removio del Hero
 
 ---
 
-### Phase 2: CTA Text Variation
+## 1. Hero H1 en 2 lineas (HeroSection.tsx)
 
-| File | Current Text | New Text |
-|------|-------------|----------|
-| `HeroSection.tsx` L86 | "Agendar Diagnóstico Gratis" | "Empezar Ahora — Es Gratis" |
-| `HowItWorksSection.tsx` L289 | "Agendar Diagnóstico Gratis" | "Agendá tu Consultoría Gratuita" |
-| `IndustriasSection.tsx` L164 | "Agendar Diagnóstico Gratis" | "Hablemos de tu Rubro" |
-| `ContactFormSection.tsx` L225 | "Agendar Diagnóstico Gratis" | "Reservar Horario" |
-| `StickyCTA.tsx` L43 | "Agendar Diagnóstico Gratis" | "Agendar Gratis" |
+Reestructurar el titulo para que quede en exactamente 2 lineas:
 
-Also clean remaining emojis:
-- `HowItWorksSection.tsx` L269: Remove "🚀" from "🚀 ¿Listo para arrancar?"
-- `ContactFormSection.tsx` L172: Remove "🔒" from privacy text
-- `ContactFormSection.tsx` L205: Remove "🇦🇷" from "Córdoba, Argentina 🇦🇷"
-- `FloatingWhatsApp.tsx` L33-36: Remove emojis from quick replies ("💰", "🎯", "📅", "🔧")
+- **Linea 1:** "Tu Negocio con IA, Otro Nivel de"
+- **Linea 2:** "Resultados."
+
+Cambiar la estructura de 2 `<span className="block">` a:
+
+- Linea 1: todo junto en un solo bloque con `AnimatedWords("Tu Negocio con")` +  `IA,` (mint) + `AnimatedWords(" Otro Nivel de")` 
+- Linea 2: "Resultados." en gradient, centrado y mas grande visualmente
+
+Aumentar el tamano tipografico para desktop: `lg:text-8xl` para que sea mas impactante.
+
+## 2. Beams mas visibles (beams-background.tsx)
+
+- Reducir la opacidad del vignette overlay: cambiar `transparent 40%` a `transparent 60%` para que los beams sean mas visibles en el centro
+- Aumentar blur de `35px` a `30px` para beams mas definidos
+- Base opacity de beams: `0.22 + Math.random() * 0.25` (mas intensos)
+
+## 3. Eliminar espacio vacio del Hero (HeroSection.tsx)
+
+- Cambiar `min-h-screen` a `min-h-[85vh]` para que el Hero no tenga tanto espacio vacio debajo
+- Ajustar padding bottom
+
+## 4. Nueva StatsSection entre Hero y Servicios
+
+Crear `src/components/StatsSection.tsx` con los 4 KPIs en un grid horizontal:
+
+
+| KPI              | Valor | Sufijo |
+| ---------------- | ----- | ------ |
+| Clientes Activos | 30    | +      |
+| Industrias       | 8     | +      |
+| Agentes IA 24/7  | 50    | +      |
+| Implementacion   | 1-4   | sem    |
+
+
+- Grid de 4 columnas (desktop) / 2x2 (mobile)
+- Cada KPI usa `NumberTicker` para la animacion de conteo
+- Fondo sutil glass con borde tenue
+- Separadores verticales entre KPIs en desktop
+- Colores: numeros en mint (#73D7CB), labels en muted
+
+Insertar en Index.tsx entre `<HeroSection />` y el primer `<AnimatedDivider />`.
+
+## 5. CTA "Como Trabajamos" - polish final (HowItWorksSection.tsx)
+
+El boton ya tiene buen estilo pero:
+
+- Verificar que el `group` class funciona para la animacion de flecha
+- Asegurar que el hover glow se intensifica correctamente
 
 ---
 
-### Phase 3: WhatsApp Navbar Differentiation
+## Archivos a modificar
 
-Instead of extracting WhatsApp from the NavBar (which would require restructuring the fixed positioning), style it differently inside the existing component.
 
-**`src/components/ui/tubelight-navbar.tsx`**: Add an `isExternal` check — if `item.url.startsWith("http")`, render with a green accent style (`bg-emerald-500/15 text-emerald-400 border border-emerald-500/30`) instead of the standard tab style. No tubelight effect on external items. On mobile, show green-tinted icon.
+| Archivo                                  | Cambio                                               |
+| ---------------------------------------- | ---------------------------------------------------- |
+| `src/components/HeroSection.tsx`         | H1 en 2 lineas, reducir min-h, tipografia mas grande |
+| `src/components/ui/beams-background.tsx` | Beams mas visibles, reducir vignette                 |
+| `src/components/StatsSection.tsx`        | CREAR - 4 KPIs con NumberTicker                      |
+| `src/pages/Index.tsx`                    | Insertar StatsSection entre Hero y Servicios         |
 
----
 
-### Phase 4: FloatingWhatsApp Polish
+## Detalle tecnico
 
-**`src/components/FloatingWhatsApp.tsx`**:
-- FAB button: Replace `MessageCircle` icon with the MostachIA isotipo (`/isotipo-mint.png`) inside a rounded container. Keep gradient and online dot.
-- Quick replies: Remove emoji prefixes, keep text only ("Precios y planes", "Ver servicios", "Agendar reunión", "Integraciones").
+### H1 nueva estructura:
 
-The header already uses the isotipo and shows "En línea" with green dot — no changes needed there.
-
----
-
-### Phase 5: Section Reorder
-
-**`src/pages/Index.tsx`**: Swap `AgentVideoShowcase` and `ServiciosSection` so Servicios comes first (explain what you do), then showcase (show it in action).
-
+```text
+Linea 1: "Tu Negocio con IA, Otro Nivel de"
+Linea 2: "Resultados."
 ```
-Current:  Trust → AgentVideoShowcase → Servicios
-New:      Trust → Servicios → AgentVideoShowcase
-```
 
----
+El truco es poner todo en la linea 1 como `inline` y dejar que "Resultados." sea un `block` separado. Aumentar a `lg:text-8xl` para impacto visual.
 
-### Phase 6: Scroll Progress Subtlety
+### StatsSection:
 
-**`src/components/ScrollProgress.tsx`**:
-- Remove the percentage text (`{pct}%` span)
-- Change bar width from `w-1` to `w-0.5`
-- Reduce overall opacity to `opacity-40` on the container
-
----
-
-### Phase 7: Responsive Audit
-
-**`src/components/IntegrationsSection.tsx`**: Make orbit responsive — use Tailwind responsive classes on the container: `w-[360px] h-[360px] md:w-[540px] md:h-[540px]`. Reduce orbit radii via CSS custom properties or inline styles that check for smaller screens. Inner: 100px mobile / 150px desktop. Outer: 160px mobile / 240px desktop. Icon sizes: 36px mobile / 44px desktop. Use a `useIsMobile` hook or media query.
-
-**`src/components/StickyCTA.tsx`**: Already has safe area padding (`env(safe-area-inset-bottom)`). Verify z-index doesn't clash with navbar (`z-30` vs navbar `z-50`).
-
-**General**: Most components already use responsive Tailwind classes (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`). The orbit is the main responsive concern.
-
----
-
-### Files to edit (10 total)
-
-| File | Phases |
-|------|--------|
-| `HeroSection.tsx` | 1, 2 |
-| `PainSection.tsx` | 1 |
-| `TrustSection.tsx` | 1 |
-| `HowItWorksSection.tsx` | 1, 2 |
-| `IndustriasSection.tsx` | 1, 2 |
-| `IntegrationsSection.tsx` | 1, 7 |
-| `ContactFormSection.tsx` | 1, 2 |
-| `FAQSection.tsx` | 1 |
-| `ServiciosSection.tsx` | 1 |
-| `StickyCTA.tsx` | 2 |
-| `FloatingWhatsApp.tsx` | 4 |
-| `ScrollProgress.tsx` | 6 |
-| `tubelight-navbar.tsx` | 3 |
-| `Index.tsx` | 5 |
-
+- Usa `NumberTicker` del componente existente (`src/components/ui/number-ticker.tsx`)
+- Background: `bg-white/[0.02]` con `backdrop-blur-sm` y `border border-white/[0.06]`
+- Padding: `py-12` para que sea compacto
+- Animacion: `BlurFade` staggered para cada KPI

@@ -64,7 +64,7 @@ export const ContactFormSection = () => {
   };
 
   return (
-    <section id="contacto" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
+    <section id="contacto" ref={ref} className="py-16 lg:py-20 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
@@ -169,7 +169,7 @@ export const ContactFormSection = () => {
                   </ShimmerButton>
 
                   <p className="text-xs text-muted-foreground text-center">
-                    🔒 No compartimos tu información. Respuesta en menos de 24hs.
+                    No compartimos tu información. Respuesta en menos de 24hs.
                   </p>
                 </form>
               </Form>
@@ -202,7 +202,7 @@ export const ContactFormSection = () => {
 
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
-                Córdoba, Argentina 🇦🇷
+                Córdoba, Argentina
               </div>
 
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
@@ -222,7 +222,7 @@ export const ContactFormSection = () => {
                   className="w-full py-4 font-semibold"
                 >
                   <Calendar className="w-4 h-4 mr-2" />
-                  Agendar Diagnóstico Gratis
+                  Reservar Horario
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </ShimmerButton>
               </a>

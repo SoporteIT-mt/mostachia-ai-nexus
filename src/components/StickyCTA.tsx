@@ -40,7 +40,7 @@ export const StickyCTA = () => {
                 className="w-full py-3 font-semibold text-sm"
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                Agendar Diagnóstico Gratis
+                Agendar Gratis
               </ShimmerButton>
             </a>
             <Button

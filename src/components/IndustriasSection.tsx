@@ -78,7 +78,7 @@ const industrias: Industria[] = [
 
 export const IndustriasSection = () => {
   return (
-    <section id="industrias" className="py-24 md:py-32 relative">
+    <section id="industrias" className="py-16 lg:py-20 relative">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
@@ -161,7 +161,7 @@ export const IndustriasSection = () => {
                 className="px-6 py-3 font-semibold whitespace-nowrap shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                Agendar Diagnóstico Gratis
+                Hablemos de tu Rubro
                 <ArrowRight className="w-4 h-4 ml-2" />
               </ShimmerButton>
             </a>

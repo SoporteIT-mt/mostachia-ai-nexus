@@ -65,18 +65,20 @@ function OrbitRing({
   duration,
   reverse = false,
   iconSize = 44,
+  className,
 }: {
   items: Integration[];
   radius: number;
   duration: number;
   reverse?: boolean;
   iconSize?: number;
+  className?: string;
 }) {
   const direction = reverse ? "reverse" : "normal";
   const counterDirection = reverse ? "normal" : "reverse";
 
   return (
-    <>
+    <div className={className}>
       {items.map((item, i) => (
         <div
           key={item.name}
@@ -112,13 +114,13 @@ function OrbitRing({
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 
 export const IntegrationsSection = () => {
   return (
-    <section id="integraciones" className="relative py-24 md:py-32 overflow-hidden">
+    <section id="integraciones" className="relative py-16 lg:py-20 overflow-hidden">
       <style>{`
         @keyframes orbit-spin {
           from { transform: rotate(0deg); }
@@ -171,19 +173,16 @@ export const IntegrationsSection = () => {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="flex justify-center items-center mb-20"
       >
-        <div className="relative" style={{ width: 540, height: 540 }}>
+        <div className="relative w-[360px] h-[360px] md:w-[540px] md:h-[540px]">
           {/* Orbit ring lines */}
           <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.04]"
-            style={{ width: 300, height: 300 }}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.04] w-[200px] h-[200px] md:w-[300px] md:h-[300px]"
           />
           <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/[0.03]"
-            style={{ width: 380, height: 380 }}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/[0.03] w-[260px] h-[260px] md:w-[380px] md:h-[380px]"
           />
           <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.04]"
-            style={{ width: 480, height: 480 }}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.04] w-[320px] h-[320px] md:w-[480px] md:h-[480px]"
           />
 
           {/* Central hub */}
@@ -209,10 +208,12 @@ export const IntegrationsSection = () => {
           </div>
 
           {/* Inner ring — 6 core integrations */}
-          <OrbitRing items={INNER_RING} radius={150} duration={45} iconSize={44} />
+          <OrbitRing items={INNER_RING} radius={100} duration={45} iconSize={36} className="md:hidden" />
+          <OrbitRing items={INNER_RING} radius={150} duration={45} iconSize={44} className="hidden md:block" />
 
           {/* Outer ring — 12 additional integrations */}
-          <OrbitRing items={OUTER_RING} radius={240} duration={65} reverse iconSize={40} />
+          <OrbitRing items={OUTER_RING} radius={160} duration={65} reverse iconSize={32} className="md:hidden" />
+          <OrbitRing items={OUTER_RING} radius={240} duration={65} reverse iconSize={40} className="hidden md:block" />
         </div>
       </motion.div>
 

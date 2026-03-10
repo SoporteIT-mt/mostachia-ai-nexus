@@ -38,17 +38,12 @@ export const ScrollProgress = () => {
       transition={{ duration: 0.3 }}
     >
       {/* Progress track */}
-      <div className="relative w-1 h-32 bg-border/30 rounded-full overflow-hidden">
+      <div className="relative w-0.5 h-32 bg-border/30 rounded-full overflow-hidden opacity-40">
         <motion.div
           className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-mint-400 to-mint-300 rounded-full origin-bottom"
           style={{ scaleY }}
         />
       </div>
-      
-      {/* Percentage indicator */}
-      <span className="text-[10px] font-mono text-muted-foreground tabular-nums">
-        {pct}%
-      </span>
     </motion.div>
   );
 };

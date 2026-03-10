@@ -68,7 +68,7 @@ export const HowItWorksSection = () => {
   }, [isInView]);
 
   return (
-    <section id="proceso" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
+    <section id="proceso" ref={ref} className="py-16 lg:py-20 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
@@ -266,7 +266,7 @@ export const HowItWorksSection = () => {
           >
             <DotPattern className="opacity-[0.04]" width={24} height={24} cr={0.8} />
             <p className="text-2xl font-display font-bold mb-2 relative z-10">
-              🚀 ¿Listo para arrancar?
+              ¿Listo para arrancar?
             </p>
             <p className="text-sm text-muted-foreground mb-6 relative z-10">
               Transformá tu negocio con IA en menos de lo que pensás.
@@ -286,7 +286,7 @@ export const HowItWorksSection = () => {
                   className="text-lg font-bold px-12 py-6 group shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
                 >
                   <Calendar className="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" />
-                  Agendar Diagnóstico Gratis
+                  Agendá tu Consultoría Gratuita
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </ShimmerButton>
               </a>

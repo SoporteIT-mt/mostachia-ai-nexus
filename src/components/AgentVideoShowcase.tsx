@@ -305,7 +305,9 @@ export const AgentVideoShowcase = () => {
                           <rect width="100%" height="100%" fill={`url(#dots-${agent.id})`} className="text-foreground" />
                         </svg>
                       </div>
-                      <span className="text-5xl relative z-10">{agent.emoji}</span>
+                      <div className="relative z-10 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+                        {agent.icon}
+                      </div>
                       <div className="flex items-center gap-2 relative z-10">
                         <div className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center">
                           <Play className="w-4 h-4 text-muted-foreground ml-0.5" />

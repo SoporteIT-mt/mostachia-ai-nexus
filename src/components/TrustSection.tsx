@@ -1,38 +1,45 @@
-
+import { ShieldCheck, Zap, MapPin, Puzzle, Check } from 'lucide-react';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { Spotlight } from '@/components/ui/spotlight';
 import { motion } from 'framer-motion';
+import { type LucideIcon } from 'lucide-react';
 
-const diferenciadores = [
+interface Diferenciador {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+const diferenciadores: Diferenciador[] = [
   {
-    emoji: '🔒',
+    icon: ShieldCheck,
     title: 'Tus Datos, Tu Control',
     description: 'Trabajamos directamente con tu base de datos. No almacenamos información sensible. Toda la IA se ejecuta sobre tus propios sistemas.',
   },
   {
-    emoji: '⚡',
+    icon: Zap,
     title: 'Implementación Express',
     description: 'En 1 a 4 semanas tenés tu solución funcionando. Sin meses de desarrollo ni costos ocultos.',
   },
   {
-    emoji: '🇦🇷',
+    icon: MapPin,
     title: 'Equipo Local, Soporte Real',
-    description: 'Somos un equipo argentino de Córdoba. Hablás directamente con quienes construyen tu solución, no con bots de soporte.',
+    description: 'Somos un equipo argentino de Córdoba, Argentina. Hablás directamente con quienes construyen tu solución, no con bots de soporte.',
   },
   {
-    emoji: '🔧',
+    icon: Puzzle,
     title: 'Tecnología Modular',
     description: 'Misma arquitectura probada, adaptada a tu rubro. Lo que funciona para un cine funciona para un restaurante, una farmacia o un e-commerce.',
   },
 ];
 
 const garantias = [
-  '✅ Consultoría inicial gratuita',
-  '✅ Capacitación incluida',
-  '✅ Soporte post-implementación',
-  '✅ Compatible con tu base de datos actual',
-  '✅ Funciona por WhatsApp',
-  '✅ Español nativo 🧉',
+  'Consultoría inicial gratuita',
+  'Capacitación incluida',
+  'Soporte post-implementación',
+  'Compatible con tu base de datos actual',
+  'Funciona por WhatsApp',
+  'Español nativo',
 ];
 
 export const TrustSection = () => {
@@ -51,31 +58,35 @@ export const TrustSection = () => {
           </BlurFade>
         </div>
 
-        {/* 2x2 Grid with MagicCard */}
+        {/* 2x2 Grid */}
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-14">
-          {diferenciadores.map((d, i) => (
-            <BlurFade key={d.title} delay={i * 0.1}>
-              <motion.div
-                whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300 } }}
-                className="group h-full"
-              >
-                <div className="glass-card p-8 text-center h-full group">
-                    <div className="w-16 h-16 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                      {d.emoji}
+          {diferenciadores.map((d, i) => {
+            const Icon = d.icon;
+            return (
+              <BlurFade key={d.title} delay={i * 0.1}>
+                <motion.div
+                  whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300 } }}
+                  className="group h-full"
+                >
+                  <div className="glass-card p-8 text-center h-full group">
+                    <div className="flex h-12 w-12 mx-auto items-center justify-center rounded-xl bg-primary/10 text-primary mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <Icon className="h-6 w-6" />
                     </div>
                     <h3 className="text-lg font-semibold font-display mb-2">{d.title}</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{d.description}</p>
-                </div>
-              </motion.div>
-            </BlurFade>
-          ))}
+                  </div>
+                </motion.div>
+              </BlurFade>
+            );
+          })}
         </div>
 
-        {/* Garantías chips with BlurFade */}
+        {/* Garantías chips */}
         <div className="flex flex-wrap items-center justify-center gap-3 max-w-4xl mx-auto">
           {garantias.map((g, i) => (
             <BlurFade key={i} delay={0.5 + i * 0.06}>
-              <span className="px-4 py-2 rounded-full bg-white/[0.05] border border-white/[0.1] text-sm text-foreground/80">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.05] border border-white/[0.1] text-sm text-foreground/80">
+                <Check className="h-3.5 w-3.5 text-emerald-400" />
                 {g}
               </span>
             </BlurFade>

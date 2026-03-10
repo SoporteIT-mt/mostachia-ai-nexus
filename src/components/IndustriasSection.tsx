@@ -1,14 +1,21 @@
-import { ArrowRight, Calendar } from 'lucide-react';
+import { ArrowRight, Calendar, Film, UtensilsCrossed, HeartPulse, Scale, ShoppingCart, GraduationCap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { MagicCard } from '@/components/ui/magic-card';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { Spotlight } from '@/components/ui/spotlight';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { CONFIG } from '@/config/constants';
+import { type LucideIcon } from 'lucide-react';
 
-const industrias = [
+interface Industria {
+  icon: LucideIcon;
+  title: string;
+  bullets: string[];
+}
+
+const industrias: Industria[] = [
   {
-    emoji: '🎬',
+    icon: Film,
     title: 'Cines y Entretenimiento',
     bullets: [
       'Dashboards de boletería y candy en tiempo real',
@@ -18,7 +25,7 @@ const industrias = [
     ],
   },
   {
-    emoji: '🍽️',
+    icon: UtensilsCrossed,
     title: 'Gastronomía',
     bullets: [
       'Analytics de ventas por producto, mesero y turno',
@@ -28,7 +35,7 @@ const industrias = [
     ],
   },
   {
-    emoji: '💊',
+    icon: HeartPulse,
     title: 'Salud y Farmacias',
     bullets: [
       'Interfaces PWA premium para gestión',
@@ -38,7 +45,7 @@ const industrias = [
     ],
   },
   {
-    emoji: '📊',
+    icon: Scale,
     title: 'Estudios Contables y Legales',
     bullets: [
       'Dashboards de gestión multi-cliente',
@@ -48,7 +55,7 @@ const industrias = [
     ],
   },
   {
-    emoji: '🛒',
+    icon: ShoppingCart,
     title: 'E-commerce y Retail',
     bullets: [
       'Automatización de inventario y pedidos',
@@ -58,7 +65,7 @@ const industrias = [
     ],
   },
   {
-    emoji: '🎓',
+    icon: GraduationCap,
     title: 'Educación y Comunidades',
     bullets: [
       'Automatización de contenido educativo',
@@ -90,46 +97,49 @@ export const IndustriasSection = () => {
 
         {/* Grid with MagicCard */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {industrias.map((ind, i) => (
-            <BlurFade key={ind.title} delay={i * 0.08}>
-              <motion.div
-                whileHover={{ y: -8, transition: { type: 'spring', stiffness: 300 } }}
-                className="group relative h-full"
-              >
-                <MagicCard className="h-full">
-                  <div className="relative p-6">
-                    <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4 text-2xl group-hover:scale-110 transition-transform duration-300">
-                      {ind.emoji}
+          {industrias.map((ind, i) => {
+            const Icon = ind.icon;
+            return (
+              <BlurFade key={ind.title} delay={i * 0.08}>
+                <motion.div
+                  whileHover={{ y: -8, transition: { type: 'spring', stiffness: 300 } }}
+                  className="group relative h-full"
+                >
+                  <MagicCard className="h-full">
+                    <div className="relative p-6">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <Icon className="h-6 w-6" />
+                      </div>
+
+                      <h3 className="text-lg font-bold font-display mb-4 group-hover:text-primary transition-colors">
+                        {ind.title}
+                      </h3>
+
+                      <ul className="space-y-2 mb-5">
+                        {ind.bullets.map((b, j) => (
+                          <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
+                            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                            {b}
+                          </li>
+                        ))}
+                      </ul>
+
+                      {/* CTA link */}
+                      <a
+                        href={CONFIG.CALCOM_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-primary opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+                      >
+                        Consultar para este rubro
+                        <ArrowRight className="w-4 h-4" />
+                      </a>
                     </div>
-
-                    <h3 className="text-lg font-bold font-display mb-4 group-hover:text-primary transition-colors">
-                      {ind.title}
-                    </h3>
-
-                    <ul className="space-y-2 mb-5">
-                      {ind.bullets.map((b, j) => (
-                        <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-                          {b}
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* CTA link */}
-                    <a
-                      href={CONFIG.CALCOM_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-primary opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
-                    >
-                      Consultar para este rubro
-                      <ArrowRight className="w-4 h-4" />
-                    </a>
-                  </div>
-                </MagicCard>
-              </motion.div>
-            </BlurFade>
-          ))}
+                  </MagicCard>
+                </motion.div>
+              </BlurFade>
+            );
+          })}
         </div>
 
         {/* Banner */}

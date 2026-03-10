@@ -46,10 +46,10 @@ function OrbitIcon({ integration, size = 44 }: { integration: Integration; size?
         </svg>
       ) : (
         <span
-          className="font-bold leading-none"
+          className="font-bold leading-none opacity-90"
           style={{
             color: integration.color,
-            fontSize: integration.letter && integration.letter.length > 2 ? 9 : integration.letter && integration.letter.length > 1 ? 11 : 16,
+            fontSize: integration.letter && integration.letter.length > 2 ? 11 : integration.letter && integration.letter.length > 1 ? 13 : 16,
           }}
         >
           {integration.letter || integration.name[0]}

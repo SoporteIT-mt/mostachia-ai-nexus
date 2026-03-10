@@ -49,7 +49,7 @@ export const TeamSection = () => {
       {/* Header */}
       <div className="container mx-auto px-4 sm:px-6 text-center mb-8">
         <span className="inline-flex items-center gap-2 rounded-full border border-mint-400/30 bg-mint-400/10 px-4 py-1.5 text-sm font-medium text-mint-400 mb-4">
-          👥 El equipo detrás de MostachIA
+          El equipo detrás de MostachIA
         </span>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-white">
           Quiénes{" "}

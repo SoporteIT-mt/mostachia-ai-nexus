@@ -109,8 +109,8 @@ export function FocusRail({
       tabIndex={0}
       onKeyDown={onKeyDown}
     >
-      {/* Background Ambience — ultra-soft blend, no visible edges */}
-      <div className="pointer-events-none absolute -inset-40" style={{ overflow: 'visible' }}>
+      {/* Background Ambience — crossfade, no hard edges */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <AnimatePresence initial={false}>
           <motion.div
             key={`bg-${activeIndex}`}
@@ -118,21 +118,27 @@ export function FocusRail({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.2, ease: "easeInOut" }}
-            className="absolute inset-0 flex items-center justify-center"
+            className="absolute inset-0"
           >
             <img
               src={activeItem.imageSrc}
               alt=""
-              className="w-full h-full object-cover blur-[160px] saturate-[1.6] opacity-15 scale-[2]"
+              className="h-full w-full object-cover blur-[100px] saturate-[2] opacity-25 scale-[1.5]"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = "none";
               }}
             />
           </motion.div>
         </AnimatePresence>
-        {/* Multi-layer fade to page background — extra wide gradients for seamless blend */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, hsl(var(--background)) 0%, hsl(var(--background) / 0.7) 15%, transparent 35%, transparent 65%, hsl(var(--background) / 0.7) 85%, hsl(var(--background)) 100%)" }} />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, hsl(var(--background)) 0%, transparent 25%, transparent 75%, hsl(var(--background)) 100%)" }} />
+        {/* Feathered edges so ambience blends into page background */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, hsl(var(--background)) 100%)
+            `,
+          }}
+        />
       </div>
 
       {/* Main Stage */}

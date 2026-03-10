@@ -30,7 +30,7 @@ const LOGOS_ROW_2 = [
 
 export const IntegrationsSection = () => {
   return (
-    <section id="integraciones" className="relative py-16 lg:py-20 overflow-hidden">
+    <section id="integraciones" className="relative py-16 lg:py-20">
       {/* Header */}
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -58,44 +58,41 @@ export const IntegrationsSection = () => {
       {/* Divider line */}
       <div className="mx-auto mb-6 h-px max-w-xs bg-white/[0.06] [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
 
-      {/* Row 1 — slides right */}
+      {/* Slider wrapper with mask */}
       <div
-        className="mb-6"
+        className="relative w-full overflow-hidden"
         style={{
-          maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
-          WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+          maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
         }}
       >
-        <InfiniteSlider gap={48} duration={30} durationOnHover={60}>
-          {LOGOS_ROW_1.map((logo) => (
-            <img
-              key={logo.alt}
-              src={logo.src}
-              alt={logo.alt}
-              className="pointer-events-none h-7 md:h-8 w-auto select-none opacity-50 hover:opacity-90 transition-opacity duration-300 brightness-0 invert"
-            />
-          ))}
-        </InfiniteSlider>
-      </div>
+        {/* Row 1 — slides right */}
+        <div className="mb-6">
+          <InfiniteSlider gap={48} duration={30} durationOnHover={60}>
+            {LOGOS_ROW_1.map((logo) => (
+              <img
+                key={logo.alt}
+                src={logo.src}
+                alt={logo.alt}
+                className="pointer-events-none h-7 md:h-8 w-auto select-none opacity-50 hover:opacity-90 transition-opacity duration-300 brightness-0 invert"
+              />
+            ))}
+          </InfiniteSlider>
+        </div>
 
-      {/* Row 2 — slides left (reverse) */}
-      <div
-        className="mb-8"
-        style={{
-          maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
-          WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
-        }}
-      >
-        <InfiniteSlider gap={48} duration={35} durationOnHover={60} reverse>
-          {LOGOS_ROW_2.map((logo) => (
-            <img
-              key={logo.alt}
-              src={logo.src}
-              alt={logo.alt}
-              className="pointer-events-none h-7 md:h-8 w-auto select-none opacity-50 hover:opacity-90 transition-opacity duration-300 brightness-0 invert"
-            />
-          ))}
-        </InfiniteSlider>
+        {/* Row 2 — slides left (reverse) */}
+        <div className="mb-8">
+          <InfiniteSlider gap={48} duration={35} durationOnHover={60} reverse>
+            {LOGOS_ROW_2.map((logo) => (
+              <img
+                key={logo.alt}
+                src={logo.src}
+                alt={logo.alt}
+                className="pointer-events-none h-7 md:h-8 w-auto select-none opacity-50 hover:opacity-90 transition-opacity duration-300 brightness-0 invert"
+              />
+            ))}
+          </InfiniteSlider>
+        </div>
       </div>
 
       {/* Divider line */}

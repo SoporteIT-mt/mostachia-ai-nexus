@@ -176,8 +176,7 @@ export const IntegrationsSection = () => {
         <div className="relative w-[360px] h-[360px] md:w-[540px] md:h-[540px]">
           {/* Orbit ring lines */}
           <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.04]"
-            className="w-[200px] h-[200px] md:w-[300px] md:h-[300px]"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.04] w-[200px] h-[200px] md:w-[300px] md:h-[300px]"
           />
           <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/[0.03] w-[260px] h-[260px] md:w-[380px] md:h-[380px]"

@@ -2,28 +2,30 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 
+const SI = "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons";
+
 const LOGOS_ROW_1 = [
-  { src: "https://cdn.simpleicons.org/openai/white", alt: "OpenAI" },
-  { src: "https://cdn.simpleicons.org/whatsapp/white", alt: "WhatsApp" },
-  { src: "https://cdn.simpleicons.org/zapier/white", alt: "Zapier" },
-  { src: "https://cdn.simpleicons.org/stripe/white", alt: "Stripe" },
-  { src: "https://cdn.simpleicons.org/supabase/white", alt: "Supabase" },
-  { src: "https://cdn.simpleicons.org/notion/white", alt: "Notion" },
-  { src: "https://cdn.simpleicons.org/postgresql/white", alt: "PostgreSQL" },
-  { src: "https://cdn.simpleicons.org/shopify/white", alt: "Shopify" },
-  { src: "https://cdn.simpleicons.org/anthropic/white", alt: "Claude" },
+  { src: `${SI}/openai.svg`, alt: "OpenAI" },
+  { src: `${SI}/whatsapp.svg`, alt: "WhatsApp" },
+  { src: `${SI}/zapier.svg`, alt: "Zapier" },
+  { src: `${SI}/stripe.svg`, alt: "Stripe" },
+  { src: `${SI}/supabase.svg`, alt: "Supabase" },
+  { src: `${SI}/notion.svg`, alt: "Notion" },
+  { src: `${SI}/postgresql.svg`, alt: "PostgreSQL" },
+  { src: `${SI}/shopify.svg`, alt: "Shopify" },
+  { src: `${SI}/anthropic.svg`, alt: "Claude" },
 ];
 
 const LOGOS_ROW_2 = [
-  { src: "https://cdn.simpleicons.org/slack/white", alt: "Slack" },
-  { src: "https://cdn.simpleicons.org/gmail/white", alt: "Gmail" },
-  { src: "https://cdn.simpleicons.org/telegram/white", alt: "Telegram" },
-  { src: "https://cdn.simpleicons.org/mongodb/white", alt: "MongoDB" },
-  { src: "https://cdn.simpleicons.org/googlesheets/white", alt: "Google Sheets" },
-  { src: "https://cdn.simpleicons.org/github/white", alt: "GitHub" },
-  { src: "https://cdn.simpleicons.org/n8n/white", alt: "n8n" },
-  { src: "https://cdn.simpleicons.org/make/white", alt: "Make" },
-  { src: "https://cdn.simpleicons.org/googlegemini/white", alt: "Gemini" },
+  { src: `${SI}/slack.svg`, alt: "Slack" },
+  { src: `${SI}/gmail.svg`, alt: "Gmail" },
+  { src: `${SI}/telegram.svg`, alt: "Telegram" },
+  { src: `${SI}/mongodb.svg`, alt: "MongoDB" },
+  { src: `${SI}/googlesheets.svg`, alt: "Google Sheets" },
+  { src: `${SI}/github.svg`, alt: "GitHub" },
+  { src: `${SI}/n8n.svg`, alt: "n8n" },
+  { src: `${SI}/make.svg`, alt: "Make" },
+  { src: `${SI}/googlegemini.svg`, alt: "Gemini" },
 ];
 
 export const IntegrationsSection = () => {

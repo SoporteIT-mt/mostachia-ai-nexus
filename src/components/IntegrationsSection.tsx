@@ -114,7 +114,7 @@ function OrbitRing({
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 

@@ -35,7 +35,7 @@ const OUTER_RING: Integration[] = [
 function OrbitIcon({ integration, size = 44 }: { integration: Integration; size?: number }) {
   return (
     <div
-      className="rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center
+      className="rounded-xl bg-white/[0.08] border border-white/[0.08] flex items-center justify-center
                   transition-all duration-300 group-hover:scale-125 group-hover:border-emerald-400/40
                   group-hover:shadow-[0_0_20px_rgba(52,211,153,0.25)] group-hover:bg-white/[0.1]"
       style={{ width: size, height: size }}

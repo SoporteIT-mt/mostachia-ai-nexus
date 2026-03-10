@@ -3,27 +3,27 @@ import { motion } from "framer-motion";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 
 const LOGOS_ROW_1 = [
-  { src: "https://svgl.app/library/openai_wordmark_light.svg", alt: "OpenAI" },
-  { src: "https://svgl.app/library/whatsapp_wordmark_light.svg", alt: "WhatsApp" },
+  { src: "https://svgl.app/library/openai-wordmark-white.svg", alt: "OpenAI" },
+  { src: "https://svgl.app/library/whatsapp.svg", alt: "WhatsApp" },
   { src: "https://svgl.app/library/zapier.svg", alt: "Zapier" },
-  { src: "https://svgl.app/library/stripe_wordmark_light.svg", alt: "Stripe" },
+  { src: "https://svgl.app/library/stripe-wordmark-white.svg", alt: "Stripe" },
   { src: "https://svgl.app/library/supabase_wordmark_light.svg", alt: "Supabase" },
-  { src: "https://svgl.app/library/notion_wordmark_light.svg", alt: "Notion" },
-  { src: "https://svgl.app/library/postgresql_wordmark_light.svg", alt: "PostgreSQL" },
-  { src: "https://svgl.app/library/shopify_wordmark_light.svg", alt: "Shopify" },
+  { src: "https://svgl.app/library/notion.svg", alt: "Notion" },
+  { src: "https://svgl.app/library/postgresql.svg", alt: "PostgreSQL" },
+  { src: "https://svgl.app/library/shopify.svg", alt: "Shopify" },
   { src: "https://svgl.app/library/claude-ai-wordmark-icon_light.svg", alt: "Claude" },
 ];
 
 const LOGOS_ROW_2 = [
-  { src: "https://svgl.app/library/slack_wordmark_light.svg", alt: "Slack" },
-  { src: "https://svgl.app/library/gmail_wordmark_light.svg", alt: "Gmail" },
-  { src: "https://svgl.app/library/telegram_wordmark_light.svg", alt: "Telegram" },
-  { src: "https://svgl.app/library/mongodb_wordmark_light.svg", alt: "MongoDB" },
-  { src: "https://svgl.app/library/google-sheets_wordmark_light.svg", alt: "Google Sheets" },
+  { src: "https://svgl.app/library/slack.svg", alt: "Slack" },
+  { src: "https://svgl.app/library/gmail.svg", alt: "Gmail" },
+  { src: "https://svgl.app/library/telegram.svg", alt: "Telegram" },
+  { src: "https://svgl.app/library/mongodb.svg", alt: "MongoDB" },
+  { src: "https://svgl.app/library/google-sheets.svg", alt: "Google Sheets" },
   { src: "https://svgl.app/library/github_wordmark_light.svg", alt: "GitHub" },
   { src: "https://svgl.app/library/n8n.svg", alt: "n8n" },
-  { src: "https://svgl.app/library/make_wordmark_light.svg", alt: "Make" },
-  { src: "https://svgl.app/library/google-gemini_wordmark_light.svg", alt: "Gemini" },
+  { src: "https://svgl.app/library/make.svg", alt: "Make" },
+  { src: "https://svgl.app/library/google-gemini.svg", alt: "Gemini" },
 ];
 
 export const IntegrationsSection = () => {

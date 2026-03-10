@@ -171,7 +171,7 @@ export const IntegrationsSection = () => {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="flex justify-center items-center mb-20"
       >
-        <div className="relative" style={{ width: 540, height: 540 }}>
+        <div className="relative w-[360px] h-[360px] md:w-[540px] md:h-[540px]">
           {/* Orbit ring lines */}
           <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.04]"

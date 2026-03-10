@@ -149,7 +149,7 @@ export const IntegrationsSection = () => {
           className="text-center mb-20"
         >
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 text-sm font-medium text-primary">
-            ⚡ Integraciones Reales
+            Integraciones Reales
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
             Se Integra con{" "}

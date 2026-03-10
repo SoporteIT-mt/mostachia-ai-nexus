@@ -14,7 +14,7 @@ const fadeUpVariants = {
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4 md:px-8 overflow-hidden">
+    <section className="relative min-h-[85vh] flex items-center justify-center pt-32 pb-10 px-4 md:px-8 overflow-hidden">
       {/* Background accents */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />

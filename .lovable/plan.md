@@ -1,94 +1,33 @@
-# Hero Profesional + Stats Section + CTA Polish
-
-## Problemas identificados
-
-1. **H1 en 3 lineas** - "Tu Negocio con IA," / "Otro Nivel de" / "Resultados." deberia ser 2 lineas
-2. **Beams apenas visibles** - la opacidad y el vignette overlay los tapan demasiado
-3. **Espacio vacio excesivo** debajo de los CTAs y micro-proof
-4. **Falta la seccion de estadisticas** (KPIs) que se removio del Hero
-
----
-
-## 1. Hero H1 en 2 lineas (HeroSection.tsx)
-
-Reestructurar el titulo para que quede en exactamente 2 lineas:
-
-- **Linea 1:** "Tu Negocio con IA, Otro Nivel de"
-- **Linea 2:** "Resultados."
-
-Cambiar la estructura de 2 `<span className="block">` a:
-
-- Linea 1: todo junto en un solo bloque con `AnimatedWords("Tu Negocio con")` +  `IA,` (mint) + `AnimatedWords(" Otro Nivel de")` 
-- Linea 2: "Resultados." en gradient, centrado y mas grande visualmente
-
-Aumentar el tamano tipografico para desktop: `lg:text-8xl` para que sea mas impactante.
-
-## 2. Beams mas visibles (beams-background.tsx)
-
-- Reducir la opacidad del vignette overlay: cambiar `transparent 40%` a `transparent 60%` para que los beams sean mas visibles en el centro
-- Aumentar blur de `35px` a `30px` para beams mas definidos
-- Base opacity de beams: `0.22 + Math.random() * 0.25` (mas intensos)
-
-## 3. Eliminar espacio vacio del Hero (HeroSection.tsx)
-
-- Cambiar `min-h-screen` a `min-h-[85vh]` para que el Hero no tenga tanto espacio vacio debajo
-- Ajustar padding bottom
-
-## 4. Nueva StatsSection entre Hero y Servicios
-
-Crear `src/components/StatsSection.tsx` con los 4 KPIs en un grid horizontal:
 
 
-| KPI              | Valor | Sufijo |
-| ---------------- | ----- | ------ |
-| Clientes Activos | 30    | +      |
-| Industrias       | 8     | +      |
-| Agentes IA 24/7  | 50    | +      |
-| Implementacion   | 1-4   | sem    |
+## Fix Responsive Mobile -- 6 Issues
 
+### 1. Hero CTA hidden by navbar (`src/components/HeroSection.tsx`)
+- Line 17: Change `pb-10` to `pb-28 sm:pb-10` so the CTA clears the bottom navbar on mobile
+- Line 45: Change `text-6xl md:text-8xl` to `text-4xl sm:text-5xl md:text-8xl` for better mobile title sizing
 
-- Grid de 4 columnas (desktop) / 2x2 (mobile)
-- Cada KPI usa `NumberTicker` para la animacion de conteo
-- Fondo sutil glass con borde tenue
-- Separadores verticales entre KPIs en desktop
-- Colores: numeros en mint (#73D7CB), labels en muted
+### 2. Navbar safe area (`src/components/ui/tubelight-navbar.tsx`)
+- Line 80: Change `bottom-4` to `bottom-6` 
+- Add `pb-[env(safe-area-inset-bottom)]` to the inner container div
 
-Insertar en Index.tsx entre `<HeroSection />` y el primer `<AnimatedDivider />`.
+### 3. FloatingWhatsApp overlaps navbar (`src/components/FloatingWhatsApp.tsx`)
+- Line 211: Change `bottom-6 right-6` to `bottom-24 right-4 sm:bottom-6 sm:right-6` on the FAB button
 
-## 5. CTA "Como Trabajamos" - polish final (HowItWorksSection.tsx)
+### 4. ScrollToTop overlaps navbar (`src/components/ScrollToTop.tsx`)
+- Line 43: Change `bottom-6 right-6 md:bottom-24 md:right-6` to `bottom-24 right-4 sm:bottom-6 sm:right-6`
 
-El boton ya tiene buen estilo pero:
+### 5. StickyCTA z-index (`src/components/StickyCTA.tsx`)
+- Change `z-30` to `z-40` for consistency
+- Change `bottom-0` to `bottom-20 sm:bottom-0` so it sits above the navbar
 
-- Verificar que el `group` class funciona para la animacion de flecha
-- Asegurar que el hover glow se intensifica correctamente
+### 6. HowItWorks CTA button truncated (`src/components/HowItWorksSection.tsx`)
+- Line 286: Change button className to `w-full sm:w-auto text-base sm:text-lg font-bold px-6 sm:px-12 py-5 sm:py-6 group shadow-[0_4px_24px_rgba(96,185,154,0.4)]`
+- Line 289: Split button text into mobile/desktop variants: `<span className="hidden sm:inline">Agendá tu Consultoría Gratuita</span><span className="sm:hidden">Agendar Consultoría</span>`
+- Line 73: Change `px-6` to `px-4 sm:px-6` on the container
 
----
+### Z-index hierarchy
+- Navbar: z-50 (already correct)
+- FloatingWhatsApp FAB: z-40 (already correct)
+- ScrollToTop: z-50 → z-40
+- StickyCTA: z-30 → z-40
 
-## Archivos a modificar
-
-
-| Archivo                                  | Cambio                                               |
-| ---------------------------------------- | ---------------------------------------------------- |
-| `src/components/HeroSection.tsx`         | H1 en 2 lineas, reducir min-h, tipografia mas grande |
-| `src/components/ui/beams-background.tsx` | Beams mas visibles, reducir vignette                 |
-| `src/components/StatsSection.tsx`        | CREAR - 4 KPIs con NumberTicker                      |
-| `src/pages/Index.tsx`                    | Insertar StatsSection entre Hero y Servicios         |
-
-
-## Detalle tecnico
-
-### H1 nueva estructura:
-
-```text
-Linea 1: "Tu Negocio con IA, Otro Nivel de"
-Linea 2: "Resultados."
-```
-
-El truco es poner todo en la linea 1 como `inline` y dejar que "Resultados." sea un `block` separado. Aumentar a `lg:text-8xl` para impacto visual.
-
-### StatsSection:
-
-- Usa `NumberTicker` del componente existente (`src/components/ui/number-ticker.tsx`)
-- Background: `bg-white/[0.02]` con `backdrop-blur-sm` y `border border-white/[0.06]`
-- Padding: `py-12` para que sea compacto
-- Animacion: `BlurFade` staggered para cada KPI

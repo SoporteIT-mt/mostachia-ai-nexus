@@ -208,7 +208,7 @@ export const FloatingWhatsApp = () => {
             exit={{ scale: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             onClick={() => setIsOpen(prev => !prev)}
-            className="fixed bottom-6 right-6 z-40 w-[60px] h-[60px] rounded-full shadow-lg shadow-mint-400/30 hover:shadow-xl hover:shadow-mint-400/40 hover:scale-110 transition-all duration-300 flex items-center justify-center overflow-hidden"
+            className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-40 w-[60px] h-[60px] rounded-full shadow-lg shadow-mint-400/30 hover:shadow-xl hover:shadow-mint-400/40 hover:scale-110 transition-all duration-300 flex items-center justify-center overflow-hidden"
             style={{ background: 'linear-gradient(135deg, #73D7CB, #5CB8A5)' }}
             aria-label={isOpen ? 'Cerrar chat' : 'Abrir chat'}
           >

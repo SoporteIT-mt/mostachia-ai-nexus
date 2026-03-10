@@ -70,7 +70,7 @@ export const HowItWorksSection = () => {
   return (
     <section id="proceso" ref={ref} className="py-16 lg:py-20 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <BlurFade className="text-center mb-16 md:mb-20">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-4">
@@ -283,10 +283,11 @@ export const HowItWorksSection = () => {
                   shimmerColor="rgba(127, 205, 179, 0.8)"
                   background="linear-gradient(135deg, #60b99a, #4a9e82)"
                   borderRadius="12px"
-                  className="text-lg font-bold px-12 py-6 group shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
+                  className="w-full sm:w-auto text-base sm:text-lg font-bold px-6 sm:px-12 py-5 sm:py-6 group shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
                 >
                   <Calendar className="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" />
-                  Agendá tu Consultoría Gratuita
+                  <span className="hidden sm:inline">Agendá tu Consultoría Gratuita</span>
+                  <span className="sm:hidden">Agendar Consultoría</span>
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </ShimmerButton>
               </a>

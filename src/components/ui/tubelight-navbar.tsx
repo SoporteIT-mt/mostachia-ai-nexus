@@ -72,11 +72,11 @@ export function NavBar({ items, className, logo }: NavBarProps) {
     <div
       className={cn(
         "fixed z-50 left-1/2 -translate-x-1/2",
-        "bottom-4 sm:top-0 sm:bottom-auto sm:pt-4",
+        "bottom-6 sm:top-0 sm:bottom-auto sm:pt-4",
         className
       )}
     >
-      <div className="flex items-center gap-1 bg-background/5 border border-border/40 backdrop-blur-xl py-1.5 px-2 rounded-full shadow-lg">
+      <div className="flex items-center gap-1 bg-background/5 border border-border/40 backdrop-blur-xl py-1.5 px-2 rounded-full shadow-lg pb-[env(safe-area-inset-bottom)]">
         {logo && (
           <a
             href="#"

@@ -286,7 +286,7 @@ export const HowItWorksSection = () => {
                   className="text-lg font-bold px-12 py-6 group shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
                 >
                   <Calendar className="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" />
-                  Agendar Diagnóstico Gratis
+                  Agendá tu Consultoría Gratuita
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </ShimmerButton>
               </a>

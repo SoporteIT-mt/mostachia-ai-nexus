@@ -161,7 +161,7 @@ export const IndustriasSection = () => {
                 className="px-6 py-3 font-semibold whitespace-nowrap shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                Agendar Diagnóstico Gratis
+                Hablemos de tu Rubro
                 <ArrowRight className="w-4 h-4 ml-2" />
               </ShimmerButton>
             </a>

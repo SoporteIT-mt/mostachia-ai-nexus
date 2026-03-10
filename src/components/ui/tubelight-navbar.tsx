@@ -103,8 +103,9 @@ export function NavBar({ items, className, logo }: NavBarProps) {
               }}
               className={cn(
                 "relative cursor-pointer text-sm font-semibold px-4 sm:px-5 py-2 rounded-full transition-colors whitespace-nowrap",
-                "text-foreground/80 hover:text-primary",
-                isActive && "bg-muted text-primary"
+                item.url.startsWith("http")
+                  ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25"
+                  : cn("text-foreground/80 hover:text-primary", isActive && "bg-muted text-primary")
               )}
             >
               <span className="hidden sm:inline">{item.name}</span>

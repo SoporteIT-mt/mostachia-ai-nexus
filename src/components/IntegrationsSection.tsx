@@ -177,15 +177,13 @@ export const IntegrationsSection = () => {
           {/* Orbit ring lines */}
           <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.04]"
-            style={{ width: 300, height: 300 }}
+            className="w-[200px] h-[200px] md:w-[300px] md:h-[300px]"
           />
           <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/[0.03]"
-            style={{ width: 380, height: 380 }}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/[0.03] w-[260px] h-[260px] md:w-[380px] md:h-[380px]"
           />
           <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.04]"
-            style={{ width: 480, height: 480 }}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.04] w-[320px] h-[320px] md:w-[480px] md:h-[480px]"
           />
 
           {/* Central hub */}

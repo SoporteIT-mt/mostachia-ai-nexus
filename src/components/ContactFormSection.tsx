@@ -222,7 +222,7 @@ export const ContactFormSection = () => {
                   className="w-full py-4 font-semibold"
                 >
                   <Calendar className="w-4 h-4 mr-2" />
-                  Agendar Diagnóstico Gratis
+                  Reservar Horario
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </ShimmerButton>
               </a>

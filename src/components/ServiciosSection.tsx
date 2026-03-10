@@ -430,7 +430,7 @@ export const ServiciosSection = () => {
   const ActiveMockup = mockupComponents[active];
 
   return (
-    <section id="servicios" className="py-24 md:py-32 relative overflow-hidden">
+    <section id="servicios" className="py-16 lg:py-20 relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
         <BlurFade className="text-center mb-16">

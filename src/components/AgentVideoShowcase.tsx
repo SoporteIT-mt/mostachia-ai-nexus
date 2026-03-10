@@ -10,7 +10,6 @@ import { cn } from '@/lib/utils';
 interface Agent {
   id: string;
   icon: React.ReactNode;
-  emoji: string;
   title: string;
   subtitle: string;
   description: string;

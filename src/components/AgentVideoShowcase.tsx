@@ -65,7 +65,6 @@ const AGENTS: Agent[] = [
   {
     id: 'ventas',
     icon: <ShoppingCart className="w-5 h-5" />,
-    emoji: '💰',
     title: 'Agente de Ventas',
     subtitle: 'Tu vendedor más rápido, disponible 24/7',
     description: 'Calificá prospectos, agendá reuniones, gestioná pagos y seguimientos sin intervención humana. Del primer contacto al cierre.',

@@ -118,7 +118,7 @@ function OrbitRing({
 
 export const IntegrationsSection = () => {
   return (
-    <section id="integraciones" className="relative py-24 md:py-32 overflow-hidden">
+    <section id="integraciones" className="relative py-16 lg:py-20 overflow-hidden">
       <style>{`
         @keyframes orbit-spin {
           from { transform: rotate(0deg); }

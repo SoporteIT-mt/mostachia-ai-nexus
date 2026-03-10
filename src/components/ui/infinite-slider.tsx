@@ -101,6 +101,8 @@ export function InfiniteSlider({
       >
         {children}
         {children}
+        {children}
+        {children}
       </motion.div>
     </motion.div>
   );

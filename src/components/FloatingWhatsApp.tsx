@@ -30,10 +30,10 @@ const initialBotMessages: Omit<ChatMessage, 'id' | 'timestamp'>[] = [
 ];
 
 const quickReplies = [
-  '💰 Precios y planes',
-  '🎯 Ver servicios',
-  '📅 Agendar reunión',
-  '🔧 Integraciones',
+  'Precios y planes',
+  'Ver servicios',
+  'Agendar reunión',
+  'Integraciones',
 ];
 
 const TypingIndicator = () => (

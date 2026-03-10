@@ -23,7 +23,6 @@ const AGENTS: Agent[] = [
   {
     id: 'analytics',
     icon: <BarChart3 className="w-5 h-5" />,
-    emoji: '📊',
     title: 'Agente de Analytics & Dashboards',
     subtitle: 'Tu negocio en tiempo real, sin tocar una planilla',
     description: 'Preguntale a tus datos como si le hablaras a una persona. Consulta tu base de datos en vivo, responde en lenguaje natural y genera dashboards interactivos.',

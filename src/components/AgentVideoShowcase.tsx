@@ -169,7 +169,7 @@ export const AgentVideoShowcase = () => {
         <div className="text-center mb-12 lg:mb-16">
           <BlurFade delay={0}>
             <span className="inline-flex items-center gap-2 rounded-full border border-mint-400/30 bg-mint-400/10 px-4 py-1.5 mb-6 text-sm font-medium text-mint-400">
-              🤖 Nuestros Agentes en Acción
+              Nuestros Agentes en Acción
             </span>
           </BlurFade>
           <BlurFade delay={0.1}>

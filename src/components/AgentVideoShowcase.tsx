@@ -37,7 +37,6 @@ const AGENTS: Agent[] = [
   {
     id: 'marketing',
     icon: <Megaphone className="w-5 h-5" />,
-    emoji: '📢',
     title: 'Agente de Marketing',
     subtitle: 'Tu estrategia ejecutándose sola mientras vos crecés',
     description: 'Analizá campañas, planificá contenido con datos reales, enviá emails segmentados y optimizá anuncios en automático.',

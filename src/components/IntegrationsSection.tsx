@@ -65,12 +65,14 @@ function OrbitRing({
   duration,
   reverse = false,
   iconSize = 44,
+  className,
 }: {
   items: Integration[];
   radius: number;
   duration: number;
   reverse?: boolean;
   iconSize?: number;
+  className?: string;
 }) {
   const direction = reverse ? "reverse" : "normal";
   const counterDirection = reverse ? "normal" : "reverse";

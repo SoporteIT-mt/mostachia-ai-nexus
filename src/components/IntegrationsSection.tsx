@@ -70,7 +70,7 @@ export const IntegrationsSection = () => {
               key={logo.alt}
               src={logo.src}
               alt={logo.alt}
-              className="h-7 md:h-9 w-auto object-contain brightness-0 invert opacity-60 hover:opacity-100 transition-opacity duration-300"
+              className="pointer-events-none h-6 md:h-7 select-none opacity-50 hover:opacity-90 transition-opacity duration-300 brightness-0 invert"
             />
           ))}
         </InfiniteSlider>

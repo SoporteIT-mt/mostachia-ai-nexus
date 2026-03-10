@@ -54,7 +54,7 @@ export const IntegrationsSection = () => {
       </div>
 
       {/* Divider line */}
-      <div className="w-full h-px bg-border mb-8" />
+      <div className="mx-auto mb-6 h-px max-w-xs bg-white/[0.06] [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
 
       {/* Row 1 — slides right */}
       <div

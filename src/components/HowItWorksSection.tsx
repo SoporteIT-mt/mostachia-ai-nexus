@@ -68,7 +68,7 @@ export const HowItWorksSection = () => {
   }, [isInView]);
 
   return (
-    <section id="proceso" ref={ref} className="py-24 md:py-32 relative overflow-hidden">
+    <section id="proceso" ref={ref} className="py-16 lg:py-20 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}

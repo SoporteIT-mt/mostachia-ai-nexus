@@ -51,7 +51,6 @@ const AGENTS: Agent[] = [
   {
     id: 'contenido',
     icon: <Palette className="w-5 h-5" />,
-    emoji: '🎨',
     title: 'Agente Creador de Contenido',
     subtitle: 'Contenido profesional en segundos, con tu identidad',
     description: 'Creá posts para Instagram con tu catálogo, carruseles adaptados a tu marca, videos de productos y avatares con IA — todo con tus colores y tu tono.',

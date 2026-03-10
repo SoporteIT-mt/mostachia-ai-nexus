@@ -169,7 +169,7 @@ export const ContactFormSection = () => {
                   </ShimmerButton>
 
                   <p className="text-xs text-muted-foreground text-center">
-                    🔒 No compartimos tu información. Respuesta en menos de 24hs.
+                    No compartimos tu información. Respuesta en menos de 24hs.
                   </p>
                 </form>
               </Form>

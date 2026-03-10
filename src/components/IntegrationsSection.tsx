@@ -92,7 +92,7 @@ export const IntegrationsSection = () => {
               key={logo.alt}
               src={logo.src}
               alt={logo.alt}
-              className="pointer-events-none h-7 md:h-8 w-auto select-none opacity-50 hover:opacity-90 transition-opacity duration-300"
+              className="pointer-events-none h-7 md:h-8 w-auto select-none opacity-50 hover:opacity-90 transition-opacity duration-300 brightness-0 invert"
             />
           ))}
         </InfiniteSlider>

@@ -23,7 +23,7 @@ const LOGOS_ROW_2 = [
   { src: `${SI}/mongodb.svg`, alt: "MongoDB" },
   { src: `${SI}/googlesheets.svg`, alt: "Google Sheets" },
   { src: `${SI}/github.svg`, alt: "GitHub" },
-  { src: `${SI}/n8n.svg`, alt: "n8n" },
+  { src: "https://cdn.simpleicons.org/n8n/white", alt: "n8n" },
   { src: `${SI}/make.svg`, alt: "Make" },
   { src: `${SI}/googlegemini.svg`, alt: "Gemini" },
 ];

@@ -78,7 +78,7 @@ function OrbitRing({
   const counterDirection = reverse ? "normal" : "reverse";
 
   return (
-    <>
+    <div className={className}>
       {items.map((item, i) => (
         <div
           key={item.name}

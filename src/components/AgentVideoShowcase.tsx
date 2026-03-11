@@ -93,6 +93,7 @@ const AGENTS: Agent[] = [
       'Memoria de conversación y contexto',
     ],
     tags: ['WhatsApp', 'Email', 'Telegram', 'Tickets'],
+    videoUrl: 'https://www.youtube.com/embed/qkcCv5gf0DA',
   },
 ];
 

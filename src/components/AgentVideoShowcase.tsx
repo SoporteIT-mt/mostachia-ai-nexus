@@ -122,6 +122,7 @@ export const AgentVideoShowcase = () => {
   const touchStartX = useRef(0);
   const autoplayTimer = useRef<ReturnType<typeof setInterval> | null>(null);
   const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const paginate = useCallback((dir: number) => {
     setCurrent(([prev]) => {
@@ -135,19 +136,27 @@ export const AgentVideoShowcase = () => {
     autoplayTimer.current = setInterval(() => paginate(1), 7000);
   }, [paginate]);
 
-  const pauseAutoplay = useCallback(() => {
+  const stopAutoplay = useCallback(() => {
     if (autoplayTimer.current) { clearInterval(autoplayTimer.current); autoplayTimer.current = null; }
-    if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    if (resumeTimer.current) { clearTimeout(resumeTimer.current); resumeTimer.current = null; }
+  }, []);
+
+  const pauseAutoplay = useCallback(() => {
+    stopAutoplay();
     resumeTimer.current = setTimeout(startAutoplay, 12000);
-  }, [startAutoplay]);
+  }, [startAutoplay, stopAutoplay]);
 
   useEffect(() => {
-    startAutoplay();
+    if (dialogOpen) {
+      stopAutoplay();
+    } else {
+      startAutoplay();
+    }
     return () => {
       if (autoplayTimer.current) clearInterval(autoplayTimer.current);
       if (resumeTimer.current) clearTimeout(resumeTimer.current);
     };
-  }, [startAutoplay]);
+  }, [dialogOpen, startAutoplay, stopAutoplay]);
 
   const handleNav = useCallback((dir: number) => {
     pauseAutoplay();
@@ -267,7 +276,7 @@ export const AgentVideoShowcase = () => {
                 {/* RIGHT — Video area */}
                 <div className="flex items-center justify-center">
                   {agent.videoUrl ? (
-                    <Dialog>
+                    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                       <DialogTrigger asChild>
                         <button className="w-full aspect-video rounded-xl overflow-hidden relative group cursor-pointer border border-white/[0.06]">
                           <img

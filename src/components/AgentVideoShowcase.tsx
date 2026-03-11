@@ -48,6 +48,7 @@ const AGENTS: Agent[] = [
       'Optimización automática de anuncios',
     ],
     tags: ['Meta Ads', 'Google Ads', 'Brevo', 'n8n'],
+    videoUrl: 'https://www.youtube.com/embed/R1n2rXTnhVs',
   },
   {
     id: 'contenido',

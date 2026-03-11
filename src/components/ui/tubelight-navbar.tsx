@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 import { type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -19,6 +20,8 @@ export function NavBar({ items, className, logo }: NavBarProps) {
   const [activeTab, setActiveTab] = useState(items[0].name);
   const [isMobile, setIsMobile] = useState(false);
   const manualOverride = useRef(false);
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const handleResize = () => {
@@ -57,6 +60,12 @@ export function NavBar({ items, className, logo }: NavBarProps) {
     return () => observer.disconnect();
   }, [items]);
 
+  // Set active tab based on current route
+  useEffect(() => {
+    const routeItem = items.find((item) => item.url === location.pathname);
+    if (routeItem) setActiveTab(routeItem.name);
+  }, [location.pathname, items]);
+
   const handleClick = useCallback((item: NavItem) => {
     setActiveTab(item.name);
     manualOverride.current = true;
@@ -68,7 +77,13 @@ export function NavBar({ items, className, logo }: NavBarProps) {
       return;
     }
 
-    // Hash-based links (e.g. #servicios) → smooth scroll
+    // Hash-based links — if not on home, navigate to home + hash
+    if (item.url.startsWith("#") && !isHome) {
+      window.location.href = `/${item.url}`;
+      return;
+    }
+
+    // Hash-based links on home → smooth scroll
     try {
       const element = document.querySelector(item.url);
       if (element) {
@@ -77,7 +92,7 @@ export function NavBar({ items, className, logo }: NavBarProps) {
     } catch {
       // Invalid selector, ignore
     }
-  }, []);
+  }, [isHome]);
 
   return (
     <div

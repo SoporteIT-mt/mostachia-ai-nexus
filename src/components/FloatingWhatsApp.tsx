@@ -208,24 +208,25 @@ export const FloatingWhatsApp = () => {
             exit={{ scale: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             onClick={() => setIsOpen(prev => !prev)}
-            className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-40 w-[60px] h-[60px] rounded-full shadow-lg shadow-mint-400/30 hover:shadow-xl hover:shadow-mint-400/40 hover:scale-110 transition-all duration-300 flex items-center justify-center overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, #73D7CB, #5CB8A5)' }}
+            className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-40 relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 shadow-lg shadow-emerald-500/25 transition-all hover:scale-105 hover:shadow-emerald-500/40 active:scale-95"
             aria-label={isOpen ? 'Cerrar chat' : 'Abrir chat'}
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
-                <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }} className="text-navy-900">
+                <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }} className="text-white">
                   <X className="w-7 h-7" />
                 </motion.div>
               ) : (
                 <motion.div key="open" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.8, opacity: 0 }} transition={{ duration: 0.15 }}>
-                  <img src="/isotipo-mint.png" alt="MostachIA" className="w-9 h-9 object-contain" />
+                  <img src="/isotipo-mint.png" alt="Chat" className="h-7 w-7 object-contain brightness-0 invert" />
                 </motion.div>
               )}
             </AnimatePresence>
-            {/* Online dot */}
             {!isOpen && (
-              <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-green-400 border-2 border-background animate-pulse" />
+              <span className="absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-emerald-400 border-2 border-neutral-950" />
+              </span>
             )}
           </motion.button>
         )}

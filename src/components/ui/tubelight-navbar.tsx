@@ -20,6 +20,8 @@ export function NavBar({ items, className, logo }: NavBarProps) {
   const [activeTab, setActiveTab] = useState(items[0].name);
   const [isMobile, setIsMobile] = useState(false);
   const manualOverride = useRef(false);
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const handleResize = () => {

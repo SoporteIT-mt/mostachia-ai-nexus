@@ -63,6 +63,7 @@ const AGENTS: Agent[] = [
       'Avatares y piezas visuales listas para publicar',
     ],
     tags: ['Instagram', 'TikTok', 'Kling AI', 'ElevenLabs'],
+    videoUrl: 'https://www.youtube.com/embed/Z4GZdqN8T4g',
   },
   {
     id: 'ventas',

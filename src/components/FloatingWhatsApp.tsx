@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CONFIG } from '@/config/constants';
+import { CONFIG, trackEvent, CRO_EVENTS } from '@/config/constants';
 
 export const FloatingWhatsApp = () => {
   const [fabVisible, setFabVisible] = useState(false);

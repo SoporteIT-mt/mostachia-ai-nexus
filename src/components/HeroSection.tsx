@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Calendar, ArrowRight, Sparkles } from 'lucide-react';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
-import { CONFIG } from '@/config/constants';
+import { CONFIG, trackEvent, CRO_EVENTS } from '@/config/constants';
 
 const fadeUpVariants = {
   hidden: { opacity: 0, y: 40 },

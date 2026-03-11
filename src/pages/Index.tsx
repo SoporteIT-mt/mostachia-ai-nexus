@@ -15,6 +15,8 @@ import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { StickyCTA } from '@/components/StickyCTA';
 import { ScrollProgress } from '@/components/ScrollProgress';
+import { ResultsSection } from '@/components/ResultsSection';
+import { SocialProofBanner } from '@/components/SocialProofBanner';
 
 
 const Index = () => {
@@ -36,11 +38,13 @@ const Index = () => {
         <ServiciosSection />
         <AgentVideoShowcase />
         <TrustSection />
+        <ResultsSection />
         <HowItWorksSection />
         <IndustriasSection />
         <IntegrationsSection />
         <TeamSection />
         <FAQSection />
+        <SocialProofBanner />
         <ContactFormSection />
       </main>
       <Footer />

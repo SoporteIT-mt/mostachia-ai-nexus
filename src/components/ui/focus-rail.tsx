@@ -1,6 +1,6 @@
 import * as React from "react";
 import { motion, AnimatePresence, type PanInfo } from "framer-motion";
-import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Linkedin } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export type FocusRailItem = {
@@ -262,7 +262,7 @@ export function FocusRail({
                   {activeItem.title}
                 </h3>
                 {activeItem.description && (
-                  <p className="mt-1.5 max-w-lg text-sm text-neutral-400 font-light leading-relaxed line-clamp-2">
+                  <p className="mt-1.5 max-w-lg text-sm sm:text-base text-neutral-400 leading-relaxed">
                     {activeItem.description}
                   </p>
                 )}
@@ -299,8 +299,8 @@ export function FocusRail({
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-neutral-400 backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
               >
-                Explore
-                <ArrowUpRight className="h-4 w-4" />
+                LinkedIn
+                <Linkedin className="h-4 w-4" />
               </a>
             )}
           </div>

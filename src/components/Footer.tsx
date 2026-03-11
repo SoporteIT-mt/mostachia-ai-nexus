@@ -28,7 +28,7 @@ export const Footer = () => {
           {/* Col 1 — Logo */}
           <div>
             <a href="#" className="block mb-4">
-              <img src="/logo-slogan.png" alt="MostachIA - Procesos inteligentes, resultados superiores" className="h-8 sm:h-10 w-auto object-contain" />
+              <img src="/logo-slogan.png" alt="MostachIA" className="h-10 w-auto object-contain" />
             </a>
             <p className="text-sm text-muted-foreground mb-5">
               Automatización Inteligente para Negocios

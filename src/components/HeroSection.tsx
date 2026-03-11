@@ -22,6 +22,17 @@ export const HeroSection = () => {
       </div>
 
       <div className="max-w-4xl mx-auto text-center space-y-8">
+        {/* Isotipo */}
+        <motion.img
+          src="/isotipo-mint.png"
+          alt=""
+          className="h-10 w-10 object-contain opacity-80 mb-4 mx-auto"
+          custom={0}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUpVariants}
+        />
+
         {/* Etiqueta superior */}
         <motion.div
           custom={0}

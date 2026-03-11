@@ -78,6 +78,7 @@ const AGENTS: Agent[] = [
       'Integración directa con tu CRM',
     ],
     tags: ['WhatsApp', 'Cal.com', 'Stripe', 'CRM'],
+    videoUrl: 'https://www.youtube.com/embed/az-ZwEZb6VI',
   },
   {
     id: 'soporte',

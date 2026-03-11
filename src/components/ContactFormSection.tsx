@@ -47,6 +47,7 @@ export const ContactFormSection = () => {
       });
 
       if (res.ok) {
+        trackEvent(CRO_EVENTS.FORM_SUBMIT, { source: 'web-form' });
         toast.success('¡Consulta enviada! Te contactamos en menos de 24 horas. 🎉');
         form.reset();
       } else {

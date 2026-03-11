@@ -12,7 +12,7 @@ const TEAM_MEMBERS: FocusRailItem[] = [
       "No espera que las herramientas existan — las construye. Como Chief AI Officer de MostachIA, diseña los sistemas de agentes que automatizan procesos, generan reportes y potencian negocios de industrias tan distintas como el cine, la gastronomía y el retail.",
     meta: "Chief AI Officer",
     imageSrc: "/team/juan-cruz.jpg.jpeg",
-    href: "https://www.linkedin.com/in/juancruzbertorello/",
+    href: "https://www.linkedin.com/in/juanbertorello/",
   },
   {
     id: "diego",
@@ -21,7 +21,7 @@ const TEAM_MEMBERS: FocusRailItem[] = [
       "Es el puente entre lo que MostachIA puede hacer y lo que cada cliente realmente necesita. Escucha primero, propone después. Tiene la habilidad de traducir desafíos de negocio en soluciones concretas, y de generar confianza desde el primer café — o el primer mensaje de WhatsApp.",
     meta: "Business Lead",
     imageSrc: "/team/diego.jpg.jpeg",
-    href: "https://www.linkedin.com/in/diego-gonzalez/",
+    href: "https://www.linkedin.com/in/diegogonzalez316/",
   },
   {
     id: "florencia",
@@ -30,7 +30,7 @@ const TEAM_MEMBERS: FocusRailItem[] = [
       "La que hace que MostachIA se vea, se sienta y se entienda. Detrás de cada pieza de comunicación hay una decisión estratégica suya. Combina criterio creativo con foco en resultados, y se asegura de que la marca diga exactamente lo que tiene que decir.",
     meta: "Brand & Comms",
     imageSrc: "/team/florencia.jpg",
-    href: "https://www.linkedin.com/in/florencia-ferrer-cabrera/",
+    href: "https://www.linkedin.com/in/florencia-ferrer-0a6455148/",
   },
   {
     id: "juan-andres",
@@ -39,7 +39,7 @@ const TEAM_MEMBERS: FocusRailItem[] = [
       "El que hace que todo funcione cuando nadie está mirando. Diseña y mantiene la infraestructura sobre la que corren los agentes, los flujos y las integraciones de cada cliente. Meticuloso, resolutivo y siempre un paso adelante de los problemas antes de que aparezcan.",
     meta: "Lead Infrastructure",
     imageSrc: "/team/juan-andres.jpg.jpeg",
-    href: "https://www.linkedin.com/in/juan-andres-huenz/",
+    href: "https://www.linkedin.com/in/jahuenz/",
   },
 ];
 

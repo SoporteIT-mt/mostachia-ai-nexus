@@ -189,7 +189,7 @@ export const ContactFormSection = () => {
                 className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 <MessageCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                +54 3564 66-7968
+                +54 9 3564 66-7968
               </a>
 
               <a

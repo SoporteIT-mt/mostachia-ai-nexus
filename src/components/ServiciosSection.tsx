@@ -126,14 +126,19 @@ const AgentChatWrapper = ({ prompt, color, children }: { prompt: string; color: 
 
 const MockupAnalytics = () => {
   const kpis = [
-    { label: 'Revenue', value: '$128.4K', change: '+18.2%' },
-    { label: 'Clientes', value: '2,847', change: '+12.5%' },
-    { label: 'Churn', value: '1.8%', change: '-0.4%' },
-    { label: 'NPS', value: '72', change: '+5pts' },
+    { label: 'Revenue', value: '$128.4K', change: '+18.2%', changeColor: 'text-emerald-400', iconColor: 'text-emerald-400' },
+    { label: 'Clientes', value: '2,847', change: '+12.5%', changeColor: 'text-blue-400', iconColor: 'text-blue-400' },
+    { label: 'Churn', value: '1.8%', change: '-0.4%', changeColor: 'text-red-400', iconColor: 'text-red-400' },
+    { label: 'NPS', value: '72', change: '+5pts', changeColor: 'text-amber-400', iconColor: 'text-amber-400' },
   ];
   const barData = [
-    { day: 'L', value: 62 }, { day: 'M', value: 85 }, { day: 'X', value: 45 },
-    { day: 'J', value: 92 }, { day: 'V', value: 78 }, { day: 'S', value: 55 }, { day: 'D', value: 38 },
+    { day: 'L', value: 62, color: 'from-emerald-500/50 to-emerald-400' },
+    { day: 'M', value: 85, color: 'from-mint-400/50 to-mint-400' },
+    { day: 'X', value: 45, color: 'from-teal-500/50 to-teal-400' },
+    { day: 'J', value: 92, color: 'from-emerald-500/50 to-emerald-400' },
+    { day: 'V', value: 78, color: 'from-mint-400/50 to-mint-400' },
+    { day: 'S', value: 55, color: 'from-teal-500/50 to-teal-400' },
+    { day: 'D', value: 38, color: 'from-emerald-500/50 to-emerald-400' },
   ];
 
   return (
@@ -150,22 +155,27 @@ const MockupAnalytics = () => {
             <span className="text-[8px] text-muted-foreground uppercase tracking-wider">{kpi.label}</span>
             <div className="text-sm font-bold font-mono text-foreground">{kpi.value}</div>
             <div className="flex items-center gap-1 mt-0.5">
-              <Activity className="w-2.5 h-2.5 text-emerald-400" />
-              <span className="text-[9px] font-mono text-emerald-400">{kpi.change}</span>
+              <ArrowUpRight className={`w-2.5 h-2.5 ${kpi.iconColor} ${kpi.label === 'Churn' ? 'rotate-90' : ''}`} />
+              <span className={`text-[9px] font-mono ${kpi.changeColor}`}>{kpi.change}</span>
             </div>
           </motion.div>
         ))}
       </div>
       <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-        <div className="flex justify-between mb-2">
+        <div className="flex justify-between items-center mb-2">
           <span className="text-[9px] font-semibold text-foreground uppercase tracking-wider">Revenue Semanal</span>
-          <span className="text-[8px] text-muted-foreground font-mono">$132.8K</span>
+          <div className="flex items-center gap-1">
+            <motion.div animate={{ y: [0, -2, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+              <ArrowUpRight className="w-3 h-3 text-emerald-400" />
+            </motion.div>
+            <span className="text-[8px] text-emerald-400 font-mono font-bold">$132.8K</span>
+          </div>
         </div>
         <div className="flex items-end gap-1.5 h-16">
           {barData.map((bar, i) => (
             <div key={bar.day} className="flex-1 flex flex-col items-center gap-0.5">
               <motion.div
-                className="w-full rounded-sm bg-gradient-to-t from-primary/50 to-primary"
+                className={`w-full rounded-sm bg-gradient-to-t ${bar.color}`}
                 initial={{ height: 0 }}
                 animate={{ height: `${bar.value}%` }}
                 transition={{ delay: 0.3 + i * 0.06, duration: 0.5, ease: 'easeOut' }}
@@ -181,9 +191,9 @@ const MockupAnalytics = () => {
 
 const MockupMarketing = () => {
   const campaigns = [
-    { name: 'Onboarding Secuencia', status: 'Activa', sent: '4,210', open: '72%', statusColor: 'text-emerald-400', statusBg: 'bg-emerald-400/10' },
-    { name: 'Promo Verano 2026', status: 'Optimizando', sent: '1,847', open: '58%', statusColor: 'text-blue-400', statusBg: 'bg-blue-400/10' },
-    { name: 'Re-engagement Q1', status: 'Programada', sent: '—', open: '—', statusColor: 'text-muted-foreground', statusBg: 'bg-muted/20' },
+    { name: 'Onboarding Secuencia', status: 'Activa', sent: '4,210', open: 72, statusColor: 'text-emerald-400', statusBg: 'bg-emerald-400/10', barColor: 'bg-emerald-400' },
+    { name: 'Promo Verano 2026', status: 'Optimizando', sent: '1,847', open: 58, statusColor: 'text-blue-400', statusBg: 'bg-blue-400/10', barColor: 'bg-blue-400' },
+    { name: 'Re-engagement Q1', status: 'Programada', sent: '—', open: 0, statusColor: 'text-muted-foreground', statusBg: 'bg-muted/20', barColor: 'bg-muted' },
   ];
 
   return (
@@ -199,22 +209,34 @@ const MockupMarketing = () => {
             initial={{ opacity: 0, x: -8 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 + i * 0.12 }}
-            className="px-3 py-2.5 flex items-center justify-between"
+            className="px-3 py-2.5"
           >
-            <div>
-              <span className="text-[10px] font-medium text-foreground block">{c.name}</span>
-              <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded-full ${c.statusBg} ${c.statusColor} inline-block mt-0.5`}>{c.status}</span>
-            </div>
-            <div className="flex gap-3 text-right">
+            <div className="flex items-center justify-between mb-1.5">
               <div>
-                <div className="text-[9px] font-mono text-foreground">{c.sent}</div>
-                <div className="text-[7px] text-muted-foreground">enviados</div>
+                <span className="text-[10px] font-medium text-foreground block">{c.name}</span>
+                <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded-full ${c.statusBg} ${c.statusColor} inline-block mt-0.5`}>{c.status}</span>
               </div>
-              <div>
-                <div className="text-[9px] font-mono text-foreground">{c.open}</div>
-                <div className="text-[7px] text-muted-foreground">apertura</div>
+              <div className="flex gap-3 text-right">
+                <div>
+                  <div className="text-[9px] font-mono text-foreground">{c.sent}</div>
+                  <div className="text-[7px] text-muted-foreground">enviados</div>
+                </div>
+                <div>
+                  <div className="text-[9px] font-mono text-foreground">{c.open > 0 ? `${c.open}%` : '—'}</div>
+                  <div className="text-[7px] text-muted-foreground">apertura</div>
+                </div>
               </div>
             </div>
+            {c.open > 0 && (
+              <div className="w-full h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                <motion.div
+                  className={`h-full rounded-full ${c.barColor}`}
+                  initial={{ width: 0 }}
+                  animate={{ width: `${c.open}%` }}
+                  transition={{ delay: 0.3 + i * 0.15, duration: 0.6 }}
+                />
+              </div>
+            )}
           </motion.div>
         ))}
       </div>
@@ -222,10 +244,19 @@ const MockupMarketing = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="mx-3 mb-3 flex items-center gap-2 p-2 rounded-lg bg-blue-400/5 border border-blue-400/10"
+        className="mx-3 mb-3 flex items-center gap-3 p-3 rounded-lg bg-blue-400/5 border border-blue-400/10"
       >
-        <Sparkles className="w-3 h-3 text-blue-400" />
-        <span className="text-[8px] text-foreground font-mono">ROAS de "Verano 2026" optimizado: +22% proyectado.</span>
+        <div className="flex items-center gap-2 flex-1">
+          <Sparkles className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+          <span className="text-[8px] text-foreground font-mono">ROAS optimizado</span>
+        </div>
+        <div className="text-right">
+          <div className="flex items-center gap-1">
+            <span className="text-lg font-bold font-mono text-blue-400">+22%</span>
+            <ArrowUpRight className="w-4 h-4 text-blue-400" />
+          </div>
+          <span className="text-[7px] text-muted-foreground">proyectado</span>
+        </div>
       </motion.div>
     </div>
   );
@@ -233,11 +264,17 @@ const MockupMarketing = () => {
 
 const MockupContent = () => {
   const queue = [
-    { type: 'Post IG #1', desc: 'Lifestyle — nueva colección', status: 'Generado', color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
-    { type: 'Post IG #2', desc: 'Producto en fondo degradado', status: 'Renderizando...', color: 'text-purple-400', bg: 'bg-purple-400/10' },
-    { type: 'Post IG #3', desc: 'Carrusel 5 slides — detalles', status: 'En cola', color: 'text-muted-foreground', bg: 'bg-muted/20' },
+    { type: 'Post IG #1', desc: 'Lifestyle — nueva colección', status: 'Generado', color: 'text-emerald-400', bg: 'bg-emerald-400/10', preview: ['#60b99a', '#4a9e82', '#73D7CB'] },
+    { type: 'Post IG #2', desc: 'Producto en fondo degradado', status: 'Renderizando...', color: 'text-purple-400', bg: 'bg-purple-400/10', preview: ['#7C3AED', '#9333EA', '#A855F7'] },
+    { type: 'Post IG #3', desc: 'Carrusel 5 slides — detalles', status: 'En cola', color: 'text-muted-foreground', bg: 'bg-muted/20', preview: [] },
   ];
-  const brandColors = ['#00E5A0', '#7C3AED', '#3B82F6', '#F59E0B'];
+  const brandKit = [
+    { name: 'Mint', color: '#73D7CB' },
+    { name: 'Primary', color: '#60b99a' },
+    { name: 'Dark', color: '#0A1820' },
+    { name: 'Navy', color: '#1a3a4a' },
+    { name: 'Accent', color: '#4a9e82' },
+  ];
 
   return (
     <div className="space-y-3 rounded-xl border border-white/[0.06] bg-black/20 p-3">
@@ -245,18 +282,6 @@ const MockupContent = () => {
         <div className="flex items-center gap-2">
           <ImageIcon className="w-3 h-3 text-purple-400" />
           <span className="text-[10px] font-semibold text-foreground uppercase tracking-wider">Producción</span>
-        </div>
-        <div className="flex gap-1">
-          {brandColors.map((c, i) => (
-            <motion.div
-              key={i}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.15 + i * 0.05 }}
-              className="w-4 h-4 rounded-full border border-white/10"
-              style={{ backgroundColor: c }}
-            />
-          ))}
         </div>
       </div>
       <div className="divide-y divide-white/[0.04] rounded-lg border border-white/[0.06] overflow-hidden">
@@ -268,13 +293,53 @@ const MockupContent = () => {
             transition={{ delay: 0.2 + i * 0.12 }}
             className="px-3 py-2.5 flex items-center justify-between"
           >
-            <div>
-              <span className="text-[10px] font-semibold text-foreground block">{item.type}</span>
-              <span className="text-[8px] text-muted-foreground">{item.desc}</span>
+            <div className="flex items-center gap-2.5">
+              {/* Mini previews */}
+              <div className="flex gap-0.5">
+                {item.preview.length > 0 ? item.preview.map((c, j) => (
+                  <motion.div
+                    key={j}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.3 + j * 0.05 }}
+                    className="w-5 h-5 rounded border border-white/10"
+                    style={{ backgroundColor: c }}
+                  />
+                )) : (
+                  <div className="w-5 h-5 rounded border border-white/10 bg-white/[0.03] flex items-center justify-center">
+                    <Clock className="w-2.5 h-2.5 text-muted-foreground" />
+                  </div>
+                )}
+              </div>
+              <div>
+                <span className="text-[10px] font-semibold text-foreground block">{item.type}</span>
+                <span className="text-[8px] text-muted-foreground">{item.desc}</span>
+              </div>
             </div>
             <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded-full ${item.bg} ${item.color}`}>{item.status}</span>
           </motion.div>
         ))}
+      </div>
+      {/* Brand Kit */}
+      <div className="p-2.5 rounded-lg bg-purple-400/5 border border-purple-400/10">
+        <div className="flex items-center gap-1.5 mb-2">
+          <PenTool className="w-2.5 h-2.5 text-purple-400" />
+          <span className="text-[8px] font-semibold text-foreground uppercase tracking-wider">Brand Kit MostachIA</span>
+        </div>
+        <div className="flex gap-1.5">
+          {brandKit.map((c, i) => (
+            <motion.div
+              key={i}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.4 + i * 0.05 }}
+              className="flex flex-col items-center gap-0.5"
+            >
+              <div className="w-6 h-6 rounded-full border border-white/10" style={{ backgroundColor: c.color }} />
+              <span className="text-[6px] text-muted-foreground">{c.name}</span>
+            </motion.div>
+          ))}
+        </div>
       </div>
       <motion.div
         initial={{ opacity: 0 }}
@@ -293,9 +358,14 @@ const MockupContent = () => {
 
 const MockupSales = () => {
   const leads = [
-    { name: 'María López', channel: 'WhatsApp', status: 'Respondió', action: 'Reunión agendada', color: 'text-emerald-400' },
-    { name: 'Carlos Ruiz', channel: 'WhatsApp', status: 'Respondió', action: 'Propuesta enviada', color: 'text-blue-400' },
-    { name: 'Ana Torres', channel: 'WhatsApp', status: 'Visto', action: 'Pendiente follow-up', color: 'text-amber-400' },
+    { name: 'María López', channel: 'WhatsApp', channelIcon: '💬', status: 'Respondió', action: 'Reunión agendada', color: 'text-emerald-400' },
+    { name: 'Carlos Ruiz', channel: 'Web', channelIcon: '🌐', status: 'Respondió', action: 'Propuesta enviada', color: 'text-blue-400' },
+    { name: 'Ana Torres', channel: 'WhatsApp', channelIcon: '💬', status: 'Visto', action: 'Pendiente follow-up', color: 'text-amber-400' },
+  ];
+  const funnel = [
+    { stage: 'Nuevo', count: 12, width: '100%', color: 'bg-blue-400' },
+    { stage: 'Calificado', count: 7, width: '60%', color: 'bg-amber-400' },
+    { stage: 'Cerrado', count: 3, width: '28%', color: 'bg-emerald-400' },
   ];
 
   return (
@@ -303,6 +373,26 @@ const MockupSales = () => {
       <div className="flex items-center gap-2 mb-1">
         <DollarSign className="w-3 h-3 text-emerald-400" />
         <span className="text-[10px] font-semibold text-foreground uppercase tracking-wider">Leads Actualizados</span>
+      </div>
+      {/* Mini Funnel */}
+      <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-1.5">
+        {funnel.map((f, i) => (
+          <motion.div
+            key={f.stage}
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ delay: 0.2 + i * 0.1, duration: 0.4 }}
+            style={{ originX: 0 }}
+            className="flex items-center gap-2"
+          >
+            <span className="text-[7px] text-muted-foreground w-14 text-right">{f.stage}</span>
+            <div className="flex-1 h-4 rounded-sm overflow-hidden bg-white/[0.04]" style={{ width: f.width }}>
+              <div className={`h-full ${f.color} rounded-sm flex items-center justify-end pr-1.5`}>
+                <span className="text-[8px] font-bold font-mono text-white">{f.count}</span>
+              </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
       <div className="divide-y divide-white/[0.04] rounded-lg border border-white/[0.06] overflow-hidden">
         {leads.map((lead, i) => (
@@ -315,7 +405,10 @@ const MockupSales = () => {
           >
             <div>
               <span className="text-[10px] font-medium text-foreground block">{lead.name}</span>
-              <span className="text-[8px] text-muted-foreground">{lead.channel} · {lead.status}</span>
+              <span className="text-[8px] text-muted-foreground">
+                <span className="mr-1">{lead.channelIcon}</span>
+                {lead.channel} · {lead.status}
+              </span>
             </div>
             <span className={`text-[8px] font-mono ${lead.color}`}>{lead.action}</span>
           </motion.div>
@@ -345,6 +438,11 @@ const MockupSupport = () => {
     { role: 'bot' as const, text: 'Encontré tu compra #4821. El correo de confirmación fue reenviado a tu casilla. ¿Necesitás algo más?' },
     { role: 'user' as const, text: '¡Perfecto, ya lo vi! Gracias.' },
   ];
+  const metrics = [
+    { label: 'Resp.', value: '<30s', percent: 95, color: 'text-emerald-400', ring: 'stroke-emerald-400' },
+    { label: 'CSAT', value: '98%', percent: 98, color: 'text-blue-400', ring: 'stroke-blue-400' },
+    { label: 'Resolución', value: '94%', percent: 94, color: 'text-amber-400', ring: 'stroke-amber-400' },
+  ];
 
   useEffect(() => {
     setVisibleMsgs(0);
@@ -358,6 +456,8 @@ const MockupSupport = () => {
     };
     setTimeout(show, 400);
   }, []);
+
+  const circumference = 2 * Math.PI * 14;
 
   return (
     <div className="space-y-2.5 rounded-xl border border-white/[0.06] bg-black/20 p-3">
@@ -401,10 +501,24 @@ const MockupSupport = () => {
         transition={{ delay: 1.5 }}
         className="grid grid-cols-3 gap-2 pt-2 border-t border-white/[0.06]"
       >
-        {[{ l: 'Resp.', v: '<30s' }, { l: 'CSAT', v: '98%' }, { l: 'Resolución', v: '94%' }].map((s, i) => (
-          <div key={i} className="text-center">
-            <div className="text-[10px] font-bold font-mono text-foreground">{s.v}</div>
-            <div className="text-[7px] text-muted-foreground">{s.l}</div>
+        {metrics.map((s, i) => (
+          <div key={i} className="flex flex-col items-center gap-1">
+            <div className="relative w-9 h-9">
+              <svg className="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-white/[0.06]" />
+                <motion.circle
+                  cx="18" cy="18" r="14" fill="none"
+                  strokeWidth="2.5" strokeLinecap="round"
+                  className={s.ring}
+                  strokeDasharray={circumference}
+                  initial={{ strokeDashoffset: circumference }}
+                  animate={{ strokeDashoffset: circumference - (circumference * s.percent) / 100 }}
+                  transition={{ delay: 1.5 + i * 0.15, duration: 0.8 }}
+                />
+              </svg>
+              <span className={`absolute inset-0 flex items-center justify-center text-[7px] font-bold font-mono ${s.color}`}>{s.value}</span>
+            </div>
+            <span className="text-[7px] text-muted-foreground">{s.label}</span>
           </div>
         ))}
       </motion.div>

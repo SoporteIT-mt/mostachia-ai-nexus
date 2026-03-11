@@ -13,11 +13,12 @@ export const CONFIG = {
   WHATSAPP_URL: 'https://wa.me/5493564667968?text=Hola!%20Me%20interesa%20saber%20más%20sobre%20MostachIA',
   
   // Redes Sociales
-  INSTAGRAM_URL: 'https://www.instagram.com/mostachia.ia',
+  INSTAGRAM_URL: 'https://www.instagram.com/mostachia.ok/',
   LINKEDIN_URL: 'https://www.linkedin.com/company/mostachia',
+  YOUTUBE_URL: 'https://www.youtube.com/@Mostach-IA',
   
   // Email
-  EMAIL: 'hola@mostachia.com',
+  EMAIL: 'info@mostachia.com',
 } as const;
 
 // Event tracking (preparado para GA4)

@@ -264,11 +264,17 @@ const MockupMarketing = () => {
 
 const MockupContent = () => {
   const queue = [
-    { type: 'Post IG #1', desc: 'Lifestyle — nueva colección', status: 'Generado', color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
-    { type: 'Post IG #2', desc: 'Producto en fondo degradado', status: 'Renderizando...', color: 'text-purple-400', bg: 'bg-purple-400/10' },
-    { type: 'Post IG #3', desc: 'Carrusel 5 slides — detalles', status: 'En cola', color: 'text-muted-foreground', bg: 'bg-muted/20' },
+    { type: 'Post IG #1', desc: 'Lifestyle — nueva colección', status: 'Generado', color: 'text-emerald-400', bg: 'bg-emerald-400/10', preview: ['#60b99a', '#4a9e82', '#73D7CB'] },
+    { type: 'Post IG #2', desc: 'Producto en fondo degradado', status: 'Renderizando...', color: 'text-purple-400', bg: 'bg-purple-400/10', preview: ['#7C3AED', '#9333EA', '#A855F7'] },
+    { type: 'Post IG #3', desc: 'Carrusel 5 slides — detalles', status: 'En cola', color: 'text-muted-foreground', bg: 'bg-muted/20', preview: [] },
   ];
-  const brandColors = ['#00E5A0', '#7C3AED', '#3B82F6', '#F59E0B'];
+  const brandKit = [
+    { name: 'Mint', color: '#73D7CB' },
+    { name: 'Primary', color: '#60b99a' },
+    { name: 'Dark', color: '#0A1820' },
+    { name: 'Navy', color: '#1a3a4a' },
+    { name: 'Accent', color: '#4a9e82' },
+  ];
 
   return (
     <div className="space-y-3 rounded-xl border border-white/[0.06] bg-black/20 p-3">
@@ -276,18 +282,6 @@ const MockupContent = () => {
         <div className="flex items-center gap-2">
           <ImageIcon className="w-3 h-3 text-purple-400" />
           <span className="text-[10px] font-semibold text-foreground uppercase tracking-wider">Producción</span>
-        </div>
-        <div className="flex gap-1">
-          {brandColors.map((c, i) => (
-            <motion.div
-              key={i}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.15 + i * 0.05 }}
-              className="w-4 h-4 rounded-full border border-white/10"
-              style={{ backgroundColor: c }}
-            />
-          ))}
         </div>
       </div>
       <div className="divide-y divide-white/[0.04] rounded-lg border border-white/[0.06] overflow-hidden">
@@ -299,13 +293,53 @@ const MockupContent = () => {
             transition={{ delay: 0.2 + i * 0.12 }}
             className="px-3 py-2.5 flex items-center justify-between"
           >
-            <div>
-              <span className="text-[10px] font-semibold text-foreground block">{item.type}</span>
-              <span className="text-[8px] text-muted-foreground">{item.desc}</span>
+            <div className="flex items-center gap-2.5">
+              {/* Mini previews */}
+              <div className="flex gap-0.5">
+                {item.preview.length > 0 ? item.preview.map((c, j) => (
+                  <motion.div
+                    key={j}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.3 + j * 0.05 }}
+                    className="w-5 h-5 rounded border border-white/10"
+                    style={{ backgroundColor: c }}
+                  />
+                )) : (
+                  <div className="w-5 h-5 rounded border border-white/10 bg-white/[0.03] flex items-center justify-center">
+                    <Clock className="w-2.5 h-2.5 text-muted-foreground" />
+                  </div>
+                )}
+              </div>
+              <div>
+                <span className="text-[10px] font-semibold text-foreground block">{item.type}</span>
+                <span className="text-[8px] text-muted-foreground">{item.desc}</span>
+              </div>
             </div>
             <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded-full ${item.bg} ${item.color}`}>{item.status}</span>
           </motion.div>
         ))}
+      </div>
+      {/* Brand Kit */}
+      <div className="p-2.5 rounded-lg bg-purple-400/5 border border-purple-400/10">
+        <div className="flex items-center gap-1.5 mb-2">
+          <PenTool className="w-2.5 h-2.5 text-purple-400" />
+          <span className="text-[8px] font-semibold text-foreground uppercase tracking-wider">Brand Kit MostachIA</span>
+        </div>
+        <div className="flex gap-1.5">
+          {brandKit.map((c, i) => (
+            <motion.div
+              key={i}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.4 + i * 0.05 }}
+              className="flex flex-col items-center gap-0.5"
+            >
+              <div className="w-6 h-6 rounded-full border border-white/10" style={{ backgroundColor: c.color }} />
+              <span className="text-[6px] text-muted-foreground">{c.name}</span>
+            </motion.div>
+          ))}
+        </div>
       </div>
       <motion.div
         initial={{ opacity: 0 }}

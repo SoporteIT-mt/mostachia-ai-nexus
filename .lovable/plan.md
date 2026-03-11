@@ -1,94 +1,88 @@
-# Hero Profesional + Stats Section + CTA Polish
 
-## Problemas identificados
 
-1. **H1 en 3 lineas** - "Tu Negocio con IA," / "Otro Nivel de" / "Resultados." deberia ser 2 lineas
-2. **Beams apenas visibles** - la opacidad y el vignette overlay los tapan demasiado
-3. **Espacio vacio excesivo** debajo de los CTAs y micro-proof
-4. **Falta la seccion de estadisticas** (KPIs) que se removio del Hero
+## Plan de Mejoras Integral — MostachIA
+
+Se implementan 5 mejoras sin quitar nada existente. Todo es aditivo.
 
 ---
 
-## 1. Hero H1 en 2 lineas (HeroSection.tsx)
+### 1. Sitemap XML + Robots.txt actualizado
 
-Reestructurar el titulo para que quede en exactamente 2 lineas:
+**`public/sitemap.xml`** — Crear archivo estático con URLs de la landing (y futuras páginas como `/privacidad`).
 
-- **Linea 1:** "Tu Negocio con IA, Otro Nivel de"
-- **Linea 2:** "Resultados."
-
-Cambiar la estructura de 2 `<span className="block">` a:
-
-- Linea 1: todo junto en un solo bloque con `AnimatedWords("Tu Negocio con")` +  `IA,` (mint) + `AnimatedWords(" Otro Nivel de")` 
-- Linea 2: "Resultados." en gradient, centrado y mas grande visualmente
-
-Aumentar el tamano tipografico para desktop: `lg:text-8xl` para que sea mas impactante.
-
-## 2. Beams mas visibles (beams-background.tsx)
-
-- Reducir la opacidad del vignette overlay: cambiar `transparent 40%` a `transparent 60%` para que los beams sean mas visibles en el centro
-- Aumentar blur de `35px` a `30px` para beams mas definidos
-- Base opacity de beams: `0.22 + Math.random() * 0.25` (mas intensos)
-
-## 3. Eliminar espacio vacio del Hero (HeroSection.tsx)
-
-- Cambiar `min-h-screen` a `min-h-[85vh]` para que el Hero no tenga tanto espacio vacio debajo
-- Ajustar padding bottom
-
-## 4. Nueva StatsSection entre Hero y Servicios
-
-Crear `src/components/StatsSection.tsx` con los 4 KPIs en un grid horizontal:
-
-
-| KPI              | Valor | Sufijo |
-| ---------------- | ----- | ------ |
-| Clientes Activos | 30    | +      |
-| Industrias       | 8     | +      |
-| Agentes IA 24/7  | 50    | +      |
-| Implementacion   | 1-4   | sem    |
-
-
-- Grid de 4 columnas (desktop) / 2x2 (mobile)
-- Cada KPI usa `NumberTicker` para la animacion de conteo
-- Fondo sutil glass con borde tenue
-- Separadores verticales entre KPIs en desktop
-- Colores: numeros en mint (#73D7CB), labels en muted
-
-Insertar en Index.tsx entre `<HeroSection />` y el primer `<AnimatedDivider />`.
-
-## 5. CTA "Como Trabajamos" - polish final (HowItWorksSection.tsx)
-
-El boton ya tiene buen estilo pero:
-
-- Verificar que el `group` class funciona para la animacion de flecha
-- Asegurar que el hover glow se intensifica correctamente
+**`public/robots.txt`** — Agregar línea `Sitemap: https://mostachia.com/sitemap.xml`.
 
 ---
 
-## Archivos a modificar
+### 2. Sección "Resultados Reales" (Social Proof ligero)
 
+Nueva sección `src/components/ResultsSection.tsx` posicionada entre `TrustSection` y `HowItWorksSection` en Index.tsx.
 
-| Archivo                                  | Cambio                                               |
-| ---------------------------------------- | ---------------------------------------------------- |
-| `src/components/HeroSection.tsx`         | H1 en 2 lineas, reducir min-h, tipografia mas grande |
-| `src/components/ui/beams-background.tsx` | Beams mas visibles, reducir vignette                 |
-| `src/components/StatsSection.tsx`        | CREAR - 4 KPIs con NumberTicker                      |
-| `src/pages/Index.tsx`                    | Insertar StatsSection entre Hero y Servicios         |
+Contenido con datos modestos y creíbles (sin testimonios con foto):
 
+- 3-4 cards tipo "mini caso" con datos anónimos pero realistas:
+  - **Cine en Córdoba**: "Automatizamos la atención por WhatsApp. Hoy responde 200+ consultas diarias sin intervención humana."
+  - **Restaurante**: "Dashboard de ventas en tiempo real. El dueño dejó de depender de Excel para tomar decisiones."
+  - **E-commerce**: "Agente de soporte que resuelve el 85% de consultas sin escalar a un humano."
+  - **Estudio Contable**: "Migración de base de datos legacy y reportes automatizados. 15 horas semanales recuperadas."
 
-## Detalle tecnico
+Cada card tiene: icono de industria, título corto, descripción de 1-2 líneas, y un chip con la métrica clave. Sin nombres de empresas, solo rubro + ciudad. Estilo glass-card consistente con el resto.
 
-### H1 nueva estructura:
+---
 
-```text
-Linea 1: "Tu Negocio con IA, Otro Nivel de"
-Linea 2: "Resultados."
-```
+### 3. Banner de Social Proof pre-Contacto
 
-El truco es poner todo en la linea 1 como `inline` y dejar que "Resultados." sea un `block` separado. Aumentar a `lg:text-8xl` para impacto visual.
+Nueva sección compacta `src/components/SocialProofBanner.tsx` justo antes de `ContactFormSection`.
 
-### StatsSection:
+Un banner horizontal con 3-4 datos en fila:
+- "30+ clientes confían en nosotros"
+- "Respuesta promedio < 24hs"
+- "98% de satisfacción"
+- "Equipo 100% argentino"
 
-- Usa `NumberTicker` del componente existente (`src/components/ui/number-ticker.tsx`)
-- Background: `bg-white/[0.02]` con `backdrop-blur-sm` y `border border-white/[0.06]`
-- Padding: `py-12` para que sea compacto
-- Animacion: `BlurFade` staggered para cada KPI
+Estilo: fondo sutil, chips/badges en fila, sin ser una sección pesada. Refuerza la decisión justo antes del formulario.
+
+---
+
+### 4. Página de Política de Privacidad
+
+**`src/pages/Privacidad.tsx`** — Página con texto legal básico (recopilación de datos del formulario, uso de cookies, contacto para ejercer derechos).
+
+**`src/App.tsx`** — Agregar ruta `/privacidad`.
+
+**`src/components/Footer.tsx`** — Agregar link "Política de Privacidad" en la columna Empresa.
+
+**`src/components/ContactFormSection.tsx`** — Agregar link a la política debajo del botón de envío.
+
+---
+
+### 5. Event Tracking preparado para GA4
+
+**`src/config/constants.ts`** — Actualizar `trackEvent` para que detecte `window.gtag` automáticamente y envíe eventos cuando GA4 esté configurado. Sin cambiar la función, solo hacer que funcione si el script de GA4 está presente.
+
+Agregar calls a `trackEvent` en puntos clave:
+- `ContactFormSection.tsx` — on form submit
+- `HeroSection.tsx` — on CTA click
+- `FloatingWhatsApp.tsx` — on WhatsApp click
+- `FAQSection.tsx` — on accordion open
+
+---
+
+### Archivos a crear/modificar
+
+| Archivo | Acción |
+|---------|--------|
+| `public/sitemap.xml` | Crear |
+| `public/robots.txt` | Modificar — agregar Sitemap |
+| `src/components/ResultsSection.tsx` | Crear — mini casos anónimos |
+| `src/components/SocialProofBanner.tsx` | Crear — banner pre-contacto |
+| `src/pages/Privacidad.tsx` | Crear — política de privacidad |
+| `src/pages/Index.tsx` | Modificar — insertar ResultsSection y SocialProofBanner |
+| `src/App.tsx` | Modificar — agregar ruta /privacidad |
+| `src/components/Footer.tsx` | Modificar — link a privacidad |
+| `src/components/ContactFormSection.tsx` | Modificar — link a privacidad |
+| `src/config/constants.ts` | Modificar — trackEvent con gtag |
+| `src/components/HeroSection.tsx` | Modificar — trackEvent en CTA |
+| `src/components/FloatingWhatsApp.tsx` | Modificar — trackEvent en click |
+| `src/components/FAQSection.tsx` | Modificar — trackEvent en accordion |
+

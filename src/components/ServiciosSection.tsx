@@ -126,14 +126,19 @@ const AgentChatWrapper = ({ prompt, color, children }: { prompt: string; color: 
 
 const MockupAnalytics = () => {
   const kpis = [
-    { label: 'Revenue', value: '$128.4K', change: '+18.2%' },
-    { label: 'Clientes', value: '2,847', change: '+12.5%' },
-    { label: 'Churn', value: '1.8%', change: '-0.4%' },
-    { label: 'NPS', value: '72', change: '+5pts' },
+    { label: 'Revenue', value: '$128.4K', change: '+18.2%', changeColor: 'text-emerald-400', iconColor: 'text-emerald-400' },
+    { label: 'Clientes', value: '2,847', change: '+12.5%', changeColor: 'text-blue-400', iconColor: 'text-blue-400' },
+    { label: 'Churn', value: '1.8%', change: '-0.4%', changeColor: 'text-red-400', iconColor: 'text-red-400' },
+    { label: 'NPS', value: '72', change: '+5pts', changeColor: 'text-amber-400', iconColor: 'text-amber-400' },
   ];
   const barData = [
-    { day: 'L', value: 62 }, { day: 'M', value: 85 }, { day: 'X', value: 45 },
-    { day: 'J', value: 92 }, { day: 'V', value: 78 }, { day: 'S', value: 55 }, { day: 'D', value: 38 },
+    { day: 'L', value: 62, color: 'from-emerald-500/50 to-emerald-400' },
+    { day: 'M', value: 85, color: 'from-mint-400/50 to-mint-400' },
+    { day: 'X', value: 45, color: 'from-teal-500/50 to-teal-400' },
+    { day: 'J', value: 92, color: 'from-emerald-500/50 to-emerald-400' },
+    { day: 'V', value: 78, color: 'from-mint-400/50 to-mint-400' },
+    { day: 'S', value: 55, color: 'from-teal-500/50 to-teal-400' },
+    { day: 'D', value: 38, color: 'from-emerald-500/50 to-emerald-400' },
   ];
 
   return (
@@ -150,22 +155,27 @@ const MockupAnalytics = () => {
             <span className="text-[8px] text-muted-foreground uppercase tracking-wider">{kpi.label}</span>
             <div className="text-sm font-bold font-mono text-foreground">{kpi.value}</div>
             <div className="flex items-center gap-1 mt-0.5">
-              <Activity className="w-2.5 h-2.5 text-emerald-400" />
-              <span className="text-[9px] font-mono text-emerald-400">{kpi.change}</span>
+              <ArrowUpRight className={`w-2.5 h-2.5 ${kpi.iconColor} ${kpi.label === 'Churn' ? 'rotate-90' : ''}`} />
+              <span className={`text-[9px] font-mono ${kpi.changeColor}`}>{kpi.change}</span>
             </div>
           </motion.div>
         ))}
       </div>
       <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-        <div className="flex justify-between mb-2">
+        <div className="flex justify-between items-center mb-2">
           <span className="text-[9px] font-semibold text-foreground uppercase tracking-wider">Revenue Semanal</span>
-          <span className="text-[8px] text-muted-foreground font-mono">$132.8K</span>
+          <div className="flex items-center gap-1">
+            <motion.div animate={{ y: [0, -2, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+              <ArrowUpRight className="w-3 h-3 text-emerald-400" />
+            </motion.div>
+            <span className="text-[8px] text-emerald-400 font-mono font-bold">$132.8K</span>
+          </div>
         </div>
         <div className="flex items-end gap-1.5 h-16">
           {barData.map((bar, i) => (
             <div key={bar.day} className="flex-1 flex flex-col items-center gap-0.5">
               <motion.div
-                className="w-full rounded-sm bg-gradient-to-t from-primary/50 to-primary"
+                className={`w-full rounded-sm bg-gradient-to-t ${bar.color}`}
                 initial={{ height: 0 }}
                 animate={{ height: `${bar.value}%` }}
                 transition={{ delay: 0.3 + i * 0.06, duration: 0.5, ease: 'easeOut' }}

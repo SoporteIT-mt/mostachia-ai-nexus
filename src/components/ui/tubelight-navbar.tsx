@@ -62,9 +62,20 @@ export function NavBar({ items, className, logo }: NavBarProps) {
     manualOverride.current = true;
     setTimeout(() => { manualOverride.current = false; }, 1200);
 
-    const element = document.querySelector(item.url);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    // Route-based links (e.g. /blog) → navigate via location
+    if (item.url.startsWith("/")) {
+      window.location.href = item.url;
+      return;
+    }
+
+    // Hash-based links (e.g. #servicios) → smooth scroll
+    try {
+      const element = document.querySelector(item.url);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } catch {
+      // Invalid selector, ignore
     }
   }, []);
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Clock, ArrowLeft, Search } from 'lucide-react';
 import { blogPosts, categories } from '@/data/blogPosts';
 import { BlurFade } from '@/components/ui/blur-fade';

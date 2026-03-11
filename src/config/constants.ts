@@ -1,12 +1,12 @@
 export const CONFIG = {
   // Chat Widget → n8n webhook REAL
-  N8N_CHAT_WEBHOOK: 'https://n8n.srv945661.hstgr.cloud/webhook/mostachia-soporte',
+  N8N_CHAT_WEBHOOK: 'https://n8n.srv945661.hstgr.cloud/webhook/agenteventas',
   
   // Formulario de contacto → n8n webhook
   N8N_LEAD_WEBHOOK: 'https://n8n.srv945661.hstgr.cloud/webhook/nuevo-lead-web',
   
   // Cal.com — Agendamiento
-  CALCOM_URL: 'https://cal.com/mostachia/consultoria',
+  CALCOM_URL: 'https://cal.com/info-mostachia-6ymac3/30min',
   
   // WhatsApp — Número REAL del agente
   WHATSAPP_NUMBER: '5493564667968',

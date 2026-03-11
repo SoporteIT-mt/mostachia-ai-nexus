@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   BarChart3, Megaphone, Image as ImageIcon, DollarSign, HeadphonesIcon,
   ArrowUpRight, Users, CheckCircle2, Activity, Mail, Sparkles, ShieldCheck,
-  Search, Send, Clock, PenTool, LayoutTemplate
+  Search, Send, Clock, PenTool, LayoutTemplate, Calendar, FileText, Video
 } from 'lucide-react';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { BorderBeam } from '@/components/ui/border-beam';
@@ -16,6 +16,7 @@ const agentes = [
     tagline: 'Tu negocio en tiempo real',
     description: 'Nuestro agente consulta tu base de datos en vivo, responde en lenguaje natural y genera dashboards interactivos.',
     prompt: 'Generame un reporte de ventas y conversión del último mes.',
+    secondPrompt: 'Armame un dashboard interactivo con estos datos',
     color: 'text-mint-400', bg: 'bg-mint-400/10', border: 'border-mint-400/20'
   },
   {
@@ -25,6 +26,7 @@ const agentes = [
     tagline: 'Tu estrategia ejecutándose sola',
     description: 'Planificá calendarios de contenido con datos reales de tu negocio, enviá campañas de email y optimizá tus anuncios.',
     prompt: 'Revisá las campañas activas y optimizá el ROAS de "Verano 2026".',
+    secondPrompt: 'Enviá la campaña optimizada a toda la lista',
     color: 'text-blue-400', bg: 'bg-blue-400/10', border: 'border-blue-400/20'
   },
   {
@@ -34,6 +36,7 @@ const agentes = [
     tagline: 'Contenido profesional en segundos',
     description: 'Creá posts, carruseles y videos usando tu identidad visual. Cero diseñador, cero tiempo perdido.',
     prompt: 'Creá 3 imágenes para Instagram promocionando la nueva colección.',
+    secondPrompt: 'Generame también el caption y los hashtags',
     color: 'text-purple-400', bg: 'bg-purple-400/10', border: 'border-purple-400/20'
   },
   {
@@ -43,6 +46,7 @@ const agentes = [
     tagline: 'Tu vendedor más rápido, 24/7',
     description: 'Calificá prospectos, agendá reuniones y gestioná pagos. Se integra con tu CRM para guiar al cliente al cierre.',
     prompt: 'Actualizá el estado de los leads que respondieron hoy por WhatsApp.',
+    secondPrompt: 'Agendame una reunión con María López para mañana',
     color: 'text-emerald-400', bg: 'bg-emerald-400/10', border: 'border-emerald-400/20'
   },
   {
@@ -52,20 +56,41 @@ const agentes = [
     tagline: 'Atención que no duerme',
     description: 'Respondé consultas frecuentes, resolvé problemas y derivá casos complejos con el tono exacto de tu marca.',
     prompt: 'Respondé este reclamo de un cliente sobre su compra de ayer.',
+    secondPrompt: 'Mostrame las métricas de soporte de hoy',
     color: 'text-amber-400', bg: 'bg-amber-400/10', border: 'border-amber-400/20'
   },
 ];
 
 // --- COMPONENTE WRAPPER DEL CHAT ---
-const AgentChatWrapper = ({ prompt, color, children }: { prompt: string; color: string; children: React.ReactNode }) => {
+const AgentChatWrapper = ({ prompt, secondPrompt, color, children, secondChildren, containerRef }: {
+  prompt: string;
+  secondPrompt: string;
+  color: string;
+  children: React.ReactNode;
+  secondChildren: React.ReactNode;
+  containerRef: React.RefObject<HTMLDivElement>;
+}) => {
   const [step, setStep] = useState(0);
+  const secondRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setStep(0);
     const t1 = setTimeout(() => setStep(1), 600);
     const t2 = setTimeout(() => setStep(2), 2500);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    const t3 = setTimeout(() => setStep(3), 4000);
+    const t4 = setTimeout(() => setStep(4), 4600);
+    const t5 = setTimeout(() => setStep(5), 6100);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); };
   }, [prompt]);
+
+  // Auto-scroll when second interaction appears
+  useEffect(() => {
+    if (step >= 3 && containerRef.current) {
+      setTimeout(() => {
+        containerRef.current?.scrollTo({ top: containerRef.current.scrollHeight, behavior: 'smooth' });
+      }, 100);
+    }
+  }, [step, containerRef]);
 
   return (
     <div className="space-y-4">
@@ -81,7 +106,7 @@ const AgentChatWrapper = ({ prompt, color, children }: { prompt: string; color: 
         </div>
       </motion.div>
 
-      {/* Agent Response */}
+      {/* Agent Response 1 */}
       {step >= 1 && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -118,11 +143,66 @@ const AgentChatWrapper = ({ prompt, color, children }: { prompt: string; color: 
           )}
         </motion.div>
       )}
+
+      {/* Second Interaction */}
+      {step >= 3 && (
+        <div ref={secondRef} className="space-y-4 pt-2">
+          {/* Second User Prompt */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="flex justify-end"
+          >
+            <div className="max-w-[85%] px-4 py-2.5 rounded-2xl rounded-br-sm bg-white/[0.06] border border-white/[0.08] text-[11px] text-foreground leading-relaxed">
+              {secondPrompt}
+            </div>
+          </motion.div>
+
+          {/* Agent Response 2 */}
+          {step >= 4 && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+              className="space-y-2"
+            >
+              <div className="flex items-center gap-2 px-1">
+                <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+                  <Sparkles className="w-2.5 h-2.5 text-primary" />
+                </div>
+                <span className="text-[10px] font-semibold text-foreground">MostachIA Agent</span>
+              </div>
+
+              {step === 4 ? (
+                <div className="flex items-center gap-1 px-4 py-3">
+                  {[0, 1, 2].map((d) => (
+                    <motion.div
+                      key={d}
+                      className="w-1.5 h-1.5 rounded-full bg-primary/50"
+                      animate={{ opacity: [0.3, 1, 0.3] }}
+                      transition={{ duration: 0.7, repeat: Infinity, delay: d * 0.15 }}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  {secondChildren}
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-// --- HIGH-FIDELITY MOCKUPS ---
+// --- HIGH-FIDELITY MOCKUPS (First Interaction) ---
 
 const MockupAnalytics = () => {
   const kpis = [
@@ -204,7 +284,6 @@ const MockupAnalytics = () => {
           ))}
         </div>
       </div>
-      {/* Trend Area Chart */}
       <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
         <div className="flex justify-between items-center mb-2">
           <span className="text-[9px] font-semibold text-foreground uppercase tracking-wider">Tendencia Mensual</span>
@@ -345,7 +424,6 @@ const MockupContent = () => {
             className="px-3 py-2.5 flex items-center justify-between"
           >
             <div className="flex items-center gap-2.5">
-              {/* Mini previews */}
               <div className="flex gap-0.5">
                 {item.preview.length > 0 ? item.preview.map((c, j) => (
                   <motion.div
@@ -371,7 +449,6 @@ const MockupContent = () => {
           </motion.div>
         ))}
       </div>
-      {/* Brand Kit */}
       <div className="p-2.5 rounded-lg bg-purple-400/5 border border-purple-400/10">
         <div className="flex items-center gap-1.5 mb-2">
           <PenTool className="w-2.5 h-2.5 text-purple-400" />
@@ -425,7 +502,6 @@ const MockupSales = () => {
         <DollarSign className="w-3 h-3 text-emerald-400" />
         <span className="text-[10px] font-semibold text-foreground uppercase tracking-wider">Leads Actualizados</span>
       </div>
-      {/* Mini Funnel */}
       <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-1.5">
         {funnel.map((f, i) => (
           <motion.div
@@ -577,22 +653,218 @@ const MockupSupport = () => {
   );
 };
 
+// --- SECOND INTERACTION MOCKUPS (Compact) ---
+
+const SecondMockupAnalytics = () => (
+  <div className="space-y-2.5 rounded-xl border border-white/[0.06] bg-black/20 p-3">
+    <div className="flex items-center gap-2">
+      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+      <span className="text-[10px] text-foreground">Listo, generé el dashboard interactivo. Podés verlo, filtrarlo y descargarlo en PDF.</span>
+    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.15 }}
+      className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.04] border border-mint-400/20 hover:bg-white/[0.06] transition-colors cursor-pointer group"
+    >
+      <div className="w-9 h-9 rounded-lg bg-mint-400/10 flex items-center justify-center flex-shrink-0">
+        <BarChart3 className="w-4.5 h-4.5 text-mint-400" />
+      </div>
+      <div className="flex-1 min-w-0">
+        <span className="text-[7px] text-mint-400 font-mono uppercase tracking-wider block">Dashboard Generado</span>
+        <span className="text-[10px] font-semibold text-foreground block">Ver Dashboard Interactivo</span>
+      </div>
+      <ArrowUpRight className="w-4 h-4 text-mint-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+    </motion.div>
+    <span className="text-[8px] text-muted-foreground block px-1">También te lo envié por email a info@mostachia.com</span>
+  </div>
+);
+
+const SecondMockupMarketing = () => (
+  <div className="space-y-2.5 rounded-xl border border-white/[0.06] bg-black/20 p-3">
+    <motion.div
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="flex items-center gap-2"
+    >
+      <div className="w-6 h-6 rounded-full bg-emerald-400/20 flex items-center justify-center">
+        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+      </div>
+      <span className="text-[10px] font-semibold text-foreground">Campaña enviada correctamente</span>
+    </motion.div>
+    <div className="grid grid-cols-3 gap-2">
+      {[
+        { label: 'Destinatarios', value: '2,847' },
+        { label: 'Envío optimizado', value: '10:30 AM' },
+        { label: 'Preview', value: 'info@...' },
+      ].map((s, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 + i * 0.08 }}
+          className="text-center p-2 rounded-lg bg-white/[0.03] border border-white/[0.06]"
+        >
+          <div className="text-[10px] font-bold font-mono text-foreground">{s.value}</div>
+          <div className="text-[7px] text-muted-foreground">{s.label}</div>
+        </motion.div>
+      ))}
+    </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.3 }}
+      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/20"
+    >
+      <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" />
+      <span className="text-[8px] font-mono text-emerald-400 font-semibold">Enviada ✓</span>
+    </motion.div>
+  </div>
+);
+
+const SecondMockupContent = () => {
+  const hashtags = ['#NuevaColección', '#Moda', '#Estilo', '#Tendencia'];
+  return (
+    <div className="space-y-2.5 rounded-xl border border-white/[0.06] bg-black/20 p-3">
+      <div className="flex items-center gap-2">
+        <FileText className="w-3.5 h-3.5 text-purple-400" />
+        <span className="text-[10px] font-semibold text-foreground">Caption generado</span>
+      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 4 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06] space-y-2"
+      >
+        <p className="text-[10px] text-foreground/80 leading-relaxed italic">
+          "Descubrí la nueva colección que combina estilo y confort. Diseños que se adaptan a tu vida. ¿Cuál es tu favorito?"
+        </p>
+        <div className="border-t border-white/[0.06] pt-2 flex flex-wrap gap-1.5">
+          {hashtags.map((tag, i) => (
+            <motion.span
+              key={tag}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2 + i * 0.06 }}
+              className="text-[8px] font-mono px-2 py-0.5 rounded-full bg-purple-400/10 border border-purple-400/20 text-purple-400"
+            >
+              {tag}
+            </motion.span>
+          ))}
+        </div>
+      </motion.div>
+      <span className="text-[8px] text-muted-foreground block px-1">Listo para publicar. ¿Lo agendo para mañana a las 11:00?</span>
+    </div>
+  );
+};
+
+const SecondMockupSales = () => (
+  <div className="space-y-2.5 rounded-xl border border-white/[0.06] bg-black/20 p-3">
+    <motion.div
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="flex items-center gap-2"
+    >
+      <div className="w-6 h-6 rounded-full bg-emerald-400/20 flex items-center justify-center">
+        <Calendar className="w-3 h-3 text-emerald-400" />
+      </div>
+      <span className="text-[10px] font-semibold text-foreground">Reunión agendada</span>
+    </motion.div>
+    <motion.div
+      initial={{ opacity: 0, y: 4 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.1 }}
+      className="p-3 rounded-lg bg-white/[0.03] border border-emerald-400/20 space-y-1.5"
+    >
+      <div className="text-[10px] font-semibold text-foreground">María López — Mañana 14:00</div>
+      <div className="text-[8px] text-muted-foreground">Invitación enviada por WhatsApp y email</div>
+      <div className="text-[8px] text-muted-foreground">info@mostachia.com notificado</div>
+      <div className="flex items-center gap-1.5 mt-1">
+        <Video className="w-3 h-3 text-blue-400" />
+        <span className="text-[8px] text-blue-400 font-mono">Link de Meet incluido</span>
+      </div>
+    </motion.div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.25 }}
+      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-400/10 border border-emerald-400/20"
+    >
+      <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" />
+      <span className="text-[8px] font-mono text-emerald-400 font-semibold">Confirmada ✓</span>
+    </motion.div>
+  </div>
+);
+
+const SecondMockupSupport = () => {
+  const circumference = 2 * Math.PI * 10;
+  const stats = [
+    { label: 'Tickets', value: '23', detail: '20 resueltos', percent: 87, color: 'text-emerald-400', ring: 'stroke-emerald-400' },
+    { label: 'Respuesta', value: '28s', detail: '↓ vs ayer', percent: 92, color: 'text-blue-400', ring: 'stroke-blue-400' },
+    { label: 'CSAT', value: '98%', detail: '', percent: 98, color: 'text-amber-400', ring: 'stroke-amber-400' },
+    { label: 'Resolución', value: '94%', detail: '', percent: 94, color: 'text-emerald-400', ring: 'stroke-emerald-400' },
+  ];
+
+  return (
+    <div className="space-y-2.5 rounded-xl border border-white/[0.06] bg-black/20 p-3">
+      <div className="flex items-center gap-2">
+        <Activity className="w-3.5 h-3.5 text-amber-400" />
+        <span className="text-[10px] font-semibold text-foreground">Resumen del día</span>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        {stats.map((s, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: i * 0.08 }}
+            className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center gap-2"
+          >
+            <div className="relative w-7 h-7 flex-shrink-0">
+              <svg className="w-7 h-7 -rotate-90" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/[0.06]" />
+                <motion.circle
+                  cx="12" cy="12" r="10" fill="none"
+                  strokeWidth="2" strokeLinecap="round"
+                  className={s.ring}
+                  strokeDasharray={circumference}
+                  initial={{ strokeDashoffset: circumference }}
+                  animate={{ strokeDashoffset: circumference - (circumference * s.percent) / 100 }}
+                  transition={{ delay: 0.2 + i * 0.1, duration: 0.6 }}
+                />
+              </svg>
+            </div>
+            <div>
+              <div className={`text-[10px] font-bold font-mono ${s.color}`}>{s.value}</div>
+              <div className="text-[7px] text-muted-foreground">{s.label}</div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+      <span className="text-[8px] text-muted-foreground block px-1">3 tickets pendientes — ¿Querés que los resuelva ahora?</span>
+    </div>
+  );
+};
+
 const mockupComponents = [MockupAnalytics, MockupMarketing, MockupContent, MockupSales, MockupSupport];
+const secondMockupComponents = [SecondMockupAnalytics, SecondMockupMarketing, SecondMockupContent, SecondMockupSales, SecondMockupSupport];
 
 export const ServiciosSection = () => {
   const [active, setActive] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const activeAgent = agentes[active];
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isHovered) return;
     const interval = setInterval(() => {
       setActive((prev) => (prev + 1) % agentes.length);
-    }, 15000);
+    }, 20000);
     return () => clearInterval(interval);
   }, [isHovered]);
 
   const ActiveMockup = mockupComponents[active];
+  const ActiveSecondMockup = secondMockupComponents[active];
 
   return (
     <section id="servicios" className="py-16 lg:py-20 relative overflow-hidden">
@@ -677,7 +949,7 @@ export const ServiciosSection = () => {
               </div>
 
               {/* Chat Content */}
-              <div className="flex-1 p-5 overflow-y-auto relative z-10">
+              <div ref={chatContainerRef} className="flex-1 p-5 overflow-y-auto relative z-10">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={active}
@@ -686,7 +958,13 @@ export const ServiciosSection = () => {
                     exit={{ opacity: 0, y: -16 }}
                     transition={{ duration: 0.45, ease: [0.25, 0.4, 0.25, 1] }}
                   >
-                    <AgentChatWrapper prompt={activeAgent.prompt} color={activeAgent.color}>
+                    <AgentChatWrapper
+                      prompt={activeAgent.prompt}
+                      secondPrompt={activeAgent.secondPrompt}
+                      color={activeAgent.color}
+                      containerRef={chatContainerRef}
+                      secondChildren={<ActiveSecondMockup />}
+                    >
                       <ActiveMockup />
                     </AgentChatWrapper>
                   </motion.div>

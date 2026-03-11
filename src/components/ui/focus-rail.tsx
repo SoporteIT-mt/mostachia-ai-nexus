@@ -262,7 +262,7 @@ export function FocusRail({
                   {activeItem.title}
                 </h3>
                 {activeItem.description && (
-                  <p className="mt-1.5 max-w-lg text-sm text-neutral-400 font-light leading-relaxed line-clamp-2">
+                  <p className="mt-1.5 max-w-lg text-sm sm:text-base text-neutral-400 leading-relaxed">
                     {activeItem.description}
                   </p>
                 )}

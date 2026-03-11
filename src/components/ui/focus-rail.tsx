@@ -123,7 +123,7 @@ export function FocusRail({
             <img
               src={activeItem.imageSrc}
               alt=""
-              className="h-full w-full object-cover blur-[100px] saturate-[2] opacity-25 scale-[1.5]"
+              className="h-full w-full object-cover blur-[120px] saturate-[1.5] opacity-15 scale-[1.5]"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = "none";
               }}

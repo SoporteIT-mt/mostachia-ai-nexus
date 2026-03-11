@@ -17,6 +17,8 @@ import { StickyCTA } from '@/components/StickyCTA';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ResultsSection } from '@/components/ResultsSection';
 import { SocialProofBanner } from '@/components/SocialProofBanner';
+import { BlogPreviewSection } from '@/components/BlogPreviewSection';
+import { Helmet } from 'react-helmet-async';
 
 
 const Index = () => {
@@ -31,6 +33,16 @@ const Index = () => {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-primary/[0.07] rounded-full blur-[150px]" />
       </div>
 
+      <Helmet>
+        <title>MostachIA — Agentes de IA y Automatización para tu Negocio</title>
+        <meta name="description" content="Implementamos agentes de inteligencia artificial, chatbots y automatizaciones para potenciar tu negocio. Resultados reales en semanas." />
+        <link rel="canonical" href="https://mostachia-ai-nexus.lovable.app/" />
+        <meta property="og:title" content="MostachIA — Agentes de IA y Automatización para tu Negocio" />
+        <meta property="og:description" content="Implementamos agentes de inteligencia artificial, chatbots y automatizaciones para potenciar tu negocio." />
+        <meta property="og:url" content="https://mostachia-ai-nexus.lovable.app/" />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
       <main id="main" className="relative z-10">
         <HeroSection />
         <StatsSection />
@@ -44,6 +56,7 @@ const Index = () => {
         <IntegrationsSection />
         <TeamSection />
         <FAQSection />
+        <BlogPreviewSection />
         <SocialProofBanner />
         <ContactFormSection />
       </main>

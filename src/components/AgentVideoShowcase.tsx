@@ -48,6 +48,7 @@ const AGENTS: Agent[] = [
       'Optimización automática de anuncios',
     ],
     tags: ['Meta Ads', 'Google Ads', 'Brevo', 'n8n'],
+    videoUrl: 'https://www.youtube.com/embed/R1n2rXTnhVs',
   },
   {
     id: 'contenido',
@@ -62,6 +63,7 @@ const AGENTS: Agent[] = [
       'Avatares y piezas visuales listas para publicar',
     ],
     tags: ['Instagram', 'TikTok', 'Kling AI', 'ElevenLabs'],
+    videoUrl: 'https://www.youtube.com/embed/Z4GZdqN8T4g',
   },
   {
     id: 'ventas',
@@ -76,6 +78,7 @@ const AGENTS: Agent[] = [
       'Integración directa con tu CRM',
     ],
     tags: ['WhatsApp', 'Cal.com', 'Stripe', 'CRM'],
+    videoUrl: 'https://www.youtube.com/embed/az-ZwEZb6VI',
   },
   {
     id: 'soporte',
@@ -90,6 +93,7 @@ const AGENTS: Agent[] = [
       'Memoria de conversación y contexto',
     ],
     tags: ['WhatsApp', 'Email', 'Telegram', 'Tickets'],
+    videoUrl: 'https://www.youtube.com/embed/qkcCv5gf0DA',
   },
 ];
 

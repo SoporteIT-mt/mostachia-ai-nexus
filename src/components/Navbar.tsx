@@ -1,4 +1,4 @@
-import { Layers, Rocket, GitBranch, Users, MessageCircle } from "lucide-react";
+import { Layers, Rocket, GitBranch, Users, MessageCircle, BookOpen } from "lucide-react";
 import { NavBar, type NavItem } from "@/components/ui/tubelight-navbar";
 import { CONFIG } from "@/config/constants";
 
@@ -6,6 +6,7 @@ const NAV_ITEMS: NavItem[] = [
   { name: "Ecosistema IA", url: "#servicios", icon: Layers },
   { name: "En Acción", url: "#agentes", icon: Rocket },
   { name: "Método", url: "#proceso", icon: GitBranch },
+  { name: "Blog", url: "/blog", icon: BookOpen },
   { name: "Equipo", url: "#quienes-somos", icon: Users },
   { name: "WhatsApp", url: CONFIG.WHATSAPP_URL, icon: MessageCircle },
 ];

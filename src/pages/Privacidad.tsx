@@ -6,6 +6,11 @@ import { CONFIG } from '@/config/constants';
 const Privacidad = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Helmet>
+        <title>Política de Privacidad — MostachIA</title>
+        <meta name="description" content="Política de privacidad de MostachIA. Conocé cómo tratamos tus datos personales." />
+        <link rel="canonical" href="https://mostachia-ai-nexus.lovable.app/privacidad" />
+      </Helmet>
       <div className="container mx-auto px-6 py-20 max-w-3xl">
         <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-10">
           <ArrowLeft className="w-4 h-4" />

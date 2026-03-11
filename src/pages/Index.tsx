@@ -56,6 +56,7 @@ const Index = () => {
         <IntegrationsSection />
         <TeamSection />
         <FAQSection />
+        <BlogPreviewSection />
         <SocialProofBanner />
         <ContactFormSection />
       </main>

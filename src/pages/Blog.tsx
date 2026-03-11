@@ -25,6 +25,15 @@ const Blog = () => {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden scroll-smooth">
+      <Helmet>
+        <title>Blog — MostachIA | IA, Automatización y Tecnología</title>
+        <meta name="description" content="Artículos sobre inteligencia artificial, automatización, chatbots y tecnología para negocios. Recursos y guías de MostachIA." />
+        <link rel="canonical" href="https://mostachia-ai-nexus.lovable.app/blog" />
+        <meta property="og:title" content="Blog — MostachIA | IA, Automatización y Tecnología" />
+        <meta property="og:description" content="Artículos sobre inteligencia artificial, automatización, chatbots y tecnología para negocios." />
+        <meta property="og:url" content="https://mostachia-ai-nexus.lovable.app/blog" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <Navbar />
 
       {/* Background */}

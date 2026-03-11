@@ -29,6 +29,34 @@ const BlogPost = () => {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden scroll-smooth">
+      <Helmet>
+        <title>{post.title} — MostachIA Blog</title>
+        <meta name="description" content={post.excerpt} />
+        <link rel="canonical" href={`https://mostachia-ai-nexus.lovable.app/blog/${post.slug}`} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.excerpt} />
+        <meta property="og:image" content={post.image} />
+        <meta property="og:url" content={`https://mostachia-ai-nexus.lovable.app/blog/${post.slug}`} />
+        <meta property="og:type" content="article" />
+        <meta property="article:published_time" content={post.date} />
+        <meta property="article:author" content={post.author} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": post.title,
+            "description": post.excerpt,
+            "image": post.image,
+            "datePublished": post.date,
+            "author": { "@type": "Organization", "name": "MostachIA" },
+            "publisher": { "@type": "Organization", "name": "MostachIA" },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": `https://mostachia-ai-nexus.lovable.app/blog/${post.slug}`
+            }
+          })}
+        </script>
+      </Helmet>
       <Navbar />
 
       <div className="fixed inset-0 -z-10 pointer-events-none">

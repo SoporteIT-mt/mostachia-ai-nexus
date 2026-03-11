@@ -1,94 +1,52 @@
-# Hero Profesional + Stats Section + CTA Polish
-
-## Problemas identificados
-
-1. **H1 en 3 lineas** - "Tu Negocio con IA," / "Otro Nivel de" / "Resultados." deberia ser 2 lineas
-2. **Beams apenas visibles** - la opacidad y el vignette overlay los tapan demasiado
-3. **Espacio vacio excesivo** debajo de los CTAs y micro-proof
-4. **Falta la seccion de estadisticas** (KPIs) que se removio del Hero
-
----
-
-## 1. Hero H1 en 2 lineas (HeroSection.tsx)
-
-Reestructurar el titulo para que quede en exactamente 2 lineas:
-
-- **Linea 1:** "Tu Negocio con IA, Otro Nivel de"
-- **Linea 2:** "Resultados."
-
-Cambiar la estructura de 2 `<span className="block">` a:
-
-- Linea 1: todo junto en un solo bloque con `AnimatedWords("Tu Negocio con")` +  `IA,` (mint) + `AnimatedWords(" Otro Nivel de")` 
-- Linea 2: "Resultados." en gradient, centrado y mas grande visualmente
-
-Aumentar el tamano tipografico para desktop: `lg:text-8xl` para que sea mas impactante.
-
-## 2. Beams mas visibles (beams-background.tsx)
-
-- Reducir la opacidad del vignette overlay: cambiar `transparent 40%` a `transparent 60%` para que los beams sean mas visibles en el centro
-- Aumentar blur de `35px` a `30px` para beams mas definidos
-- Base opacity de beams: `0.22 + Math.random() * 0.25` (mas intensos)
-
-## 3. Eliminar espacio vacio del Hero (HeroSection.tsx)
-
-- Cambiar `min-h-screen` a `min-h-[85vh]` para que el Hero no tenga tanto espacio vacio debajo
-- Ajustar padding bottom
-
-## 4. Nueva StatsSection entre Hero y Servicios
-
-Crear `src/components/StatsSection.tsx` con los 4 KPIs en un grid horizontal:
 
 
-| KPI              | Valor | Sufijo |
-| ---------------- | ----- | ------ |
-| Clientes Activos | 30    | +      |
-| Industrias       | 8     | +      |
-| Agentes IA 24/7  | 50    | +      |
-| Implementacion   | 1-4   | sem    |
+## Multi-Interaction per Agent — Plan
 
+### Approach
 
-- Grid de 4 columnas (desktop) / 2x2 (mobile)
-- Cada KPI usa `NumberTicker` para la animacion de conteo
-- Fondo sutil glass con borde tenue
-- Separadores verticales entre KPIs en desktop
-- Colores: numeros en mint (#73D7CB), labels en muted
+Modify `AgentChatWrapper` to support a second interaction sequence (second user prompt + typing + second mockup). Each agent definition gets a `secondPrompt` string, and each agent gets a `SecondMockup` component.
 
-Insertar en Index.tsx entre `<HeroSection />` y el primer `<AnimatedDivider />`.
+### Changes
 
-## 5. CTA "Como Trabajamos" - polish final (HowItWorksSection.tsx)
+#### 1. Agent data (`agentes` array, lines 11-57)
+Add `secondPrompt` field to each agent:
+- Analytics: `"Armame un dashboard interactivo con estos datos"`
+- Marketing: `"Enviá la campaña optimizada a toda la lista"`
+- Content: `"Generame también el caption y los hashtags"`
+- Sales: `"Agendame una reunión con María López para mañana"`
+- Support: `"Mostrame las métricas de soporte de hoy"`
 
-El boton ya tiene buen estilo pero:
+#### 2. `AgentChatWrapper` (lines 59-123)
+- Accept new props: `secondPrompt`, `secondChildren`
+- Extend step state to include steps 3-5:
+  - Step 3 (4000ms): Show second user bubble
+  - Step 4 (4600ms): Show typing dots for second response
+  - Step 5 (6100ms): Show second mockup
+- Add `useRef` for auto-scroll: when step 3+ triggers, scroll the chat container down smoothly
+- Render second interaction block after the first mockup when step >= 3
 
-- Verificar que el `group` class funciona para la animacion de flecha
-- Asegurar que el hover glow se intensifica correctamente
+#### 3. Five new compact mockup components
 
----
+**`SecondMockupAnalytics`**: Dashboard-generated confirmation card with BarChart3 icon, "Ver Dashboard Interactivo" link card, and email notification text.
 
-## Archivos a modificar
+**`SecondMockupMarketing`**: Mail sent confirmation with check icon, 3-stat row (2,847 recipients, 10:30 AM send time, preview email), green "Enviada ✓" badge.
 
+**`SecondMockupContent`**: Caption text block with sample copy, hashtag chips in purple, footer with scheduling prompt.
 
-| Archivo                                  | Cambio                                               |
-| ---------------------------------------- | ---------------------------------------------------- |
-| `src/components/HeroSection.tsx`         | H1 en 2 lineas, reducir min-h, tipografia mas grande |
-| `src/components/ui/beams-background.tsx` | Beams mas visibles, reducir vignette                 |
-| `src/components/StatsSection.tsx`        | CREAR - 4 KPIs con NumberTicker                      |
-| `src/pages/Index.tsx`                    | Insertar StatsSection entre Hero y Servicios         |
+**`SecondMockupSales`**: Calendar + check icon, emerald-bordered card with meeting details (María López, tomorrow 14:00), WhatsApp/email confirmation, Meet link.
 
+**`SecondMockupSupport`**: "Resumen del día" with Activity icon, 2x2 grid of stats (23 tickets, 28s response, 98% CSAT, 94% resolution) with mini progress indicators, proactive footer.
 
-## Detalle tecnico
+#### 4. Wiring (lines 580, 689-691)
+- Create `secondMockupComponents` array parallel to `mockupComponents`
+- Pass `secondPrompt` and second mockup as children to `AgentChatWrapper`
 
-### H1 nueva estructura:
+#### 5. Auto-rotate timer (line 591)
+Change from `15000` to `20000` ms to allow time for both interactions.
 
-```text
-Linea 1: "Tu Negocio con IA, Otro Nivel de"
-Linea 2: "Resultados."
-```
+#### 6. Scroll behavior
+Add a `ref` on the chat content container (line 680) and pass it to `AgentChatWrapper` so it can call `scrollIntoView({ behavior: 'smooth' })` on the second interaction elements.
 
-El truco es poner todo en la linea 1 como `inline` y dejar que "Resultados." sea un `block` separado. Aumentar a `lg:text-8xl` para impacto visual.
+### Files modified
+- `src/components/ServiciosSection.tsx` — all changes in one file
 
-### StatsSection:
-
-- Usa `NumberTicker` del componente existente (`src/components/ui/number-ticker.tsx`)
-- Background: `bg-white/[0.02]` con `backdrop-blur-sm` y `border border-white/[0.06]`
-- Padding: `py-12` para que sea compacto
-- Animacion: `BlurFade` staggered para cada KPI

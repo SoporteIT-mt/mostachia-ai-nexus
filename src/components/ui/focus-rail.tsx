@@ -1,6 +1,6 @@
 import * as React from "react";
 import { motion, AnimatePresence, type PanInfo } from "framer-motion";
-import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Linkedin } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export type FocusRailItem = {

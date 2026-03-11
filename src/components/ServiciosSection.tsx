@@ -126,20 +126,24 @@ const AgentChatWrapper = ({ prompt, color, children }: { prompt: string; color: 
 
 const MockupAnalytics = () => {
   const kpis = [
-    { label: 'Revenue', value: '$128.4K', change: '+18.2%', changeColor: 'text-emerald-400', iconColor: 'text-emerald-400' },
-    { label: 'Clientes', value: '2,847', change: '+12.5%', changeColor: 'text-blue-400', iconColor: 'text-blue-400' },
-    { label: 'Churn', value: '1.8%', change: '-0.4%', changeColor: 'text-red-400', iconColor: 'text-red-400' },
-    { label: 'NPS', value: '72', change: '+5pts', changeColor: 'text-amber-400', iconColor: 'text-amber-400' },
+    { label: 'Revenue', value: '$128.4K', change: '+18.2%', changeColor: 'text-emerald-400', iconColor: 'text-emerald-400', sparkline: [20, 35, 28, 42, 38, 55, 62] },
+    { label: 'Clientes', value: '2,847', change: '+12.5%', changeColor: 'text-blue-400', iconColor: 'text-blue-400', sparkline: [15, 22, 18, 30, 25, 35, 40] },
+    { label: 'Churn', value: '1.8%', change: '-0.4%', changeColor: 'text-red-400', iconColor: 'text-red-400', sparkline: [40, 35, 38, 30, 28, 22, 18] },
+    { label: 'NPS', value: '72', change: '+5pts', changeColor: 'text-amber-400', iconColor: 'text-amber-400', sparkline: [30, 35, 32, 45, 50, 58, 65] },
   ];
-  const barData = [
-    { day: 'L', value: 62, color: 'from-emerald-500/50 to-emerald-400' },
-    { day: 'M', value: 85, color: 'from-mint-400/50 to-mint-400' },
-    { day: 'X', value: 45, color: 'from-teal-500/50 to-teal-400' },
-    { day: 'J', value: 92, color: 'from-emerald-500/50 to-emerald-400' },
-    { day: 'V', value: 78, color: 'from-mint-400/50 to-mint-400' },
-    { day: 'S', value: 55, color: 'from-teal-500/50 to-teal-400' },
-    { day: 'D', value: 38, color: 'from-emerald-500/50 to-emerald-400' },
+  const barHeights = [45, 62, 38, 78, 55, 85, 95];
+  const barColors = [
+    'rgba(96,185,154,0.6)', 'rgba(96,185,154,0.7)', 'rgba(96,185,154,0.5)',
+    'rgba(96,185,154,0.8)', 'rgba(96,185,154,0.6)', 'rgba(96,185,154,0.9)', 'rgba(96,185,154,1)'
   ];
+  const days = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+
+  const sparklinePath = (points: number[]) => {
+    const max = Math.max(...points);
+    const w = 40;
+    const h = 12;
+    return points.map((p, i) => `${i === 0 ? 'M' : 'L'}${(i / (points.length - 1)) * w},${h - (p / max) * h}`).join(' ');
+  };
 
   return (
     <div className="space-y-3 rounded-xl border border-white/[0.06] bg-black/20 p-3">
@@ -154,9 +158,24 @@ const MockupAnalytics = () => {
           >
             <span className="text-[8px] text-muted-foreground uppercase tracking-wider">{kpi.label}</span>
             <div className="text-sm font-bold font-mono text-foreground">{kpi.value}</div>
-            <div className="flex items-center gap-1 mt-0.5">
-              <ArrowUpRight className={`w-2.5 h-2.5 ${kpi.iconColor} ${kpi.label === 'Churn' ? 'rotate-90' : ''}`} />
-              <span className={`text-[9px] font-mono ${kpi.changeColor}`}>{kpi.change}</span>
+            <div className="flex items-center justify-between mt-0.5">
+              <div className="flex items-center gap-1">
+                <ArrowUpRight className={`w-2.5 h-2.5 ${kpi.iconColor} ${kpi.label === 'Churn' ? 'rotate-90' : ''}`} />
+                <span className={`text-[9px] font-mono ${kpi.changeColor}`}>{kpi.change}</span>
+              </div>
+              <svg width="40" height="12" viewBox="0 0 40 12" fill="none" className="opacity-60">
+                <motion.path
+                  d={sparklinePath(kpi.sparkline)}
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={kpi.iconColor}
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ delay: 0.3 + i * 0.1, duration: 0.8 }}
+                />
+              </svg>
             </div>
           </motion.div>
         ))}
@@ -171,19 +190,51 @@ const MockupAnalytics = () => {
             <span className="text-[8px] text-emerald-400 font-mono font-bold">$132.8K</span>
           </div>
         </div>
-        <div className="flex items-end gap-1.5 h-16">
-          {barData.map((bar, i) => (
-            <div key={bar.day} className="flex-1 flex flex-col items-center gap-0.5">
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: '6px', height: '80px', padding: '8px 0' }}>
+          {barHeights.map((h, i) => (
+            <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', height: '100%', justifyContent: 'flex-end' }}>
               <motion.div
-                className={`w-full rounded-sm bg-gradient-to-t ${bar.color}`}
+                style={{ width: '100%', background: barColors[i], borderRadius: '3px 3px 0 0' }}
                 initial={{ height: 0 }}
-                animate={{ height: `${bar.value}%` }}
+                animate={{ height: `${h}%` }}
                 transition={{ delay: 0.3 + i * 0.06, duration: 0.5, ease: 'easeOut' }}
               />
-              <span className="text-[7px] text-muted-foreground/60">{bar.day}</span>
+              <span className="text-[7px] text-muted-foreground/60">{days[i]}</span>
             </div>
           ))}
         </div>
+      </div>
+      {/* Trend Area Chart */}
+      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-[9px] font-semibold text-foreground uppercase tracking-wider">Tendencia Mensual</span>
+          <span className="text-[8px] text-emerald-400 font-mono font-bold">↑ 23%</span>
+        </div>
+        <svg width="100%" height="40" viewBox="0 0 280 40" preserveAspectRatio="none" className="overflow-visible">
+          <defs>
+            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="rgba(96,185,154,0.3)" />
+              <stop offset="100%" stopColor="rgba(96,185,154,0)" />
+            </linearGradient>
+          </defs>
+          <motion.path
+            d="M0,35 L40,28 L80,32 L120,22 L160,18 L200,12 L240,8 L280,3 L280,40 L0,40 Z"
+            fill="url(#areaGrad)"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+          />
+          <motion.path
+            d="M0,35 L40,28 L80,32 L120,22 L160,18 L200,12 L240,8 L280,3"
+            fill="none"
+            stroke="rgba(96,185,154,0.8)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ delay: 0.5, duration: 1, ease: 'easeOut' }}
+          />
+        </svg>
       </div>
     </div>
   );

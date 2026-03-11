@@ -358,9 +358,14 @@ const MockupContent = () => {
 
 const MockupSales = () => {
   const leads = [
-    { name: 'María López', channel: 'WhatsApp', status: 'Respondió', action: 'Reunión agendada', color: 'text-emerald-400' },
-    { name: 'Carlos Ruiz', channel: 'WhatsApp', status: 'Respondió', action: 'Propuesta enviada', color: 'text-blue-400' },
-    { name: 'Ana Torres', channel: 'WhatsApp', status: 'Visto', action: 'Pendiente follow-up', color: 'text-amber-400' },
+    { name: 'María López', channel: 'WhatsApp', channelIcon: '💬', status: 'Respondió', action: 'Reunión agendada', color: 'text-emerald-400' },
+    { name: 'Carlos Ruiz', channel: 'Web', channelIcon: '🌐', status: 'Respondió', action: 'Propuesta enviada', color: 'text-blue-400' },
+    { name: 'Ana Torres', channel: 'WhatsApp', channelIcon: '💬', status: 'Visto', action: 'Pendiente follow-up', color: 'text-amber-400' },
+  ];
+  const funnel = [
+    { stage: 'Nuevo', count: 12, width: '100%', color: 'bg-blue-400' },
+    { stage: 'Calificado', count: 7, width: '60%', color: 'bg-amber-400' },
+    { stage: 'Cerrado', count: 3, width: '28%', color: 'bg-emerald-400' },
   ];
 
   return (
@@ -368,6 +373,26 @@ const MockupSales = () => {
       <div className="flex items-center gap-2 mb-1">
         <DollarSign className="w-3 h-3 text-emerald-400" />
         <span className="text-[10px] font-semibold text-foreground uppercase tracking-wider">Leads Actualizados</span>
+      </div>
+      {/* Mini Funnel */}
+      <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-1.5">
+        {funnel.map((f, i) => (
+          <motion.div
+            key={f.stage}
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ delay: 0.2 + i * 0.1, duration: 0.4 }}
+            style={{ originX: 0 }}
+            className="flex items-center gap-2"
+          >
+            <span className="text-[7px] text-muted-foreground w-14 text-right">{f.stage}</span>
+            <div className="flex-1 h-4 rounded-sm overflow-hidden bg-white/[0.04]" style={{ width: f.width }}>
+              <div className={`h-full ${f.color} rounded-sm flex items-center justify-end pr-1.5`}>
+                <span className="text-[8px] font-bold font-mono text-white">{f.count}</span>
+              </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
       <div className="divide-y divide-white/[0.04] rounded-lg border border-white/[0.06] overflow-hidden">
         {leads.map((lead, i) => (
@@ -380,7 +405,10 @@ const MockupSales = () => {
           >
             <div>
               <span className="text-[10px] font-medium text-foreground block">{lead.name}</span>
-              <span className="text-[8px] text-muted-foreground">{lead.channel} · {lead.status}</span>
+              <span className="text-[8px] text-muted-foreground">
+                <span className="mr-1">{lead.channelIcon}</span>
+                {lead.channel} · {lead.status}
+              </span>
             </div>
             <span className={`text-[8px] font-mono ${lead.color}`}>{lead.action}</span>
           </motion.div>

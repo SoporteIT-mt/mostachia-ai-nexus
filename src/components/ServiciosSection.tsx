@@ -438,6 +438,11 @@ const MockupSupport = () => {
     { role: 'bot' as const, text: 'Encontré tu compra #4821. El correo de confirmación fue reenviado a tu casilla. ¿Necesitás algo más?' },
     { role: 'user' as const, text: '¡Perfecto, ya lo vi! Gracias.' },
   ];
+  const metrics = [
+    { label: 'Resp.', value: '<30s', percent: 95, color: 'text-emerald-400', ring: 'stroke-emerald-400' },
+    { label: 'CSAT', value: '98%', percent: 98, color: 'text-blue-400', ring: 'stroke-blue-400' },
+    { label: 'Resolución', value: '94%', percent: 94, color: 'text-amber-400', ring: 'stroke-amber-400' },
+  ];
 
   useEffect(() => {
     setVisibleMsgs(0);
@@ -451,6 +456,8 @@ const MockupSupport = () => {
     };
     setTimeout(show, 400);
   }, []);
+
+  const circumference = 2 * Math.PI * 14;
 
   return (
     <div className="space-y-2.5 rounded-xl border border-white/[0.06] bg-black/20 p-3">
@@ -494,10 +501,24 @@ const MockupSupport = () => {
         transition={{ delay: 1.5 }}
         className="grid grid-cols-3 gap-2 pt-2 border-t border-white/[0.06]"
       >
-        {[{ l: 'Resp.', v: '<30s' }, { l: 'CSAT', v: '98%' }, { l: 'Resolución', v: '94%' }].map((s, i) => (
-          <div key={i} className="text-center">
-            <div className="text-[10px] font-bold font-mono text-foreground">{s.v}</div>
-            <div className="text-[7px] text-muted-foreground">{s.l}</div>
+        {metrics.map((s, i) => (
+          <div key={i} className="flex flex-col items-center gap-1">
+            <div className="relative w-9 h-9">
+              <svg className="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-white/[0.06]" />
+                <motion.circle
+                  cx="18" cy="18" r="14" fill="none"
+                  strokeWidth="2.5" strokeLinecap="round"
+                  className={s.ring}
+                  strokeDasharray={circumference}
+                  initial={{ strokeDashoffset: circumference }}
+                  animate={{ strokeDashoffset: circumference - (circumference * s.percent) / 100 }}
+                  transition={{ delay: 1.5 + i * 0.15, duration: 0.8 }}
+                />
+              </svg>
+              <span className={`absolute inset-0 flex items-center justify-center text-[7px] font-bold font-mono ${s.color}`}>{s.value}</span>
+            </div>
+            <span className="text-[7px] text-muted-foreground">{s.label}</span>
           </div>
         ))}
       </motion.div>

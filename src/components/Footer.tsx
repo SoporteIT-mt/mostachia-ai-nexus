@@ -12,7 +12,7 @@ const serviciosLinks = [
 const empresaLinks = [
   { label: 'Cómo Funciona', href: '#proceso' },
   { label: 'Industrias', href: '#industrias' },
-  { label: 'Demos', href: '#demos' },
+  { label: 'Blog', href: '/blog' },
   { label: 'FAQ', href: '#faq' },
   { label: 'Política de Privacidad', href: '/privacidad' },
 ];

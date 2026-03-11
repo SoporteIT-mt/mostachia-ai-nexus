@@ -21,11 +21,12 @@ export const CONFIG = {
   EMAIL: 'info@mostachia.com',
 } as const;
 
-// Event tracking (preparado para GA4)
+// Event tracking (GA4-ready)
 export const trackEvent = (event: string, params?: Record<string, any>) => {
   if (import.meta.env.DEV) console.log(`[Analytics] ${event}`, params);
-  // Descomentar cuando GA4 esté listo:
-  // window.gtag?.('event', event, params);
+  if (typeof window !== 'undefined' && (window as any).gtag) {
+    (window as any).gtag('event', event, params);
+  }
 };
 
 export const CRO_EVENTS = {

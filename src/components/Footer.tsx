@@ -14,6 +14,7 @@ const empresaLinks = [
   { label: 'Industrias', href: '#industrias' },
   { label: 'Demos', href: '#demos' },
   { label: 'FAQ', href: '#faq' },
+  { label: 'Política de Privacidad', href: '/privacidad' },
 ];
 
 export const Footer = () => {

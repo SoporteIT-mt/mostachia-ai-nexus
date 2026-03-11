@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CONFIG } from '@/config/constants';
+import { CONFIG, trackEvent, CRO_EVENTS } from '@/config/constants';
 
 export const FloatingWhatsApp = () => {
   const [fabVisible, setFabVisible] = useState(false);
@@ -17,6 +17,7 @@ export const FloatingWhatsApp = () => {
           href={CONFIG.WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackEvent(CRO_EVENTS.CTA_WHATSAPP_CLICK, { location: 'floating' })}
           initial={{ scale: 0, y: 20 }}
           animate={{ scale: 1, y: 0 }}
           exit={{ scale: 0 }}

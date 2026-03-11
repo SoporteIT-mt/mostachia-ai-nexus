@@ -1,5 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { ArrowLeft, Clock, Calendar, User, Share2 } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
+import { ArrowLeft, Clock, Calendar, User, Share2, ArrowRight, MessageCircle } from 'lucide-react';
 import { getPostBySlug, blogPosts } from '@/data/blogPosts';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { Badge } from '@/components/ui/badge';
@@ -9,7 +10,6 @@ import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { CONFIG } from '@/config/constants';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
-import { ArrowRight, MessageCircle } from 'lucide-react';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();

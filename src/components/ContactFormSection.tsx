@@ -172,6 +172,10 @@ export const ContactFormSection = () => {
 
                   <p className="text-xs text-muted-foreground text-center">
                     No compartimos tu información. Respuesta en menos de 24hs.
+                    <br />
+                    <Link to="/privacidad" className="underline hover:text-primary transition-colors">
+                      Política de Privacidad
+                    </Link>
                   </p>
                 </form>
               </Form>

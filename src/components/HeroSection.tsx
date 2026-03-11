@@ -91,7 +91,10 @@ export const HeroSection = () => {
             background="linear-gradient(135deg, hsl(159 37% 55%), hsl(159 37% 45%))"
             borderRadius="9999px"
             className="px-8 py-4 text-base font-semibold shadow-glow hover:-translate-y-1 transition-transform duration-300"
-            onClick={() => window.open(CONFIG.CALCOM_URL, '_blank')}
+            onClick={() => {
+              trackEvent(CRO_EVENTS.CTA_HERO_CLICK, { location: 'hero' });
+              window.open(CONFIG.CALCOM_URL, '_blank');
+            }}
           >
             <Calendar className="w-5 h-5 mr-2" />
             Empezar Ahora — Es Gratis

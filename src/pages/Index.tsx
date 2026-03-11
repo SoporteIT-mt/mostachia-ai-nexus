@@ -15,7 +15,7 @@ import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { StickyCTA } from '@/components/StickyCTA';
 import { ScrollProgress } from '@/components/ScrollProgress';
-import { ScrollToTop } from '@/components/ScrollToTop';
+
 
 const Index = () => {
   return (
@@ -46,7 +46,7 @@ const Index = () => {
       <Footer />
       <FloatingWhatsApp />
       {false && <StickyCTA />}
-      <ScrollToTop />
+      
     </div>
   );
 };

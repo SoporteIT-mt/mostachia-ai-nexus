@@ -17,6 +17,8 @@ import { StickyCTA } from '@/components/StickyCTA';
 import { ScrollProgress } from '@/components/ScrollProgress';
 import { ResultsSection } from '@/components/ResultsSection';
 import { SocialProofBanner } from '@/components/SocialProofBanner';
+import { BlogPreviewSection } from '@/components/BlogPreviewSection';
+import { Helmet } from 'react-helmet-async';
 
 
 const Index = () => {

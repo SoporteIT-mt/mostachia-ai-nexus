@@ -33,6 +33,7 @@ const AGENTS: Agent[] = [
       'Actualiza reportes con un mensaje',
     ],
     tags: ['MySQL', 'PostgreSQL', 'MongoDB', 'Google Sheets'],
+    videoUrl: 'https://www.youtube.com/embed/msn2181HNDQ',
   },
   {
     id: 'marketing',

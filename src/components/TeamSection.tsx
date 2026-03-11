@@ -39,7 +39,7 @@ const TEAM_MEMBERS: FocusRailItem[] = [
       "El que hace que todo funcione cuando nadie está mirando. Diseña y mantiene la infraestructura sobre la que corren los agentes, los flujos y las integraciones de cada cliente. Meticuloso, resolutivo y siempre un paso adelante de los problemas antes de que aparezcan.",
     meta: "Lead Infrastructure",
     imageSrc: "/team/juan-andres.jpg.jpeg",
-    href: "https://www.linkedin.com/in/juan-andres-huenz/",
+    href: "https://www.linkedin.com/in/jahuenz/",
   },
 ];
 

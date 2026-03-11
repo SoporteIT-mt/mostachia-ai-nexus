@@ -1,5 +1,5 @@
 import { CONFIG } from '@/config/constants';
-import { Instagram, Linkedin, MapPin, Mail, Phone, Calendar } from 'lucide-react';
+import { Instagram, Linkedin, Youtube, MapPin, Mail, Phone, Calendar } from 'lucide-react';
 import { DotPattern } from '@/components/ui/dot-pattern';
 
 const serviciosLinks = [
@@ -52,6 +52,15 @@ export const Footer = () => {
               >
                 <Linkedin className="w-4 h-4" />
               </a>
+              <a
+                href={CONFIG.YOUTUBE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-white/5 hover:bg-primary/20 flex items-center justify-center transition-colors"
+                aria-label="YouTube"
+              >
+                <Youtube className="w-4 h-4" />
+              </a>
             </div>
           </div>
 
@@ -85,7 +94,7 @@ export const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <a href={CONFIG.WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
-                  <Phone className="w-4 h-4 shrink-0" /> +54 3564 66-7968
+                  <Phone className="w-4 h-4 shrink-0" /> +54 9 3564 66-7968
                 </a>
               </li>
               <li>
@@ -99,7 +108,7 @@ export const Footer = () => {
                 </a>
               </li>
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="w-4 h-4 shrink-0" /> Córdoba, Argentina 🇦🇷
+                <MapPin className="w-4 h-4 shrink-0" /> Córdoba, Argentina
               </li>
             </ul>
           </div>

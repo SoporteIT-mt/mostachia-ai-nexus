@@ -191,9 +191,9 @@ const MockupAnalytics = () => {
 
 const MockupMarketing = () => {
   const campaigns = [
-    { name: 'Onboarding Secuencia', status: 'Activa', sent: '4,210', open: '72%', statusColor: 'text-emerald-400', statusBg: 'bg-emerald-400/10' },
-    { name: 'Promo Verano 2026', status: 'Optimizando', sent: '1,847', open: '58%', statusColor: 'text-blue-400', statusBg: 'bg-blue-400/10' },
-    { name: 'Re-engagement Q1', status: 'Programada', sent: '—', open: '—', statusColor: 'text-muted-foreground', statusBg: 'bg-muted/20' },
+    { name: 'Onboarding Secuencia', status: 'Activa', sent: '4,210', open: 72, statusColor: 'text-emerald-400', statusBg: 'bg-emerald-400/10', barColor: 'bg-emerald-400' },
+    { name: 'Promo Verano 2026', status: 'Optimizando', sent: '1,847', open: 58, statusColor: 'text-blue-400', statusBg: 'bg-blue-400/10', barColor: 'bg-blue-400' },
+    { name: 'Re-engagement Q1', status: 'Programada', sent: '—', open: 0, statusColor: 'text-muted-foreground', statusBg: 'bg-muted/20', barColor: 'bg-muted' },
   ];
 
   return (
@@ -209,22 +209,34 @@ const MockupMarketing = () => {
             initial={{ opacity: 0, x: -8 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 + i * 0.12 }}
-            className="px-3 py-2.5 flex items-center justify-between"
+            className="px-3 py-2.5"
           >
-            <div>
-              <span className="text-[10px] font-medium text-foreground block">{c.name}</span>
-              <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded-full ${c.statusBg} ${c.statusColor} inline-block mt-0.5`}>{c.status}</span>
-            </div>
-            <div className="flex gap-3 text-right">
+            <div className="flex items-center justify-between mb-1.5">
               <div>
-                <div className="text-[9px] font-mono text-foreground">{c.sent}</div>
-                <div className="text-[7px] text-muted-foreground">enviados</div>
+                <span className="text-[10px] font-medium text-foreground block">{c.name}</span>
+                <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded-full ${c.statusBg} ${c.statusColor} inline-block mt-0.5`}>{c.status}</span>
               </div>
-              <div>
-                <div className="text-[9px] font-mono text-foreground">{c.open}</div>
-                <div className="text-[7px] text-muted-foreground">apertura</div>
+              <div className="flex gap-3 text-right">
+                <div>
+                  <div className="text-[9px] font-mono text-foreground">{c.sent}</div>
+                  <div className="text-[7px] text-muted-foreground">enviados</div>
+                </div>
+                <div>
+                  <div className="text-[9px] font-mono text-foreground">{c.open > 0 ? `${c.open}%` : '—'}</div>
+                  <div className="text-[7px] text-muted-foreground">apertura</div>
+                </div>
               </div>
             </div>
+            {c.open > 0 && (
+              <div className="w-full h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                <motion.div
+                  className={`h-full rounded-full ${c.barColor}`}
+                  initial={{ width: 0 }}
+                  animate={{ width: `${c.open}%` }}
+                  transition={{ delay: 0.3 + i * 0.15, duration: 0.6 }}
+                />
+              </div>
+            )}
           </motion.div>
         ))}
       </div>
@@ -232,10 +244,19 @@ const MockupMarketing = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="mx-3 mb-3 flex items-center gap-2 p-2 rounded-lg bg-blue-400/5 border border-blue-400/10"
+        className="mx-3 mb-3 flex items-center gap-3 p-3 rounded-lg bg-blue-400/5 border border-blue-400/10"
       >
-        <Sparkles className="w-3 h-3 text-blue-400" />
-        <span className="text-[8px] text-foreground font-mono">ROAS de "Verano 2026" optimizado: +22% proyectado.</span>
+        <div className="flex items-center gap-2 flex-1">
+          <Sparkles className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+          <span className="text-[8px] text-foreground font-mono">ROAS optimizado</span>
+        </div>
+        <div className="text-right">
+          <div className="flex items-center gap-1">
+            <span className="text-lg font-bold font-mono text-blue-400">+22%</span>
+            <ArrowUpRight className="w-4 h-4 text-blue-400" />
+          </div>
+          <span className="text-[7px] text-muted-foreground">proyectado</span>
+        </div>
       </motion.div>
     </div>
   );

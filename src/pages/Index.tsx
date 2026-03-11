@@ -46,7 +46,7 @@ const Index = () => {
       <Footer />
       <FloatingWhatsApp />
       {false && <StickyCTA />}
-      <ScrollToTop />
+      
     </div>
   );
 };

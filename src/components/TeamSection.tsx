@@ -30,7 +30,7 @@ const TEAM_MEMBERS: FocusRailItem[] = [
       "La que hace que MostachIA se vea, se sienta y se entienda. Detrás de cada pieza de comunicación hay una decisión estratégica suya. Combina criterio creativo con foco en resultados, y se asegura de que la marca diga exactamente lo que tiene que decir.",
     meta: "Brand & Comms",
     imageSrc: "/team/florencia.jpg",
-    href: "https://www.linkedin.com/in/florencia-ferrer-cabrera/",
+    href: "https://www.linkedin.com/in/florencia-ferrer-0a6455148/",
   },
   {
     id: "juan-andres",

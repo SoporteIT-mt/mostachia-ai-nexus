@@ -276,7 +276,7 @@ export const AgentVideoShowcase = () => {
                 {/* RIGHT — Video area */}
                 <div className="flex items-center justify-center">
                   {agent.videoUrl ? (
-                    <Dialog>
+                    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                       <DialogTrigger asChild>
                         <button className="w-full aspect-video rounded-xl overflow-hidden relative group cursor-pointer border border-white/[0.06]">
                           <img

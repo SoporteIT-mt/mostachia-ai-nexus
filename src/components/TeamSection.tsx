@@ -12,7 +12,7 @@ const TEAM_MEMBERS: FocusRailItem[] = [
       "No espera que las herramientas existan — las construye. Como Chief AI Officer de MostachIA, diseña los sistemas de agentes que automatizan procesos, generan reportes y potencian negocios de industrias tan distintas como el cine, la gastronomía y el retail.",
     meta: "Chief AI Officer",
     imageSrc: "/team/juan-cruz.jpg.jpeg",
-    href: "https://www.linkedin.com/in/juancruzbertorello/",
+    href: "https://www.linkedin.com/in/juanbertorello/",
   },
   {
     id: "diego",

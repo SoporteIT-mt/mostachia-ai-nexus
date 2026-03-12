@@ -1,94 +1,73 @@
-# Hero Profesional + Stats Section + CTA Polish
-
-## Problemas identificados
-
-1. **H1 en 3 lineas** - "Tu Negocio con IA," / "Otro Nivel de" / "Resultados." deberia ser 2 lineas
-2. **Beams apenas visibles** - la opacidad y el vignette overlay los tapan demasiado
-3. **Espacio vacio excesivo** debajo de los CTAs y micro-proof
-4. **Falta la seccion de estadisticas** (KPIs) que se removio del Hero
-
----
-
-## 1. Hero H1 en 2 lineas (HeroSection.tsx)
-
-Reestructurar el titulo para que quede en exactamente 2 lineas:
-
-- **Linea 1:** "Tu Negocio con IA, Otro Nivel de"
-- **Linea 2:** "Resultados."
-
-Cambiar la estructura de 2 `<span className="block">` a:
-
-- Linea 1: todo junto en un solo bloque con `AnimatedWords("Tu Negocio con")` +  `IA,` (mint) + `AnimatedWords(" Otro Nivel de")` 
-- Linea 2: "Resultados." en gradient, centrado y mas grande visualmente
-
-Aumentar el tamano tipografico para desktop: `lg:text-8xl` para que sea mas impactante.
-
-## 2. Beams mas visibles (beams-background.tsx)
-
-- Reducir la opacidad del vignette overlay: cambiar `transparent 40%` a `transparent 60%` para que los beams sean mas visibles en el centro
-- Aumentar blur de `35px` a `30px` para beams mas definidos
-- Base opacity de beams: `0.22 + Math.random() * 0.25` (mas intensos)
-
-## 3. Eliminar espacio vacio del Hero (HeroSection.tsx)
-
-- Cambiar `min-h-screen` a `min-h-[85vh]` para que el Hero no tenga tanto espacio vacio debajo
-- Ajustar padding bottom
-
-## 4. Nueva StatsSection entre Hero y Servicios
-
-Crear `src/components/StatsSection.tsx` con los 4 KPIs en un grid horizontal:
 
 
-| KPI              | Valor | Sufijo |
-| ---------------- | ----- | ------ |
-| Clientes Activos | 30    | +      |
-| Industrias       | 8     | +      |
-| Agentes IA 24/7  | 50    | +      |
-| Implementacion   | 1-4   | sem    |
+## Audit de Produccion — MostachIA
 
+### Diagnostico: Repetitividad en Mobile
 
-- Grid de 4 columnas (desktop) / 2x2 (mobile)
-- Cada KPI usa `NumberTicker` para la animacion de conteo
-- Fondo sutil glass con borde tenue
-- Separadores verticales entre KPIs en desktop
-- Colores: numeros en mint (#73D7CB), labels en muted
-
-Insertar en Index.tsx entre `<HeroSection />` y el primer `<AnimatedDivider />`.
-
-## 5. CTA "Como Trabajamos" - polish final (HowItWorksSection.tsx)
-
-El boton ya tiene buen estilo pero:
-
-- Verificar que el `group` class funciona para la animacion de flecha
-- Asegurar que el hover glow se intensifica correctamente
-
----
-
-## Archivos a modificar
-
-
-| Archivo                                  | Cambio                                               |
-| ---------------------------------------- | ---------------------------------------------------- |
-| `src/components/HeroSection.tsx`         | H1 en 2 lineas, reducir min-h, tipografia mas grande |
-| `src/components/ui/beams-background.tsx` | Beams mas visibles, reducir vignette                 |
-| `src/components/StatsSection.tsx`        | CREAR - 4 KPIs con NumberTicker                      |
-| `src/pages/Index.tsx`                    | Insertar StatsSection entre Hero y Servicios         |
-
-
-## Detalle tecnico
-
-### H1 nueva estructura:
+El problema principal es que en mobile, el usuario scrollea por **~20 cards con layout identico** (icono + titulo + descripcion en `glass-card`):
 
 ```text
-Linea 1: "Tu Negocio con IA, Otro Nivel de"
-Linea 2: "Resultados."
+PainSection       → 3 cards (glass-card, icon+title+desc)
+ServiciosSection  → 5 cards (complex, pero glass-card)
+TrustSection      → 4 cards (glass-card, icon+title+desc)  ← MUY similar a PainSection
+ResultsSection    → 4 cards (glass-card, icon+title+desc)  ← MUY similar
+IndustriasSection → 6 cards (magic-card, icon+title+bullets)
+BlogPreview       → 3 cards (glass-card)
+ContactForm       → 2 cards (glass-card)
+                    ─────────
+                    ~27 recuadros en mobile
 ```
 
-El truco es poner todo en la linea 1 como `inline` y dejar que "Resultados." sea un `block` separado. Aumentar a `lg:text-8xl` para impacto visual.
+### Plan de Optimizacion
 
-### StatsSection:
+#### 1. Reducir cards repetitivas en mobile
 
-- Usa `NumberTicker` del componente existente (`src/components/ui/number-ticker.tsx`)
-- Background: `bg-white/[0.02]` con `backdrop-blur-sm` y `border border-white/[0.06]`
-- Padding: `py-12` para que sea compacto
-- Animacion: `BlurFade` staggered para cada KPI
+- **PainSection**: En mobile, mostrar los 3 pains como una lista compacta horizontal (chips/tags) en vez de 3 cards apiladas. Ahorra scroll y rompe la monotonia.
+- **TrustSection**: En mobile, mostrar los 4 diferenciadores como lista simple con icono inline (sin glass-card), similar a como ya se muestran las garantias (chips). Desktop queda igual.
+- **ResultsSection**: En mobile, cambiar de 4 cards apiladas a un slider horizontal (2 visibles a la vez) para ahorrar scroll.
+- **IndustriasSection**: En mobile, mostrar solo 4 industrias (las mas relevantes) con un boton "Ver todas" en vez de las 6 apiladas.
+
+#### 2. Ajustar botones para mobile
+
+- HowItWorksSection CTA: `py-5 sm:py-6` es muy grande. Reducir a `py-3.5 sm:py-5`.
+- Todos los ShimmerButton CTA intermedios: `py-3 sm:py-4` en mobile para que no dominen la pantalla.
+- Los botones de navegacion del carousel de agentes (`w-12 h-12`) son grandes en mobile. Reducir a `w-10 h-10` en mobile.
+
+#### 3. Separadores visuales entre secciones
+
+Agregar separadores sutiles (linea gradiente horizontal como la de IntegrationsSection) entre PainSection/ServiciosSection y TrustSection/ResultsSection para romper la monotonia visual.
+
+#### 4. Checklist de produccion (ya listo)
+
+| Item | Estado |
+|------|--------|
+| SEO meta tags + OG | OK |
+| Structured data (JSON-LD) | OK |
+| sitemap.xml + robots.txt | OK |
+| Formulario con validacion + webhook | OK |
+| Analytics (GA4-ready) | OK |
+| Lazy loading imagenes + rutas | OK |
+| ScrollToTop entre paginas | OK |
+| 404 page | OK |
+| Politica de privacidad | OK |
+| Accesibilidad (aria-labels) | OK |
+| WhatsApp FAB | OK |
+| Responsive navbar | OK |
+
+#### 5. Items pendientes para produccion
+
+- **Google Analytics**: Agregar el script de GA4 en `index.html` (el `trackEvent` ya esta preparado).
+- **Favicon**: Ya existe en `/public/favicon.ico`.
+- **Dominio custom**: Configurar desde Lovable Settings > Domains despues de publicar.
+
+### Archivos a modificar
+
+| Archivo | Cambio |
+|---------|--------|
+| `src/components/PainSection.tsx` | Layout compacto en mobile (chips horizontales) |
+| `src/components/TrustSection.tsx` | Lista simple sin cards en mobile |
+| `src/components/ResultsSection.tsx` | Slider horizontal en mobile |
+| `src/components/IndustriasSection.tsx` | Limitar a 4 en mobile + "Ver todas" |
+| `src/components/HowItWorksSection.tsx` | Reducir tamanio de CTA button |
+| `src/components/AgentVideoShowcase.tsx` | Botones nav mas chicos en mobile |
+

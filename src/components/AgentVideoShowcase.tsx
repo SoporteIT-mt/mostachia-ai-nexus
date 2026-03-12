@@ -207,14 +207,14 @@ export const AgentVideoShowcase = () => {
           {/* Navigation arrows */}
           <button
             onClick={() => handleNav(-1)}
-            className="absolute left-0 lg:-left-16 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-[hsl(var(--card))]/70 backdrop-blur-md border border-white/10 flex items-center justify-center text-muted-foreground transition-all hover:bg-mint-400/20 hover:text-mint-400 hover:border-mint-400/30 hover:scale-110"
+            className="absolute left-0 lg:-left-16 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[hsl(var(--card))]/70 backdrop-blur-md border border-white/10 flex items-center justify-center text-muted-foreground transition-all hover:bg-mint-400/20 hover:text-mint-400 hover:border-mint-400/30 hover:scale-110"
             aria-label="Agente anterior"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={() => handleNav(1)}
-            className="absolute right-0 lg:-right-16 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-[hsl(var(--card))]/70 backdrop-blur-md border border-white/10 flex items-center justify-center text-muted-foreground transition-all hover:bg-mint-400/20 hover:text-mint-400 hover:border-mint-400/30 hover:scale-110"
+            className="absolute right-0 lg:-right-16 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[hsl(var(--card))]/70 backdrop-blur-md border border-white/10 flex items-center justify-center text-muted-foreground transition-all hover:bg-mint-400/20 hover:text-mint-400 hover:border-mint-400/30 hover:scale-110"
             aria-label="Agente siguiente"
           >
             <ChevronRight className="w-5 h-5" />

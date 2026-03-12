@@ -283,7 +283,7 @@ export const HowItWorksSection = () => {
                   shimmerColor="rgba(127, 205, 179, 0.8)"
                   background="linear-gradient(135deg, #60b99a, #4a9e82)"
                   borderRadius="12px"
-                  className="w-full sm:w-auto text-base sm:text-lg font-bold px-6 sm:px-12 py-5 sm:py-6 group shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
+                  className="w-full sm:w-auto text-sm sm:text-lg font-bold px-5 sm:px-12 py-3.5 sm:py-5 group shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
                 >
                   <Calendar className="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" />
                   <span className="hidden sm:inline">Agendá tu Consultoría Gratuita</span>

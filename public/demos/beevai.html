@@ -197,6 +197,19 @@
     @keyframes ctaPulse{0%,100%{box-shadow:var(--shadow-forest),0 0 0 4px rgba(245,166,35,.12)}50%{box-shadow:var(--shadow-forest),0 0 0 9px rgba(245,166,35,.04)}}
     .btn-sticky:hover{background:var(--amber);color:var(--forest-deep);transform:translateY(-3px) scale(1.03);animation:none;box-shadow:var(--shadow-amber)}
     .btn-sticky .bee{font-size:17px}
+    /* Botón PDF en el header */
+    .btn-pdf{
+      display:inline-flex;align-items:center;gap:7px;
+      padding:12px 20px;border-radius:var(--radius-full);
+      background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.3);
+      color:rgba(255,255,255,0.85);font-family:'DM Sans',sans-serif;
+      font-size:.85rem;font-weight:600;cursor:pointer;
+      transition:all .2s;-webkit-tap-highlight-color:transparent;
+    }
+    .btn-pdf:hover{background:rgba(255,255,255,0.22);color:white;border-color:rgba(255,255,255,0.5);transform:translateY(-1px)}
+    .btn-pdf svg{flex-shrink:0}
+    @media(max-width:640px){.btn-pdf{font-size:.8rem;padding:10px 15px}}
+    @media print{.btn-pdf{display:none!important}}
     /* Footer */
     .rpt-footer{background:var(--forest-deep);color:white;padding:26px 72px;display:flex;justify-content:space-between;align-items:center}
     .ft-brand{font-family:'Sora',sans-serif;font-size:14px;font-weight:700}
@@ -370,8 +383,11 @@
     .mo-name span{color:var(--amber)}
     .mo-tag{font-size:.67rem;color:rgba(255,255,255,.52);font-style:italic;margin-top:4px}
     /* History overlay */
-    .hist-ov{display:none;position:fixed;top:var(--header-height);left:0;bottom:0;right:0;background:rgba(0,0,0,.45);z-index:49;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .hist-ov{display:none;position:fixed;top:var(--header-height);left:0;bottom:0;right:0;background:rgba(0,0,0,.45);z-index:199;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;cursor:pointer;-webkit-tap-highlight-color:transparent}
     .hist-ov.on{opacity:1;visibility:visible}
+    /* Botón cerrar sidebar — solo mobile */
+    .hist-close{display:none;align-items:center;gap:7px;padding:9px 13px;background:transparent;border:none;font-size:.82rem;font-weight:600;color:var(--text-muted);cursor:pointer;margin-bottom:4px;width:100%;text-align:left}
+    .hist-close:hover{color:var(--text-primary)}
 
     /* ═══════════════════════════
        RESPONSIVE
@@ -381,9 +397,12 @@
       .r-panel{display:none}
     }
     @media(max-width:900px){
-      .hist-sidebar{position:fixed;left:0;top:var(--header-height);bottom:0;z-index:200;box-shadow:var(--shadow-xl);width:272px;min-width:272px}
-      .hist-sidebar.closed{transform:translateX(-100%);margin-left:0}
+      .hist-sidebar{position:fixed;top:0;left:0;height:100%;width:min(320px,85vw);min-width:0;z-index:200;box-shadow:var(--shadow-xl);transform:translateX(-100%);transition:transform .3s ease;margin-left:0}
+      .hist-sidebar.closed{transform:translateX(-100%)}
+      .hist-sidebar:not(.closed){transform:translateX(0)}
+      .hist-close{display:flex}
       .hist-ov{display:block}
+      .chat-wrap{width:100%!important}
       .main-layout{padding:11px}
       .rpt-header{padding:36px 28px 48px}
       .rpt-title{font-size:27px}
@@ -411,12 +430,21 @@
       .ch-left{gap:8px}
       .btn-back span{display:none}
       .ch-brand-sub{display:none}
-      .sticky-cta{bottom:14px;right:14px}
-      .btn-sticky{padding:11px 17px;font-size:.83rem}
+      .sticky-cta{bottom:0;left:0;right:0;width:100%;border-radius:0;text-align:center;justify-content:center;padding:0}
+      .btn-sticky{padding:14px 20px;font-size:.88rem;width:100%;border-radius:0;justify-content:center;animation:none}
     }
     @media(max-width:380px){
       .rpt-title{font-size:20px}
       .kpi-grid{grid-template-columns:1fr}
+      .lv-card{padding:32px 24px}
+    }
+    /* Chips scroll horizontal en mobile */
+    @media(max-width:640px){
+      .chips-row{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+      .chips-row::-webkit-scrollbar{display:none}
+      /* Input bar: textarea ocupa todo el espacio disponible */
+      .input-bar{flex-wrap:nowrap}
+      .input-bar textarea{min-width:0}
     }
     /* PDF button */
     .pdf-btn{
@@ -557,6 +585,13 @@
     }
     .lv-web-link:hover{color:#60b99a}
     .lv-web-link svg{width:11px;height:11px}
+
+    /* Animaciones IntersectionObserver */
+    .fade-in-up{opacity:0;transform:translateY(24px);transition:opacity .5s ease,transform .5s ease}
+    .fade-in-up.visible{opacity:1;transform:none}
+    /* Gradiente animado en header del report */
+    @keyframes headerShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .rpt-header{background-size:200% 200%;animation:headerShift 8s ease infinite}
   </style>
 </head>
 <body>
@@ -609,7 +644,10 @@
         <button class="btn-try" onclick="App.goChat()">
           <span class="bee">🐝</span> Probar el agente ahora
         </button>
-        <span class="btn-hint">Sin instalación · Sin login</span>
+        <a class="btn-pdf" href="https://www.mostachia.com/downloads/beevai-informe.pdf" download="informe-beevai.pdf" target="_blank" title="Descargar informe como PDF">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Descargar PDF
+        </a>
       </div>
     </header>
 
@@ -728,10 +766,10 @@
     <footer class="rpt-footer">
       <div><div class="ft-brand">Mostach<span>IA</span></div><div class="ft-sub">Automatización con Inteligencia Artificial · mostachia.com</div></div>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end">
-        <button class="pdf-btn" onclick="window.print()" title="Descargar informe como PDF">
+        <a class="pdf-btn" href="https://www.mostachia.com/downloads/beevai-informe.pdf" download="informe-beevai.pdf" target="_blank" title="Descargar informe como PDF">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Descargar informe
-        </button>
+        </a>
         <div class="ft-badge">Potenciado por IA</div>
       </div>
     </footer>
@@ -766,6 +804,7 @@
 
     <div class="chat-body">
       <aside class="hist-sidebar closed" id="histSidebar">
+        <button class="hist-close" onclick="Hist.toggle()">✕ Cerrar</button>
         <div class="hist-top">
           <button class="new-chat-btn" id="newChatBtn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -1116,6 +1155,7 @@
     };
 
     window.App=App;
+    window.Hist=Hist;
 
     /* ── ACCESS GATE ── */
     const ACCESS_KEY='mostachia_access_beevai';
@@ -1147,6 +1187,19 @@
       /* else: login screen stays visible, user must authenticate */
     }
     document.readyState==='loading'?document.addEventListener('DOMContentLoaded',boot):boot();
+
+    /* IntersectionObserver — animar elementos al entrar en viewport */
+    (function(){
+      const targets='.s-card,.kpi-card,.rpt-section,.r-chip,.feat-card,.step-card';
+      const obs=new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+      },{threshold:0.12});
+      function initObserver(){
+        document.querySelectorAll(targets).forEach(el=>{el.classList.add('fade-in-up');obs.observe(el)});
+      }
+      if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initObserver);
+      else initObserver();
+    })();
   })();
   </script>
 </body>

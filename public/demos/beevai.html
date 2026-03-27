@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
   <title>Beevai Analytics — Tu Agente de Datos Apícola</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,6 +42,8 @@
       --ease-smooth: cubic-bezier(0.4,0,0.2,1);
       --header-height: 64px;
       --history-width: 265px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
     body.dark {
       --bg-base: #0F100A; --bg-elevated: #171A10; --surface: #1D2115;
@@ -61,7 +63,7 @@
     body{
       font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
       background:var(--bg-base);color:var(--text-primary);
-      min-height:100vh;overflow:hidden;
+      min-height:100dvh;overflow:hidden;
       transition:background-color 0.4s var(--ease-smooth),color 0.3s;
     }
     /* BG */
@@ -220,7 +222,7 @@
     /* ═══════════════════════════
        CHAT VIEW
     ═══════════════════════════ */
-    #chat-view{display:flex;flex-direction:column;height:100vh;background:var(--bg-base)}
+    #chat-view{display:flex;flex-direction:column;height:100dvh;background:var(--bg-base)}
     /* Header */
     .chat-header{display:flex;align-items:center;justify-content:space-between;height:var(--header-height);padding:0 20px;background:var(--surface);border-bottom:1px solid var(--border-medium);box-shadow:0 2px 10px -2px rgba(45,74,30,.10);z-index:100;flex-shrink:0}
     .ch-left{display:flex;align-items:center;gap:13px}
@@ -338,8 +340,9 @@
     body.dark .load-stat{background:rgba(245,166,35,.11);color:var(--amber)}
     .load-stat svg{width:14px;height:14px;animation:spin 1s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes msg-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
     /* Input */
-    .input-zone{padding:13px 17px;border-top:1px solid var(--border-light)}
+    .input-zone{padding:13px 17px;padding-bottom:calc(13px + var(--safe-bottom));border-top:1px solid var(--border-light)}
     .chips-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px;max-height:0;overflow:hidden;transition:max-height .3s var(--ease-out),margin .3s}
     .chips-row.show{max-height:90px;margin-bottom:9px}
     .chip{padding:6px 13px;background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:var(--radius-full);font-size:.77rem;font-weight:500;color:var(--text-secondary);cursor:pointer;white-space:nowrap;transition:all .2s}
@@ -358,6 +361,22 @@
     .btn-send{background:linear-gradient(135deg,var(--amber) 0%,var(--amber-dark) 100%);color:var(--forest-deep);box-shadow:var(--shadow-amber)}
     .btn-send:hover{transform:scale(1.07)}
     .btn-send:disabled{opacity:.48;cursor:not-allowed;transform:none}
+    /* Typing indicator */
+    .typing-ind{display:none;align-items:center;gap:5px;padding:10px 14px;background:var(--bg-msg-bot,#f1f5f9);border-radius:18px 18px 18px 4px;width:fit-content;margin:4px 0}
+    .typing-ind.visible{display:flex}
+    .typing-ind span{width:7px;height:7px;border-radius:50%;background:#60b99a;animation:typing-bounce .8s infinite ease-in-out}
+    .typing-ind span:nth-child(2){animation-delay:.15s}
+    .typing-ind span:nth-child(3){animation-delay:.3s}
+    @keyframes typing-bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+    /* Timestamp on hover */
+    .msg-time{font-size:10px;color:var(--text-3,#94a3b8);margin-top:3px;opacity:0;transition:opacity .2s;display:block;text-align:right}
+    .msg-row:hover .msg-time{opacity:1}
+    @media(max-width:640px){.msg-time{opacity:0.6}}
+    /* Copy button en bubbles del agente */
+    .msg-copy{position:absolute;top:6px;right:6px;background:rgba(255,255,255,0.9);border:1px solid #e2e8f0;border-radius:6px;padding:3px 7px;font-size:11px;cursor:pointer;opacity:0;transition:opacity .2s;color:#64748b}
+    .msg-row:hover .msg-copy{opacity:1}
+    .msg-bubble{position:relative}
+    @media(max-width:640px){.msg-copy{opacity:0.7}}
     /* Right panel */
     .r-panel{display:flex;flex-direction:column;gap:13px;overflow-y:auto;padding-right:1px;transition:opacity .3s,transform .3s var(--ease-out)}
     .r-panel::-webkit-scrollbar{width:4px}
@@ -432,6 +451,8 @@
       .ch-brand-sub{display:none}
       .sticky-cta{bottom:0;left:0;right:0;width:100%;border-radius:0;text-align:center;justify-content:center;padding:0}
       .btn-sticky{padding:14px 20px;font-size:.88rem;width:100%;border-radius:0;justify-content:center;animation:none}
+      .ch-status{display:flex;align-items:center;gap:5px}
+      .ch-status::before{content:'';width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block}
     }
     @media(max-width:380px){
       .rpt-title{font-size:20px}
@@ -833,6 +854,7 @@
             </div>
           </div>
           <div id="msgs" class="msgs"></div>
+          <div class="typing-ind" id="typing-ind"><span></span><span></span><span></span></div>
           <div class="input-zone">
             <div class="chips-row" id="chipsRow">
               <button class="chip" data-q="¿Cuántas colmenas activas hay?">🐝 Colmenas activas</button>
@@ -990,7 +1012,7 @@
           return `<div class="msg-row${isU?' u':''}" style="animation-delay:${Math.min(i*.025,.3)}s">
             <div class="m-av${isU?' usr':' bot'}">${isU?'B':'🐝'}</div>
             <div class="m-con">
-              <div class="m-bub">
+              <div class="m-bub msg-bubble">
                 ${md(txt)}
                 ${url?`<a href="${url}" target="_blank" rel="noopener" class="db-card"><span class="db-ico">📊</span><div class="db-txt"><div class="db-lbl">Dashboard generado</div><div class="db-name">Ver Dashboard Interactivo</div></div><span class="db-arr">→</span></a>`:''}
               </div>
@@ -1021,10 +1043,13 @@
         st.conv.push({role:'user',content:text,t:Date.now()});
         st.loading=true;st.t0=Date.now();
         UI.render();UI.chips(false);UI.startLoad();
+        const tiInd=document.getElementById('typing-ind');
+        if(tiInd){tiInd.classList.add('visible');tiInd.scrollIntoView({behavior:'smooth'})}
         const ctrl=new AbortController();
         const tmr=setTimeout(()=>ctrl.abort(),TO);
         try{
           const res=await fetch(HOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,sessionId:st.chatId,audio:''}),signal:ctrl.signal});
+          if(tiInd)tiInd.classList.remove('visible');
           clearTimeout(tmr);
           if(!res.ok)throw new Error(`HTTP ${res.status}`);
           const data=await res.json();
@@ -1039,6 +1064,7 @@
           st.conv.push({role:'bot',content:err,t:Date.now()});
           Toast.show('Error de conexión','err');
         }finally{
+          if(tiInd)tiInd.classList.remove('visible');
           st.loading=false;UI.stopLoad();UI.render();Chat.save();
         }
       }
@@ -1151,6 +1177,11 @@
         document.querySelectorAll('.chip[data-q]').forEach(b=>b.onclick=()=>{$('msgInput').value=b.dataset.q;this.send()});
         document.querySelectorAll('.q-btn[data-q]').forEach(b=>b.onclick=()=>{$('msgInput').value=b.dataset.q;this.send()});
         window.addEventListener('resize',()=>{if(window.innerWidth>900)$('histOv').classList.remove('on')});
+        // Swipe izquierda para cerrar sidebar en mobile
+        let _tsx=0;
+        const sidebar=$('histSidebar');
+        sidebar.addEventListener('touchstart',e=>{_tsx=e.touches[0].clientX},{passive:true});
+        sidebar.addEventListener('touchmove',e=>{if(_tsx-e.touches[0].clientX>50)Hist.close()},{passive:true});
       }
     };
 

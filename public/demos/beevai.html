@@ -447,18 +447,21 @@
     }
     .lv-card{
       position:relative;z-index:1;
-      width:min(440px,92vw);
+      width:min(480px,92vw);
       background:rgba(13,25,45,0.85);
       backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
       border:1px solid rgba(96,185,154,0.18);
       border-radius:24px;
-      padding:44px 40px 36px;
-      box-shadow:0 0 0 1px rgba(96,185,154,0.06),0 32px 64px rgba(0,0,0,0.55),0 0 80px rgba(96,185,154,0.08);
+      padding:52px 48px 44px;
+      box-shadow:0 0 0 1px rgba(96,185,154,0.1),0 32px 80px rgba(0,0,0,0.65),0 0 120px rgba(96,185,154,0.12);
       text-align:center;
       animation:lv-in 0.55s cubic-bezier(0.16,1,0.3,1);
     }
     @keyframes lv-in{from{opacity:0;transform:translateY(24px) scale(0.97)}to{opacity:1;transform:none}}
-    .lv-logo{height:36px;margin-bottom:28px;filter:brightness(1.1)}
+    .lv-logo{height:40px;margin-bottom:32px;filter:brightness(1.1);display:block;margin-left:auto;margin-right:auto}
+    .lv-logo-text{display:none;font-family:'Sora',sans-serif;font-size:1.3rem;font-weight:700;color:#60b99a;letter-spacing:-0.03em;margin-bottom:32px}
+    .lv-logo.failed+.lv-logo-text{display:block}
+
     .lv-badge{
       display:inline-flex;align-items:center;gap:6px;
       font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
@@ -469,13 +472,13 @@
     @keyframes lv-pulse{0%,100%{opacity:1}50%{opacity:0.3}}
     .lv-title{
       font-family:'Sora',sans-serif;
-      font-size:1.65rem;font-weight:700;line-height:1.2;
-      color:#F4F0E8;margin-bottom:10px;
+      font-size:1.9rem;font-weight:700;line-height:1.2;
+      color:#F4F0E8;margin-bottom:12px;
     }
     .lv-title span{color:#f6c667}
     .lv-sub{
-      font-size:0.9rem;color:rgba(244,240,232,0.5);
-      line-height:1.5;margin-bottom:30px;
+      font-size:0.93rem;color:rgba(244,240,232,0.5);
+      line-height:1.6;margin-bottom:36px;
     }
     .lv-inp-wrap{position:relative;margin-bottom:12px}
     .lv-inp{
@@ -514,7 +517,7 @@
       margin:22px 0 16px;color:rgba(244,240,232,0.2);font-size:12px;
     }
     .lv-divider::before,.lv-divider::after{content:'';flex:1;height:1px;background:rgba(96,185,154,0.1)}
-    .lv-foot{margin-top:20px;font-size:0.78rem;color:rgba(244,240,232,0.3)}
+    .lv-foot{margin-top:28px;font-size:0.78rem;color:rgba(244,240,232,0.3)}
     .lv-foot a{color:#60b99a;text-decoration:none;font-weight:500}
     .lv-foot a:hover{color:#f6c667}
     .lv-web-link{
@@ -536,10 +539,10 @@
       <div class="lv-grid"></div>
     </div>
     <div class="lv-card">
-      <img src="/logo-horizontal-oscuro.png" alt="MostachIA" class="lv-logo" onerror="this.style.display='none'">
-      <div class="lv-badge">
-        <span class="lv-badge-dot"></span> Acceso exclusivo
-      </div>
+      <img src="/logo-horizontal-oscuro.png" alt="MostachIA" class="lv-logo"
+        onerror="this.classList.add('failed');this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="lv-logo-text">MostachIA</div>
+      <div class="lv-badge">Acceso exclusivo</div>
       <h1 class="lv-title">Tu demo <span>está lista</span></h1>
       <p class="lv-sub">Ingresá el nombre de tu empresa para acceder</p>
       <input id="lv-input" class="lv-inp" type="text" placeholder="Nombre de tu empresa"
@@ -550,7 +553,6 @@
         <svg viewBox="0 0 16 16" fill="none" style="width:14px;height:14px;flex-shrink:0"><circle cx="8" cy="8" r="7" stroke="#f87171" stroke-width="1.5"/><path d="M8 5v3.5M8 11h.01" stroke="#f87171" stroke-width="1.5" stroke-linecap="round"/></svg>
         <span id="lv-err-txt">Nombre incorrecto. Revisá y volvé a intentar.</span>
       </div>
-      <div class="lv-divider">o</div>
       <div class="lv-foot">¿Problemas para acceder? <a href="mailto:info@mostachia.com">Contactanos</a></div>
     </div>
     <a href="https://mostachia.com" target="_blank" class="lv-web-link">

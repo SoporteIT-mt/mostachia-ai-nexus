@@ -8,6 +8,7 @@ import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { CONFIG } from '@/config/constants';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { type LucideIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface Industria {
   icon: LucideIcon;
@@ -15,72 +16,74 @@ interface Industria {
   bullets: string[];
 }
 
-const industrias: Industria[] = [
-  {
-    icon: Film,
-    title: 'Cines y Entretenimiento',
-    bullets: [
-      'Dashboards de boletería y candy en tiempo real',
-      'Analytics de ocupación por sala y película',
-      'Agente de redes sociales con datos de cartelera',
-      'Integración con sistemas de venta de entradas',
-    ],
-  },
-  {
-    icon: UtensilsCrossed,
-    title: 'Gastronomía',
-    bullets: [
-      'Analytics de ventas por producto, mesero y turno',
-      'Rankings de platos más vendidos y tendencias',
-      'Integración con sistemas POS',
-      'Adaptable a restaurantes, heladerías, cafeterías',
-    ],
-  },
-  {
-    icon: HeartPulse,
-    title: 'Salud y Farmacias',
-    bullets: [
-      'Interfaces PWA premium para gestión',
-      'Conexión con sistemas de stock existentes',
-      'Automatización de procesos internos',
-      'Alertas y seguimiento automatizado',
-    ],
-  },
-  {
-    icon: Scale,
-    title: 'Estudios Contables y Legales',
-    bullets: [
-      'Dashboards de gestión multi-cliente',
-      'Automatización de vencimientos y alertas',
-      'Integración con AFIP y facturación',
-      'Reportes automáticos para cada cliente',
-    ],
-  },
-  {
-    icon: ShoppingCart,
-    title: 'E-commerce y Retail',
-    bullets: [
-      'Automatización de inventario y pedidos',
-      'Agentes de atención al cliente con IA',
-      'Integración TiendaNube, Shopify, WooCommerce',
-      'Reportes de ventas y métricas automáticas',
-    ],
-  },
-  {
-    icon: GraduationCap,
-    title: 'Educación y Comunidades',
-    bullets: [
-      'Automatización de contenido educativo',
-      'Gestión de comunidades online con IA',
-      'Sistemas de seguimiento de alumnos',
-      'Bots de soporte y FAQ automatizados',
-    ],
-  },
-];
-
 export const IndustriasSection = () => {
   const isMobile = useIsMobile();
   const [showAll, setShowAll] = useState(false);
+  const { t } = useTranslation();
+
+  const industrias: Industria[] = [
+    {
+      icon: Film,
+      title: t('industrias.i1Title'),
+      bullets: [
+        t('industrias.i1b1'),
+        t('industrias.i1b2'),
+        t('industrias.i1b3'),
+        t('industrias.i1b4'),
+      ],
+    },
+    {
+      icon: UtensilsCrossed,
+      title: t('industrias.i2Title'),
+      bullets: [
+        t('industrias.i2b1'),
+        t('industrias.i2b2'),
+        t('industrias.i2b3'),
+        t('industrias.i2b4'),
+      ],
+    },
+    {
+      icon: HeartPulse,
+      title: t('industrias.i3Title'),
+      bullets: [
+        t('industrias.i3b1'),
+        t('industrias.i3b2'),
+        t('industrias.i3b3'),
+        t('industrias.i3b4'),
+      ],
+    },
+    {
+      icon: Scale,
+      title: t('industrias.i4Title'),
+      bullets: [
+        t('industrias.i4b1'),
+        t('industrias.i4b2'),
+        t('industrias.i4b3'),
+        t('industrias.i4b4'),
+      ],
+    },
+    {
+      icon: ShoppingCart,
+      title: t('industrias.i5Title'),
+      bullets: [
+        t('industrias.i5b1'),
+        t('industrias.i5b2'),
+        t('industrias.i5b3'),
+        t('industrias.i5b4'),
+      ],
+    },
+    {
+      icon: GraduationCap,
+      title: t('industrias.i6Title'),
+      bullets: [
+        t('industrias.i6b1'),
+        t('industrias.i6b2'),
+        t('industrias.i6b3'),
+        t('industrias.i6b4'),
+      ],
+    },
+  ];
+
   const visibleIndustrias = isMobile && !showAll ? industrias.slice(0, 4) : industrias;
 
   return (
@@ -93,10 +96,10 @@ export const IndustriasSection = () => {
           <Spotlight size={600} fill="hsl(162 100% 39% / 0.08)" />
           <BlurFade>
             <h2 className="text-3xl md:text-5xl font-bold font-display mb-4">
-              Industrias que <span className="text-gradient-primary">Transformamos</span>
+              {t('industrias.title')} <span className="text-gradient-primary">{t('industrias.titleAccent')}</span>
             </h2>
             <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-              Misma arquitectura modular probada, adaptada a cada rubro.
+              {t('industrias.subtitle')}
             </p>
           </BlurFade>
         </div>
@@ -136,7 +139,7 @@ export const IndustriasSection = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm font-semibold text-primary opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
                       >
-                        Consultar para este rubro
+                        {t('industrias.consultBtn')}
                         <ArrowRight className="w-4 h-4" />
                       </a>
                     </div>
@@ -154,7 +157,7 @@ export const IndustriasSection = () => {
               onClick={() => setShowAll(true)}
               className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
             >
-              Ver todas las industrias
+              {t('industrias.showAll')}
               <ChevronDown className="w-4 h-4" />
             </button>
           </div>
@@ -165,10 +168,10 @@ export const IndustriasSection = () => {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 md:p-8 rounded-2xl bg-white/[0.05] backdrop-blur-md border border-white/[0.1]">
             <div className="text-center sm:text-left">
               <p className="text-foreground font-display font-semibold text-base md:text-lg">
-                ¿Tu rubro no está en la lista? No importa.
+                {t('industrias.bannerTitle')}
               </p>
               <p className="text-xs md:text-sm text-muted-foreground">
-                Si tenés datos y procesos, podemos automatizarlos.
+                {t('industrias.bannerSubtitle')}
               </p>
             </div>
             <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
@@ -179,7 +182,7 @@ export const IndustriasSection = () => {
                 className="px-5 py-2.5 md:px-6 md:py-3 font-semibold whitespace-nowrap text-sm shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                Hablemos de tu Rubro
+                {t('industrias.bannerBtn')}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </ShimmerButton>
             </a>

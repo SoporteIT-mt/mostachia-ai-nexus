@@ -19,9 +19,14 @@ import { ResultsSection } from '@/components/ResultsSection';
 import { SocialProofBanner } from '@/components/SocialProofBanner';
 import { BlogPreviewSection } from '@/components/BlogPreviewSection';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 
 
 const Index = () => {
+  const { t, i18n } = useTranslation();
+  const isEn = i18n.language === 'en';
+  const canonicalPath = isEn ? '/en' : '/';
+
   return (
     <div className="relative min-h-screen overflow-x-hidden scroll-smooth">
       <ScrollProgress />
@@ -34,13 +39,15 @@ const Index = () => {
       </div>
 
       <Helmet>
-        <title>MostachIA — Agentes de IA y Automatización para tu Negocio</title>
-        <meta name="description" content="Implementamos agentes de inteligencia artificial, chatbots y automatizaciones para potenciar tu negocio. Resultados reales en semanas." />
-        <link rel="canonical" href="https://mostachia-ai-nexus.lovable.app/" />
-        <meta property="og:title" content="MostachIA — Agentes de IA y Automatización para tu Negocio" />
-        <meta property="og:description" content="Implementamos agentes de inteligencia artificial, chatbots y automatizaciones para potenciar tu negocio." />
-        <meta property="og:url" content="https://mostachia-ai-nexus.lovable.app/" />
+        <title>{t('seo.homeTitle')}</title>
+        <meta name="description" content={t('seo.homeDesc')} />
+        <link rel="canonical" href={`https://mostachia-ai-nexus.lovable.app${canonicalPath}`} />
+        <meta property="og:title" content={t('seo.homeTitle')} />
+        <meta property="og:description" content={t('seo.homeDesc')} />
+        <meta property="og:url" content={`https://mostachia-ai-nexus.lovable.app${canonicalPath}`} />
         <meta property="og:type" content="website" />
+        {isEn && <html lang="en" />}
+        {!isEn && <html lang="es" />}
       </Helmet>
 
       <main id="main" className="relative z-10">
@@ -63,7 +70,7 @@ const Index = () => {
       <Footer />
       <FloatingWhatsApp />
       {false && <StickyCTA />}
-      
+
     </div>
   );
 };

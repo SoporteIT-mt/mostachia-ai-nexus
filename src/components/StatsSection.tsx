@@ -1,14 +1,17 @@
 import { NumberTicker } from '@/components/ui/number-ticker';
 import { BlurFade } from '@/components/ui/blur-fade';
-
-const stats = [
-  { value: 30, suffix: '+', label: 'Clientes Activos' },
-  { value: 8, suffix: '+', label: 'Industrias' },
-  { value: 50, suffix: '+', label: 'Agentes IA 24/7' },
-  { label: 'Implementación', custom: '1-4 sem' },
-];
+import { useTranslation } from 'react-i18next';
 
 export const StatsSection = () => {
+  const { t } = useTranslation();
+
+  const stats = [
+    { value: 30, suffix: '+', label: t('stats.activeClients') },
+    { value: 8, suffix: '+', label: t('stats.industries') },
+    { value: 50, suffix: '+', label: t('stats.aiAgents') },
+    { label: t('stats.implementation'), custom: t('stats.implementationValue') },
+  ];
+
   return (
     <section className="relative z-10 py-10">
       <div className="container mx-auto px-4">

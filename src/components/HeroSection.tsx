@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Calendar, ArrowRight, Sparkles } from 'lucide-react';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { CONFIG, trackEvent, CRO_EVENTS } from '@/config/constants';
+import { useTranslation } from 'react-i18next';
 
 const fadeUpVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -13,6 +14,8 @@ const fadeUpVariants = {
 };
 
 export const HeroSection = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center pt-32 pb-28 sm:pb-10 px-4 md:px-8 overflow-hidden">
       {/* Background accents */}
@@ -43,7 +46,7 @@ export const HeroSection = () => {
         >
           <Sparkles className="w-4 h-4 text-primary" />
           <span className="text-sm font-medium text-white/70">
-            Automatización Inteligente para Empresas
+            {t('hero.badge')}
           </span>
         </motion.div>
 
@@ -55,7 +58,7 @@ export const HeroSection = () => {
           variants={fadeUpVariants}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold leading-tight tracking-tight"
         >
-          <span className="block text-white">Tu equipo digital</span>
+          <span className="block text-white">{t('hero.title1')}</span>
           <motion.span
             className="block bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent"
             custom={2}
@@ -63,7 +66,7 @@ export const HeroSection = () => {
             animate="visible"
             variants={fadeUpVariants}
           >
-            que nunca duerme.
+            {t('hero.title2')}
           </motion.span>
         </motion.h1>
 
@@ -75,7 +78,7 @@ export const HeroSection = () => {
           variants={fadeUpVariants}
           className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed"
         >
-          Conectamos Agentes de IA a tu base de datos para responder a tus clientes, analizar tus métricas y operar tu negocio en piloto automático.
+          {t('hero.subtitle')}
         </motion.p>
 
         {/* CTA Principal Único */}
@@ -97,7 +100,7 @@ export const HeroSection = () => {
             }}
           >
             <Calendar className="w-5 h-5 mr-2" />
-            Empezar Ahora — Es Gratis
+            {t('hero.cta')}
             <ArrowRight className="w-5 h-5 ml-2" />
           </ShimmerButton>
         </motion.div>

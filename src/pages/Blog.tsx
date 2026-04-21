@@ -2,19 +2,28 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Clock, ArrowLeft, Search } from 'lucide-react';
-import { blogPosts, categories } from '@/data/blogPosts';
+import { blogPosts, blogPostsEn, categories, categoriesEn } from '@/data/blogPosts';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
+import { useTranslation } from 'react-i18next';
 
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [search, setSearch] = useState('');
+  const { t, i18n } = useTranslation();
 
-  const filtered = blogPosts.filter((p) => {
+  const isEn = i18n.language === 'en';
+  const posts = isEn ? blogPostsEn : blogPosts;
+  const cats = isEn ? categoriesEn : categories;
+  const blogPath = isEn ? '/en/blog' : '/blog';
+  const homePath = isEn ? '/en' : '/';
+  const postPath = (slug: string) => isEn ? `/en/blog/${slug}` : `/blog/${slug}`;
+
+  const filtered = posts.filter((p) => {
     const matchesCategory = !activeCategory || p.category === activeCategory;
     const matchesSearch =
       !search ||
@@ -26,12 +35,12 @@ const Blog = () => {
   return (
     <div className="relative min-h-screen overflow-x-hidden scroll-smooth">
       <Helmet>
-        <title>Blog — MostachIA | IA, Automatización y Tecnología</title>
-        <meta name="description" content="Artículos sobre inteligencia artificial, automatización, chatbots y tecnología para negocios. Recursos y guías de MostachIA." />
-        <link rel="canonical" href="https://mostachia-ai-nexus.lovable.app/blog" />
-        <meta property="og:title" content="Blog — MostachIA | IA, Automatización y Tecnología" />
-        <meta property="og:description" content="Artículos sobre inteligencia artificial, automatización, chatbots y tecnología para negocios." />
-        <meta property="og:url" content="https://mostachia-ai-nexus.lovable.app/blog" />
+        <title>{t('seo.blogTitle')}</title>
+        <meta name="description" content={t('seo.blogDesc')} />
+        <link rel="canonical" href={`https://mostachia-ai-nexus.lovable.app${blogPath}`} />
+        <meta property="og:title" content={t('seo.blogTitle')} />
+        <meta property="og:description" content={t('seo.blogDesc')} />
+        <meta property="og:url" content={`https://mostachia-ai-nexus.lovable.app${blogPath}`} />
         <meta property="og:type" content="website" />
       </Helmet>
       <Navbar />
@@ -47,17 +56,17 @@ const Blog = () => {
           {/* Header */}
           <BlurFade>
             <Link
-              to="/"
+              to={homePath}
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8"
             >
               <ArrowLeft className="w-4 h-4" />
-              Volver al inicio
+              {t('blog.backToHome')}
             </Link>
             <h1 className="text-4xl md:text-6xl font-bold font-display mb-4">
-              Blog & <span className="text-gradient-primary">Recursos</span>
+              {t('blog.pageTitle')} <span className="text-gradient-primary">{t('blog.pageTitleAccent')}</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mb-10">
-              Artículos sobre inteligencia artificial, automatización y tecnología para negocios.
+              {t('blog.pageSubtitle')}
             </p>
           </BlurFade>
 
@@ -67,7 +76,7 @@ const Blog = () => {
               <div className="relative max-w-sm">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
-                  placeholder="Buscar artículos..."
+                  placeholder={t('blog.searchPlaceholder')}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   className="pl-10 bg-white/[0.05] border-white/[0.1]"
@@ -82,9 +91,9 @@ const Blog = () => {
                       : 'bg-white/[0.05] text-muted-foreground hover:text-foreground'
                   }`}
                 >
-                  Todos
+                  {t('blog.allCategories')}
                 </button>
-                {categories.map((cat) => (
+                {cats.map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat === activeCategory ? null : cat)}
@@ -105,7 +114,7 @@ const Blog = () => {
           {filtered.length > 0 && !search && !activeCategory && (
             <BlurFade delay={0.15}>
               <Link
-                to={`/blog/${filtered[0].slug}`}
+                to={postPath(filtered[0].slug)}
                 className="group block mb-12"
               >
                 <div className="glass-card overflow-hidden grid md:grid-cols-2 gap-0 hover:border-primary/20 transition-colors">
@@ -133,7 +142,7 @@ const Blog = () => {
                       {filtered[0].excerpt}
                     </p>
                     <div className="flex items-center gap-2 text-primary font-medium text-sm">
-                      Leer artículo <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      {t('blog.readArticle')} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </div>
@@ -145,7 +154,7 @@ const Blog = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {(search || activeCategory ? filtered : filtered.slice(1)).map((post, i) => (
               <BlurFade key={post.slug} delay={i * 0.05}>
-                <Link to={`/blog/${post.slug}`} className="group block h-full">
+                <Link to={postPath(post.slug)} className="group block h-full">
                   <article className="glass-card overflow-hidden h-full flex flex-col hover:border-primary/20 transition-colors">
                     <div className="aspect-video overflow-hidden">
                       <img
@@ -173,7 +182,7 @@ const Blog = () => {
                           <Clock className="w-3 h-3" /> {post.readTime}
                         </span>
                         <span className="text-primary text-sm font-medium flex items-center gap-1">
-                          Leer <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                          {t('blog.read')} <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                         </span>
                       </div>
                     </div>
@@ -185,7 +194,7 @@ const Blog = () => {
 
           {filtered.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-muted-foreground text-lg">No se encontraron artículos.</p>
+              <p className="text-muted-foreground text-lg">{t('blog.noResults')}</p>
             </div>
           )}
         </div>

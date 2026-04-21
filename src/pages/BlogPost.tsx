@@ -1,7 +1,7 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, Clock, Calendar, User, Share2, ArrowRight, MessageCircle } from 'lucide-react';
-import { getPostBySlug, blogPosts } from '@/data/blogPosts';
+import { getPostBySlug, getPostBySlugEn, blogPosts, blogPostsEn } from '@/data/blogPosts';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -10,14 +10,21 @@ import { Footer } from '@/components/Footer';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { CONFIG } from '@/config/constants';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
+import { useTranslation } from 'react-i18next';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const post = slug ? getPostBySlug(slug) : undefined;
+  const { t, i18n } = useTranslation();
 
-  if (!post) return <Navigate to="/blog" replace />;
+  const isEn = i18n.language === 'en';
+  const post = slug ? (isEn ? getPostBySlugEn(slug) : getPostBySlug(slug)) : undefined;
+  const allPosts = isEn ? blogPostsEn : blogPosts;
+  const blogPath = isEn ? '/en/blog' : '/blog';
+  const postPath = (s: string) => isEn ? `/en/blog/${s}` : `/blog/${s}`;
 
-  const related = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+  if (!post) return <Navigate to={blogPath} replace />;
+
+  const related = allPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -32,11 +39,11 @@ const BlogPost = () => {
       <Helmet>
         <title>{post.title} — MostachIA Blog</title>
         <meta name="description" content={post.excerpt} />
-        <link rel="canonical" href={`https://mostachia-ai-nexus.lovable.app/blog/${post.slug}`} />
+        <link rel="canonical" href={`https://mostachia-ai-nexus.lovable.app${postPath(post.slug)}`} />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
         <meta property="og:image" content={post.image} />
-        <meta property="og:url" content={`https://mostachia-ai-nexus.lovable.app/blog/${post.slug}`} />
+        <meta property="og:url" content={`https://mostachia-ai-nexus.lovable.app${postPath(post.slug)}`} />
         <meta property="og:type" content="article" />
         <meta property="article:published_time" content={post.date} />
         <meta property="article:author" content={post.author} />
@@ -52,7 +59,7 @@ const BlogPost = () => {
             "publisher": { "@type": "Organization", "name": "MostachIA" },
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": `https://mostachia-ai-nexus.lovable.app/blog/${post.slug}`
+              "@id": `https://mostachia-ai-nexus.lovable.app${postPath(post.slug)}`
             }
           })}
         </script>
@@ -68,11 +75,11 @@ const BlogPost = () => {
         <article className="container mx-auto px-6 max-w-3xl">
           <BlurFade>
             <Link
-              to="/blog"
+              to={blogPath}
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8"
             >
               <ArrowLeft className="w-4 h-4" />
-              Volver al blog
+              {t('blog.backToBlog')}
             </Link>
 
             {/* Meta */}
@@ -157,17 +164,17 @@ const BlogPost = () => {
                   onClick={handleShare}
                 >
                   <Share2 className="w-4 h-4 mr-2" />
-                  Compartir
+                  {t('blog.share')}
                 </Button>
               </div>
 
               {/* CTA Box */}
               <div className="glass-card p-6 md:p-8 text-center">
                 <h3 className="text-xl font-bold font-display mb-2">
-                  ¿Querés implementar esto en tu negocio?
+                  {t('blog.ctaTitle')}
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Agendá una reunión gratuita de 30 minutos y te mostramos cómo podemos ayudarte.
+                  {t('blog.ctaSubtitle')}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <ShimmerButton
@@ -178,7 +185,7 @@ const BlogPost = () => {
                     onClick={() => window.open(CONFIG.CALCOM_URL, '_blank')}
                   >
                     <Calendar className="w-4 h-4 mr-2" />
-                    Agendar Reunión Gratis
+                    {t('blog.ctaBtn')}
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </ShimmerButton>
                   <Button
@@ -200,12 +207,12 @@ const BlogPost = () => {
           {related.length > 0 && (
             <BlurFade delay={0.25}>
               <div className="mt-16">
-                <h3 className="text-2xl font-bold font-display mb-6">Artículos relacionados</h3>
+                <h3 className="text-2xl font-bold font-display mb-6">{t('blog.relatedArticles')}</h3>
                 <div className="grid sm:grid-cols-3 gap-4">
                   {related.map((rp) => (
                     <Link
                       key={rp.slug}
-                      to={`/blog/${rp.slug}`}
+                      to={postPath(rp.slug)}
                       className="glass-card overflow-hidden group hover:border-primary/20 transition-colors"
                     >
                       <div className="aspect-video overflow-hidden">

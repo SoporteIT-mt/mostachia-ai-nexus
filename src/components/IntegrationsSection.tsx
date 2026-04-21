@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
+import { useTranslation } from 'react-i18next';
 
 const SI = "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons";
 
@@ -29,6 +30,8 @@ const LOGOS_ROW_2 = [
 ];
 
 export const IntegrationsSection = () => {
+  const { t } = useTranslation();
+
   return (
     <section id="integraciones" className="relative py-16 lg:py-20">
       {/* Header */}
@@ -41,16 +44,16 @@ export const IntegrationsSection = () => {
           className="text-center mb-16"
         >
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 text-sm font-medium text-primary">
-            Integraciones Reales
+            {t('integrations.badge')}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
-            Se Integra con{" "}
+            {t('integrations.title')}{" "}
             <span className="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">
-              Todo tu Stack
+              {t('integrations.titleAccent')}
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Conectamos con las herramientas que ya usás.
+            {t('integrations.subtitle')}
           </p>
         </motion.div>
       </div>
@@ -108,9 +111,9 @@ export const IntegrationsSection = () => {
       >
         <div className="text-center">
           <p className="text-muted-foreground mb-4">
-            ¿No ves tu herramienta?{" "}
+            {t('integrations.noTool')}{" "}
             <span className="text-primary font-medium">
-              Desarrollamos integraciones custom.
+              {t('integrations.customIntegration')}
             </span>
           </p>
           <a
@@ -118,7 +121,7 @@ export const IntegrationsSection = () => {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-border text-foreground
                        hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 text-sm font-medium"
           >
-            Consultar por integración
+            {t('integrations.consultBtn')}
             <ArrowRight className="w-4 h-4" />
           </a>
         </div>

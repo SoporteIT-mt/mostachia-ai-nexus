@@ -1,27 +1,29 @@
 import { Clock, TrendingDown, MessageSquareOff } from 'lucide-react';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { useIsMobile } from '@/hooks/use-mobile';
-
-const pains = [
-  {
-    icon: MessageSquareOff,
-    title: 'Atención Lenta',
-    description: 'Leads que se enfrían por tardar en responder mensajes.',
-  },
-  {
-    icon: TrendingDown,
-    title: 'Datos Desordenados',
-    description: 'Decisiones a ciegas por depender de Excels manuales o sistemas desconectados.',
-  },
-  {
-    icon: Clock,
-    title: 'Trabajo Repetitivo',
-    description: 'Tu equipo perdiendo horas en tareas mecánicas en lugar de trabajo estratégico.',
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 export const PainSection = () => {
   const isMobile = useIsMobile();
+  const { t } = useTranslation();
+
+  const pains = [
+    {
+      icon: MessageSquareOff,
+      title: t('pain.pain1Title'),
+      description: t('pain.pain1Desc'),
+    },
+    {
+      icon: TrendingDown,
+      title: t('pain.pain2Title'),
+      description: t('pain.pain2Desc'),
+    },
+    {
+      icon: Clock,
+      title: t('pain.pain3Title'),
+      description: t('pain.pain3Desc'),
+    },
+  ];
 
   return (
     <section className="py-12 lg:py-20 relative overflow-hidden">
@@ -29,11 +31,11 @@ export const PainSection = () => {
       <div className="container mx-auto px-6 relative z-10">
         <BlurFade className="text-center mb-8 md:mb-14">
           <span className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-4 py-1.5 mb-4 md:mb-6 text-sm font-medium text-accent">
-            El Problema
+            {t('pain.badge')}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold font-display mb-4">
-            Tu negocio crece, pero tus procesos{' '}
-            <span className="text-accent">se rompen</span>
+            {t('pain.title')}{' '}
+            <span className="text-accent">{t('pain.titleAccent')}</span>
           </h2>
         </BlurFade>
 

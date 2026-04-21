@@ -4,6 +4,7 @@ import { Spotlight } from '@/components/ui/spotlight';
 import { motion } from 'framer-motion';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { type LucideIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface Diferenciador {
   icon: LucideIcon;
@@ -11,40 +12,41 @@ interface Diferenciador {
   description: string;
 }
 
-const diferenciadores: Diferenciador[] = [
-  {
-    icon: ShieldCheck,
-    title: 'Tus Datos, Tu Control',
-    description: 'Trabajamos directamente con tu base de datos. No almacenamos información sensible.',
-  },
-  {
-    icon: Zap,
-    title: 'Implementación Express',
-    description: 'En 1 a 4 semanas tenés tu solución funcionando. Sin costos ocultos.',
-  },
-  {
-    icon: MapPin,
-    title: 'Equipo Local, Soporte Real',
-    description: 'Equipo argentino de Córdoba. Hablás con quienes construyen tu solución.',
-  },
-  {
-    icon: Puzzle,
-    title: 'Tecnología Modular',
-    description: 'Misma arquitectura probada, adaptada a tu rubro.',
-  },
-];
-
-const garantias = [
-  'Consultoría inicial gratuita',
-  'Capacitación incluida',
-  'Soporte post-implementación',
-  'Compatible con tu base de datos actual',
-  'Funciona por WhatsApp',
-  'Español nativo',
-];
-
 export const TrustSection = () => {
   const isMobile = useIsMobile();
+  const { t } = useTranslation();
+
+  const diferenciadores: Diferenciador[] = [
+    {
+      icon: ShieldCheck,
+      title: t('trust.d1Title'),
+      description: t('trust.d1Desc'),
+    },
+    {
+      icon: Zap,
+      title: t('trust.d2Title'),
+      description: t('trust.d2Desc'),
+    },
+    {
+      icon: MapPin,
+      title: t('trust.d3Title'),
+      description: t('trust.d3Desc'),
+    },
+    {
+      icon: Puzzle,
+      title: t('trust.d4Title'),
+      description: t('trust.d4Desc'),
+    },
+  ];
+
+  const garantias = [
+    t('trust.g1'),
+    t('trust.g2'),
+    t('trust.g3'),
+    t('trust.g4'),
+    t('trust.g5'),
+    t('trust.g6'),
+  ];
 
   return (
     <section id="confianza" className="py-12 lg:py-20 relative overflow-hidden">
@@ -56,7 +58,7 @@ export const TrustSection = () => {
           <Spotlight size={600} fill="hsl(162 100% 39% / 0.08)" />
           <BlurFade>
             <h2 className="text-3xl md:text-5xl font-bold font-display mb-4">
-              ¿Por Qué <span className="text-gradient-primary">Elegirnos</span>?
+              {t('trust.title')} <span className="text-gradient-primary">{t('trust.titleAccent')}</span>?
             </h2>
           </BlurFade>
         </div>

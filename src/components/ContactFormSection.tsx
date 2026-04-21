@@ -10,9 +10,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { toast } from 'sonner';
 import { CONFIG, trackEvent, CRO_EVENTS } from '@/config/constants';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
+import { useTranslation } from 'react-i18next';
 
 const formSchema = z.object({
   nombre: z.string().trim().min(1, 'Requerido').max(100),
@@ -27,6 +28,10 @@ export const ContactFormSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { t, i18n } = useTranslation();
+  const { pathname } = useLocation();
+  const isEn = i18n.language === 'en';
+  const privacyPath = isEn ? '/en/privacidad' : '/privacidad';
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -48,15 +53,15 @@ export const ContactFormSection = () => {
 
       if (res.ok) {
         trackEvent(CRO_EVENTS.FORM_SUBMIT, { source: 'web-form' });
-        toast.success('¡Consulta enviada! Te contactamos en menos de 24 horas. 🎉');
+        toast.success(t('contact.successMsg'));
         form.reset();
       } else {
         throw new Error('Error');
       }
     } catch {
-      toast.error('Hubo un error. Intentá de nuevo o escribinos por WhatsApp.', {
+      toast.error(t('contact.errorMsg'), {
         action: {
-          label: 'WhatsApp',
+          label: t('contact.errorWhatsappAction'),
           onClick: () => window.open(CONFIG.WHATSAPP_URL, '_blank'),
         },
       });
@@ -73,11 +78,11 @@ export const ContactFormSection = () => {
         {/* Header */}
         <BlurFade className="text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
-            Hablemos de{' '}
-            <span className="text-gradient-primary">tu Proyecto</span>
+            {t('contact.title')}{' '}
+            <span className="text-gradient-primary">{t('contact.titleAccent')}</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Dejanos tus datos y te contactamos en menos de 24 horas.
+            {t('contact.subtitle')}
           </p>
         </BlurFade>
 
@@ -93,9 +98,9 @@ export const ContactFormSection = () => {
                       name="nombre"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-white/90">Nombre *</FormLabel>
+                          <FormLabel className="text-white/90">{t('contact.nameLabel')}</FormLabel>
                           <FormControl>
-                            <Input placeholder="Tu nombre" {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
+                            <Input placeholder={t('contact.namePlaceholder')} {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -106,9 +111,9 @@ export const ContactFormSection = () => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-white/90">Email *</FormLabel>
+                          <FormLabel className="text-white/90">{t('contact.emailLabel')}</FormLabel>
                           <FormControl>
-                            <Input placeholder="tu@email.com" type="email" {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
+                            <Input placeholder={t('contact.emailPlaceholder')} type="email" {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -121,11 +126,11 @@ export const ContactFormSection = () => {
                     name="whatsapp"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-white/90">WhatsApp</FormLabel>
+                        <FormLabel className="text-white/90">{t('contact.whatsappLabel')}</FormLabel>
                         <FormControl>
-                          <Input placeholder="+54 9 ..." {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
+                          <Input placeholder={t('contact.whatsappPlaceholder')} {...field} className="bg-white/[0.05] border-white/[0.1] focus:ring-2 focus:ring-primary/30 transition-shadow" />
                         </FormControl>
-                        <p className="text-xs text-muted-foreground mt-1">Te contactamos por WhatsApp</p>
+                        <p className="text-xs text-muted-foreground mt-1">{t('contact.whatsappHint')}</p>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -136,10 +141,10 @@ export const ContactFormSection = () => {
                     name="mensaje"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-white/90">Mensaje</FormLabel>
+                        <FormLabel className="text-white/90">{t('contact.messageLabel')}</FormLabel>
                         <FormControl>
                           <Textarea
-                            placeholder="Contanos brevemente qué necesitás"
+                            placeholder={t('contact.messagePlaceholder')}
                             rows={3}
                             {...field}
                             className="bg-white/[0.05] border-white/[0.1] resize-none focus:ring-2 focus:ring-primary/30 transition-shadow"
@@ -160,21 +165,21 @@ export const ContactFormSection = () => {
                     {isSubmitting ? (
                       <>
                         <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                        Enviando...
+                        {t('contact.submitting')}
                       </>
                     ) : (
                       <>
                         <Send className="w-5 h-5 mr-2" />
-                        Enviar Consulta
+                        {t('contact.submitBtn')}
                       </>
                     )}
                   </ShimmerButton>
 
                   <p className="text-xs text-muted-foreground text-center">
-                    No compartimos tu información. Respuesta en menos de 24hs.
+                    {t('contact.privacyNote')}
                     <br />
-                    <Link to="/privacidad" className="underline hover:text-primary transition-colors">
-                      Política de Privacidad
+                    <Link to={privacyPath} className="underline hover:text-primary transition-colors">
+                      {t('contact.privacyLink')}
                     </Link>
                   </p>
                 </form>
@@ -186,7 +191,7 @@ export const ContactFormSection = () => {
           <BlurFade delay={0.3} className="lg:col-span-2 space-y-6">
             {/* Contact info card */}
             <div className="glass-card p-6 space-y-5">
-              <h3 className="font-display font-semibold text-lg">Contacto directo</h3>
+              <h3 className="font-display font-semibold text-lg">{t('contact.directContact')}</h3>
 
               <a
                 href={CONFIG.WHATSAPP_URL}
@@ -208,18 +213,18 @@ export const ContactFormSection = () => {
 
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
-                Córdoba, Argentina
+                {t('contact.location')}
               </div>
 
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <Clock className="w-5 h-5 text-primary flex-shrink-0" />
-                Lun-Vie, 9:00-18:00 (GMT-3)
+                {t('contact.hours')}
               </div>
             </div>
 
             {/* CTA card */}
             <div className="glass-card p-6">
-              <p className="font-display font-semibold mb-3">¿Preferís hablar directo?</p>
+              <p className="font-display font-semibold mb-3">{t('contact.preferDirect')}</p>
               <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer">
                 <ShimmerButton
                   shimmerColor="rgba(127, 205, 179, 0.8)"
@@ -228,12 +233,12 @@ export const ContactFormSection = () => {
                   className="w-full py-4 font-semibold"
                 >
                   <Calendar className="w-4 h-4 mr-2" />
-                  Reservar Horario
+                  {t('contact.bookSlot')}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </ShimmerButton>
               </a>
               <p className="text-xs text-muted-foreground text-center mt-3">
-                30 min · Gratuita · Sin compromiso
+                {t('contact.callDetails')}
               </p>
             </div>
           </BlurFade>

@@ -5,43 +5,45 @@ import { BlurFade } from '@/components/ui/blur-fade';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { DotPattern } from '@/components/ui/dot-pattern';
 import { CONFIG } from '@/config/constants';
-
-const steps = [
-  {
-    number: '01',
-    icon: MessageSquare,
-    title: 'Conversamos',
-    description: 'Agendás una videollamada gratuita de 30 minutos. Entendemos tu negocio, tus datos y qué querés lograr.',
-    badge: 'Sin compromiso',
-  },
-  {
-    number: '02',
-    icon: PenTool,
-    title: 'Diseñamos',
-    description: 'Analizamos tu base de datos y procesos. Te presentamos una propuesta con alcance, precio cerrado y timeline.',
-    badge: 'Propuesta en 48-72hs',
-  },
-  {
-    number: '03',
-    icon: Rocket,
-    title: 'Implementamos',
-    description: 'Configuramos agentes, conectamos bases de datos, armamos dashboards y capacitamos a tu equipo.',
-    badge: '1 a 4 semanas',
-  },
-  {
-    number: '04',
-    icon: TrendingUp,
-    title: 'Optimizamos',
-    description: 'Monitoreamos resultados, ajustamos prompts, ampliamos funcionalidades y acompañamos tu crecimiento.',
-    badge: 'Acompañamiento continuo',
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 export const HowItWorksSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [activeStep, setActiveStep] = useState(-1);
   const [progress, setProgress] = useState(0);
+  const { t } = useTranslation();
+
+  const steps = [
+    {
+      number: t('howItWorks.s1Number'),
+      icon: MessageSquare,
+      title: t('howItWorks.s1Title'),
+      description: t('howItWorks.s1Desc'),
+      badge: t('howItWorks.s1Badge'),
+    },
+    {
+      number: t('howItWorks.s2Number'),
+      icon: PenTool,
+      title: t('howItWorks.s2Title'),
+      description: t('howItWorks.s2Desc'),
+      badge: t('howItWorks.s2Badge'),
+    },
+    {
+      number: t('howItWorks.s3Number'),
+      icon: Rocket,
+      title: t('howItWorks.s3Title'),
+      description: t('howItWorks.s3Desc'),
+      badge: t('howItWorks.s3Badge'),
+    },
+    {
+      number: t('howItWorks.s4Number'),
+      icon: TrendingUp,
+      title: t('howItWorks.s4Title'),
+      description: t('howItWorks.s4Desc'),
+      badge: t('howItWorks.s4Badge'),
+    },
+  ];
 
   useEffect(() => {
     if (!isInView) return;
@@ -74,10 +76,10 @@ export const HowItWorksSection = () => {
         {/* Header */}
         <BlurFade className="text-center mb-16 md:mb-20">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-4">
-            Cómo <span className="text-gradient-primary">Trabajamos</span>
+            {t('howItWorks.title')} <span className="text-gradient-primary">{t('howItWorks.titleAccent')}</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            De la idea al sistema funcionando. Sin vueltas, sin sorpresas.
+            {t('howItWorks.subtitle')}
           </p>
         </BlurFade>
 
@@ -266,10 +268,10 @@ export const HowItWorksSection = () => {
           >
             <DotPattern className="opacity-[0.04]" width={24} height={24} cr={0.8} />
             <p className="text-2xl font-display font-bold mb-2 relative z-10">
-              ¿Listo para arrancar?
+              {t('howItWorks.ctaTitle')}
             </p>
             <p className="text-sm text-muted-foreground mb-6 relative z-10">
-              Transformá tu negocio con IA en menos de lo que pensás.
+              {t('howItWorks.ctaSubtitle')}
             </p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -286,18 +288,18 @@ export const HowItWorksSection = () => {
                   className="w-full sm:w-auto text-sm sm:text-lg font-bold px-5 sm:px-12 py-3.5 sm:py-5 group shadow-[0_4px_24px_rgba(96,185,154,0.4)]"
                 >
                   <Calendar className="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" />
-                  <span className="hidden sm:inline">Agendá tu Consultoría Gratuita</span>
-                  <span className="sm:hidden">Agendar Consultoría</span>
+                  <span className="hidden sm:inline">{t('howItWorks.ctaButton')}</span>
+                  <span className="sm:hidden">{t('howItWorks.ctaButtonShort')}</span>
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </ShimmerButton>
               </a>
             </motion.div>
             <div className="flex items-center justify-center gap-3 mt-5 relative z-10">
-              <span className="text-xs text-muted-foreground">30 minutos</span>
+              <span className="text-xs text-muted-foreground">{t('howItWorks.ctaMinutes')}</span>
               <span className="text-primary text-xs">|</span>
-              <span className="text-xs text-muted-foreground">Sin compromiso</span>
+              <span className="text-xs text-muted-foreground">{t('howItWorks.ctaNoCommitment')}</span>
               <span className="text-primary text-xs">|</span>
-              <span className="text-xs text-muted-foreground">100% gratuito</span>
+              <span className="text-xs text-muted-foreground">{t('howItWorks.ctaFree')}</span>
             </div>
           </div>
         </BlurFade>
@@ -313,7 +315,7 @@ const StepCard = ({
   isCurrent,
   align,
 }: {
-  step: typeof steps[0];
+  step: { number: string; title: string; description: string; badge: string };
   isActive: boolean;
   isCurrent: boolean;
   align: 'left' | 'right';

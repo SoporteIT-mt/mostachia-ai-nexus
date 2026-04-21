@@ -1,14 +1,17 @@
 import { Users, Clock, ThumbsUp, MapPin } from 'lucide-react';
 import { BlurFade } from '@/components/ui/blur-fade';
-
-const proofs = [
-  { icon: Users, text: '30+ clientes confían en nosotros' },
-  { icon: Clock, text: 'Respuesta promedio < 24hs' },
-  { icon: ThumbsUp, text: '98% de satisfacción' },
-  { icon: MapPin, text: 'Equipo 100% argentino' },
-];
+import { useTranslation } from 'react-i18next';
 
 export const SocialProofBanner = () => {
+  const { t } = useTranslation();
+
+  const proofs = [
+    { icon: Users, text: t('socialProof.p1') },
+    { icon: Clock, text: t('socialProof.p2') },
+    { icon: ThumbsUp, text: t('socialProof.p3') },
+    { icon: MapPin, text: t('socialProof.p4') },
+  ];
+
   return (
     <section className="py-10 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/[0.04] via-transparent to-primary/[0.04] pointer-events-none" />

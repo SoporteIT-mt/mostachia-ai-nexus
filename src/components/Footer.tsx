@@ -1,23 +1,26 @@
 import { CONFIG } from '@/config/constants';
 import { Instagram, Linkedin, Youtube, MapPin, Mail, Phone, Calendar } from 'lucide-react';
 import { DotPattern } from '@/components/ui/dot-pattern';
-
-const serviciosLinks = [
-  { label: 'Dashboards IA', href: '#servicios' },
-  { label: 'Agentes WhatsApp', href: '#servicios' },
-  { label: 'Automatización', href: '#servicios' },
-  { label: 'Migración de Datos', href: '#servicios' },
-];
-
-const empresaLinks = [
-  { label: 'Cómo Funciona', href: '#proceso' },
-  { label: 'Industrias', href: '#industrias' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'FAQ', href: '#faq' },
-  { label: 'Política de Privacidad', href: '/privacidad' },
-];
+import { useTranslation } from 'react-i18next';
 
 export const Footer = () => {
+  const { t } = useTranslation();
+
+  const serviciosLinks = [
+    { label: t('footer.s1'), href: '#servicios' },
+    { label: t('footer.s2'), href: '#servicios' },
+    { label: t('footer.s3'), href: '#servicios' },
+    { label: t('footer.s4'), href: '#servicios' },
+  ];
+
+  const empresaLinks = [
+    { label: t('footer.e1'), href: '#proceso' },
+    { label: t('footer.e2'), href: '#industrias' },
+    { label: t('footer.e3'), href: '/blog' },
+    { label: t('footer.e4'), href: '#faq' },
+    { label: t('footer.e5'), href: '/privacidad' },
+  ];
+
   return (
     <footer className="relative pt-20 pb-8 overflow-hidden" style={{ backgroundColor: '#0A1820' }}>
       {/* DotPattern background */}
@@ -32,7 +35,7 @@ export const Footer = () => {
               <img src="/logo-slogan.png" alt="MostachIA" className="h-10 w-auto object-contain" />
             </a>
             <p className="text-sm text-muted-foreground mb-5">
-              Automatización Inteligente para Negocios
+              {t('footer.slogan')}
             </p>
             <div className="flex items-center gap-3">
               <a
@@ -67,7 +70,7 @@ export const Footer = () => {
 
           {/* Col 2 — Servicios */}
           <div>
-            <h4 className="font-display font-semibold mb-4 text-white uppercase text-sm tracking-wider">Servicios</h4>
+            <h4 className="font-display font-semibold mb-4 text-white uppercase text-sm tracking-wider">{t('footer.servicesTitle')}</h4>
             <ul className="space-y-3">
               {serviciosLinks.map((l) => (
                 <li key={l.label}>
@@ -79,7 +82,7 @@ export const Footer = () => {
 
           {/* Col 3 — Empresa */}
           <div>
-            <h4 className="font-display font-semibold mb-4 text-white uppercase text-sm tracking-wider">Empresa</h4>
+            <h4 className="font-display font-semibold mb-4 text-white uppercase text-sm tracking-wider">{t('footer.companyTitle')}</h4>
             <ul className="space-y-3">
               {empresaLinks.map((l) => (
                 <li key={l.label}>
@@ -91,7 +94,7 @@ export const Footer = () => {
 
           {/* Col 4 — Contacto */}
           <div>
-            <h4 className="font-display font-semibold mb-4 text-white uppercase text-sm tracking-wider">Contacto</h4>
+            <h4 className="font-display font-semibold mb-4 text-white uppercase text-sm tracking-wider">{t('footer.contactTitle')}</h4>
             <ul className="space-y-3">
               <li>
                 <a href={CONFIG.WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
@@ -105,11 +108,11 @@ export const Footer = () => {
               </li>
               <li>
                 <a href={CONFIG.CALCOM_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
-                  <Calendar className="w-4 h-4 shrink-0" /> Agendar Reunión
+                  <Calendar className="w-4 h-4 shrink-0" /> {t('footer.scheduleCall')}
                 </a>
               </li>
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="w-4 h-4 shrink-0" /> Córdoba, Argentina
+                <MapPin className="w-4 h-4 shrink-0" /> {t('footer.location')}
               </li>
             </ul>
           </div>
@@ -118,7 +121,7 @@ export const Footer = () => {
         {/* Copyright */}
         <div className="pt-6 border-t border-[rgba(115,215,203,0.08)] text-center">
           <p className="text-xs text-steel-500">
-            © {new Date().getFullYear()} MostachIA. Procesos inteligentes, resultados superiores.
+            © {new Date().getFullYear()} MostachIA. {t('footer.copyright')}
           </p>
         </div>
       </div>

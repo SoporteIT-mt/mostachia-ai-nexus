@@ -14,9 +14,10 @@ interface NavBarProps {
   items: NavItem[];
   className?: string;
   logo?: React.ReactNode;
+  extraRight?: React.ReactNode;
 }
 
-export function NavBar({ items, className, logo }: NavBarProps) {
+export function NavBar({ items, className, logo, extraRight }: NavBarProps) {
   const [activeTab, setActiveTab] = useState(items[0].name);
   const [isMobile, setIsMobile] = useState(false);
   const manualOverride = useRef(false);
@@ -111,6 +112,12 @@ export function NavBar({ items, className, logo }: NavBarProps) {
           >
             {logo}
           </a>
+        )}
+
+        {extraRight && (
+          <div className="hidden sm:flex items-center">
+            {extraRight}
+          </div>
         )}
 
         {items.map((item) => {

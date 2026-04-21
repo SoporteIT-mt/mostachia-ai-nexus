@@ -3,36 +3,38 @@ import { BlurFade } from '@/components/ui/blur-fade';
 import { Spotlight } from '@/components/ui/spotlight';
 import { Badge } from '@/components/ui/badge';
 import { useIsMobile } from '@/hooks/use-mobile';
-
-const results = [
-  {
-    icon: Film,
-    industry: 'Cine en Córdoba',
-    description: 'Automatizamos la atención por WhatsApp. Hoy responde 200+ consultas diarias sin intervención humana.',
-    metric: '200+ consultas/día',
-  },
-  {
-    icon: UtensilsCrossed,
-    industry: 'Restaurante',
-    description: 'Dashboard de ventas en tiempo real. El dueño dejó de depender de Excel para tomar decisiones.',
-    metric: 'Decisiones en tiempo real',
-  },
-  {
-    icon: ShoppingCart,
-    industry: 'E-commerce',
-    description: 'Agente de soporte que resuelve el 85% de consultas sin escalar a un humano.',
-    metric: '85% resolución automática',
-  },
-  {
-    icon: Calculator,
-    industry: 'Estudio Contable',
-    description: 'Migración de base de datos legacy y reportes automatizados. 15 horas semanales recuperadas.',
-    metric: '15 hs/semana ahorradas',
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 export const ResultsSection = () => {
   const isMobile = useIsMobile();
+  const { t } = useTranslation();
+
+  const results = [
+    {
+      icon: Film,
+      industry: t('results.r1Industry'),
+      description: t('results.r1Desc'),
+      metric: t('results.r1Metric'),
+    },
+    {
+      icon: UtensilsCrossed,
+      industry: t('results.r2Industry'),
+      description: t('results.r2Desc'),
+      metric: t('results.r2Metric'),
+    },
+    {
+      icon: ShoppingCart,
+      industry: t('results.r3Industry'),
+      description: t('results.r3Desc'),
+      metric: t('results.r3Metric'),
+    },
+    {
+      icon: Calculator,
+      industry: t('results.r4Industry'),
+      description: t('results.r4Desc'),
+      metric: t('results.r4Metric'),
+    },
+  ];
 
   return (
     <section className="py-12 lg:py-20 relative overflow-hidden">
@@ -43,10 +45,10 @@ export const ResultsSection = () => {
           <Spotlight size={500} fill="rgba(115, 215, 203, 0.06)" />
           <BlurFade>
             <h2 className="text-3xl md:text-5xl font-bold font-display mb-4">
-              Resultados <span className="text-gradient-primary">Reales</span>
+              {t('results.title')} <span className="text-gradient-primary">{t('results.titleAccent')}</span>
             </h2>
             <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-              Casos anónimos de implementaciones que ya están funcionando.
+              {t('results.subtitle')}
             </p>
           </BlurFade>
         </div>
